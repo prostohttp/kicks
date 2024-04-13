@@ -1,0 +1,25 @@
+{
+	"name": "kicks",
+	"version": "1.0.0",
+	"description": "Kicks e-commerce Fullstack",
+	"main": "index.js",
+	"scripts": {
+		"start": "npm run dev:admin",
+		"dev:admin": "cd admin && npm run dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/prostohttp/kicks"
+	},
+	"author": "Морозов Михаил aka @prostohttp",
+	"keywords": [
+		"vue 3",
+		"nuxt 3",
+		"mongo",
+		"nest",
+		"tailwind",
+		"nuxt ui",
+		"shadcn/ui vue"
+	],
+	"license": "MIT"
+}
