@@ -5,7 +5,7 @@ export const useAuthDataStore = defineStore("authData", () => {
 	const email = ref("");
 	const password = ref("");
 	const terms = ref(false);
-	const keepLogged = ref(false);
+	const keepLogged = ref(true);
 
 	return {
 		firstName,

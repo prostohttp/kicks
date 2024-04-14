@@ -8,8 +8,8 @@
 </script>
 
 <template>
+	<NuxtLoadingIndicator />
 	<div class="w-full max-w-[1440px] mx-auto">
-		<NuxtLoadingIndicator color="black" />
 		<NuxtLayout>
 			<NuxtPage />
 		</NuxtLayout>

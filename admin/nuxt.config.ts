@@ -8,7 +8,14 @@ export default defineNuxtConfig({
 		},
 	},
 	runtimeConfig: {
-		public: {},
+		GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+		YANDEX_CLIENT_SECRET: process.env.YANDEX_CLIENT_SECRET,
+		DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+		public: {
+			GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+			YANDEX_CLIENT_ID: process.env.YANDEX_CLIENT_ID,
+			DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
+		},
 	},
 	nitro: {
 		imports: {

@@ -6,7 +6,8 @@
 
 	// Stores
 	const user = useAuthDataStore();
-	const { firstName, lastName, email, password, terms } = storeToRefs(user);
+	const { firstName, lastName, email, password, terms, keepLogged } =
+		storeToRefs(user);
 
 	// Vars
 	const isOpen = ref(false);
@@ -22,6 +23,7 @@
 				email,
 				password,
 				terms,
+				keepLogged,
 			})
 		"
 		:schema="schema"
@@ -31,6 +33,7 @@
 			email,
 			password,
 			terms,
+			keepLogged,
 		}"
 	>
 		<div class="flex flex-col gap-[20px]">
@@ -83,15 +86,15 @@
 					</template>
 				</UCheckbox>
 			</UFormGroup>
-			<!-- <UFormGroup name="keepLogged">
+			<UFormGroup name="keepLogged">
 				<UCheckbox v-model="keepLogged">
 					<template #label>
 						<span class="font-[OpenSans] text-[16px] font-[600]"
-							>Keep me logged in - applies to all log in options below.</span
+							>Keep me logged in after registration</span
 						>
 					</template>
 				</UCheckbox>
-			</UFormGroup> -->
+			</UFormGroup>
 			<UButton
 				type="submit"
 				class="h-[48px] px-[16px] flex justify-between"

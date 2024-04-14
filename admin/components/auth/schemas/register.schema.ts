@@ -27,7 +27,7 @@ export const schema = z.object({
 			invalid_type_error: "Terms must be a boolean",
 		})
 		.refine((value) => value === true, { message: "Terms must be accepted" }),
-	// keepLogged: z.boolean(),
+	keepLogged: z.boolean(),
 });
 
 export type Schema = z.output<typeof schema>;

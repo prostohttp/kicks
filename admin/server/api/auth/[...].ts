@@ -16,18 +16,18 @@ export default NuxtAuthHandler({
 	providers: [
 		// @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
 		YandexProvider.default({
-			clientId: "047157328f4c48a0b0eea6cb1c7ce40b",
-			clientSecret: "2a86a1bcc67445b581c58d33ac317fd2",
+			clientId: runtimeConfig.public.YANDEX_CLIENT_ID,
+			clientSecret: runtimeConfig.YANDEX_CLIENT_SECRET,
 		}),
 		// @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
 		DiscordProvider.default({
-			clientId: "1228646007865348116",
-			clientSecret: "zF7HCRpPrAgBvtECcPjzhe97-4pB0PN4",
+			clientId: runtimeConfig.public.DISCORD_CLIENT_ID,
+			clientSecret: runtimeConfig.DISCORD_CLIENT_SECRET,
 		}),
 		// @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
 		GitHubProvider.default({
-			clientId: "053b5a2a36ac7b612208",
-			clientSecret: "066405e640c0dbd758b91ef462200505e7313ab8",
+			clientId: runtimeConfig.public.GITHUB_CLIENT_ID,
+			clientSecret: runtimeConfig.GITHUB_CLIENT_SECRET,
 		}),
 		// @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
 		CredentialsProvider.default({

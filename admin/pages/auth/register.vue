@@ -19,6 +19,7 @@
 
 	// vars
 	const toast = useToast();
+	const router = useRouter();
 
 	// Handlers
 	const registerHandler = useThrottleFn(async (data: RegisterFormDto) => {
@@ -31,12 +32,22 @@
 					email: data.email,
 					password: data.password,
 					role: Roles.USER,
+					keepLogged: data.keepLogged,
 				},
 			});
-			signIn("credentials", {
-				email: data.email,
-				password: data.password,
-			});
+			if (data.keepLogged) {
+				signIn("credentials", {
+					email: data.email,
+					password: data.password,
+				});
+			} else {
+				toast.add({
+					title: "You are have been registered and now you can login",
+					callback: () => {
+						router.push({ name: "login" });
+					},
+				});
+			}
 		} catch (error: any) {
 			toast.add({ title: error.statusMessage });
 		}
