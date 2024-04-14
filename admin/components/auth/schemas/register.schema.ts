@@ -20,14 +20,14 @@ export const schema = z.object({
 	// 	.refine((value) => /[!@#$%^&*(),.?":{}|<>]/.test(value), {
 	// 		message: "Password must contain at least one special character",
 	// 	}),
-	password: z.string().min(6, "Password must be at least 8 characters long"),
+	password: z.string().min(6, "Password must be at least 6 characters long"),
 	terms: z
 		.boolean({
 			required_error: "Terms is Required",
 			invalid_type_error: "Terms must be a boolean",
 		})
 		.refine((value) => value === true, { message: "Terms must be accepted" }),
-	keepLogged: z.boolean(),
+	// keepLogged: z.boolean(),
 });
 
 export type Schema = z.output<typeof schema>;

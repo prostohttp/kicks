@@ -6,6 +6,11 @@
 	definePageMeta({
 		layout: "auth",
 		name: "forgot",
+		auth: {
+			unauthenticatedOnly: true,
+			navigateAuthenticatedTo: "/dashboard",
+		},
+		alias: ["/forgot"],
 	});
 	useHead({
 		title: "Forgot password",

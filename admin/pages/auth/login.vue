@@ -1,5 +1,12 @@
 <script lang="ts" setup>
+	import { useThrottleFn } from "@vueuse/core";
+	import { type LoginFormDto } from "~/types";
+	// Vars
+	const isOpen = ref(false);
+	const isError = ref();
 	const { signIn } = useAuth();
+	const router = useRouter();
+	const toast = useToast();
 
 	// Meta
 	definePageMeta({
@@ -7,8 +14,9 @@
 		name: "login",
 		auth: {
 			unauthenticatedOnly: true,
-			navigateAuthenticatedTo: "dashboard",
+			navigateAuthenticatedTo: "/dashboard",
 		},
+		alias: ["/login"],
 	});
 
 	useHead({
@@ -16,11 +24,20 @@
 	});
 
 	// Handlers
-	const loginHandler = async (data: LoginFormDto) => {
-		signIn("credentials", { username: data.email, password: data.password });
-	};
-	// Vars
-	const isOpen = ref(false);
+	const loginHandler = useThrottleFn(async (data: LoginFormDto) => {
+		console.log(data);
+
+		isError.value = await signIn("credentials", {
+			email: data.email,
+			password: data.password,
+			redirect: false,
+		});
+		if (!isError.value.error) {
+			router.push("/dashboard");
+		} else {
+			toast.add({ title: "Wrong email or password" });
+		}
+	}, 1000);
 </script>
 
 <template>
@@ -34,8 +51,8 @@
 				<ULink
 					:to="{ name: 'forgot' }"
 					class="font-[OpenSans] text-[16px] font-[600] underline decoration-gray-main"
-					>Forgot your password?</ULink
-				>
+					>Forgot your password?
+				</ULink>
 			</div>
 			<AuthLoginForm @submit="loginHandler" />
 			<AuthSocialButtons />

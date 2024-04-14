@@ -4,13 +4,12 @@ export interface RegisterFormDto {
 	email: string;
 	password: string;
 	terms: boolean;
-	keepLogged: boolean;
+	// keepLogged: boolean;
 }
 
 export interface LoginFormDto {
 	email: string;
 	password: string;
-	keepLogged: boolean;
 }
 
 export interface ForgotFormDto {

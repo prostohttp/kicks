@@ -20,10 +20,10 @@
 				class="scale-100 sm:scale-[140%]"
 			/>
 		</AuthSocialButton>
-		<AuthSocialButton title="Log in with Mail.ru" @click="signIn('mailru')">
+		<AuthSocialButton title="Log in with Discord" @click="signIn('discord')">
 			<img
-				src="/assets/img/icon-mailru.svg"
-				class="scale-100 sm:scale-[350%]"
+				src="/assets/img/icon-discord.svg"
+				class="scale-[200%] sm:scale-[200%]"
 			/>
 		</AuthSocialButton>
 	</div>

@@ -1,11 +1,17 @@
 <script lang="ts" setup>
 	import { useThrottleFn } from "@vueuse/core";
+	const { signIn } = useAuth();
 	import { Roles, type RegisterFormDto } from "~/types";
 
 	// Meta
 	definePageMeta({
 		layout: "auth",
 		name: "register",
+		auth: {
+			unauthenticatedOnly: true,
+			navigateAuthenticatedTo: "/dashboard",
+		},
+		alias: ["/register"],
 	});
 	useHead({
 		title: "Register",
@@ -24,9 +30,12 @@
 					lastName: data.lastName,
 					email: data.email,
 					password: data.password,
-					keepLogged: data.keepLogged,
 					role: Roles.USER,
 				},
+			});
+			signIn("credentials", {
+				email: data.email,
+				password: data.password,
 			});
 		} catch (error: any) {
 			toast.add({ title: error.statusMessage });

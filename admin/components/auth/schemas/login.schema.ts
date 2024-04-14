@@ -18,8 +18,7 @@ export const schema = z.object({
 	// 	.refine((value) => /[!@#$%^&*(),.?":{}|<>]/.test(value), {
 	// 		message: "Password must contain at least one special character",
 	// 	}),
-	password: z.string().min(6, "Password must be at least 8 characters long"),
-	keepLogged: z.boolean(),
+	password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
 export type Schema = z.output<typeof schema>;

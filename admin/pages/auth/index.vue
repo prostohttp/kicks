@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-definePageMeta({
-  redirect: { name: "login" }
-})
+	definePageMeta({
+		layout: "auth",
+		redirect: "auth/login",
+	});
 </script>
 
 <template>
-  <div>
-
-  </div>
+	<AuthSidebar />
+	<div>Auth index page</div>
 </template>

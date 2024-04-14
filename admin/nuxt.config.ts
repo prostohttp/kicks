@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from "nuxt/config";
-import { ADMIN } from "./constants";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -19,11 +18,15 @@ export default defineNuxtConfig({
 	css: ["~/assets/css/main.css"],
 	devtools: { enabled: true },
 	experimental: {
-		componentIslands: true,
+		// componentIslands: true,
 	},
 	auth: {
+		isEnabled: true,
 		provider: {
 			type: "authjs",
+		},
+		globalAppMiddleware: {
+			isEnabled: true,
 		},
 	},
 	mongoose: {
@@ -33,6 +36,10 @@ export default defineNuxtConfig({
 	pinia: {
 		storesDirs: ["./stores/**"],
 	},
+	vueEmail: {
+		baseUrl: process.env.SITE_URL,
+		autoImport: true,
+	},
 	modules: [
 		"@nuxt/ui",
 		"@nuxt/image",
@@ -41,18 +48,7 @@ export default defineNuxtConfig({
 		"nuxt-mongoose",
 		"@pinia/nuxt",
 		"@nuxt/content",
-		[
-			"nuxt-mail",
-			{
-				message: {
-					to: ADMIN.EMAIL,
-				},
-				smtp: {
-					host: ADMIN.SMTP_HOST,
-					port: ADMIN.SMTP_PORT,
-				},
-			},
-		],
 		"@sidebase/nuxt-auth",
+		"@vue-email/nuxt",
 	],
 });

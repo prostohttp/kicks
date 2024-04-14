@@ -6,21 +6,17 @@
 
 	// stores
 	const user = useAuthDataStore();
-	const { email, password, keepLogged } = storeToRefs(user);
-
-	// vars
-	const isOpen = ref(false);
+	const { email, password } = storeToRefs(user);
 </script>
 
 <template>
 	<UForm
 		class="flex flex-col gap-[24px]"
-		@submit="$emit('submit', { email, password, keepLogged })"
+		@submit="$emit('submit', { email, password })"
 		:schema="schema"
 		:state="{
 			email,
 			password,
-			keepLogged,
 		}"
 	>
 		<div class="flex flex-col gap-[24px]">
@@ -34,21 +30,6 @@
 					placeholder="Password"
 					v-model="password"
 				/>
-			</UFormGroup>
-			<UFormGroup name="keepLogged">
-				<UCheckbox v-model="keepLogged">
-					<template #label>
-						<span class="font-[OpenSans] text-[16px] font-[600]"
-							>Keep me logged in - applies to all log in options below.
-							<small
-								@click.prevent="isOpen = true"
-								class="text-[16px] underline decoration-gray-main hover: cursor-pointer"
-							>
-								More info.
-							</small></span
-						>
-					</template>
-				</UCheckbox>
 			</UFormGroup>
 		</div>
 		<div class="flex flex-col gap-[20px]">
@@ -71,7 +52,4 @@
 			</ULink>
 		</div>
 	</UForm>
-	<UiModal v-model="isOpen" title="More Info">
-		<ContentDoc path="/auth-info" />
-	</UiModal>
 </template>
