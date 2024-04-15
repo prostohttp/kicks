@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 	import { useThrottleFn } from "@vueuse/core";
+	import { Constants } from "~/constants";
 	const { signIn } = useAuth();
 	import { Roles, type RegisterFormDto } from "~/types";
 
@@ -23,16 +24,17 @@
 
 	// Handlers
 	const registerHandler = useThrottleFn(async (data: RegisterFormDto) => {
+		const { firstName, lastName, email, password, keepLogged } = data;
 		try {
 			await $fetch("/api/auth/register", {
 				method: "POST",
 				body: {
-					firstName: data.firstName,
-					lastName: data.lastName,
-					email: data.email,
-					password: data.password,
+					firstName,
+					lastName,
+					email,
+					password,
 					role: Roles.USER,
-					keepLogged: data.keepLogged,
+					keepLogged,
 				},
 			});
 			if (data.keepLogged) {
@@ -48,6 +50,16 @@
 					},
 				});
 			}
+			await $fetch("/api/send-email", {
+				method: "POST",
+				body: {
+					userFirstName: firstName,
+					userLastName: lastName,
+					userEmail: email,
+					siteName: Constants.SITE_NAME,
+					siteUrl: Constants.SITE_URL,
+				},
+			});
 		} catch (error: any) {
 			toast.add({ title: error.statusMessage });
 		}

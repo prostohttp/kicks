@@ -5,10 +5,12 @@ export const User = defineMongooseModel({
 	name: "User",
 	schema: {
 		firstName: {
+			min: 3,
 			type: String,
 			required: true,
 		},
 		lastName: {
+			min: 3,
 			type: String,
 			required: true,
 		},
@@ -18,6 +20,7 @@ export const User = defineMongooseModel({
 			required: true,
 		},
 		password: {
+			min: 6,
 			type: String,
 			required: true,
 		},

@@ -74,7 +74,7 @@
 				<UCheckbox v-model="terms">
 					<template #label>
 						<span class="font-[OpenSans] text-[16px] font-[600]"
-							>By clicking 'Log In' you agree to our website
+							>By clicking 'REGISTER' you agree to our website
 							<small
 								@click.prevent="isOpen = true"
 								class="text-[16px] underline decoration-gray-main hover: cursor-pointer"

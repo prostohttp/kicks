@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
+import { Constants } from "./constants";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -11,6 +12,8 @@ export default defineNuxtConfig({
 		GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
 		YANDEX_CLIENT_SECRET: process.env.YANDEX_CLIENT_SECRET,
 		DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+		AUTH_SECRET: process.env.AUTH_SECRET,
+		RESEND_API_KEY: process.env.RESEND_API_KEY,
 		public: {
 			GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
 			YANDEX_CLIENT_ID: process.env.YANDEX_CLIENT_ID,
@@ -20,6 +23,12 @@ export default defineNuxtConfig({
 	nitro: {
 		imports: {
 			dirs: ["./types"],
+		},
+		storage: {
+			fs: {
+				driver: "fs",
+				base: "./public",
+			},
 		},
 	},
 	css: ["~/assets/css/main.css"],
@@ -44,14 +53,13 @@ export default defineNuxtConfig({
 		storesDirs: ["./stores/**"],
 	},
 	vueEmail: {
-		baseUrl: process.env.SITE_URL,
+		baseUrl: Constants.SITE_URL,
 		autoImport: true,
 	},
 	modules: [
 		"@nuxt/ui",
 		"@nuxt/image",
 		"@vueuse/nuxt",
-		"@nuxtjs/i18n",
 		"nuxt-mongoose",
 		"@pinia/nuxt",
 		"@nuxt/content",
