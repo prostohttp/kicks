@@ -75,7 +75,7 @@
 			<EContainer>
 				<ESection :style="logo">
 					<EImg
-						src="https://s168vlx.storage.yandex.net/rdisk/cd1b84da0de7b5c97fb8407ecff65a95fa6b54d0e840cefe34009af394fc5fbf/661d20c1/5sFCdr_IOmrzpp9ifm4wjWXAlq2flBr2RR-zY2BqREs9BbydP9Z-7nz_GWwc_u8pha3LiUiii46AmCxGyK7oJQ==?uid=0&filename=small-logo.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&fsize=7767&hid=5a5389fdf5fba9d1222d555dce278307&media_type=image&tknv=v2&etag=3c54762eb42dd90cb9082ea2b5940851&ts=61621f508f240&s=33e60f19171f49219c22fc5f9f4733cdfc886d3766c8eda2482dc69c2d47e8e0&pb=U2FsdGVkX18OyJnAbIbXpoPhFq4N_GcOT-1VUaufmpzWCBQdHQsbR-qrhe1RmAYz98DTgeWnjzMey8e0fUGOn_bGdJYTZz04UNNAtcVAmuc"
+						src="https://pixeldrain.com/api/file/8b2LR8UH"
 						style="width: 100px; padding-top: 5px; padding-bottom: 5px"
 					/>
 				</ESection>
@@ -111,7 +111,7 @@
 									textAlign: 'center',
 								}"
 							>
-								We noticed a recent login to your account.
+								We are glad to have you on {{ siteName }}!
 							</EHeading>
 
 							<EText :style="paragraph">

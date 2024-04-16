@@ -1,5 +1,5 @@
 export const Constants = {
-	EMAIL: "studio38@mail.ru",
+	EMAIL: "info@prostohttp.ru",
 	SMTP_HOST: "smtp.mail.ru",
 	SMTP_PORT: 465,
 	SITE_URL: "http://localhost:3001",

@@ -50,7 +50,7 @@
 					},
 				});
 			}
-			await $fetch("/api/send-email", {
+			await $fetch("/api/register-send-email", {
 				method: "POST",
 				body: {
 					userFirstName: firstName,
