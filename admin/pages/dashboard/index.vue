@@ -28,9 +28,6 @@
 		<h2>
 			<pre>{{ status }}</pre>
 		</h2>
-		<h2>
-			<pre>{{ getSession }}</pre>
-		</h2>
 		<UButton @click="logOutHandler">Log Out</UButton>
 	</div>
 </template>

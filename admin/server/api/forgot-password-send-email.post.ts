@@ -4,6 +4,7 @@ import { Constants } from "~/constants";
 
 const runtimeConfig = useRuntimeConfig();
 const resend = new Resend(runtimeConfig.RESEND_API_KEY);
+
 export default defineEventHandler(async (event) => {
 	const { url, email } = await readBody(event);
 	const template = await useCompiler("ForgotPassword.vue", {

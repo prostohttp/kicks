@@ -1,12 +1,8 @@
 <script lang="ts" setup>
 	defineProps({
-		userFirstName: {
+		name: {
 			type: String,
 			default: "John",
-		},
-		userLastName: {
-			type: String,
-			default: "Doe",
 		},
 		siteName: {
 			type: String,
@@ -101,7 +97,7 @@
 									margin-top: 20px;
 								"
 							>
-								Hi {{ userFirstName }} {{ userLastName }},
+								Hi {{ name }},
 							</EHeading>
 							<EHeading
 								as="h2"

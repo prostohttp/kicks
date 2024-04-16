@@ -47,7 +47,7 @@
 					Forgot password
 				</h1>
 			</div>
-			<AuthForgotForm @submit="forgotHandler" />
+			<AuthForgotPasswordForm @submit="forgotHandler" />
 			<AuthSocialButtons />
 			<span
 				class="font-[OpenSans] text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"

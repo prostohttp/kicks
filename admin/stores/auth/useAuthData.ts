@@ -1,15 +1,13 @@
 export const useAuthDataStore = defineStore("authData", () => {
 	// vars
-	const firstName = ref("");
-	const lastName = ref("");
+	const name = ref("");
 	const email = ref("");
 	const password = ref("");
 	const terms = ref(true);
 	const keepLogged = ref(true);
 
 	return {
-		firstName,
-		lastName,
+		name,
 		email,
 		password,
 		terms,

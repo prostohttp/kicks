@@ -5,12 +5,10 @@ import { Constants } from "~/constants";
 const runtimeConfig = useRuntimeConfig();
 const resend = new Resend(runtimeConfig.RESEND_API_KEY);
 export default defineEventHandler(async (event) => {
-	const { userFirstName, userLastName, userEmail, siteName, siteUrl } =
-		await readBody(event);
+	const { name, userEmail, siteName, siteUrl } = await readBody(event);
 	const template = await useCompiler("Welcome.vue", {
 		props: {
-			userFirstName,
-			userLastName,
+			name,
 			userEmail,
 			siteName,
 			siteUrl,

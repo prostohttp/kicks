@@ -24,13 +24,12 @@
 
 	// Handlers
 	const registerHandler = useThrottleFn(async (data: RegisterFormDto) => {
-		const { firstName, lastName, email, password, keepLogged } = data;
+		const { name, email, password, keepLogged } = data;
 		try {
 			await $fetch("/api/auth/register", {
 				method: "POST",
 				body: {
-					firstName,
-					lastName,
+					name,
 					email,
 					password,
 					role: Roles.USER,
@@ -38,7 +37,7 @@
 				},
 			});
 			if (data.keepLogged) {
-				signIn("credentials", {
+				await signIn("credentials", {
 					email: data.email,
 					password: data.password,
 				});
@@ -53,8 +52,7 @@
 			await $fetch("/api/register-send-email", {
 				method: "POST",
 				body: {
-					userFirstName: firstName,
-					userLastName: lastName,
+					name,
 					userEmail: email,
 					siteName: Constants.SITE_NAME,
 					siteUrl: Constants.SITE_URL,

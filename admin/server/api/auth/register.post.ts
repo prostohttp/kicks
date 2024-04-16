@@ -3,13 +3,12 @@ import { User } from "~/server/models/user.schema";
 import { clearString } from "~/utils";
 
 export default defineEventHandler(async (event) => {
-	const { firstName, lastName, email, password, role } = await readBody(event);
+	const { name, email, password, role } = await readBody(event);
 	const hashed = bcrypt.hashSync(password, 10);
 
 	try {
 		const newUser = new User({
-			firstName,
-			lastName,
+			name,
 			email: clearString(email),
 			password: hashed,
 			role,

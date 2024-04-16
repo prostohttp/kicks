@@ -2,8 +2,7 @@
 
 <template>
 	<Welcome
-		user-first-name="Mikele"
-		user-last-name="Corleone"
+		user-full-name="Mikele Corleone"
 		site-name="Kicks Club"
 		site-url="http://localhost:3001"
 	/>

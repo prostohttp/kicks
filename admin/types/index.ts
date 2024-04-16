@@ -1,6 +1,5 @@
 export interface RegisterFormDto {
-	firstName: string;
-	lastName: string;
+	name: string;
 	email: string;
 	password: string;
 	terms: boolean;
@@ -14,6 +13,10 @@ export interface LoginFormDto {
 
 export interface ForgotFormDto {
 	email: string;
+}
+
+export interface ResetPasswordDto {
+	password: string;
 }
 
 export enum Roles {

@@ -6,8 +6,7 @@
 
 	// Stores
 	const user = useAuthDataStore();
-	const { firstName, lastName, email, password, terms, keepLogged } =
-		storeToRefs(user);
+	const { name, email, password, terms, keepLogged } = storeToRefs(user);
 
 	// Vars
 	const isOpen = ref(false);
@@ -18,8 +17,7 @@
 		class="flex flex-col gap-[24px]"
 		@submit="
 			$emit('submit', {
-				firstName,
-				lastName,
+				name,
 				email,
 				password,
 				terms,
@@ -28,8 +26,7 @@
 		"
 		:schema="schema"
 		:state="{
-			firstName,
-			lastName,
+			name,
 			email,
 			password,
 			terms,
@@ -38,18 +35,11 @@
 	>
 		<div class="flex flex-col gap-[20px]">
 			<h1 class="font-[Rubik] font-[600] text-[24px]">Your Name</h1>
-			<UFormGroup name="firstName">
+			<UFormGroup name="name">
 				<UInput
 					variant="outline"
-					placeholder="First Name *"
-					v-model="firstName"
-				/>
-			</UFormGroup>
-			<UFormGroup name="lastName">
-				<UInput
-					variant="outline"
-					placeholder="Last Name *"
-					v-model="lastName"
+					placeholder="Full Name *"
+					v-model="name"
 				/>
 			</UFormGroup>
 		</div>

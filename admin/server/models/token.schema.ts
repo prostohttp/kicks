@@ -1,27 +1,20 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
-import { Roles } from "~/types";
 
-export const User = defineMongooseModel({
-	name: "User",
+export const Token = defineMongooseModel({
+	name: "Token",
 	schema: {
-		name: {
-			min: 3,
+		token: {
 			type: String,
 			required: true,
 		},
-		email: {
+		timestamp: {
 			type: String,
-			unique: true,
 			required: true,
 		},
 		password: {
 			min: 6,
 			type: String,
 			required: true,
-		},
-		role: {
-			type: String,
-			enum: Object.values(Roles),
 		},
 	},
 });
