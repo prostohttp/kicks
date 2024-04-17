@@ -122,7 +122,7 @@
 					<ERow :style="{ ...boxInfos, paddingTop: '0' }">
 						<EColumn :style="containerButton" col-span="{2}">
 							<EText :style="button">
-								<NuxtLink :to="siteUrl">Learn More</NuxtLink>
+								<a style="color: white" :href="siteUrl">Learn More</a>
 							</EText>
 						</EColumn>
 					</ERow>
@@ -143,9 +143,9 @@
 					}"
 				>
 					&copy; {{ new Date().getFullYear() }} | {{ siteName }} |
-					<NuxtLink :to="siteUrl" :style="{ ...link, fontWeight: '600' }">
+					<a :href="siteUrl" :style="{ ...link, fontWeight: '600' }">
 						www.kicks-club.com
-					</NuxtLink>
+					</a>
 				</EText>
 			</EContainer>
 		</EBody>

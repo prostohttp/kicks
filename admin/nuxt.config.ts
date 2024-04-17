@@ -53,7 +53,7 @@ export default defineNuxtConfig({
 		storesDirs: ["./stores/**"],
 	},
 	vueEmail: {
-		baseUrl: Constants.SITE_URL,
+		// baseUrl: Constants.SITE_URL,
 		autoImport: true,
 	},
 	modules: [

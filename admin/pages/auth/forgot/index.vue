@@ -22,7 +22,7 @@
 	const toast = useToast();
 
 	// Handlers
-	const forgotHandler = useThrottleFn(async (data: ForgotFormDto) => {
+	const forgot = async (data: ForgotFormDto) => {
 		let user;
 		try {
 			user = await $fetch("/api/auth/forgot", {
@@ -33,7 +33,8 @@
 			toast.add({ title: error.statusMessage });
 		}
 		foundedUser.value = user;
-	}, 1000);
+	};
+	const forgotHandler = useThrottleFn(forgot, 1000);
 </script>
 
 <template>

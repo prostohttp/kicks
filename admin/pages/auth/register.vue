@@ -23,7 +23,7 @@
 	const router = useRouter();
 
 	// Handlers
-	const registerHandler = useThrottleFn(async (data: RegisterFormDto) => {
+	const register = async (data: RegisterFormDto) => {
 		const { name, email, password, keepLogged } = data;
 		try {
 			await $fetch("/api/auth/register", {
@@ -36,32 +36,42 @@
 					keepLogged,
 				},
 			});
-			if (data.keepLogged) {
-				await signIn("credentials", {
-					email: data.email,
-					password: data.password,
-				});
-			} else {
+			if (!data.keepLogged) {
 				toast.add({
 					title: "You are have been registered and now you can login",
 					callback: () => {
 						router.push({ name: "login" });
 					},
 				});
+				await $fetch("/api/register-send-email", {
+					method: "POST",
+					body: {
+						name,
+						userEmail: email,
+						siteName: Constants.SITE_NAME,
+						siteUrl: Constants.SITE_URL,
+					},
+				});
+			} else {
+				await $fetch("/api/register-send-email", {
+					method: "POST",
+					body: {
+						name,
+						userEmail: email,
+						siteName: Constants.SITE_NAME,
+						siteUrl: Constants.SITE_URL,
+					},
+				});
+				await signIn("credentials", {
+					email,
+					password,
+				});
 			}
-			await $fetch("/api/register-send-email", {
-				method: "POST",
-				body: {
-					name,
-					userEmail: email,
-					siteName: Constants.SITE_NAME,
-					siteUrl: Constants.SITE_URL,
-				},
-			});
 		} catch (error: any) {
 			toast.add({ title: error.statusMessage });
 		}
-	}, 1000);
+	};
+	const registerHandler = useThrottleFn(register, 1000);
 </script>
 
 <template>
