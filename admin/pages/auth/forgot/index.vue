@@ -17,22 +17,19 @@
 	});
 
 	// Vars
-	const foundedUser = ref();
 	const isOpen = ref(false);
 	const toast = useToast();
 
 	// Handlers
 	const forgot = async (data: ForgotFormDto) => {
-		let user;
 		try {
-			user = await $fetch("/api/auth/forgot", {
+			await $fetch("/api/auth/forgot", {
 				method: "POST",
 				body: data,
 			});
 		} catch (error: any) {
 			toast.add({ title: error.statusMessage });
 		}
-		foundedUser.value = user;
 	};
 	const forgotHandler = useThrottleFn(forgot, 1000);
 </script>
@@ -56,7 +53,6 @@
 				>KicksClub Terms & Conditions, Kicks Privacy Notice and Terms &
 				Conditions. By clicking 'Log In' you agree to our website</span
 			>
-			<pre>{{ foundedUser }}</pre>
 		</div>
 	</div>
 	<UiModal v-model="isOpen" title="KicksClub Terms & Conditions" fullscreen>

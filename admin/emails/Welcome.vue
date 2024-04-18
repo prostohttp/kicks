@@ -66,7 +66,7 @@
 <template>
 	<EHtml>
 		<EHead />
-		<EPreview>{{ siteName }} recent login</EPreview>
+		<EPreview>{{ siteName }} recent register</EPreview>
 		<EBody :style="main">
 			<EContainer>
 				<ESection :style="logo">

@@ -1,16 +1,13 @@
 <script lang="ts" setup>
 	defineProps({
-		name: {
-			type: String,
-			default: "John",
-		},
 		siteName: {
 			type: String,
-			default: "Kicks Club",
 		},
 		siteUrl: {
 			type: String,
-			default: "http://localhost:3001",
+		},
+		token: {
+			type: String,
 		},
 	});
 
@@ -66,7 +63,7 @@
 <template>
 	<EHtml>
 		<EHead />
-		<EPreview>{{ siteName }} recent login</EPreview>
+		<EPreview>{{ siteName }} - reset the password</EPreview>
 		<EBody :style="main">
 			<EContainer>
 				<ESection :style="logo">
@@ -90,39 +87,27 @@
 					>
 						<EColumn>
 							<EHeading
-								style="
-									font-size: 32;
-									font-weight: bold;
-									text-align: center;
-									margin-top: 20px;
-								"
-							>
-								Hi {{ name }},
-							</EHeading>
-							<EHeading
 								as="h2"
 								:style="{
 									fontSize: '26px',
 									fontWeight: 'bold',
 									textAlign: 'center',
+									marginTop: '10px',
 								}"
 							>
-								We are glad to have you on {{ siteName }}!
+								{{ siteName }}
 							</EHeading>
 
 							<EText :style="paragraph">
-								If this was you, there's nothing else you need to do.
-							</EText>
-							<EText :style="{ ...paragraph, marginTop: '-5px' }">
-								If this wasn't you or if you have additional questions, please
-								see our support page.
+								If you have not requested a password reset, simply ignore this
+								email.
 							</EText>
 						</EColumn>
 					</ERow>
 					<ERow :style="{ ...boxInfos, paddingTop: '0' }">
 						<EColumn :style="containerButton" col-span="{2}">
 							<EText :style="button">
-								<a style="color: white" :href="siteUrl">Learn More</a>
+								<a style="color: white" :href="token">Reset the password</a>
 							</EText>
 						</EColumn>
 					</ERow>
