@@ -5,11 +5,12 @@
 	// Meta
 	definePageMeta({
 		layout: "auth",
-		name: "token",
+		name: "reset-password",
 		auth: {
 			unauthenticatedOnly: true,
 			navigateAuthenticatedTo: "/dashboard",
 		},
+		middleware: ["reset-password-middleware"],
 	});
 	useHead({
 		title: "Reset password",

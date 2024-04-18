@@ -71,7 +71,7 @@
 			<EContainer>
 				<ESection :style="logo">
 					<EImg
-						src="https://pixeldrain.com/api/file/8b2LR8UH"
+						src="https://i.ibb.co/M9NY9c7/small-logo.png"
 						style="width: 100px; padding-top: 5px; padding-bottom: 5px"
 					/>
 				</ESection>
