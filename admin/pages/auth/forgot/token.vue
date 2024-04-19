@@ -22,6 +22,8 @@
 	const toast = useToast();
 	const router = useRouter();
 	const route = useRoute();
+	const isValid = ref(false);
+	const userEmail = ref("");
 
 	// Handlers
 	const resetPassword = async (data: ResetPasswordDto) => {
@@ -30,8 +32,14 @@
 			await $fetch("/api/auth/reset-password", {
 				method: "PUT",
 				body: {
-					email: "info@kicks.club",
+					email: userEmail.value,
 					password,
+				},
+			});
+			await $fetch("/api/auth/delete-token", {
+				method: "DELETE",
+				body: {
+					token: route.query.token,
 				},
 			});
 			toast.add({
@@ -48,9 +56,20 @@
 	const resetPasswordHandler = useThrottleFn(resetPassword, 1000);
 
 	// Hooks
-	onMounted(() => {
-		console.log("token", route.query.token);
-		console.log("timestamp", route.query.timestamp);
+	onMounted(async () => {
+		const now = Date.now();
+		if (route.query.timestamp && +route.query.timestamp >= now) {
+			const token = await $fetch("/api/auth/verification-token", {
+				method: "POST",
+				body: {
+					token: route.query.token,
+				},
+			});
+			if (token) {
+				userEmail.value = token as string;
+				isValid.value = true;
+			}
+		}
 	});
 </script>
 
@@ -65,7 +84,24 @@
 					Reset password
 				</h1>
 			</div>
-			<ResetPasswordForm @submit="resetPasswordHandler" />
+			<ResetPasswordForm @submit="resetPasswordHandler" v-if="isValid" />
+			<template v-else>
+				<p>Sorry, but the password reset link is no longer valid.</p>
+				<p>
+					Please try to reset your password again and make sure to use the
+					latest link provided in the email.
+				</p>
+				<p>
+					If you continue to experience issues, feel free to contact our support
+					team for further assistance. Thank you for your understanding.
+				</p>
+				<UButton
+					to="/forgot"
+					class="bg-dark-gray h-[48px] px-[16px] flex w-full uppercase justify-center font-[Rubik] font-[500]"
+				>
+					Try again
+				</UButton>
+			</template>
 		</div>
 	</div>
 </template>
