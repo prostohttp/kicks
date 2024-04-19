@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from "nuxt/config";
-import { Constants } from "./constants";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({

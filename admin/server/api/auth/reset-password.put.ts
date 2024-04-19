@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { User } from "~/server/models/user.schema";
-import { clearString } from "~/utils";
+import clearString from "~/utils/clear-string";
 
 export default defineEventHandler(async (event) => {
 	const { email, password } = await readBody(event);

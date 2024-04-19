@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 	import { useThrottleFn } from "@vueuse/core";
+	import { Constants } from "~/constants";
 	import type { ForgotFormDto } from "~/types";
 
 	// Meta
@@ -22,10 +23,30 @@
 
 	// Handlers
 	const forgot = async (data: ForgotFormDto) => {
+		const { email } = data;
 		try {
 			await $fetch("/api/auth/forgot", {
 				method: "POST",
-				body: data,
+				body: {
+					email,
+				},
+			});
+			const token = generateToken(10);
+			const savedToken = await $fetch("/api/auth/generate-token", {
+				method: "POST",
+				body: {
+					email,
+					getToken: token,
+				},
+			});
+			await $fetch("/api/email/forgot-password-send-email", {
+				method: "POST",
+				body: {
+					email,
+					siteName: Constants.SITE_NAME,
+					siteUrl: Constants.SITE_URL,
+					token: `/token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
+				},
 			});
 		} catch (error: any) {
 			toast.add({ title: error.statusMessage });

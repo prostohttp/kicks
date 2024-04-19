@@ -43,7 +43,7 @@
 						router.push({ name: "login" });
 					},
 				});
-				await $fetch("/api/register-send-email", {
+				await $fetch("/api/email/register-send-email", {
 					method: "POST",
 					body: {
 						name,
@@ -53,7 +53,7 @@
 					},
 				});
 			} else {
-				await $fetch("/api/register-send-email", {
+				await $fetch("/api/email/register-send-email", {
 					method: "POST",
 					body: {
 						name,

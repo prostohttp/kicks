@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+	import { useThrottleFn } from "@vueuse/core";
 	import ResetPasswordForm from "~/components/auth/ResetPasswordForm.vue";
 	import type { ResetPasswordDto } from "~/types";
 
@@ -11,6 +12,7 @@
 			navigateAuthenticatedTo: "/dashboard",
 		},
 		middleware: ["reset-password-middleware"],
+		alias: ["/token"],
 	});
 	useHead({
 		title: "Reset password",
@@ -19,9 +21,10 @@
 	// Vars
 	const toast = useToast();
 	const router = useRouter();
+	const route = useRoute();
 
 	// Handlers
-	const resetPasswordHandler = async (data: ResetPasswordDto) => {
+	const resetPassword = async (data: ResetPasswordDto) => {
 		const { password } = data;
 		try {
 			await $fetch("/api/auth/reset-password", {
@@ -42,6 +45,13 @@
 			});
 		} catch (error) {}
 	};
+	const resetPasswordHandler = useThrottleFn(resetPassword, 1000);
+
+	// Hooks
+	onMounted(() => {
+		console.log("token", route.query.token);
+		console.log("timestamp", route.query.timestamp);
+	});
 </script>
 
 <template>
