@@ -1,13 +1,11 @@
-import { User } from "~/server/models/user.schema";
-import clearString from "~/utils/clear-string";
-
-export default defineEventHandler(async (event) => {
-  const { token, timestamp } = await readBody(event);
-  try {
-
-  } catch (error: any) {
-    return createError({
-      statusMessage: error.message,
-    });
-  }
+export default defineEventHandler(async (event): Promise<string | boolean> => {
+	const { token } = await readBody(event);
+	try {
+		const activeToken = await Token.findOne({ token: token });
+		return activeToken ? activeToken.email.toString() : false;
+	} catch (error: any) {
+		throw createError({
+			statusMessage: error.message,
+		});
+	}
 });

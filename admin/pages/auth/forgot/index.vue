@@ -48,6 +48,9 @@
 					token: `/token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
 				},
 			});
+			toast.add({
+				title: "Check your email for instructions on resetting your password.",
+			});
 		} catch (error: any) {
 			toast.add({ title: error.statusMessage });
 		}
