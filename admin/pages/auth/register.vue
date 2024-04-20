@@ -49,7 +49,7 @@
 						name,
 						userEmail: email,
 						siteName: Constants.SITE_NAME,
-						siteUrl: Constants.SITE_URL,
+						siteUrl: Constants.SITE_URL + "/login",
 					},
 				});
 			} else {
@@ -59,7 +59,7 @@
 						name,
 						userEmail: email,
 						siteName: Constants.SITE_NAME,
-						siteUrl: Constants.SITE_URL,
+						siteUrl: Constants.SITE_URL + "/login",
 					},
 				});
 				await signIn("credentials", {
@@ -75,16 +75,18 @@
 </script>
 
 <template>
-	<AuthSidebar />
-	<div class="flex py-[10px] lg:px-0 px-[30px] justify-center items-center">
-		<div class="max-w-[480px] flex flex-col w-full gap-[24px]">
-			<div>
-				<h1 class="font-[Rubik] font-[600] text-[36px]">Register</h1>
-				<h2 class="font-[OpenSans] text-[20px] font-[600]">Sign up with</h2>
+	<div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh">
+		<AuthSidebar />
+		<div class="flex py-[10px] lg:px-0 px-[30px] justify-center items-center">
+			<div class="max-w-[480px] flex flex-col w-full gap-[24px]">
+				<div>
+					<h1 class="font-[Rubik] font-[600] text-[36px]">Register</h1>
+					<h2 class="font-[OpenSans] text-[20px] font-[600]">Sign up with</h2>
+				</div>
+				<AuthSocialButtons />
+				<h2 class="font-[OpenSans] text-[20px] font-[600] uppercase">OR</h2>
+				<AuthRegisterForm @submit="registerHandler" />
 			</div>
-			<AuthSocialButtons />
-			<h2 class="font-[OpenSans] text-[20px] font-[600] uppercase">OR</h2>
-			<AuthRegisterForm @submit="registerHandler" />
 		</div>
 	</div>
 </template>

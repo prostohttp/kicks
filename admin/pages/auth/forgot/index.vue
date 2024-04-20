@@ -59,27 +59,29 @@
 </script>
 
 <template>
-	<AuthSidebar />
-	<div
-		class="flex lg:pt-[40px] pb-[40px] pt-[40px] lg:px-0 px-[30px] justify-center items-center"
-	>
-		<div class="max-w-[480px] flex flex-col w-full gap-[24px]">
-			<div>
-				<h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
-					Forgot password
-				</h1>
+	<div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh">
+		<AuthSidebar />
+		<div
+			class="flex lg:pt-[40px] pb-[40px] pt-[40px] lg:px-0 px-[30px] justify-center items-center"
+		>
+			<div class="max-w-[480px] flex flex-col w-full gap-[24px]">
+				<div>
+					<h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
+						Forgot password
+					</h1>
+				</div>
+				<AuthForgotPasswordForm @submit="forgotHandler" />
+				<AuthSocialButtons />
+				<span
+					class="font-[OpenSans] text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"
+					@click.prevent="isOpen = true"
+					>KicksClub Terms & Conditions, Kicks Privacy Notice and Terms &
+					Conditions. By clicking 'Log In' you agree to our website</span
+				>
 			</div>
-			<AuthForgotPasswordForm @submit="forgotHandler" />
-			<AuthSocialButtons />
-			<span
-				class="font-[OpenSans] text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"
-				@click.prevent="isOpen = true"
-				>KicksClub Terms & Conditions, Kicks Privacy Notice and Terms &
-				Conditions. By clicking 'Log In' you agree to our website</span
-			>
 		</div>
+		<UiModal v-model="isOpen" title="KicksClub Terms & Conditions" fullscreen>
+			<ContentDoc path="/terms" />
+		</UiModal>
 	</div>
-	<UiModal v-model="isOpen" title="KicksClub Terms & Conditions" fullscreen>
-		<ContentDoc path="/terms" />
-	</UiModal>
 </template>

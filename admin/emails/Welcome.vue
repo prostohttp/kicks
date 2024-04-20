@@ -2,15 +2,12 @@
 	defineProps({
 		name: {
 			type: String,
-			default: "John",
 		},
 		siteName: {
 			type: String,
-			default: "Kicks Club",
 		},
 		siteUrl: {
 			type: String,
-			default: "http://localhost:3001",
 		},
 	});
 

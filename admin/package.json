@@ -20,6 +20,7 @@
 		"bcrypt": "^5.1.1",
 		"nanoid": "^5.0.7",
 		"nuxt": "^3.11.2",
+		"nuxt-aos": "^1.2.4",
 		"nuxt-mongoose": "^1.0.5",
 		"pinia": "^2.1.7",
 		"resend": "^3.2.0",
