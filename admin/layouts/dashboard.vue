@@ -2,9 +2,11 @@
 
 <template>
 	<div>
-		<AppHeader />
 		<DashboardSidebar />
-		<slot />
-		<AppFooter />
+		<div>
+			<DashboardHeader />
+			<slot />
+			<DashboardFooter />
+		</div>
 	</div>
 </template>

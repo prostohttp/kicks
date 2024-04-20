@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import { User } from "~/server/models/user.schema";
-import clearString from "~/utils/clear-string";
 
 export default defineEventHandler(async (event) => {
 	const { name, email, password, role } = await readBody(event);
@@ -9,7 +8,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		const newUser = new User({
 			name,
-			email: clearString(email),
+			email,
 			password: hashed,
 			role,
 		});
@@ -19,6 +18,7 @@ export default defineEventHandler(async (event) => {
 	} catch (error) {
 		throw createError({
 			statusMessage: "User with this email already exists.",
+			statusCode: 409,
 		});
 	}
 });

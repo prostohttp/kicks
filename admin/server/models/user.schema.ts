@@ -1,3 +1,4 @@
+import clearString from "~/utils/clear-string";
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Roles } from "~/types";
 
@@ -24,5 +25,11 @@ export const User = defineMongooseModel({
 			enum: Object.values(Roles),
 		},
 		// TODO: Реализовать поле image ?
+	},
+	hooks(schema) {
+		schema.pre("save", function (this, next) {
+			this.email = clearString(this.email.toString()) as any;
+			next();
+		});
 	},
 });
