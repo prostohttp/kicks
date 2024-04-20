@@ -12,10 +12,24 @@ const runtimeConfig = useRuntimeConfig();
 export default NuxtAuthHandler({
 	secret: runtimeConfig.AUTH_SECRET,
 	session: {
-		maxAge: 24 * 60 * 60,
+		maxAge: 7 * 24 * 60 * 60,
 	},
 	pages: {
 		signIn: "/auth/login",
+	},
+	callbacks: {
+		jwt: async ({ token, user }) => {
+			const isSignIn = user ? true : false;
+			if (isSignIn) {
+				token.role = user ? (user as any).role || "" : "";
+			}
+			return Promise.resolve(token);
+		},
+		// Callback whenever session is checked, see https://next-auth.js.org/configuration/callbacks#session-callback
+		async session({ session, token }) {
+			(session as any).user.role = token.role || "manager";
+			return session;
+		},
 	},
 	providers: [
 		// @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
@@ -33,6 +47,7 @@ export default NuxtAuthHandler({
 			clientId: runtimeConfig.public.GITHUB_CLIENT_ID,
 			clientSecret: runtimeConfig.GITHUB_CLIENT_SECRET,
 		}),
+
 		// @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
 		CredentialsProvider.default({
 			name: "Credentials",
@@ -56,7 +71,11 @@ export default NuxtAuthHandler({
 					existingUser.password.toString()
 				);
 				if (isPasswordMatch) {
-					return existingUser;
+					return {
+						name: existingUser.name,
+						email: existingUser.email,
+						role: existingUser.role,
+					};
 				} else {
 					return null;
 				}

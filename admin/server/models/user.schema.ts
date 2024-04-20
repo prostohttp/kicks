@@ -23,5 +23,6 @@ export const User = defineMongooseModel({
 			type: String,
 			enum: Object.values(Roles),
 		},
+		// TODO: Реализовать поле image ?
 	},
 });

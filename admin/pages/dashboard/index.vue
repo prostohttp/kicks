@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	const { signOut, data, status, getSession } = useAuth();
+	const { signOut, data, status } = useAuth();
 	// Meta
 	definePageMeta({
 		layout: "dashboard",
@@ -17,6 +17,8 @@
 	const logOutHandler = () => {
 		signOut({ callbackUrl: "/login" });
 	};
+
+	// Hooks
 </script>
 
 <template>
