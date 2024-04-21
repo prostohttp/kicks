@@ -59,7 +59,6 @@ export default defineNuxtConfig({
 		autoImport: true,
 	},
 	modules: [
-		"@nuxt/ui",
 		"@nuxt/image",
 		"@vueuse/nuxt",
 		"nuxt-mongoose",
@@ -68,5 +67,6 @@ export default defineNuxtConfig({
 		"@sidebase/nuxt-auth",
 		"@vue-email/nuxt",
 		"nuxt-aos",
+		"@nuxt/ui",
 	],
 });

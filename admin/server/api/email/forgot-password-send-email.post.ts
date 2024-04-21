@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 	const options = {
 		from: Constants.EMAIL,
 		to: email,
-		subject: "Forgot password - Kick Club",
+		subject: "Reset password - Kick Club",
 		html: template.html,
 	};
 

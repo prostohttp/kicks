@@ -18,6 +18,7 @@
 		"@vue-email/nuxt": "^0.8.19",
 		"@vueuse/nuxt": "^10.9.0",
 		"bcrypt": "^5.1.1",
+		"multer": "^1.4.5-lts.1",
 		"nanoid": "^5.0.7",
 		"nuxt": "^3.11.2",
 		"nuxt-aos": "^1.2.4",
@@ -29,6 +30,7 @@
 		"zod": "^3.22.5"
 	},
 	"devDependencies": {
-		"@types/bcrypt": "^5.0.2"
+		"@types/bcrypt": "^5.0.2",
+		"@types/multer": "^1.4.11"
 	}
 }

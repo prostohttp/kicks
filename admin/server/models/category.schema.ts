@@ -21,7 +21,7 @@ export const Category = defineMongooseModel({
 		children: [
 			{
 				type: Types.ObjectId,
-				required: true,
+				required: false,
 				ref: "Category",
 			},
 		],
