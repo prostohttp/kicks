@@ -32,7 +32,7 @@
 					name,
 					email,
 					password,
-					role: Roles.USER,
+					role: Roles.MANAGER,
 					keepLogged,
 				},
 			});

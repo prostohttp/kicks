@@ -94,7 +94,7 @@
 									margin-top: 20px;
 								"
 							>
-								Hi {{ name }},
+								Hi, {{ name }}
 							</EHeading>
 							<EHeading
 								as="h2"
