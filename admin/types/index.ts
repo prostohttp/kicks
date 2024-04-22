@@ -24,3 +24,10 @@ export enum Roles {
 	MANAGER = "manager",
 	ADMIN = "admin",
 }
+
+export interface MultiPartData {
+	data: Buffer;
+	name?: string;
+	filename?: string;
+	type?: string;
+}
