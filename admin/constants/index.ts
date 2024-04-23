@@ -6,4 +6,7 @@ export const Constants = {
 	SITE_NAME: "Kicks Club",
 	IMG_CATEGORIES: "/public/img/categories",
 	IMG_PRODUCTS: "/public/img/products",
+	PER_PAGE_CAT: 8,
+	PER_PAGE_PROD: 12,
+	PER_PAGE_ORDER: 8,
 };

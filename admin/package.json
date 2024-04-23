@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"@nuxt/content": "^2.12.1",
-		"@nuxt/image": "^1.5.0",
+		"@nuxt/image": "^1.6.0",
 		"@nuxt/ui": "^2.15.2",
 		"@pinia/nuxt": "^0.5.1",
 		"@sidebase/nuxt-auth": "^0.7.2",
@@ -24,9 +24,9 @@
 		"nuxt-mongoose": "^1.0.5",
 		"pinia": "^2.1.7",
 		"resend": "^3.2.0",
-		"vue": "^3.4.23",
+		"vue": "^3.4.24",
 		"vue-router": "^4.3.2",
-		"zod": "^3.23.0"
+		"zod": "^3.23.3"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.2"

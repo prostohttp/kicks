@@ -10,7 +10,7 @@ export default (
 	const files: string[] = [];
 	if (data) {
 		data.forEach((el) => {
-			if (el.name === "image") {
+			if (el.name === "image" && el.filename) {
 				const filePath = path.join(
 					process.cwd(),
 					folderPath,

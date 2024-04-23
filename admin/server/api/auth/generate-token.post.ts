@@ -1,4 +1,3 @@
-import clearString from "~/utils/clear-string";
 interface TokenResponse {
 	token: string;
 	timestamp: string;
@@ -8,7 +7,7 @@ export default defineEventHandler(async (event): Promise<TokenResponse> => {
 	try {
 		const { email, getToken } = await readBody(event);
 		const newToken = new Token({
-			email: clearString(email),
+			email,
 			token: getToken.token,
 			timestamp: getToken.timestamp,
 		});

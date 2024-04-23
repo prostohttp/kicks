@@ -1,13 +1,11 @@
 import { User } from "~/server/models/user.schema";
-import clearString from "~/utils/clear-string";
 
 export default defineEventHandler(async (event) => {
-	const { email } = await readBody(event);
-
 	try {
-		const user = await User.findOne({ email: clearString(email) });
+		const { email } = await readBody(event);
+		const user = await User.findOne({ email });
 		if (!user) {
-			return createError({
+			throw createError({
 				statusMessage: "Email not found.",
 			});
 		}

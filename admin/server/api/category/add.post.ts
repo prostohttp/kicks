@@ -7,10 +7,9 @@ import uploadFiles from "~/utils/upload-files";
 export default defineEventHandler<{
 	body: {
 		title: string;
-		description?: string;
+		description: string;
 		isParent: string;
-		children?: string;
-		productCount?: number;
+		children: string;
 	};
 }>(async (event) => {
 	const data = await readMultipartFormData(event);
@@ -20,7 +19,6 @@ export default defineEventHandler<{
 	const description = formData.get("description");
 	const isParent = formData.get("isParent");
 	const children = formData.get("children") as string;
-	const productCount = formData.get("productCount") || 0;
 
 	const images = uploadFiles(data, Constants.IMG_CATEGORIES);
 	try {
@@ -29,7 +27,7 @@ export default defineEventHandler<{
 			description,
 			isParent,
 			children: cleanStringToArray(children),
-			productCount,
+			productCount: 0,
 			image: images[0],
 		});
 		return await newCategory.save();

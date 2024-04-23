@@ -2,10 +2,9 @@ import bcrypt from "bcrypt";
 import { User } from "~/server/models/user.schema";
 
 export default defineEventHandler(async (event) => {
-	const { name, email, password, role } = await readBody(event);
-	const hashed = bcrypt.hashSync(password, 10);
-
 	try {
+		const { name, email, password, role } = await readBody(event);
+		const hashed = bcrypt.hashSync(password, 10);
 		const newUser = new User({
 			name,
 			email,
