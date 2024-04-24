@@ -8,7 +8,7 @@ export default defineEventHandler<{
 	body: {
 		title: string;
 		description: string;
-		isParent: string;
+		isParent: boolean;
 		children: string;
 	};
 }>(async (event) => {
@@ -36,7 +36,6 @@ export default defineEventHandler<{
 		deleteFiles(images);
 		throw createError({
 			statusMessage: error.message,
-			statusText: "Category already exists",
 			statusCode: 409,
 		});
 	}

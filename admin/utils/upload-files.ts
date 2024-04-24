@@ -11,13 +11,12 @@ export default (
 	if (data) {
 		data.forEach((el) => {
 			if (el.name === "image" && el.filename) {
-				const filePath = path.join(
+				const filePath = path.relative(
 					process.cwd(),
-					folderPath,
-					renameFile(el.filename as string)
+					folderPath + renameFile(el.filename as string)
 				);
-				fs.writeFileSync(filePath, el.data);
-				files.push(filePath);
+				fs.writeFileSync("public/" + filePath, el.data);
+				files.push("/" + filePath);
 			}
 		});
 	}

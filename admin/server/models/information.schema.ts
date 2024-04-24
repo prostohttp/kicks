@@ -1,8 +1,8 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Types } from "mongoose";
 
-export const Category = defineMongooseModel({
-	name: "Category",
+export const Information = defineMongooseModel({
+	name: "Information",
 	schema: {
 		title: {
 			min: 3,
@@ -13,28 +13,13 @@ export const Category = defineMongooseModel({
 			type: String,
 			required: false,
 		},
-		isParent: {
-			type: Boolean,
-			required: true,
-		},
-		children: [
-			{
-				type: Types.ObjectId || String,
-				required: false,
-				ref: "Category",
-			},
-		],
-		productCount: {
-			type: Number,
-			required: false,
-		},
 		image: {
 			type: String,
 			required: false,
 		},
 		isEnabled: {
 			type: Boolean,
-			required: true,
+			required: false,
 		},
 	},
 	hooks(schema) {
@@ -43,8 +28,5 @@ export const Category = defineMongooseModel({
 			this.isEnabled = true as any;
 			next();
 		});
-	},
-	options: {
-		collection: "categories",
 	},
 });

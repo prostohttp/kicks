@@ -1,4 +1,5 @@
 import { Constants } from "~/constants";
+import { type CategoryDto } from "~/types";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
 import uploadFiles from "~/utils/upload-files";
@@ -20,7 +21,7 @@ export default defineEventHandler<{
 	const images = uploadFiles(data, Constants.IMG_CATEGORIES);
 
 	try {
-		const category = await Category.findById(id);
+		const category: CategoryDto | null = await Category.findById(id);
 
 		if (!category) {
 			return createError({ statusMessage: "Category not found" });
