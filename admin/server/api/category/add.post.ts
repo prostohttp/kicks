@@ -26,6 +26,7 @@ export default defineEventHandler<{
 			title,
 			description,
 			isParent,
+			isEnabled: true,
 			children: cleanStringToArray(children),
 			productCount: 0,
 			image: images[0],

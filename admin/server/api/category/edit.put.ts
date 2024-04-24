@@ -8,8 +8,9 @@ export default defineEventHandler<{
 		id: string;
 		title: string;
 		description: string;
-		isParent: string;
+		isParent: boolean;
 		children: string;
+		isEnabled: boolean;
 	};
 }>(async (event) => {
 	const data = await readMultipartFormData(event);
@@ -20,35 +21,44 @@ export default defineEventHandler<{
 
 	try {
 		const category = await Category.findById(id);
+
 		if (!category) {
 			return createError({ statusMessage: "Category not found" });
 		}
 
 		const updatedFields: any = {};
+
 		const title = formData.get("title");
 		if (title) {
 			updatedFields.title = title;
 		}
+
 		const description = formData.get("description");
 		if (description) {
 			updatedFields.description = description;
 		}
+
 		const isParent = formData.get("isParent");
 		if (isParent) {
 			updatedFields.isParent = isParent;
 		}
+
 		const children = formData.get("children") as string;
 		if (children) {
 			updatedFields.children = cleanStringToArray(children);
 		} else {
 			updatedFields.children = [];
 		}
+
+		updatedFields.isEnabled = formData.get("isEnabled");
+
 		if (images.length > 0) {
 			updatedFields.image = images[0];
 		} else {
 			updatedFields.image = "";
 			deleteFiles([category.image.toString()]);
 		}
+
 		const updatedCategory = await Category.findByIdAndUpdate(
 			id,
 			updatedFields,
