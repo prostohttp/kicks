@@ -60,7 +60,6 @@ export const Product = defineMongooseModel({
 		isEnabled: {
 			type: Boolean,
 			required: true,
-			default: true as any,
 		},
 	},
 	hooks(schema) {
