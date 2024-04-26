@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 			throw createError({ statusMessage: "Category not found" });
 		}
 	} catch (error: any) {
-		return createError({
+		throw createError({
 			statusMessage: error.message,
 		});
 	}

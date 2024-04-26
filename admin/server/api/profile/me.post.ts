@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 		}
 		return user;
 	} catch (error: any) {
-		return createError({
+		throw createError({
 			statusMessage: error.message,
 		});
 	}

@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
 		return { statusMessage: "Password changed" };
 	} catch (error: any) {
-		return createError({
+		throw createError({
 			statusMessage: error.message,
 		});
 	}

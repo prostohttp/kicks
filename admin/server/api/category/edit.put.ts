@@ -14,37 +14,37 @@ export default defineEventHandler(async (event) => {
 	try {
 		const category: CategoryDto | null = await Category.findById(id);
 
-		if (!category) {
-			return createError({ statusMessage: "Category not found" });
-		}
+		const title = formData.get("title");
+		const description = formData.get("description");
+		const isParent = formData.get("isParent");
+		const children = formData.get("children") as string;
+		const iEnabled = formData.get("isEnabled");
 
 		const updatedFields: any = {};
 
-		const title = formData.get("title");
+		if (!category) {
+			throw createError({ statusMessage: "Category not found" });
+		}
 		if (title) {
 			updatedFields.title = title;
 		}
-
-		const description = formData.get("description");
 		if (description) {
 			updatedFields.description = description;
+		} else {
+			updatedFields.description = "";
 		}
-
-		const isParent = formData.get("isParent");
 		if (isParent) {
 			updatedFields.isParent = isParent;
 		}
-
-		const children = formData.get("children") as string;
 		if (children) {
 			updatedFields.children = cleanStringToArray(children);
 		} else {
 			updatedFields.children = [];
 		}
-
-		updatedFields.isEnabled = formData.get("isEnabled");
-
+		updatedFields.isEnabled = iEnabled;
 		if (images.length > 0) {
+			// TODO: Стоит реализовать удаление изображения после изменения на новое
+			// deleteFiles([category.image.toString()]);
 			updatedFields.image = images[0];
 		} else {
 			updatedFields.image = "";
@@ -56,11 +56,10 @@ export default defineEventHandler(async (event) => {
 			updatedFields,
 			{ new: true }
 		);
-
 		return updatedCategory;
 	} catch (error: any) {
 		deleteFiles(images);
-		return createError({
+		throw createError({
 			statusMessage: error.message,
 		});
 	}

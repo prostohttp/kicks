@@ -5,9 +5,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		let body = await readBody(event);
 		const limit = body.perPage;
-		const categories: CategoryDto[] = await Category.find().select(
-			"_id title description isParent children productCount image isEnabled"
-		);
+		const categories: CategoryDto[] = await Category.find();
 		const catLength = categories.length;
 		const pagesInPagination = pageCount(catLength, limit);
 
@@ -37,7 +35,7 @@ export default defineEventHandler(async (event) => {
 			activePage: body.page,
 		};
 	} catch (error: any) {
-		return createError({
+		throw createError({
 			statusMessage: error.message,
 		});
 	}

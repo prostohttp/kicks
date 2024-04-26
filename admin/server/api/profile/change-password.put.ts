@@ -23,6 +23,6 @@ export default defineEventHandler(async (event) => {
 		}
 		throw createError({ statusMessage: "User not found" });
 	} catch (error: any) {
-		return createError({ statusMessage: error.message });
+		throw createError({ statusMessage: error.message });
 	}
 });
