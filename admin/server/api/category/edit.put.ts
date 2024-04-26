@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 		const description = formData.get("description");
 		const isParent = formData.get("isParent");
 		const children = formData.get("children") as string;
-		const iEnabled = formData.get("isEnabled");
+		const isEnabled = formData.get("isEnabled");
 
 		const updatedFields: any = {};
 
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
 		} else {
 			updatedFields.children = [];
 		}
-		updatedFields.isEnabled = iEnabled;
+		updatedFields.isEnabled = isEnabled;
 		if (images.length > 0) {
 			// TODO: Стоит реализовать удаление изображения после изменения на новое
 			// deleteFiles([category.image.toString()]);

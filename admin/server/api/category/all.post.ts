@@ -1,4 +1,5 @@
 import { type CategoryDto } from "~/types";
+import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
 
 export default defineEventHandler(async (event) => {
@@ -9,12 +10,7 @@ export default defineEventHandler(async (event) => {
 		const catLength = categories.length;
 		const pagesInPagination = pageCount(catLength, limit);
 
-		if (
-			!body.page ||
-			!Number.isInteger(Number(body.page)) ||
-			body.page > pagesInPagination ||
-			body.page <= 0
-		) {
+		if (isValidPaginationPage(body.page, pagesInPagination, catLength, limit)) {
 			return {
 				categories,
 				pagesInPagination: 0,
