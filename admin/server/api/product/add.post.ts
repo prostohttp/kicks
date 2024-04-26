@@ -4,8 +4,8 @@ import deleteFiles from "~/utils/delete-files";
 import uploadFiles from "~/utils/upload-files";
 
 export default defineEventHandler(async (event) => {
-	const formData = await readFormData(event);
 	const data = await readMultipartFormData(event);
+	const formData = await readFormData(event);
 	const title = formData.get("title");
 	const description = formData.get("description");
 
@@ -19,7 +19,11 @@ export default defineEventHandler(async (event) => {
 	const isEnabled = formData.get("isEnabled");
 
 	const image = uploadFiles(data, Constants.IMG_PRODUCTS, "image");
-	const additionImages = uploadFiles(data, Constants.IMG_PRODUCTS, "image");
+	const additionImages = uploadFiles(
+		data,
+		Constants.IMG_PRODUCTS,
+		"additionImages"
+	);
 
 	try {
 		const newProduct = new Product({
@@ -33,7 +37,7 @@ export default defineEventHandler(async (event) => {
 			salePrice,
 			tags: cleanStringToArray(tags),
 			isEnabled,
-			image,
+			image: image[0],
 			additionImages,
 		});
 		return await newProduct.save();

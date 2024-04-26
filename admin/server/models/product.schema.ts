@@ -59,16 +59,15 @@ export const Product = defineMongooseModel({
 		],
 		isEnabled: {
 			type: Boolean,
-			required: false,
+			required: true,
+			default: true as any,
 		},
 	},
 	hooks(schema) {
 		schema.pre("save", function (this, next) {
 			this.title = this.title.toString().trim() as any;
 			this.regularPrice = 0 as any;
-			this.quantity = 0 as any;
-			this.isEnabled = true as any;
-			if (Number(this.quantity) === 0) {
+			if (Number(this.quantity) === 0 && !this.isEnabled) {
 				this.isEnabled = false as any;
 			}
 			next();
