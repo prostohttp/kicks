@@ -4,21 +4,12 @@ import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
 import uploadFiles from "~/utils/upload-files";
 
-export default defineEventHandler<{
-	body: {
-		id: string;
-		title: string;
-		description: string;
-		isParent: boolean;
-		children: string;
-		isEnabled: boolean;
-	};
-}>(async (event) => {
+export default defineEventHandler(async (event) => {
 	const data = await readMultipartFormData(event);
 	const formData = await readFormData(event);
 
 	const id = formData.get("id");
-	const images = uploadFiles(data, Constants.IMG_CATEGORIES);
+	const images = uploadFiles(data, Constants.IMG_CATEGORIES, "image");
 
 	try {
 		const category: CategoryDto | null = await Category.findById(id);
