@@ -42,11 +42,11 @@ export default defineEventHandler(async (event) => {
 			updatedFields.children = [];
 		}
 		updatedFields.isEnabled = isEnabled;
-		if (images.length > 0) {
+		if (images && images.length > 0) {
 			// TODO: Стоит реализовать удаление изображения после изменения на новое
 			// deleteFiles([category.image.toString()]);
 			updatedFields.image = images[0];
-		} else {
+		} else if (images && !images.length) {
 			updatedFields.image = "";
 			deleteFiles([category.image.toString()]);
 		}
@@ -58,7 +58,9 @@ export default defineEventHandler(async (event) => {
 		);
 		return updatedCategory;
 	} catch (error: any) {
-		deleteFiles(images);
+		if (images) {
+			deleteFiles(images);
+		}
 		throw createError({
 			statusMessage: error.message,
 		});

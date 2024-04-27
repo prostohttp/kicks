@@ -1,4 +1,3 @@
-import clearString from "~/utils/clear-string";
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Roles } from "~/types";
 
@@ -28,7 +27,7 @@ export const User = defineMongooseModel({
 	},
 	hooks(schema) {
 		schema.pre("save", function (this, next) {
-			this.email = clearString(this.email.toString()) as any;
+			this.email = this.email.toString().toLowerCase().trim() as any;
 			next();
 		});
 	},

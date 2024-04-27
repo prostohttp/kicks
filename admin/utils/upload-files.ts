@@ -7,8 +7,9 @@ export default (
 	data: MultiPartData[] | undefined,
 	folderPath: string,
 	fieldName: string
-): string[] => {
+): string[] | false => {
 	const files: string[] = [];
+	let isEmpty = data && !data.some((el) => el.name === fieldName);
 	try {
 		if (data) {
 			data.forEach((el) => {
@@ -18,7 +19,7 @@ export default (
 						folderPath + renameFile(el.filename as string)
 					);
 					fs.writeFileSync("public/" + filePath, el.data);
-					files.push("/" + filePath);
+					files!.push("/" + filePath);
 				}
 			});
 		}
@@ -27,5 +28,5 @@ export default (
 			statusMessage: error.message,
 		});
 	}
-	return files;
+	return isEmpty ? false : files;
 };

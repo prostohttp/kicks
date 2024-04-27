@@ -30,11 +30,11 @@ export default defineEventHandler(async (event) => {
 		} else {
 			updatedFields.description = "";
 		}
-		if (image.length > 0) {
+		if (image && image.length > 0) {
 			// TODO: Стоит реализовать удаление изображения после изменения на новое
 			// deleteFiles([brand.image.toString()]);
 			updatedFields.image = image[0];
-		} else {
+		} else if (image && !image.length) {
 			updatedFields.image = "";
 			deleteFiles([brand.image.toString()]);
 		}
@@ -44,7 +44,9 @@ export default defineEventHandler(async (event) => {
 		});
 		return updatedBrand;
 	} catch (error: any) {
-		deleteFiles(image);
+		if (image) {
+			deleteFiles(image);
+		}
 
 		throw createError({
 			statusMessage: error.message,

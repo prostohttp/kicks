@@ -72,21 +72,23 @@ export default defineEventHandler(async (event) => {
 			updatedFields.tags = [];
 		}
 		updatedFields.isEnabled = isEnabled;
-		if (image.length > 0) {
+		if (image && image.length > 0) {
 			// TODO: Стоит реализовать удаление изображения после изменения на новое
 			// deleteFiles([category.image.toString()]);
 			updatedFields.image = image[0];
-		} else {
+		} else if (image && !image.length) {
 			updatedFields.image = "";
 			deleteFiles([product.image.toString()]);
 		}
-		if (additionImages.length > 0) {
+		if (additionImages && additionImages.length > 0) {
 			// TODO: Стоит реализовать удаление изображения после изменения на новое
 			// deleteFiles([category.image.toString()]);
 			updatedFields.additionImages = additionImages;
-		} else {
+		} else if (additionImages && !additionImages.length) {
 			updatedFields.additionImages = [];
-			deleteFiles(additionImages);
+			if (additionImages) {
+				deleteFiles(additionImages);
+			}
 		}
 
 		const updatedProduct = await Product.findByIdAndUpdate(id, updatedFields, {
@@ -94,8 +96,12 @@ export default defineEventHandler(async (event) => {
 		});
 		return updatedProduct;
 	} catch (error: any) {
-		deleteFiles(image);
-		deleteFiles(additionImages);
+		if (image) {
+			deleteFiles(image);
+		}
+		if (additionImages) {
+			deleteFiles(additionImages);
+		}
 		throw createError({
 			statusMessage: error.message,
 		});
