@@ -19,12 +19,7 @@ export default defineEventHandler(async (event) => {
 
 		const skip = body.page * limit - limit;
 
-		const catInPage = await Category.find()
-			.select(
-				"_id title description isParent children productCount image isEnabled"
-			)
-			.skip(skip)
-			.limit(limit);
+		const catInPage = await Category.find().skip(skip).limit(limit);
 		return {
 			categories: catInPage,
 			pagesInPagination,

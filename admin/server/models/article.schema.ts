@@ -26,7 +26,7 @@ export const Article = defineMongooseModel({
 		],
 		image: {
 			type: String,
-			required: true,
+			required: false,
 		},
 	},
 	hooks(schema) {
