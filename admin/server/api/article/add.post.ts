@@ -23,12 +23,14 @@ export default defineEventHandler(async (event) => {
 			description,
 			isEnabled,
 			featuredProducts: cleanStringToArray(featuredProducts),
-			image: image[0],
+			image: image ? image[0] : "",
 		});
 
 		return await newArticle.save();
 	} catch (error: any) {
-		deleteFiles(image);
+		if (image) {
+			deleteFiles(image);
+		}
 
 		throw createError({
 			statusMessage: error.message,

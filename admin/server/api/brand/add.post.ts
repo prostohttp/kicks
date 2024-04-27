@@ -15,12 +15,14 @@ export default defineEventHandler(async (event) => {
 		const newBrand = new Brand({
 			title,
 			description,
-			image: image[0],
+			image: image ? image[0] : "",
 		});
 
 		return await newBrand.save();
 	} catch (error: any) {
-		deleteFiles(image);
+		if (image) {
+			deleteFiles(image);
+		}
 
 		throw createError({
 			statusMessage: error.message,

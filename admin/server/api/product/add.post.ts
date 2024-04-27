@@ -37,13 +37,17 @@ export default defineEventHandler(async (event) => {
 			salePrice,
 			tags: cleanStringToArray(tags),
 			isEnabled,
-			image: image[0],
-			additionImages,
+			image: image ? image[0] : "",
+			additionImages: additionImages ? additionImages : [],
 		});
 		return await newProduct.save();
 	} catch (error: any) {
-		deleteFiles(image);
-		deleteFiles(additionImages);
+		if (image) {
+			deleteFiles(image);
+		}
+		if (additionImages) {
+			deleteFiles(additionImages);
+		}
 
 		throw createError({
 			statusMessage: error.message,

@@ -22,11 +22,13 @@ export default defineEventHandler(async (event) => {
 			isEnabled: true,
 			children: cleanStringToArray(children),
 			productCount: 0,
-			image: image[0],
+			image: image ? image[0] : "",
 		});
 		return await newCategory.save();
 	} catch (error: any) {
-		deleteFiles(image);
+		if (image) {
+			deleteFiles(image);
+		}
 
 		throw createError({
 			statusMessage: error.message,
