@@ -22,7 +22,7 @@ export interface ResetPasswordDto {
 }
 
 export enum Roles {
-	USER = "user",
+	CUSTOMER = "customer",
 	MANAGER = "manager",
 	ADMIN = "admin",
 }
