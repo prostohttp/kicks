@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 		const updatedFields: any = {};
 
 		if (!article) {
-			throw createError({ statusMessage: "Category not found" });
+			return createError({ statusMessage: "Category not found" });
 		}
 		if (title) {
 			updatedFields.title = title;

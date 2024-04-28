@@ -4,26 +4,27 @@ import pageCount from "~/utils/page-count";
 
 export default defineEventHandler(async (event) => {
 	try {
-		let body = await readBody(event);
-		const limit = body.perPage;
+		let query = getQuery(event);
+		const page = Number(query.page);
+		const perPage = Number(query.perPage);
 		const categories: CategoryDto[] = await Category.find();
 		const catLength = categories.length;
-		const pagesInPagination = pageCount(catLength, limit);
+		const pagesInPagination = pageCount(catLength, perPage);
 
-		if (isValidPaginationPage(body.page, pagesInPagination, catLength, limit)) {
+		if (isValidPaginationPage(page, pagesInPagination, catLength, perPage)) {
 			return {
 				categories,
 				pagesInPagination: 0,
 			};
 		}
 
-		const skip = body.page * limit - limit;
+		const skip = page * perPage - perPage;
 
-		const catInPage = await Category.find().skip(skip).limit(limit);
+		const catInPage = await Category.find().skip(skip).limit(perPage);
 		return {
 			categories: catInPage,
 			pagesInPagination,
-			activePage: body.page,
+			activePage: page,
 		};
 	} catch (error: any) {
 		throw createError({
