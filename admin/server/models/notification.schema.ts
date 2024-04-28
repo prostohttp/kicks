@@ -2,32 +2,25 @@ import { defineMongooseModel } from "#nuxt/mongoose";
 import { Types } from "mongoose";
 import { OrderStatus } from "~/types";
 
-export const Order = defineMongooseModel({
-	name: "Order",
+export const Notification = defineMongooseModel({
+	name: "Notification",
 	schema: {
-		orderId: {
-			type: String,
-			required: true,
-			unique: true,
-		},
 		title: {
 			min: 3,
 			type: String,
 			required: true,
 		},
-		products: [
-			{
-				type: Types.ObjectId || String,
-				ref: "Product",
-				required: true,
-			},
-		],
+		order: {
+			type: Types.ObjectId || String,
+			required: true,
+			ref: "Order",
+		},
 		status: {
 			type: String,
 			enum: Object.values(OrderStatus),
 		},
-		date: {
-			type: Date,
+		isRead: {
+			type: Boolean,
 			required: true,
 		},
 	},
@@ -35,14 +28,6 @@ export const Order = defineMongooseModel({
 		schema.pre("save", function (this, next) {
 			this.title = this.title.toString().trim() as any;
 			next();
-		});
-
-		schema.pre("validate", function (this, next) {
-			if (this.products.length === 0) {
-				next(new Error("Products array must not be empty"));
-			} else {
-				next();
-			}
 		});
 	},
 });

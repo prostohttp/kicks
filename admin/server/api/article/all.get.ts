@@ -3,7 +3,7 @@ import pageCount from "~/utils/page-count";
 
 export default defineEventHandler(async (event) => {
 	try {
-		let query =  getQuery(event);
+		let query = getQuery(event);
 		const page = Number(query.page);
 		const perPage = Number(query.perPage);
 		const article = await Article.find();
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
 		const articleInPage = await Category.find().skip(skip).limit(perPage);
 		return {
-			categories: articleInPage,
+			articles: articleInPage,
 			pagesInPagination,
 			activePage: page,
 		};

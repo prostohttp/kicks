@@ -6,24 +6,25 @@ export default defineEventHandler(async (event) => {
 		const query = getQuery(event);
 		const page = Number(query.page);
 		const perPage = Number(query.perPage);
-		const products = await Product.find();
-		const productsLength = products.length;
-		const pagesInPagination = pageCount(productsLength, perPage);
+		const orders = await Order.find().populate("products");
+		const ordersLength = orders.length;
+		const pagesInPagination = pageCount(ordersLength, perPage);
 
-		if (
-			isValidPaginationPage(page, pagesInPagination, productsLength, perPage)
-		) {
+		if (isValidPaginationPage(page, pagesInPagination, ordersLength, perPage)) {
 			return {
-				products,
+				orders,
 				pagesInPagination: 0,
 			};
 		}
 
 		const skip = page * perPage - perPage;
 
-		const catInPage = await Product.find().skip(skip).limit(perPage);
+		const orderInPage = await Order.find()
+			.populate("products")
+			.skip(skip)
+			.limit(perPage);
 		return {
-			products: catInPage,
+			orders: orderInPage,
 			pagesInPagination,
 			activePage: page,
 		};

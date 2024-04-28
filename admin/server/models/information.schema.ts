@@ -1,5 +1,4 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
-import { Types } from "mongoose";
 
 export const Information = defineMongooseModel({
 	name: "Information",

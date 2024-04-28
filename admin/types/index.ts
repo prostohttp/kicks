@@ -27,6 +27,13 @@ export enum Roles {
 	ADMIN = "admin",
 }
 
+export enum OrderStatus {
+	SOLD = "sold",
+	PROCESSING = "processing",
+	DELIVERED = "delivered",
+	CANCELLED = "cancelled",
+}
+
 export interface MultiPartData {
 	data: Buffer;
 	name?: string;
