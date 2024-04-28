@@ -3,14 +3,15 @@ import pageCount from "~/utils/page-count";
 
 export default defineEventHandler(async (event) => {
 	try {
-		let body = await readBody(event);
-		const limit = body.perPage;
+		let query = getQuery(event);
+		const page = Number(query.page);
+		const perPage = Number(query.perPage);
 		const products = await Product.find();
 		const productsLength = products.length;
-		const pagesInPagination = pageCount(productsLength, limit);
+		const pagesInPagination = pageCount(productsLength, perPage);
 
 		if (
-			isValidPaginationPage(body.page, pagesInPagination, productsLength, limit)
+			isValidPaginationPage(page, pagesInPagination, productsLength, perPage)
 		) {
 			return {
 				products,
@@ -18,13 +19,13 @@ export default defineEventHandler(async (event) => {
 			};
 		}
 
-		const skip = body.page * limit - limit;
+		const skip = page * perPage - perPage;
 
-		const catInPage = await Product.find().skip(skip).limit(limit);
+		const catInPage = await Product.find().skip(skip).limit(perPage);
 		return {
 			products: catInPage,
 			pagesInPagination,
-			activePage: body.page,
+			activePage: page,
 		};
 	} catch (error: any) {
 		throw createError({
