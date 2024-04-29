@@ -17,9 +17,16 @@ export const Order = defineMongooseModel({
 		},
 		products: [
 			{
-				type: Types.ObjectId || String,
-				ref: "Product",
-				required: true,
+				productId: {
+					type: Types.ObjectId || String,
+					ref: "Product",
+					required: true,
+				},
+				productCount: {
+					type: Number,
+					min: 1,
+					required: true,
+				},
 			},
 		],
 		customer: {
@@ -32,6 +39,10 @@ export const Order = defineMongooseModel({
 			required: true,
 			ref: "Shipping",
 		},
+		shippingAddress: {
+			type: String,
+			required: false,
+		},
 		payment: {
 			type: Types.ObjectId || String,
 			required: true,
@@ -40,9 +51,18 @@ export const Order = defineMongooseModel({
 		status: {
 			type: String,
 			enum: Object.values(OrderStatus),
+			required: true,
 		},
 		date: {
 			type: Date,
+			required: true,
+		},
+		note: {
+			type: String,
+			required: false,
+		},
+		totalPrice: {
+			type: Number,
 			required: true,
 		},
 	},
@@ -53,7 +73,7 @@ export const Order = defineMongooseModel({
 		});
 
 		schema.pre("validate", function (this, next) {
-			if (this.products.length === 0) {
+			if (!this.products.length) {
 				next(new Error("Products array must not be empty"));
 			} else {
 				next();

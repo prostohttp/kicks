@@ -1,13 +1,33 @@
-import { nanoid } from "nanoid";
-import cleanStringToArray from "~/utils/clean-string-to-array";
+import { customAlphabet } from "nanoid";
 
+const nanoid = customAlphabet("1234567890", 5);
 export default defineEventHandler(async (event) => {
 	try {
-		const { title, products, date } = await readBody(event);
-		const newOrder = await Order.create({
-			orderId: "order_" + nanoid(),
+		const {
 			title,
-			products: cleanStringToArray(products),
+			products,
+			date,
+			customer,
+			shipping,
+			payment,
+			note,
+			shippingAddress,
+			totalPrice,
+		} = await readBody(event);
+		const user = await User.findById(customer);
+		if (user && user.role.toString() !== Roles.CUSTOMER) {
+			return createError({ statusMessage: "Only customers can order" });
+		}
+		const newOrder = await Order.create({
+			orderId: "#" + nanoid(),
+			title,
+			note,
+			shippingAddress,
+			customer,
+			shipping,
+			payment,
+			products,
+			totalPrice,
 			status: OrderStatus.PROCESSING,
 			date,
 		});
