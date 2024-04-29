@@ -1,6 +1,5 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Types } from "mongoose";
-import { OrderStatus } from "~/types";
 
 export const Notification = defineMongooseModel({
 	name: "Notification",
@@ -14,10 +13,6 @@ export const Notification = defineMongooseModel({
 			type: Types.ObjectId || String,
 			required: true,
 			ref: "Order",
-		},
-		status: {
-			type: String,
-			enum: Object.values(OrderStatus),
 		},
 		isRead: {
 			type: Boolean,
