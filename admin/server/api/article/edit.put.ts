@@ -1,4 +1,4 @@
-import { Constants } from "~/constants";
+import {Constants} from "~/constants";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
 import uploadFiles from "~/utils/upload-files";
@@ -52,10 +52,9 @@ export default defineEventHandler(async (event) => {
 			deleteFiles([article.image.toString()]);
 		}
 
-		const updatedArticle = await Article.findByIdAndUpdate(id, updatedFields, {
+		return await Article.findByIdAndUpdate(id, updatedFields, {
 			new: true,
 		});
-		return updatedArticle;
 	} catch (error: any) {
 		if (image) {
 			deleteFiles(image);
