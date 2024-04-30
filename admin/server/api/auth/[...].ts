@@ -66,6 +66,9 @@ export default NuxtAuthHandler({
 				if (!existingUser) {
 					return null;
 				}
+				if (existingUser && existingUser.role.toString() === Roles.CUSTOMER) {
+					return null;
+				}
 				const isPasswordMatch = await bcrypt.compare(
 					credentials.password,
 					existingUser.password.toString()

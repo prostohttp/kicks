@@ -1,3 +1,4 @@
+import { Product } from "./../server/models/product.schema";
 import { type ObjectId } from "mongoose";
 
 export interface RegisterFormDto {
@@ -32,6 +33,14 @@ export enum OrderStatus {
 	PROCESSING = "processing",
 	DELIVERED = "delivered",
 	CANCELLED = "cancelled",
+}
+
+export enum ModelNamesForSearchEngine {
+	CATEGORY = "categories",
+	PRODUCT = "products",
+	ARTICLES = "articles",
+	BRAND = "brands",
+	ALL = "all",
 }
 
 export interface MultiPartData {
