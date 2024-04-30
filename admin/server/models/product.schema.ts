@@ -20,6 +20,29 @@ export const Product = defineMongooseModel({
 				ref: "Category",
 			},
 		],
+		options: [
+			{
+				optionId: {
+					type: Types.ObjectId || String,
+					required: true,
+					ref: "Option",
+				},
+				values: [
+					{
+						valueId: {
+							type: Types.ObjectId || String,
+							required: true,
+							ref: "OptionValue",
+						},
+						productCount: {
+							type: Number,
+							required: true,
+							min: 1,
+						},
+					},
+				],
+			},
+		],
 		brand: {
 			type: Types.ObjectId || String,
 			required: false,

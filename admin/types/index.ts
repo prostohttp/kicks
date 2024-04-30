@@ -43,6 +43,14 @@ export enum ModelNamesForSearchEngine {
 	ALL = "all",
 }
 
+export enum OptionTypes {
+	SELECT = "select",
+	CHECKBOX = "checkbox",
+	RADIO = "radio",
+	IMAGE = "image",
+	SLIDER = "slider",
+}
+
 export interface MultiPartData {
 	data: Buffer;
 	name?: string;

@@ -1,27 +1,27 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Types } from "mongoose";
+import { OptionTypes } from "~/types";
 
-export const Filter = defineMongooseModel({
-	name: "Filter",
+export const Option = defineMongooseModel({
+	name: "Option",
 	schema: {
 		title: {
 			min: 3,
 			type: String,
 			required: true,
 		},
-		description: {
+		type: {
 			type: String,
+			enum: Object.values(OptionTypes),
 			required: true,
 		},
-		isEnabled: {
-			type: Boolean,
-			required: true,
-		},
-		options: {
-			type: Types.ObjectId || String,
-			required: true,
-			ref: "Option",
-		},
+		values: [
+			{
+				type: Types.ObjectId || String,
+				required: true,
+				ref: "OptionValue",
+			},
+		],
 	},
 	hooks(schema) {
 		schema.pre("save", function (this, next) {
