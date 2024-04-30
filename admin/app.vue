@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-	useSeoMeta({
-		ogImage: "/public/favicon.png",
-	});
-	useHead({
-		titleTemplate: "%s - Kicks admin panel",
-	});
+useSeoMeta({
+  ogImage: "/public/favicon.png",
+});
+useHead({
+  titleTemplate: "%s - Kicks admin panel",
+});
 </script>
 
 <template>
-	<div class="w-full max-w-[1440px] mx-auto">
-		<NuxtLayout>
-			<NuxtPage />
-		</NuxtLayout>
-		<UNotifications />
-	</div>
+  <div class="w-full max-w-[1440px] mx-auto">
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    <UNotifications />
+  </div>
 </template>
 
 // TODO: Подумать стоит ли использовать анимацию
 <style>
-	/* .page-enter-active,
+/* .page-enter-active,
 	.page-leave-active,
 	.layout-enter-active,
 	.layout-leave-active {

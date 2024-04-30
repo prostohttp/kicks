@@ -1,65 +1,65 @@
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/public/fonts/Inter-Regular.woff2) format('woff2');
+  src: url(/public/fonts/Inter-Regular.woff2) format("woff2");
 }
 
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(/public/fonts/Inter-Medium.woff2) format('woff2');
+  src: url(/public/fonts/Inter-Medium.woff2) format("woff2");
 }
 
 @font-face {
-  font-family: 'OpenSans';
+  font-family: "OpenSans";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/public/fonts/OpenSans-Regular.woff2) format('woff2');
+  src: url(/public/fonts/OpenSans-Regular.woff2) format("woff2");
 }
 
 @font-face {
-  font-family: 'OpenSans';
+  font-family: "OpenSans";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(/public/fonts/OpenSans-SemiBold.woff2) format('woff2');
+  src: url(/public/fonts/OpenSans-SemiBold.woff2) format("woff2");
 }
 
 @font-face {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/public/fonts/Poppins-Regular.woff2) format('woff2');
+  src: url(/public/fonts/Poppins-Regular.woff2) format("woff2");
 }
 
 @font-face {
-  font-family: 'Rubik';
+  font-family: "Rubik";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(/public/fonts/Rubik-Medium.woff2) format('woff2');
+  src: url(/public/fonts/Rubik-Medium.woff2) format("woff2");
 }
 
 @font-face {
-  font-family: 'Rubik';
+  font-family: "Rubik";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(/public/fonts/Rubik-SemiBold.woff2) format('woff2');
+  src: url(/public/fonts/Rubik-SemiBold.woff2) format("woff2");
 }
 
 @font-face {
-  font-family: 'Rubik';
+  font-family: "Rubik";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(/public/fonts/Rubik-Bold.woff2) format('woff2');
+  src: url(/public/fonts/Rubik-Bold.woff2) format("woff2");
 }
 
 body {
@@ -69,39 +69,39 @@ body {
 input[type="text"],
 input[type="password"],
 textarea {
-  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] py-[15px] px-[16px] focus:ring-blue focus:shadow-none text-dark-gray
+  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] py-[15px] px-[16px] focus:ring-blue focus:shadow-none text-dark-gray;
 }
 
 button[type="submit"] {
-  @apply bg-dark-gray rounded-[8px] uppercase font-[Rubik] font-[500] hover:bg-yellow transition-colors
+  @apply bg-dark-gray rounded-[8px] uppercase font-[Rubik] font-[500] hover:bg-yellow transition-colors;
 }
 
 button.inverse {
-  @apply bg-yellow hover:bg-dark-gray uppercase
+  @apply bg-yellow hover:bg-dark-gray uppercase;
 }
 
 input[type="checkbox"] {
-  @apply border-dark-gray rounded-[2px] h-[15px] w-[15px]
+  @apply border-dark-gray rounded-[2px] h-[15px] w-[15px];
 }
 
 input[type="checkbox"]:checked,
 input[type="checkbox"]:checked:hover,
 input[type="checkbox"]:checked:focus {
-  @apply bg-dark-gray
+  @apply bg-dark-gray;
 }
 
 .ui-modal {
-  @apply font-[OpenSans]
+  @apply font-[OpenSans];
 }
 
 .ui-modal h1 {
-  @apply text-[30px] font-[700] leading-[40px] mb-[20px]
+  @apply text-[30px] font-[700] leading-[40px] mb-[20px];
 }
 
 .ui-modal h3 {
-  @apply text-[25px] font-[500] leading-[30px] my-[20px]
+  @apply text-[25px] font-[500] leading-[30px] my-[20px];
 }
 
 .ui-modal p {
-  @apply text-[16px] font-[400] leading-[30px]
+  @apply text-[16px] font-[400] leading-[30px];
 }

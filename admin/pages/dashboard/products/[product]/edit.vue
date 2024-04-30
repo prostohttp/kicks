@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-	definePageMeta({
-		layout: "dashboard",
-		name: "edit-product",
-	});
-	useHead({
-		title: "Edit product",
-	});
+definePageMeta({
+  layout: "dashboard",
+  name: "edit-product",
+});
+useHead({
+  title: "Edit product",
+});
 </script>
 
 <template>
-	<div>Edit product</div>
+  <div>Edit product</div>
 </template>

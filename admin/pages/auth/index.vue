@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-	definePageMeta({
-		layout: "auth",
-		redirect: "auth/login",
-	});
+definePageMeta({
+  layout: "auth",
+  redirect: "auth/login",
+});
 </script>

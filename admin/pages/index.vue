@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-	definePageMeta({
-		name: "index",
-		redirect: { name: "register" },
-	});
+definePageMeta({
+  name: "index",
+  redirect: { name: "register" },
+});
 </script>
 
 <template>
-	<div></div>
+  <div></div>
 </template>

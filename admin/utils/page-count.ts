@@ -1,3 +1,3 @@
 export default (allItems: number, itemsPerPage: number): number => {
-	return Math.ceil(allItems / itemsPerPage);
+  return Math.ceil(allItems / itemsPerPage);
 };

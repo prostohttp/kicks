@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-	definePageMeta({
-		layout: "dashboard",
-		name: "order",
-	});
-	useHead({
-		title: "Order",
-	});
+definePageMeta({
+  layout: "dashboard",
+  name: "order",
+});
+useHead({
+  title: "Order",
+});
 </script>
 
 <template>
-	<div>Order</div>
+  <div>Order</div>
 </template>
