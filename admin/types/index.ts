@@ -49,6 +49,7 @@ export enum OptionTypes {
   RADIO = "radio",
   IMAGE = "image",
   SLIDER = "slider",
+  COLOR = "color",
 }
 
 export interface MultiPartData {
