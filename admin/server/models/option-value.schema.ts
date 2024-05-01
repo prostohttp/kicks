@@ -7,7 +7,6 @@ export const OptionValue = defineMongooseModel({
       min: 3,
       type: String,
       required: true,
-      unique: true,
     },
     image: {
       type: String,
