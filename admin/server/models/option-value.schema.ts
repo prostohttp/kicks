@@ -1,5 +1,4 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
-import { Types } from "mongoose";
 
 export const OptionValue = defineMongooseModel({
   name: "OptionValue",
@@ -15,12 +14,7 @@ export const OptionValue = defineMongooseModel({
     },
     value: {
       type: String,
-      required: false,
-    },
-    parentOption: {
-      type: Types.ObjectId || String,
       required: true,
-      ref: "Option",
     },
   },
   hooks(schema) {

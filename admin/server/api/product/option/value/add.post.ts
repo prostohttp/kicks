@@ -16,7 +16,6 @@ export default defineEventHandler(async (event) => {
   try {
     const newOptionValue = new OptionValue({
       title,
-      parentOption,
       value,
       image: image ? image[0] : "",
     });
