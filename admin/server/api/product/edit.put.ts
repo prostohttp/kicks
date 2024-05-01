@@ -1,4 +1,5 @@
 import { Constants } from "~/constants";
+import { Options } from "~/types";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
 import uploadFiles from "~/utils/upload-files";
@@ -27,62 +28,74 @@ export default defineEventHandler(async (event) => {
     const salePrice = formData.get("salePrice");
     const tags = formData.get("tags") as string;
     const isEnabled = formData.get("isEnabled");
+    const options = formData.get("options") as Options | null;
 
     const updatedFields: any = {};
 
     if (!product) {
       throw createError({ statusMessage: "Category not found" });
     }
+
+    if (options) {
+      updatedFields.options = JSON.parse(options.toString());
+    }
+
     if (title) {
       updatedFields.title = title;
     }
+
     if (description) {
       updatedFields.description = description;
     } else {
       updatedFields.description = "";
     }
+
     if (categories) {
       updatedFields.category = cleanStringToArray(categories);
     } else {
       updatedFields.category = [];
     }
+
     if (brand) {
       updatedFields.brand = brand;
     } else {
       updatedFields.brand = "";
     }
+
     if (sku) {
       updatedFields.sku = sku;
     } else {
       updatedFields.sku = "";
     }
+
     if (regularPrice) {
       updatedFields.regularPrice = regularPrice;
     } else {
       updatedFields.regularPrice = 0;
     }
+
     if (salePrice) {
       updatedFields.salePrice = salePrice;
     } else {
       updatedFields.salePrice = 0;
     }
+
     if (tags) {
       updatedFields.tags = cleanStringToArray(tags);
     } else {
       updatedFields.tags = [];
     }
+
     updatedFields.isEnabled = isEnabled;
+
     if (image && image.length > 0) {
-      // TODO: Стоит реализовать удаление изображения после изменения на новое
-      // deleteFiles([category.image.toString()]);
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
       deleteFiles([product.image.toString()]);
     }
+
     if (additionImages && additionImages.length > 0) {
-      // TODO: Стоит реализовать удаление изображения после изменения на новое
-      // deleteFiles([category.image.toString()]);
       updatedFields.additionImages = additionImages;
     } else if (additionImages && !additionImages.length) {
       updatedFields.additionImages = [];

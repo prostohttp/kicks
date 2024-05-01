@@ -74,3 +74,17 @@ export interface CategoryResponseDto {
   pagesInPagination: number;
   activePage: number;
 }
+
+export interface OptionValue {
+  valueId: string;
+  productCount: string;
+}
+
+export interface Option {
+  optionId: string;
+  values: OptionValue[];
+}
+
+export interface Options {
+  options: Option[];
+}

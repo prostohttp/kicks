@@ -1,4 +1,5 @@
 import { Constants } from "~/constants";
+import { Options } from "~/types";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
 import uploadFiles from "~/utils/upload-files";
@@ -6,9 +7,9 @@ import uploadFiles from "~/utils/upload-files";
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
   const formData = await readFormData(event);
+
   const title = formData.get("title");
   const description = formData.get("description");
-
   const category = formData.get("category") as string;
   const brand = formData.get("brand");
   const sku = formData.get("sku");
@@ -17,6 +18,7 @@ export default defineEventHandler(async (event) => {
   const salePrice = formData.get("salePrice");
   const tags = formData.get("tags") as string;
   const isEnabled = formData.get("isEnabled");
+  const options = formData.get("options") as Options | null;
 
   const image = uploadFiles(data, Constants.IMG_PRODUCTS, "image");
   const additionImages = uploadFiles(
@@ -39,6 +41,7 @@ export default defineEventHandler(async (event) => {
       isEnabled,
       image: image ? image[0] : "",
       additionImages: additionImages ? additionImages : [],
+      options: options ? JSON.parse(options.toString()) : [],
     });
     return await newProduct.save();
   } catch (error: any) {
