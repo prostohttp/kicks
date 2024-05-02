@@ -6,7 +6,10 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
     const page = Number(query.page);
     const perPage = Number(query.perPage);
-    const orders = await Order.find().populate("products");
+    const orders = await Order.find().populate({
+      path: "products.productId",
+      select: "title quantity regularPrice salePrice",
+    });
     const ordersLength = orders.length;
     const pagesInPagination = pageCount(ordersLength, perPage);
 
@@ -20,7 +23,10 @@ export default defineEventHandler(async (event) => {
     const skip = page * perPage - perPage;
 
     const orderInPage = await Order.find()
-      .populate("products")
+      .populate({
+        path: "products.productId",
+        select: "title quantity regularPrice salePrice",
+      })
       .skip(skip)
       .limit(perPage);
     return {
