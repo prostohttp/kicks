@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { MultiPartData } from "~/types";
 import renameFile from "./rename-file";
+import checkExistsFolder from "./check-exists-folder";
 
 export default (
   data: MultiPartData[] | undefined,
@@ -9,7 +10,9 @@ export default (
   fieldName: string,
 ): string[] | false => {
   const files: string[] = [];
-  let isEmpty = data && !data.some((el) => el.name === fieldName);
+  // TODO: удалить или сохранить!
+  // let isEmpty = data && !data.some((el) => el.name === fieldName);
+  const imgPath = path.resolve(process.cwd(), "public/" + folderPath);
   try {
     if (data) {
       data.forEach((el) => {
@@ -18,6 +21,9 @@ export default (
             process.cwd(),
             folderPath + renameFile(el.filename as string),
           );
+          if (!checkExistsFolder(imgPath)) {
+            fs.mkdirSync(imgPath);
+          }
           fs.writeFileSync("public/" + filePath, el.data);
           files!.push("/" + filePath);
         }
@@ -28,5 +34,7 @@ export default (
       statusMessage: error.message,
     });
   }
-  return isEmpty ? false : files;
+  // TODO: удалить или сохранить!
+  // return isEmpty ? false : files;
+  return files;
 };

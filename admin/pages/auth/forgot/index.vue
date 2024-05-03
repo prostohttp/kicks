@@ -39,6 +39,9 @@ const forgot = async (data: ForgotFormDto) => {
         getToken: token,
       },
     });
+    toast.add({
+      title: "Check your email for instructions on resetting your password.",
+    });
     await $fetch("/api/email/forgot-password-send-email", {
       method: "POST",
       body: {
@@ -47,9 +50,6 @@ const forgot = async (data: ForgotFormDto) => {
         siteUrl: Constants.SITE_URL,
         token: `/token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
       },
-    });
-    toast.add({
-      title: "Check your email for instructions on resetting your password.",
     });
   } catch (error: any) {
     toast.add({ title: error.statusMessage });

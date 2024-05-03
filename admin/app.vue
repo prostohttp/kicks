@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 useSeoMeta({
-  ogImage: "/public/favicon.png",
+  ogImage: "/public/kicks-marketplace.svg",
 });
 useHead({
   titleTemplate: "%s - Kicks admin panel",

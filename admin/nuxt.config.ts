@@ -6,9 +6,6 @@ export default defineNuxtConfig({
     head: {
       link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
     },
-    // TODO: Подумать стоит ли использовать анимацию
-    // layoutTransition: { name: "layout", mode: "in-out" },
-    // pageTransition: { name: "page", mode: "out-in" },
   },
   runtimeConfig: {
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,

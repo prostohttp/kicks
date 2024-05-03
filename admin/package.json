@@ -30,7 +30,7 @@
     "vue": "^3.4.26",
     "vue-router": "^4.3.2",
     "vue3-tags-input": "^1.0.12",
-    "zod": "^3.23.5"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2"
