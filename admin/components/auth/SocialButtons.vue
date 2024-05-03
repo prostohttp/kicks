@@ -12,7 +12,7 @@ const { signIn } = useAuth();
         class="w-full"
       >
         <img
-          src="~~/assets/img/icon-github.svg"
+          src="~/assets/img/icon-github.svg"
           class="scale-[300%] sm:scale-[270%]"
         />
       </AuthSocialButton>
@@ -24,7 +24,7 @@ const { signIn } = useAuth();
         class="w-full"
       >
         <img
-          src="~~/assets/img/icon-yandex.svg"
+          src="~/assets/img/icon-yandex.svg"
           class="scale-100 sm:scale-[170%]"
         />
       </AuthSocialButton>
@@ -36,7 +36,7 @@ const { signIn } = useAuth();
         class="w-full"
       >
         <img
-          src="~~/assets/img/icon-discord.svg"
+          src="~/assets/img/icon-discord.svg"
           class="scale-[200%] sm:scale-[200%]"
         />
       </AuthSocialButton>

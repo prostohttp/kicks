@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
@@ -60,7 +60,7 @@
   font-weight: 700;
   font-display: swap;
   src: url(/public/fonts/Rubik-Bold.woff2) format("woff2");
-}
+} */
 
 body {
   @apply font-[400] font-[Inter] text-dark-gray select-text selection:bg-blue selection:text-white;
@@ -91,7 +91,11 @@ input[type="checkbox"]:checked:focus {
 }
 
 .ui-modal {
-  @apply font-[OpenSans];
+  font-family: "Open Sans", sans-serif;
+}
+
+.open-sans {
+  font-family: "Open Sans", sans-serif;
 }
 
 .ui-modal h1 {

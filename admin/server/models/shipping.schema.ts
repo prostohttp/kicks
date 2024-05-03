@@ -8,6 +8,18 @@ export const Shipping = defineMongooseModel({
       required: true,
       unique: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: false,
+    },
+    free: {
+      type: Boolean,
+      required: false,
+    },
   },
   hooks(schema) {
     schema.pre("save", function (this, next) {

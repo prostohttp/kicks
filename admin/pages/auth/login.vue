@@ -52,14 +52,14 @@ const loginHandler = useThrottleFn(login, 1000);
           <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">Login</h1>
           <ULink
             :to="{ name: 'forgot' }"
-            class="font-[OpenSans] text-[16px] font-[600] underline decoration-gray-main"
+            class="open-sans text-[16px] font-[600] underline decoration-gray-main"
             >Forgot your password?
           </ULink>
         </div>
         <AuthLoginForm @submit="loginHandler" />
         <AuthSocialButtons />
         <span
-          class="font-[OpenSans] text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"
+          class="open-sans text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"
           @click.prevent="isOpen = true"
           >KicksClub Terms & Conditions, Kicks Privacy Notice and Terms &
           Conditions. By clicking 'Log In' you agree to our website</span

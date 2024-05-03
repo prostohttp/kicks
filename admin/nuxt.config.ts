@@ -58,6 +58,14 @@ export default defineNuxtConfig({
     // baseUrl: Constants.SITE_URL,
     autoImport: true,
   },
+  googleFonts: {
+    families: {
+      Inter: [400, 500],
+      "Open Sans": [400, 600],
+      Poppins: [400],
+      Rubik: [500, 600, 700],
+    },
+  },
   modules: [
     "@nuxt/image",
     "@vueuse/nuxt",
@@ -68,5 +76,7 @@ export default defineNuxtConfig({
     "@vue-email/nuxt",
     "nuxt-aos",
     "@nuxt/ui",
+    "@nuxtjs/google-fonts",
+    ,
   ],
 });

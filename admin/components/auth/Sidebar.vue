@@ -5,7 +5,7 @@
     class="flex flex-col lg:pt-[80px] pt-[40px] lg:px-0 px-[10px] items-center lg:bg-[url('/assets/img/auth-bg.jpg')] bg-none bg-bottom bg-cover lg:bg-[#dcdee5]"
   >
     <ULink :to="{ name: 'index' }">
-      <img src="/assets/img/small-logo.svg" alt="kicks" class="w-[248px]" />
+      <img src="~/assets/img/small-logo.svg" alt="kicks" class="w-[248px]" />
     </ULink>
   </div>
 </template>

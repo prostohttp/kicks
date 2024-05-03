@@ -81,10 +81,10 @@ const registerHandler = useThrottleFn(register, 1000);
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px]">Register</h1>
-          <h2 class="font-[OpenSans] text-[20px] font-[600]">Sign up with</h2>
+          <h2 class="open-sans text-[20px] font-[600]">Sign up with</h2>
         </div>
         <AuthSocialButtons />
-        <h2 class="font-[OpenSans] text-[20px] font-[600] uppercase">OR</h2>
+        <h2 class="open-sans text-[20px] font-[600] uppercase">OR</h2>
         <AuthRegisterForm @submit="registerHandler" />
       </div>
     </div>

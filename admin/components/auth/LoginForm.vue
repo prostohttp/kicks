@@ -43,7 +43,7 @@ const { email, password } = storeToRefs(user);
       </UButton>
       <ULink :to="{ name: 'register' }">
         <UButton
-          class="inverse h-[48px] px-[16px] flex justify-between w-full"
+          class="font-[Rubik] inverse h-[48px] px-[16px] flex justify-between w-full"
           trailing
         >
           <span>Register page</span>

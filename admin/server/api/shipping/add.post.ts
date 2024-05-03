@@ -1,9 +1,12 @@
 export default defineEventHandler(async (event) => {
-  const { title } = await readBody(event);
+  const { title, description, price, free } = await readBody(event);
 
   try {
     const newShipping = new Shipping({
       title,
+      description,
+      price,
+      free,
     });
 
     return await newShipping.save();

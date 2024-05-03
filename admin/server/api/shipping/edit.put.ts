@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const { id, title } = await readBody(event);
+  const { id, title, description, price, free } = await readBody(event);
 
   const updatedFields: any = {};
 
@@ -13,6 +13,18 @@ export default defineEventHandler(async (event) => {
 
     if (title) {
       updatedFields.title = title;
+    }
+
+    if (description) {
+      updatedFields.description = description;
+    }
+
+    if (price) {
+      updatedFields.price = price;
+    }
+
+    if (free) {
+      updatedFields.free = free;
     }
 
     const updatedPayment = await Shipping.findByIdAndUpdate(id, updatedFields, {

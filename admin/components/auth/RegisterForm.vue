@@ -59,7 +59,7 @@ const isOpen = ref(false);
       <UFormGroup name="terms">
         <UCheckbox v-model="terms">
           <template #label>
-            <span class="font-[OpenSans] text-[16px] font-[600]"
+            <span class="open-sans text-[16px] font-[600]"
               >By clicking 'REGISTER' you agree to our website
               <small
                 @click.prevent="isOpen = true"
@@ -75,7 +75,7 @@ const isOpen = ref(false);
       <UFormGroup name="keepLogged">
         <UCheckbox v-model="keepLogged">
           <template #label>
-            <span class="font-[OpenSans] text-[16px] font-[600]"
+            <span class="open-sans text-[16px] font-[600]"
               >Keep me logged in after registration</span
             >
           </template>
