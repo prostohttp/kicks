@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Order deleted",
     };
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

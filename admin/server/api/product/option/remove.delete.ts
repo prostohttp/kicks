@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Option deleted",
     };
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

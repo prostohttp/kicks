@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const brand = await Brand.findByIdAndDelete(id);
     if (!brand) {
-      throw createError({
+      return createError({
         statusMessage: "Brand not found",
       });
     }
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Brand deleted",
     };
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

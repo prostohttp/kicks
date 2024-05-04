@@ -1,33 +1,27 @@
 import deleteFiles from "~/utils/delete-files";
 import { Constants } from "~/constants";
 import uploadFiles from "~/utils/upload-files";
+import fromMultipartFormData from "~/utils/from-multipart-form-data";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
-  const formData = await readFormData(event);
-
-  const updatedFields: any = {};
-
-  const id = formData.get("id");
-  const title = formData.get("title");
-  const value = formData.get("value");
 
   const image = uploadFiles(data, Constants.IMG_OPTIONS, "image");
 
   try {
-    const optionValue = await OptionValue.findById(id);
+    const updatedFields = fromMultipartFormData(data);
+    const optionValue = await OptionValue.findById(updatedFields.id);
+
     if (!optionValue) {
-      throw createError({
+      return createError({
         statusMessage: "Option value not found",
       });
     }
 
-    if (title) {
-      updatedFields.title = title;
-    }
-
-    if (value) {
-      updatedFields.value = value;
+    if (!updatedFields.title || !updatedFields.value) {
+      return createError({
+        statusMessage: "Title and value are required",
+      });
     }
 
     if (image && image.length > 0) {
@@ -38,19 +32,20 @@ export default defineEventHandler(async (event) => {
     }
 
     const updatedOptionValue = await OptionValue.findByIdAndUpdate(
-      id,
+      updatedFields.id,
       updatedFields,
       {
         new: true,
       },
     );
+
     return updatedOptionValue;
   } catch (error: any) {
     if (image) {
       deleteFiles(image);
     }
 
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

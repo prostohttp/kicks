@@ -1,24 +1,11 @@
 import { Constants } from "~/constants";
-import { Options } from "~/types";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
+import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFiles from "~/utils/upload-files";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
-  const formData = await readFormData(event);
-
-  const title = formData.get("title");
-  const description = formData.get("description");
-  const category = formData.get("category") as string;
-  const brand = formData.get("brand");
-  const sku = formData.get("sku");
-  const quantity = formData.get("quantity");
-  const regularPrice = formData.get("regularPrice");
-  const salePrice = formData.get("salePrice");
-  const tags = formData.get("tags") as string;
-  const isEnabled = formData.get("isEnabled");
-  const options = formData.get("options") as Options | null;
 
   const image = uploadFiles(data, Constants.IMG_PRODUCTS, "image");
   const additionImages = uploadFiles(
@@ -28,20 +15,16 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
+    const resultData = fromMultipartFormData(data);
     const newProduct = new Product({
-      title,
-      description,
-      category: cleanStringToArray(category),
-      brand,
-      sku,
-      quantity,
-      regularPrice,
-      salePrice,
-      tags: cleanStringToArray(tags),
-      isEnabled,
+      ...resultData,
+      category: cleanStringToArray(resultData.category as string),
+      tags: cleanStringToArray(resultData.tags as string),
       image: image ? image[0] : "",
       additionImages: additionImages ? additionImages : [],
-      options: options ? JSON.parse(options.toString()) : [],
+      options: resultData.options
+        ? JSON.parse(resultData.options.toString())
+        : [],
     });
     return await newProduct.save();
   } catch (error: any) {
@@ -52,7 +35,7 @@ export default defineEventHandler(async (event) => {
       deleteFiles(additionImages);
     }
 
-    throw createError({
+    return createError({
       statusMessage: error.message,
       statusCode: 409,
     });

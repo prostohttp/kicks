@@ -61,10 +61,6 @@ export const Order = defineMongooseModel({
       type: String,
       required: false,
     },
-    totalPrice: {
-      type: Number,
-      required: true,
-    },
   },
   hooks(schema) {
     schema.pre("save", function (this, next) {

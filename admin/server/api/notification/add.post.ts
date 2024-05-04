@@ -2,15 +2,11 @@ import { Notification } from "#imports";
 
 export default defineEventHandler(async (event) => {
   try {
-    const { title, order, isRead } = await readBody(event);
-    const newNotification = new Notification({
-      title,
-      order,
-      isRead,
-    });
+    const body = await readBody(event);
+    const newNotification = new Notification(body);
     return await newNotification.save();
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

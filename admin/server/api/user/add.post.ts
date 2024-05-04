@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     });
     return await newUser.save();
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

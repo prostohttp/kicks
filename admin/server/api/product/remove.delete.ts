@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const product = await Product.findByIdAndDelete(id);
     if (!product) {
-      throw createError({
+      return createError({
         statusMessage: "Product not found",
       });
     }

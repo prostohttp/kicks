@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const payment = await Payment.findByIdAndDelete(id);
     if (!payment) {
-      throw createError({
+      return createError({
         statusMessage: "Payment method not found",
       });
     }
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Payment method deleted",
     };
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

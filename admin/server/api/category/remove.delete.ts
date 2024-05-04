@@ -7,10 +7,10 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Category deleted",
       };
     } else {
-      throw createError({ statusMessage: "Category not found" });
+      return createError({ statusMessage: "Category not found" });
     }
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

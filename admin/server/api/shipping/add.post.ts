@@ -1,17 +1,17 @@
 export default defineEventHandler(async (event) => {
-  const { title, description, price, free } = await readBody(event);
+  const body = await readBody(event);
 
   try {
-    const newShipping = new Shipping({
-      title,
-      description,
-      price,
-      free,
-    });
+    if (!body.title || !body.description) {
+      return createError({
+        statusMessage: "Title and description are required",
+      });
+    }
 
+    const newShipping = new Shipping(body);
     return await newShipping.save();
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
       statusCode: 409,
     });

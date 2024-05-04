@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const shipping = await Shipping.findByIdAndDelete(id);
     if (!shipping) {
-      throw createError({
+      return createError({
         statusMessage: "Shipping method not found",
       });
     }
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Shipping method deleted",
     };
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

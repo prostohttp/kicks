@@ -3,7 +3,7 @@ export default defineEventHandler(async (event): Promise<void> => {
     const { token } = await readBody(event);
     await Token.findOneAndDelete({ token: token });
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     const savedUser = await newUser.save();
     return { user: savedUser };
   } catch (error) {
-    throw createError({
+    return createError({
       statusMessage: "User with this email already exists.",
       statusCode: 409,
     });

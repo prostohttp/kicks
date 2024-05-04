@@ -21,13 +21,16 @@ export default defineNuxtConfig({
   },
   nitro: {
     imports: {
-      dirs: ["./types"],
+      dirs: ["./types", "./server/models"],
     },
     storage: {
       fs: {
         driver: "fs",
         base: "./public",
       },
+    },
+    experimental: {
+      websocket: true,
     },
   },
   css: ["~/assets/css/main.css"],

@@ -1,14 +1,12 @@
 export default defineEventHandler(async (event) => {
-  const { title } = await readBody(event);
+  const body = await readBody(event);
 
   try {
-    const newPayment = new Payment({
-      title,
-    });
+    const newPayment = new Payment(body);
 
     return await newPayment.save();
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
       statusCode: 409,
     });

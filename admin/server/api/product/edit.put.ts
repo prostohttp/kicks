@@ -1,14 +1,12 @@
 import { Constants } from "~/constants";
-import { Options } from "~/types";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
+import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFiles from "~/utils/upload-files";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
-  const formData = await readFormData(event);
 
-  const id = formData.get("id");
   const image = uploadFiles(data, Constants.IMG_PRODUCTS, "image");
   const additionImages = uploadFiles(
     data,
@@ -17,76 +15,16 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const product = await Product.findById(id);
-
-    const title = formData.get("title");
-    const description = formData.get("description");
-    const categories = formData.get("category") as string;
-    const brand = formData.get("brand");
-    const sku = formData.get("sku");
-    const regularPrice = formData.get("regularPrice");
-    const salePrice = formData.get("salePrice");
-    const tags = formData.get("tags") as string;
-    const isEnabled = formData.get("isEnabled");
-    const options = formData.get("options") as Options | null;
-
-    const updatedFields: any = {};
+    const updatedFields = fromMultipartFormData(data);
+    const product = await Product.findById(updatedFields.id);
 
     if (!product) {
-      throw createError({ statusMessage: "Category not found" });
+      return createError({ statusMessage: "Category not found" });
     }
 
-    if (options) {
-      updatedFields.options = JSON.parse(options.toString());
+    if (!updatedFields.title) {
+      return createError({ statusMessage: "Title is required" });
     }
-
-    if (title) {
-      updatedFields.title = title;
-    }
-
-    if (description) {
-      updatedFields.description = description;
-    } else {
-      updatedFields.description = "";
-    }
-
-    if (categories) {
-      updatedFields.category = cleanStringToArray(categories);
-    } else {
-      updatedFields.category = [];
-    }
-
-    if (brand) {
-      updatedFields.brand = brand;
-    } else {
-      updatedFields.brand = "";
-    }
-
-    if (sku) {
-      updatedFields.sku = sku;
-    } else {
-      updatedFields.sku = "";
-    }
-
-    if (regularPrice) {
-      updatedFields.regularPrice = regularPrice;
-    } else {
-      updatedFields.regularPrice = 0;
-    }
-
-    if (salePrice) {
-      updatedFields.salePrice = salePrice;
-    } else {
-      updatedFields.salePrice = 0;
-    }
-
-    if (tags) {
-      updatedFields.tags = cleanStringToArray(tags);
-    } else {
-      updatedFields.tags = [];
-    }
-
-    updatedFields.isEnabled = isEnabled;
 
     if (image && image.length > 0) {
       updatedFields.image = image[0];
@@ -104,9 +42,17 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, updatedFields, {
-      new: true,
-    });
+    const updatedProduct = await Product.findByIdAndUpdate(
+      updatedFields.id,
+      {
+        ...updatedFields,
+        categories: cleanStringToArray(updatedFields.categories as string),
+        tags: cleanStringToArray(updatedFields.tags as string),
+      },
+      {
+        new: true,
+      },
+    );
     return updatedProduct;
   } catch (error: any) {
     if (image) {
@@ -115,7 +61,7 @@ export default defineEventHandler(async (event) => {
     if (additionImages) {
       deleteFiles(additionImages);
     }
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

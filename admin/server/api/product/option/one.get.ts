@@ -9,6 +9,6 @@ export default defineEventHandler(async (event) => {
     }
     return option;
   } catch (error: any) {
-    throw createError({ statusMessage: error.message });
+    return createError({ statusMessage: error.message });
   }
 });

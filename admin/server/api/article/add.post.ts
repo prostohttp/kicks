@@ -2,27 +2,19 @@ import { Constants } from "~/constants";
 import { Article } from "~/server/models/article.schema";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFiles from "~/utils/delete-files";
+import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFiles from "~/utils/upload-files";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
-  const formData = await readFormData(event);
-
-  const title = formData.get("title");
-  const shortDescription = formData.get("shortDescription");
-  const description = formData.get("description");
-  const isEnabled = formData.get("isEnabled");
-  const featuredProducts = formData.get("featuredProducts") as string;
 
   const image = uploadFiles(data, Constants.IMG_ARTICLES, "image");
 
   try {
+    const resultData = fromMultipartFormData(data);
     const newArticle = new Article({
-      title,
-      shortDescription,
-      description,
-      isEnabled,
-      featuredProducts: cleanStringToArray(featuredProducts),
+      ...resultData,
+      featuredProducts: cleanStringToArray(resultData.featuredProducts),
       image: image ? image[0] : "",
     });
 
@@ -32,7 +24,7 @@ export default defineEventHandler(async (event) => {
       deleteFiles(image);
     }
 
-    throw createError({
+    return createError({
       statusMessage: error.message,
       statusCode: 409,
     });

@@ -1,38 +1,30 @@
 export default defineEventHandler(async (event) => {
   const { id, title, description, price, free } = await readBody(event);
 
-  const updatedFields: any = {};
-
   try {
     const shipping = await Shipping.findById(id);
     if (!shipping) {
-      throw createError({
+      return createError({
         statusMessage: "Shipping method not found",
       });
     }
 
-    if (title) {
-      updatedFields.title = title;
+    if (!title || !description) {
+      return createError({
+        statusMessage: "Title and description are required",
+      });
     }
 
-    if (description) {
-      updatedFields.description = description;
-    }
-
-    if (price) {
-      updatedFields.price = price;
-    }
-
-    if (free) {
-      updatedFields.free = free;
-    }
-
-    const updatedPayment = await Shipping.findByIdAndUpdate(id, updatedFields, {
-      new: true,
-    });
+    const updatedPayment = await Shipping.findByIdAndUpdate(
+      id,
+      { title, description, price, free },
+      {
+        new: true,
+      },
+    );
     return updatedPayment;
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

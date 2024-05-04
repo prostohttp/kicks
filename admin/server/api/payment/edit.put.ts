@@ -1,26 +1,30 @@
 export default defineEventHandler(async (event) => {
   const { id, title } = await readBody(event);
 
-  const updatedFields: any = {};
-
   try {
     const payment = await Payment.findById(id);
     if (!payment) {
-      throw createError({
+      return createError({
         statusMessage: "Payment method not found",
       });
     }
 
-    if (title) {
-      updatedFields.title = title;
+    if (!title) {
+      return createError({
+        statusMessage: "Title is required",
+      });
     }
 
-    const updatedPayment = await Payment.findByIdAndUpdate(id, updatedFields, {
-      new: true,
-    });
+    const updatedPayment = await Payment.findByIdAndUpdate(
+      id,
+      { title },
+      {
+        new: true,
+      },
+    );
     return updatedPayment;
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

@@ -3,11 +3,11 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const user = await User.findById(id);
     if (!user) {
-      throw createError({ statusMessage: "User not found" });
+      return createError({ statusMessage: "User not found" });
     }
     return user;
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }

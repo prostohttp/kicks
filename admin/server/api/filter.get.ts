@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     // TODO: Перенести на сайт
     return filteredArray;
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }
