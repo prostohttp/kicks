@@ -18,7 +18,11 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (!updatedFields.title || !updatedFields.value) {
+    if (
+      !updatedFields.title ||
+      !updatedFields.value ||
+      !updatedFields.parentOption
+    ) {
       return createError({
         statusMessage: "Title and value are required",
       });

@@ -1,28 +1,23 @@
 import { Option } from "#imports";
 import { Constants } from "~/constants";
 import deleteFiles from "~/utils/delete-files";
+import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFiles from "~/utils/upload-files";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
-  const formData = await readFormData(event);
-
-  const title = formData.get("title");
-  const value = formData.get("value");
-  const parentOption = formData.get("parentOption");
-
   const image = uploadFiles(data, Constants.IMG_OPTIONS, "image");
 
   try {
+    const resultData = fromMultipartFormData(data);
     const newOptionValue = new OptionValue({
-      title,
-      value,
+      ...resultData,
       image: image ? image[0] : "",
     });
 
     const savedOptionValue = await newOptionValue.save();
     await Option.findByIdAndUpdate(
-      parentOption,
+      resultData.parentOption,
       {
         $push: { values: savedOptionValue._id },
       },
