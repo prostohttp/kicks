@@ -1,14 +1,18 @@
 import { Constants } from "~/constants";
 import cleanStringToArray from "~/utils/clean-string-to-array";
-import deleteFiles from "~/utils/delete-files";
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
-import uploadFiles from "~/utils/upload-files";
+import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
 
-  const image = uploadFiles(data, Constants.IMG_PRODUCTS, "image");
-  const additionImages = uploadFiles(
+  const image = uploadFilesWithUseStorage(
+    data,
+    Constants.IMG_PRODUCTS,
+    "image",
+  );
+  const additionImages = uploadFilesWithUseStorage(
     data,
     Constants.IMG_PRODUCTS,
     "additionImages",
@@ -29,10 +33,10 @@ export default defineEventHandler(async (event) => {
     return await newProduct.save();
   } catch (error: any) {
     if (image) {
-      deleteFiles(image);
+      deleteFilesWithUseStorage(image);
     }
     if (additionImages) {
-      deleteFiles(additionImages);
+      deleteFilesWithUseStorage(additionImages);
     }
 
     return createError({

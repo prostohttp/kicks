@@ -1,12 +1,12 @@
-import deleteFiles from "~/utils/delete-files";
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import { Constants } from "~/constants";
-import uploadFiles from "~/utils/upload-files";
+import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
 
-  const image = uploadFiles(data, Constants.IMG_OPTIONS, "image");
+  const image = uploadFilesWithUseStorage(data, Constants.IMG_OPTIONS, "image");
 
   try {
     const updatedFields = fromMultipartFormData(data);
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFiles([optionValue.image.toString()]);
+      deleteFilesWithUseStorage([optionValue.image.toString()]);
     }
 
     const updatedOptionValue = await OptionValue.findByIdAndUpdate(
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
     return updatedOptionValue;
   } catch (error: any) {
     if (image) {
-      deleteFiles(image);
+      deleteFilesWithUseStorage(image);
     }
 
     return createError({

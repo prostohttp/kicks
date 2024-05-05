@@ -1,14 +1,18 @@
 import { Constants } from "~/constants";
 import { type CategoryDto } from "~/types";
 import cleanStringToArray from "~/utils/clean-string-to-array";
-import deleteFiles from "~/utils/delete-files";
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
-import uploadFiles from "~/utils/upload-files";
+import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
 
-  const images = uploadFiles(data, Constants.IMG_CATEGORIES, "image");
+  const images = uploadFilesWithUseStorage(
+    data,
+    Constants.IMG_CATEGORIES,
+    "image",
+  );
 
   try {
     const updatedFields = fromMultipartFormData(data);
@@ -33,21 +37,21 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = images[0];
     } else if (images && !images.length) {
       updatedFields.image = "";
-      deleteFiles([category.image.toString()]);
+      deleteFilesWithUseStorage([category.image.toString()]);
     }
 
     const updatedCategory = await Category.findByIdAndUpdate(
       updatedFields.id,
       {
         ...updatedFields,
-        children: cleanStringToArray(updatedFields.children),
+        children: cleanStringToArray(updatedFields.children as string),
       },
       { new: true },
     );
     return updatedCategory;
   } catch (error: any) {
     if (images) {
-      deleteFiles(images);
+      deleteFilesWithUseStorage(images);
     }
     return createError({
       statusMessage: error.message,

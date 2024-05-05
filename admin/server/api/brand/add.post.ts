@@ -1,12 +1,12 @@
 import { Constants } from "~/constants";
-import deleteFiles from "~/utils/delete-files";
+import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
-import uploadFiles from "~/utils/upload-files";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
 
-  const image = uploadFiles(data, Constants.IMG_BRANDS, "image");
+  const image = uploadFilesWithUseStorage(data, Constants.IMG_BRANDS, "image");
   try {
     const resultData = fromMultipartFormData(data);
     const newBrand = new Brand({
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     return await newBrand.save();
   } catch (error: any) {
     if (image) {
-      deleteFiles(image);
+      deleteFilesWithUseStorage(image);
     }
 
     return createError({

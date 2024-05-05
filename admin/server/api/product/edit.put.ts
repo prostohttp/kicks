@@ -1,14 +1,18 @@
 import { Constants } from "~/constants";
 import cleanStringToArray from "~/utils/clean-string-to-array";
-import deleteFiles from "~/utils/delete-files";
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
-import uploadFiles from "~/utils/upload-files";
+import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
 
-  const image = uploadFiles(data, Constants.IMG_PRODUCTS, "image");
-  const additionImages = uploadFiles(
+  const image = uploadFilesWithUseStorage(
+    data,
+    Constants.IMG_PRODUCTS,
+    "image",
+  );
+  const additionImages = uploadFilesWithUseStorage(
     data,
     Constants.IMG_PRODUCTS,
     "additionImages",
@@ -30,7 +34,7 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFiles([product.image.toString()]);
+      deleteFilesWithUseStorage([product.image.toString()]);
     }
 
     if (additionImages && additionImages.length > 0) {
@@ -38,7 +42,7 @@ export default defineEventHandler(async (event) => {
     } else if (additionImages && !additionImages.length) {
       updatedFields.additionImages = [];
       if (additionImages) {
-        deleteFiles(additionImages);
+        deleteFilesWithUseStorage(additionImages);
       }
     }
 
@@ -56,10 +60,10 @@ export default defineEventHandler(async (event) => {
     return updatedProduct;
   } catch (error: any) {
     if (image) {
-      deleteFiles(image);
+      deleteFilesWithUseStorage(image);
     }
     if (additionImages) {
-      deleteFiles(additionImages);
+      deleteFilesWithUseStorage(additionImages);
     }
     return createError({
       statusMessage: error.message,
