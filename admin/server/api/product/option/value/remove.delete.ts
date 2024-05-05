@@ -1,3 +1,5 @@
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
+
 export default defineEventHandler(async (event) => {
   try {
     const { id } = await readBody(event);
@@ -7,6 +9,8 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Option value not found",
       });
     }
+
+    deleteFilesWithUseStorage([optionValue.image.toString()]);
     return {
       statusMessage: "Option value deleted",
     };
