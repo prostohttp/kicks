@@ -76,7 +76,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh">
+  <div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh dark:text-white">
     <AuthSidebar />
     <div
       class="flex lg:pt-[40px] pb-[40px] pt-[40px] lg:px-0 px-[30px] justify-center items-center"

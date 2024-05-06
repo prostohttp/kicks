@@ -3,6 +3,7 @@ import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
+import { ProductDto } from "./dto/product.dto";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
@@ -19,11 +20,11 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const resultData = fromMultipartFormData(data);
+    const resultData = fromMultipartFormData(data) as any as ProductDto;
     const newProduct = new Product({
       ...resultData,
-      category: cleanStringToArray(resultData.category as string),
-      tags: cleanStringToArray(resultData.tags as string),
+      category: cleanStringToArray(resultData.category),
+      tags: cleanStringToArray(resultData.tags),
       image: image ? image[0] : "",
       additionImages: additionImages ? additionImages : [],
       options: resultData.options

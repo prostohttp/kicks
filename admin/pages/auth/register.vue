@@ -75,7 +75,7 @@ const registerHandler = useThrottleFn(register, 1000);
 </script>
 
 <template>
-  <div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh">
+  <div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh dark:text-white">
     <AuthSidebar />
     <div class="flex py-[10px] lg:px-0 px-[30px] justify-center items-center">
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">

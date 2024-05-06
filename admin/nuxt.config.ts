@@ -69,6 +69,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-mongoose",
     "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
     "@nuxt/content",
     "@sidebase/nuxt-auth",
     "@vue-email/nuxt",

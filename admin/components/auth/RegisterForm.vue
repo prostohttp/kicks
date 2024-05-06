@@ -101,7 +101,12 @@ const isOpen = ref(false);
       </ULink>
     </div>
   </UForm>
-  <UiModal v-model="isOpen" title="KicksClub Terms & Conditions" fullscreen>
+  <UiModal
+    v-model="isOpen"
+    title="KicksClub Terms & Conditions"
+    class="dark:text-white"
+    fullscreen
+  >
     <ContentDoc path="/terms" />
   </UiModal>
 </template>

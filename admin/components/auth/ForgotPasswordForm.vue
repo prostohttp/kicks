@@ -47,7 +47,7 @@ const isOpen = ref(false);
       </ULink>
     </div>
   </UForm>
-  <UiModal v-model="isOpen" title="More Info">
+  <UiModal v-model="isOpen" title="More Info" class="dark:text-white">
     <ContentDoc path="/auth-info" />
   </UiModal>
 </template>

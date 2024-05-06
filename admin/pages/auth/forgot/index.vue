@@ -59,7 +59,7 @@ const forgotHandler = useThrottleFn(forgot, 1000);
 </script>
 
 <template>
-  <div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh">
+  <div class="lg:grid flex flex-col lg:grid-cols-2 h-dvh dark:text-white">
     <AuthSidebar />
     <div
       class="flex lg:pt-[40px] pb-[40px] pt-[40px] lg:px-0 px-[30px] justify-center items-center"
@@ -80,7 +80,12 @@ const forgotHandler = useThrottleFn(forgot, 1000);
         >
       </div>
     </div>
-    <UiModal v-model="isOpen" title="KicksClub Terms & Conditions" fullscreen>
+    <UiModal
+      v-model="isOpen"
+      title="KicksClub Terms & Conditions"
+      class="dark:text-white"
+      fullscreen
+    >
       <ContentDoc path="/terms" />
     </UiModal>
   </div>

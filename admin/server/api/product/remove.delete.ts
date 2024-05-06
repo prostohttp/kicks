@@ -1,17 +1,18 @@
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
+import { ProductDto } from "./dto/product.dto";
 
 export default defineEventHandler(async (event) => {
   try {
     const { id } = await readBody(event);
-    const product = await Product.findByIdAndDelete(id);
+    const product: ProductDto | null = await Product.findByIdAndDelete(id);
 
     if (!product) {
       return createError({
         statusMessage: "Product not found",
       });
     }
-    deleteFilesWithUseStorage([product.image?.toString()]);
-    deleteFilesWithUseStorage(product?.additionImages as any as string[]);
+    deleteFilesWithUseStorage(product.image ? [product.image] : undefined);
+    deleteFilesWithUseStorage(product.additionImages);
     return {
       statusMessage: "Product deleted",
     };
