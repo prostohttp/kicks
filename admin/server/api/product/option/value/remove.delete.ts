@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    deleteFilesWithUseStorage([optionValue.image.toString()]);
+    deleteFilesWithUseStorage([optionValue.image?.toString()]);
     return {
       statusMessage: "Option value deleted",
     };

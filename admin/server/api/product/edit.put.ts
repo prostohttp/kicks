@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage([product.image.toString()]);
+      deleteFilesWithUseStorage([product.image?.toString()]);
     }
 
     if (additionImages && additionImages.length > 0) {

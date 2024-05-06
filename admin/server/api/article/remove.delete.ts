@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Article not found",
       });
     }
-    deleteFilesWithUseStorage([article.image.toString()]);
+    deleteFilesWithUseStorage([article.image?.toString()]);
     return {
       statusMessage: "Article deleted",
     };

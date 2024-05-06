@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
       return createError({ statusMessage: "Category not found" });
     }
 
-    deleteFilesWithUseStorage([category.image.toString()]);
+    deleteFilesWithUseStorage([category.image?.toString()]);
 
     return {
       statusMessage: "Category deleted",

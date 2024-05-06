@@ -6,7 +6,7 @@ export default (
   data: MultiPartData[] | undefined,
   folderPath: string,
   fieldName: string,
-): string[] | false => {
+): string[] => {
   const files: string[] = [];
   try {
     if (data) {

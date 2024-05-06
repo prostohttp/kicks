@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    deleteFilesWithUseStorage([foundedUser.image.toString()]);
+    deleteFilesWithUseStorage([foundedUser.image?.toString()]);
     return {
       statusMessage: "User deleted",
     };

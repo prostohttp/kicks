@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage([brand.image.toString()]);
+      deleteFilesWithUseStorage([brand.image?.toString()]);
     }
 
     const updatedBrand = await Brand.findByIdAndUpdate(

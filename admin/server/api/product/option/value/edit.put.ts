@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage([optionValue.image.toString()]);
+      deleteFilesWithUseStorage([optionValue.image?.toString()]);
     }
 
     const updatedOptionValue = await OptionValue.findByIdAndUpdate(

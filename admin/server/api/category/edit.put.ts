@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = images[0];
     } else if (images && !images.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage([category.image.toString()]);
+      deleteFilesWithUseStorage([category.image?.toString()]);
     }
 
     const updatedCategory = await Category.findByIdAndUpdate(

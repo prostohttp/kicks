@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage([article.image.toString()]);
+      deleteFilesWithUseStorage([article.image?.toString()]);
     }
 
     return await Article.findByIdAndUpdate(

@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Product not found",
       });
     }
-    deleteFilesWithUseStorage([product.image.toString()]);
+    deleteFilesWithUseStorage([product.image?.toString()]);
     deleteFilesWithUseStorage(product?.additionImages as any as string[]);
     return {
       statusMessage: "Product deleted",

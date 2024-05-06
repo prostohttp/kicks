@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    deleteFilesWithUseStorage([brand.image.toString()]);
+    deleteFilesWithUseStorage([brand.image?.toString()]);
     return {
       statusMessage: "Brand deleted",
     };
