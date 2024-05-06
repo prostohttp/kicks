@@ -1,9 +1,12 @@
 import { Notification } from "#imports";
+import { NotificationDto } from "~/server/api/notification/dto/notification.dto";
 
 export default defineEventHandler(async (event) => {
   try {
-    const { id, isRead } = await readBody(event);
-    const notification = await Notification.findById(id);
+    const notificationBody: NotificationDto = await readBody(event);
+    const notification: NotificationDto = await Notification.findById(
+      notificationBody.id,
+    );
 
     if (!notification) {
       return createError({
@@ -11,14 +14,13 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const updatedNotification = await Notification.findByIdAndUpdate(
-      id,
-      { isRead },
+    return await Notification.findByIdAndUpdate(
+      notificationBody.id,
+      { ...notificationBody, isRead: notificationBody.isRead },
       {
         new: true,
       },
     );
-    return updatedNotification;
   } catch (error: any) {
     return createError({
       statusMessage: error.message,

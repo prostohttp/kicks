@@ -1,9 +1,9 @@
 import { Constants } from "~/constants";
-import { type CategoryDto } from "~/types";
 import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
+import { CategoryDto } from "~/server/api/category/dto/category.dto";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const updatedFields = fromMultipartFormData(data);
+    const updatedFields = fromMultipartFormData(data) as any as CategoryDto;
     const category: CategoryDto | null = await Category.findById(
       updatedFields.id,
     );
@@ -37,7 +37,9 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = images[0];
     } else if (images && !images.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage([category.image?.toString()]);
+      deleteFilesWithUseStorage(
+        updatedFields.image ? [updatedFields.image] : undefined,
+      );
     }
 
     const updatedCategory = await Category.findByIdAndUpdate(

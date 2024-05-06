@@ -3,13 +3,14 @@ import { Constants } from "~/constants";
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
+import { OptionValueDto } from "~/server/api/product/dto/option-value.dto";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
   const image = uploadFilesWithUseStorage(data, Constants.IMG_OPTIONS, "image");
 
   try {
-    const resultData = fromMultipartFormData(data);
+    const resultData = fromMultipartFormData(data) as any as OptionValueDto;
     const newOptionValue = new OptionValue({
       ...resultData,
       image: image ? image[0] : "",

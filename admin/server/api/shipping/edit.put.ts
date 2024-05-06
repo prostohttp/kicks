@@ -1,28 +1,25 @@
+import { ShippingDto } from "~/server/api/shipping/dto/shipping.dto";
+
 export default defineEventHandler(async (event) => {
-  const { id, title, description, price, free } = await readBody(event);
+  const body: ShippingDto = await readBody(event);
 
   try {
-    const shipping = await Shipping.findById(id);
+    const shipping = await Shipping.findById(body.id);
     if (!shipping) {
       return createError({
         statusMessage: "Shipping method not found",
       });
     }
 
-    if (!title || !description) {
+    if (!body.title || !body.price) {
       return createError({
-        statusMessage: "Title and description are required",
+        statusMessage: "Title and price are required",
       });
     }
 
-    const updatedPayment = await Shipping.findByIdAndUpdate(
-      id,
-      { title, description, price, free },
-      {
-        new: true,
-      },
-    );
-    return updatedPayment;
+    return await Shipping.findByIdAndUpdate(body.id, body, {
+      new: true,
+    });
   } catch (error: any) {
     return createError({
       statusMessage: error.message,

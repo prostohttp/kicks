@@ -18,6 +18,10 @@ export const Notification = defineMongooseModel({
       type: Boolean,
       required: true,
     },
+    createdAt: {
+      type: Date,
+      required: true,
+    },
   },
   hooks(schema) {
     schema.pre("save", function (this, next) {

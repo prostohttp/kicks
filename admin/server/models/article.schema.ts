@@ -1,5 +1,5 @@
-import { defineMongooseModel } from "#nuxt/mongoose";
-import { Types } from "mongoose";
+import {defineMongooseModel} from "#nuxt/mongoose";
+import {Types} from "mongoose";
 
 export const Article = defineMongooseModel({
   name: "Article",
@@ -19,10 +19,10 @@ export const Article = defineMongooseModel({
     },
     isEnabled: {
       type: Boolean,
-      required: false,
+      required: true,
     },
     featuredProducts: [
-      { type: Types.ObjectId || String, required: false, ref: "Product" },
+      {type: Types.ObjectId || String, required: false, ref: "Product"},
     ],
     image: {
       type: String,

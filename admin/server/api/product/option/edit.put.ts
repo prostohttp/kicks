@@ -1,10 +1,10 @@
-import { Option } from "#imports";
+import {Option} from "#imports";
 import cleanStringToArray from "~/utils/clean-string-to-array";
-import { OptionDto } from "../dto/option.dto";
+import {OptionDto} from "../dto/option.dto";
 
 export default defineEventHandler(async (event) => {
   try {
-    const { title, type, values, id }: OptionDto = await readBody(event);
+    const {title, type, values, id}: OptionDto = await readBody(event);
     const option = await Option.findById(id);
 
     if (!option) {
@@ -25,14 +25,13 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const updatedOption = await Option.findByIdAndUpdate(
+    return await Option.findByIdAndUpdate(
       id,
-      { title, type, values: cleanStringToArray(values) },
+      {title, type, values: cleanStringToArray(values)},
       {
         new: true,
       },
     );
-    return updatedOption;
   } catch (error: any) {
     return createError({
       statusMessage: error.message,

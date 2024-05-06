@@ -1,10 +1,12 @@
+import { ShippingDto } from "~/server/api/shipping/dto/shipping.dto";
+
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body: ShippingDto = await readBody(event);
 
   try {
-    if (!body.title || !body.description) {
+    if (!body.title || !body.price) {
       return createError({
-        statusMessage: "Title and description are required",
+        statusMessage: "Title and price are required",
       });
     }
 

@@ -7,6 +7,7 @@ export const Constants = {
   IMG_BRANDS: "img/brands/",
   IMG_OPTIONS: "img/options/",
   IMG_ARTICLES: "img/articles/",
+  IMG_USERS: "img/users/",
   PER_PAGE_CAT: 8,
   PER_PAGE_PROD: 12,
   PER_PAGE_ORDER: 8,

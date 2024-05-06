@@ -1,6 +1,8 @@
+import { OrderDto } from "~/server/api/order/dto/order.dto";
+
 export default defineEventHandler(async (event) => {
   try {
-    const body = await readBody(event);
+    const body: OrderDto = await readBody(event);
     const order = await Order.findById(body.id);
 
     if (!order) {

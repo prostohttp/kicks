@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
+import { UserDto } from "./dto/user.dto";
 
 export default defineEventHandler(async (event) => {
   try {
-    const { name, email, password } = await readBody(event);
-    const hashed = bcrypt.hashSync(password, 10);
+    const user: UserDto = await readBody(event);
+    const hashed = bcrypt.hashSync(user.password!, 10);
     const newUser = new User({
-      name,
-      email,
+      ...user,
       password: hashed,
       role: Roles.CUSTOMER,
     });

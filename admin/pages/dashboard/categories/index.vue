@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
-import type { CategoryDto } from "~/types";
+import type { CategoryDto } from "~/server/api/category/dto/category.dto";
 
 // types
 interface ICategoriesDto {
@@ -8,6 +8,7 @@ interface ICategoriesDto {
   page?: number;
   perPage: number;
 }
+
 // meta
 definePageMeta({
   layout: "dashboard",

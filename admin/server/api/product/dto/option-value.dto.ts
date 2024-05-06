@@ -1,4 +1,5 @@
-export interface OptionValue {
+export interface OptionValueDto {
+  id?: string;
   title: string;
   image?: string;
   value: string;

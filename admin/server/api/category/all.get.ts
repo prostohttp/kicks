@@ -1,6 +1,6 @@
-import { type CategoryDto } from "~/types";
 import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
+import { CategoryDto } from "~/server/api/category/dto/category.dto";
 
 export default defineEventHandler(async (event) => {
   try {

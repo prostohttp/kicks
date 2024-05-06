@@ -1,5 +1,7 @@
+import { PaymentDto } from "~/server/api/payment/dto/payment.dto";
+
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body: PaymentDto = await readBody(event);
 
   try {
     const newPayment = new Payment(body);

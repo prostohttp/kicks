@@ -1,23 +1,25 @@
+import { PaymentDto } from "~/server/api/payment/dto/payment.dto";
+
 export default defineEventHandler(async (event) => {
-  const { id, title } = await readBody(event);
+  const body: PaymentDto = await readBody(event);
 
   try {
-    const payment = await Payment.findById(id);
+    const payment = await Payment.findById(body.id);
     if (!payment) {
       return createError({
         statusMessage: "Payment method not found",
       });
     }
 
-    if (!title) {
+    if (!body.title) {
       return createError({
         statusMessage: "Title is required",
       });
     }
 
     const updatedPayment = await Payment.findByIdAndUpdate(
-      id,
-      { title },
+      body.id,
+      { ...body, title: body.title },
       {
         new: true,
       },

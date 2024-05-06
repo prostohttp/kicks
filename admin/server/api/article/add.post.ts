@@ -4,6 +4,7 @@ import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
+import { ArticleDto } from "~/server/api/article/dto/article.dto";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
@@ -15,12 +16,10 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const resultData = fromMultipartFormData(data);
+    const resultData = fromMultipartFormData(data) as any as ArticleDto;
     const newArticle = new Article({
       ...resultData,
-      featuredProducts: cleanStringToArray(
-        resultData.featuredProducts as string,
-      ),
+      featuredProducts: cleanStringToArray(resultData.featuredProducts),
       image: image ? image[0] : "",
     });
 

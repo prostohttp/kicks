@@ -10,15 +10,11 @@ export const Shipping = defineMongooseModel({
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     price: {
       type: Number,
-      required: false,
-    },
-    free: {
-      type: Boolean,
-      required: false,
+      required: true,
     },
   },
   hooks(schema) {

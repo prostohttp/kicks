@@ -3,6 +3,7 @@ import cleanStringToArray from "~/utils/clean-string-to-array";
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
+import { ArticleDto } from "~/server/api/article/dto/article.dto";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
@@ -14,7 +15,7 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const updatedFields = fromMultipartFormData(data);
+    const updatedFields = fromMultipartFormData(data) as any as ArticleDto;
     const article = await Article.findById(updatedFields.id);
 
     if (!article) {
@@ -30,16 +31,16 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage([article.image?.toString()]);
+      deleteFilesWithUseStorage(
+        updatedFields.image ? [updatedFields.image] : undefined,
+      );
     }
 
     return await Article.findByIdAndUpdate(
       updatedFields.id,
       {
         ...updatedFields,
-        featuredProducts: cleanStringToArray(
-          updatedFields.featuredProducts as string,
-        ),
+        featuredProducts: cleanStringToArray(updatedFields.featuredProducts),
       },
       {
         new: true,
