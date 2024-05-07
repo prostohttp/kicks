@@ -7,6 +7,7 @@
       r="20"
       fill="none"
       stroke-width="5"
+      class="dark:stroke-white"
     ></circle>
   </svg>
 </template>
