@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const updatedFields = fromMultipartFormData(data) as any as ArticleDto;
+    const updatedFields = fromMultipartFormData(data) as unknown as ArticleDto;
     const article = await Article.findById(updatedFields.id);
 
     if (!article) {

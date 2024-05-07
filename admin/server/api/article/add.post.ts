@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const resultData = fromMultipartFormData(data) as any as ArticleDto;
+    const resultData = fromMultipartFormData(data) as unknown as ArticleDto;
     const newArticle = new Article({
       ...resultData,
       featuredProducts: cleanStringToArray(resultData.featuredProducts),

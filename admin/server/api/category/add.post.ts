@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     "image",
   );
   try {
-    const resultData = fromMultipartFormData(data) as any as CategoryDto;
+    const resultData = fromMultipartFormData(data) as unknown as CategoryDto;
 
     const newCategory = new Category({
       ...resultData,

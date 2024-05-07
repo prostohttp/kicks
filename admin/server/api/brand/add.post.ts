@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const image = uploadFilesWithUseStorage(data, Constants.IMG_BRANDS, "image");
   try {
-    const resultData = fromMultipartFormData(data) as any as BrandDto;
+    const resultData = fromMultipartFormData(data) as unknown as BrandDto;
     const newBrand = new Brand({
       ...resultData,
       image: image ? image[0] : "",

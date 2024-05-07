@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   const image = uploadFilesWithUseStorage(data, Constants.IMG_OPTIONS, "image");
 
   try {
-    const resultData = fromMultipartFormData(data) as any as OptionValueDto;
+    const resultData = fromMultipartFormData(data) as unknown as OptionValueDto;
     const newOptionValue = new OptionValue({
       ...resultData,
       image: image ? image[0] : "",

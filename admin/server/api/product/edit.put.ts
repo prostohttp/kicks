@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const updatedFields = fromMultipartFormData(data) as any as ProductDto;
+    const updatedFields = fromMultipartFormData(data) as unknown as ProductDto;
     const product: ProductDto | null = await Product.findById(updatedFields.id);
 
     if (!product) {

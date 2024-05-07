@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   );
 
   try {
-    const resultData = fromMultipartFormData(data) as any as ProductDto;
+    const resultData = fromMultipartFormData(data) as unknown as ProductDto;
     const newProduct = new Product({
       ...resultData,
       category: cleanStringToArray(resultData.category),

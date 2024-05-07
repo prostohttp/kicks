@@ -7,7 +7,7 @@ import { BrandDto } from "~/server/api/brand/dto/brand.dto";
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
 
-  const updatedFields = fromMultipartFormData(data) as any as BrandDto;
+  const updatedFields = fromMultipartFormData(data) as unknown as BrandDto;
   const image = uploadFilesWithUseStorage(data, Constants.IMG_BRANDS, "image");
 
   try {

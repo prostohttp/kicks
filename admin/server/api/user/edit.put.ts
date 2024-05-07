@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   try {
     const data = await readMultipartFormData(event);
     const image = uploadFilesWithUseStorage(data, Constants.IMG_USERS, "image");
-    const resultData = fromMultipartFormData(data) as any as UserDto;
+    const resultData = fromMultipartFormData(data) as unknown as UserDto;
 
     const user = await User.findById(resultData.id);
     if (!user || (user && user.role.toString() !== Roles.CUSTOMER)) {
