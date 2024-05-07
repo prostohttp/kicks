@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { schema } from "~/components/auth/schemas/forgot.schema";
+import { schema } from "~/components/auth/schema/forgot.schema";
 
 // Emits
 defineEmits(["submit"]);

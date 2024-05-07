@@ -37,7 +37,7 @@ const { data, pending } = await useFetch<ICategoriesDto>("/api/category/all", {
 
 <template>
   <div>
-    <UiSpinner v-if="pending" />
+    <LazyUiSpinner v-if="pending" />
     <template v-else>
       <h1>All categories</h1>
       <pre>{{ data }}</pre>

@@ -20,7 +20,6 @@ useHead({
 
 // vars
 const toast = useToast();
-const router = useRouter();
 
 // Handlers
 const register = async (data: RegisterFormDto) => {
@@ -40,7 +39,7 @@ const register = async (data: RegisterFormDto) => {
       toast.add({
         title: "You are have been registered and now you can login",
         callback: () => {
-          router.push({ name: "login" });
+          navigateTo({ name: "login" });
         },
       });
       await $fetch("/api/email/register-send-email", {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import SwitchTheme from "./components/ui/switchTheme.vue";
+import SwitchTheme from "./components/ui/SwitchTheme.vue";
 
 // meta
 useSeoMeta({

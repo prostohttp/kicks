@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { schema } from "~/components/auth/schemas/reset-password.schema";
+import { schema } from "~/components/auth/schema/reset-password.schema";
 
 // Emits
 defineEmits(["submit"]);

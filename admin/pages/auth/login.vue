@@ -5,7 +5,6 @@ import { type LoginFormDto } from "~/types";
 const isOpen = ref(false);
 const isError = ref();
 const { signIn } = useAuth();
-const router = useRouter();
 const toast = useToast();
 
 // Meta
@@ -33,7 +32,7 @@ const login = async (data: LoginFormDto) => {
     redirect: false,
   });
   if (!isError.value.error) {
-    router.push("/dashboard");
+    navigateTo({ name: "dashboard" });
   } else {
     toast.add({ title: "Wrong email or password" });
   }

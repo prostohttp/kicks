@@ -20,7 +20,6 @@ useHead({
 
 // Vars
 const toast = useToast();
-const router = useRouter();
 const route = useRoute();
 const isLoading = ref(true);
 const isValid = ref(false);
@@ -43,13 +42,11 @@ const resetPassword = async (data: ResetPasswordDto) => {
         token: route.query.token,
       },
     });
+    navigateTo({ name: "login" });
     toast.add({
       title: "Password changed, now you can Login",
       click: () => {
-        router.push({ name: "login" });
-      },
-      callback() {
-        router.push({ name: "login" });
+        navigateTo({ name: "login" });
       },
     });
   } catch (error) {}
@@ -81,7 +78,7 @@ onMounted(async () => {
     <div
       class="flex lg:pt-[40px] pb-[40px] pt-[40px] lg:px-0 px-[30px] justify-center items-center"
     >
-      <UiSpinner v-if="isLoading" />
+      <LazyUiSpinner v-if="isLoading" />
       <div v-else class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
