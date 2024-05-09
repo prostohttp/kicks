@@ -1,5 +1,5 @@
 import { Constants } from "~/constants";
-import { UserDto } from "./dto/user.dto";
+import { UserDto } from "~/server/dto/user.dto";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
 

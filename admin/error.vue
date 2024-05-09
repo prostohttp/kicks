@@ -11,7 +11,7 @@ const errorHandle = () => {
 
 <template>
   <div
-    class="flex flex-col justify-center items-center h-dvh gap-[20px] px-[20px] xl:px-0"
+    class="flex flex-col justify-center items-center h-dvh gap-[20px] px-[20px] xl:px-0 dark:text-white"
   >
     <img src="~/assets/img/large-logo.svg" alt="kicks logo" class="mb-[50px]" />
     <h1 class="text-[4em] font-[Rubik]">{{ error!.statusCode }}</h1>

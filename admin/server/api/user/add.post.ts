@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { UserDto } from "./dto/user.dto";
+import { UserDto } from "~/server/dto/user.dto";
 
 export default defineEventHandler(async (event) => {
   try {

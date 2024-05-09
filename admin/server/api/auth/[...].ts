@@ -27,7 +27,7 @@ export default NuxtAuthHandler({
     },
     // Callback whenever session is checked, see https://next-auth.js.org/configuration/callbacks#session-callback
     async session({ session, token }) {
-      (session as any).user.role = token.role || "manager";
+      (session as any).user.role = token.role || Roles.MANAGER;
       return session;
     },
   },

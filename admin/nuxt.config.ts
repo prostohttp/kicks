@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       },
     },
     experimental: {
-      websocket: true,
+      // websocket: true,
     },
   },
   css: ["~/assets/css/main.css"],
@@ -80,6 +80,5 @@ export default defineNuxtConfig({
     "nuxt-aos",
     "@nuxt/ui",
     "@nuxtjs/google-fonts",
-    ,
   ],
 });

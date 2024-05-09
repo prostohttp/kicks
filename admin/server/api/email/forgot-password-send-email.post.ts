@@ -7,7 +7,7 @@ const resend = new Resend(runtimeConfig.RESEND_API_KEY);
 
 export default defineEventHandler(async (event) => {
   const { email, siteName, siteUrl, token } = await readBody(event);
-  const template = await useCompiler("ForgotPassword.vue", {
+  const template = await useCompiler("forgot-password.vue", {
     props: {
       siteName,
       siteUrl,

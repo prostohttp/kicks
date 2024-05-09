@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   try {
-    const { id } = getQuery(event);
-    const user = await User.findById(id);
+    const { email } = getQuery(event);
+    const user = await User.findOne({ email }).select("name email image");
     if (!user) {
       return createError({ statusMessage: "User not found" });
     }
