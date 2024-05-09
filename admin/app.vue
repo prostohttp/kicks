@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import SwitchTheme from "./components/ui/SwitchTheme.vue";
-
 // meta
 useSeoMeta({
   ogImage: "/public/kicks-marketplace.svg",
@@ -13,7 +11,7 @@ useHead({
 <template>
   <div class="w-full max-w-[1440px] mx-auto">
     <NuxtLayout>
-      <SwitchTheme />
+      <UiSwitchTheme />
       <NuxtPage />
     </NuxtLayout>
     <UNotifications />
