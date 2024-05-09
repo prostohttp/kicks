@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     if (!body.title || !body.price) {
-      return createError({
+      throw createError({
         statusMessage: "Title and price are required",
       });
     }
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const newShipping = new Shipping(body);
     return await newShipping.save();
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
       statusCode: 409,
     });

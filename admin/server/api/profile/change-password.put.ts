@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
         user.password.toString(),
       );
       if (!correctPassword) {
-        return createError({ statusMessage: "Wrong password" });
+        throw createError({ statusMessage: "Wrong password" });
       }
       await User.findOneAndUpdate(
         { email },
@@ -21,8 +21,8 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Password changed",
       };
     }
-    return createError({ statusMessage: "User not found" });
+    throw createError({ statusMessage: "User not found" });
   } catch (error: any) {
-    return createError({ statusMessage: error.message });
+    throw createError({ statusMessage: error.message });
   }
 });

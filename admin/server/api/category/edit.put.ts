@@ -21,14 +21,14 @@ export default defineEventHandler(async (event) => {
     );
 
     if (!category) {
-      return createError({ statusMessage: "Category not found" });
+      throw createError({ statusMessage: "Category not found" });
     }
     if (
       !updatedFields.title ||
       !updatedFields.isParent ||
       !updatedFields.isEnabled
     ) {
-      return createError({
+      throw createError({
         statusMessage: "Title, isParent and isEnabled are required",
       });
     }
@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
     if (images) {
       deleteFilesWithUseStorage(images);
     }
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

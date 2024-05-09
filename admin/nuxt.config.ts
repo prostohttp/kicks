@@ -45,9 +45,9 @@ export default defineNuxtConfig({
     provider: {
       type: "authjs",
     },
-    globalAppMiddleware: {
-      isEnabled: true,
-    },
+    // globalAppMiddleware: {
+    //   isEnabled: true,
+    // },
   },
   mongoose: {
     uri: process.env.MONGODB_URI,

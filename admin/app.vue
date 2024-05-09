@@ -11,6 +11,7 @@ useHead({
 <template>
   <div class="w-full max-w-[1440px] mx-auto">
     <NuxtLayout>
+      <NuxtLoadingIndicator :height="5" color="#FFA52F" />
       <UiSwitchTheme />
       <NuxtPage />
     </NuxtLayout>

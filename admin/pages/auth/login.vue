@@ -32,7 +32,7 @@ const login = async (data: LoginFormDto) => {
     redirect: false,
   });
   if (!isError.value.error) {
-    navigateTo({ name: "dashboard" });
+    navigateTo("/dashboard");
   } else {
     toast.add({ title: "Wrong email or password" });
   }

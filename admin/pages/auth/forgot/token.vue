@@ -42,11 +42,11 @@ const resetPassword = async (data: ResetPasswordDto) => {
         token: route.query.token,
       },
     });
-    navigateTo({ name: "login" });
+    navigateTo("/login");
     toast.add({
       title: "Password changed, now you can Login",
       click: () => {
-        navigateTo({ name: "login" });
+        navigateTo("/login");
       },
     });
   } catch (error) {}

@@ -5,10 +5,10 @@ export default defineEventHandler(async (event) => {
     const { id } = getQuery(event);
     const notification = await Notification.findById(id);
     if (!notification) {
-      return createError({ statusMessage: "Notification not found" });
+      throw createError({ statusMessage: "Notification not found" });
     }
     return notification;
   } catch (error: any) {
-    return createError({ statusMessage: error.message });
+    throw createError({ statusMessage: error.message });
   }
 });

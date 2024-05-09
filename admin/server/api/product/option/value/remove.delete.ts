@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const optionValue = await OptionValue.findByIdAndDelete(id);
     if (!optionValue) {
-      return createError({
+      throw createError({
         statusMessage: "Option value not found",
       });
     }
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Option value deleted",
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

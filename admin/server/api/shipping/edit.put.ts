@@ -6,13 +6,13 @@ export default defineEventHandler(async (event) => {
   try {
     const shipping = await Shipping.findById(body.id);
     if (!shipping) {
-      return createError({
+      throw createError({
         statusMessage: "Shipping method not found",
       });
     }
 
     if (!body.title || !body.price) {
-      return createError({
+      throw createError({
         statusMessage: "Title and price are required",
       });
     }
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
       new: true,
     });
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

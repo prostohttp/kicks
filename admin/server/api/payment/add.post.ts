@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
     return await newPayment.save();
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
       statusCode: 409,
     });

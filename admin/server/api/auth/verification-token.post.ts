@@ -4,7 +4,7 @@ export default defineEventHandler(async (event): Promise<string | boolean> => {
     const activeToken = await Token.findOne({ token: token });
     return activeToken ? activeToken.email.toString() : false;
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

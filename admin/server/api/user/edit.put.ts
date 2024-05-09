@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
     const user = await User.findById(resultData.id);
     if (!user || (user && user.role.toString() !== Roles.CUSTOMER)) {
-      return createError({
+      throw createError({
         statusMessage: "User not found",
       });
     }
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     );
     return updatedUser;
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

@@ -88,6 +88,6 @@ export default async (
     }
     return founded;
   } catch (error: any) {
-    return createError({ statusMessage: error.message });
+    throw createError({ statusMessage: error.message });
   }
 };

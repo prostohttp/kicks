@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     );
 
     if (!notification) {
-      return createError({
+      throw createError({
         statusMessage: "Notification not found",
       });
     }
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
       },
     );
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

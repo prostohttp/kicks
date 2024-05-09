@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     if (!updatedFields.title) {
-      return createError({
+      throw createError({
         statusMessage: "Title is required",
       });
     }
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     const brand = await Brand.findById(updatedFields.id);
 
     if (!brand) {
-      return createError({
+      throw createError({
         statusMessage: "Brand not found",
       });
     }
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       deleteFilesWithUseStorage(image);
     }
 
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

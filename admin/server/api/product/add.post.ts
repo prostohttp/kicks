@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
       deleteFilesWithUseStorage(additionImages);
     }
 
-    return createError({
+    throw createError({
       statusMessage: error.message,
       statusCode: 409,
     });

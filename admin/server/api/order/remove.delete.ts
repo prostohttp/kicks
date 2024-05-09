@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const foundedOrder = await Order.findByIdAndDelete(id);
     if (!foundedOrder) {
-      return createError({
+      throw createError({
         statusMessage: "Order not found",
       });
     }
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Order deleted",
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

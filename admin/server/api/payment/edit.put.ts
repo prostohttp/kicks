@@ -6,13 +6,13 @@ export default defineEventHandler(async (event) => {
   try {
     const payment = await Payment.findById(body.id);
     if (!payment) {
-      return createError({
+      throw createError({
         statusMessage: "Payment method not found",
       });
     }
 
     if (!body.title) {
-      return createError({
+      throw createError({
         statusMessage: "Title is required",
       });
     }
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     );
     return updatedPayment;
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

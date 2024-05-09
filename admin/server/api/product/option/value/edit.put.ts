@@ -1,8 +1,8 @@
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
-import {Constants} from "~/constants";
+import { Constants } from "~/constants";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
-import {OptionValueDto} from "~/server/api/product/dto/option-value.dto";
+import { OptionValueDto } from "~/server/api/product/dto/option-value.dto";
 
 export default defineEventHandler(async (event) => {
   const data = await readMultipartFormData(event);
@@ -11,10 +11,12 @@ export default defineEventHandler(async (event) => {
 
   try {
     const updatedFields = fromMultipartFormData(data);
-    const optionValue: OptionValueDto | null = await OptionValue.findById(updatedFields.id);
+    const optionValue: OptionValueDto | null = await OptionValue.findById(
+      updatedFields.id,
+    );
 
     if (!optionValue) {
-      return createError({
+      throw createError({
         statusMessage: "Option value not found",
       });
     }
@@ -24,7 +26,7 @@ export default defineEventHandler(async (event) => {
       !updatedFields.value ||
       !updatedFields.parentOption
     ) {
-      return createError({
+      throw createError({
         statusMessage: "Title and value are required",
       });
     }
@@ -33,7 +35,9 @@ export default defineEventHandler(async (event) => {
       updatedFields.image = image[0];
     } else if (image && !image.length) {
       updatedFields.image = "";
-      deleteFilesWithUseStorage(optionValue.image ? [optionValue.image] : undefined);
+      deleteFilesWithUseStorage(
+        optionValue.image ? [optionValue.image] : undefined,
+      );
     }
 
     return await OptionValue.findByIdAndUpdate(
@@ -48,7 +52,7 @@ export default defineEventHandler(async (event) => {
       deleteFilesWithUseStorage(image);
     }
 
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

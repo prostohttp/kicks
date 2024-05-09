@@ -3,11 +3,11 @@ export default defineEventHandler(async (event) => {
     const { id } = getQuery(event);
     const article = await Article.findById(id);
     if (!article) {
-      return createError({ statusMessage: "Article not found" });
+      throw createError({ statusMessage: "Article not found" });
     }
     return article;
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

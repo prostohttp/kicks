@@ -17,7 +17,7 @@ export default defineEventHandler(async (event): Promise<TokenResponse> => {
       timestamp: savedToken.timestamp.toString(),
     };
   } catch (error) {
-    return createError({
+    throw createError({
       statusMessage: "Error generating token",
     });
   }

@@ -5,13 +5,13 @@ export default defineEventHandler(async (event) => {
     const { optionId } = getQuery(event);
     const option = await Option.findById(optionId).populate("values");
     if (!option) {
-      return createError({
+      throw createError({
         statusMessage: "Option not found",
       });
     }
     return option.values;
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

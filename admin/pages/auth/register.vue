@@ -39,7 +39,7 @@ const register = async (data: RegisterFormDto) => {
       toast.add({
         title: "You are have been registered and now you can login",
         callback: () => {
-          navigateTo({ name: "login" });
+          navigateTo("/login");
         },
       });
       await $fetch("/api/email/register-send-email", {

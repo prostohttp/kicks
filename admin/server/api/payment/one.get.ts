@@ -3,10 +3,10 @@ export default defineEventHandler(async (event) => {
     const { id } = getQuery(event);
     const payment = await Payment.findById(id);
     if (!payment) {
-      return createError({ statusMessage: "Payment method not found" });
+      throw createError({ statusMessage: "Payment method not found" });
     }
     return payment;
   } catch (error: any) {
-    return createError({ statusMessage: error.message });
+    throw createError({ statusMessage: error.message });
   }
 });

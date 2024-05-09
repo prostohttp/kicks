@@ -19,10 +19,10 @@ export default defineEventHandler(async (event) => {
     const article = await Article.findById(updatedFields.id);
 
     if (!article) {
-      return createError({ statusMessage: "Category not found" });
+      throw createError({ statusMessage: "Category not found" });
     }
     if (!updatedFields.title || !updatedFields.description) {
-      return createError({
+      throw createError({
         statusMessage: "Title and description are required",
       });
     }
@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
     if (image) {
       deleteFilesWithUseStorage(image);
     }
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

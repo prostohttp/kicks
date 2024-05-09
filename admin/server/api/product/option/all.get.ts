@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
       activePage: page,
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

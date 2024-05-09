@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const notification = await Notification.findByIdAndDelete(id);
     if (!notification) {
-      return createError({
+      throw createError({
         statusMessage: "Notification not found",
       });
     }
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Notification deleted",
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

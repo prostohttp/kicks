@@ -5,7 +5,7 @@ export default (fileNames: string[] | undefined): void => {
       await useStorage("fs").removeItem(fileName, { removeMeta: true });
       console.log("File deleted successfully");
     } catch (error) {
-      return createError({
+      throw createError({
         statusMessage: "Error deleting file",
       });
     }

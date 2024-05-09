@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const article = await Article.findByIdAndDelete(id);
     if (!article) {
-      return createError({
+      throw createError({
         statusMessage: "Article not found",
       });
     }
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Article deleted",
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

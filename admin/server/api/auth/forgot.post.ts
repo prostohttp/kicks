@@ -5,13 +5,13 @@ export default defineEventHandler(async (event) => {
     const { email } = await readBody(event);
     const user = await User.findOne({ email });
     if (!user) {
-      return createError({
+      throw createError({
         statusMessage: "Email not found.",
       });
     }
     return user;
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

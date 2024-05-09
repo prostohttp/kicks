@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);
     const foundedUser = await User.findByIdAndDelete(id);
     if (!foundedUser) {
-      return createError({
+      throw createError({
         statusMessage: "User not found",
       });
     }
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "User deleted",
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

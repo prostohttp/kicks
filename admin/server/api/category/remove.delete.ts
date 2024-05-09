@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   try {
     const category = await Category.findByIdAndDelete(id);
     if (!category) {
-      return createError({ statusMessage: "Category not found" });
+      throw createError({ statusMessage: "Category not found" });
     }
 
     deleteFilesWithUseStorage([category.image?.toString()]);
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Category deleted",
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

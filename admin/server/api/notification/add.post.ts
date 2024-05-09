@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const newNotification = new Notification(body);
     return await newNotification.save();
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

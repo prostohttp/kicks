@@ -11,14 +11,14 @@ export default defineEventHandler(async (event) => {
       { new: true },
     );
     if (!user) {
-      return createError({
+      throw createError({
         statusMessage: "User not found.",
       });
     }
 
     return { statusMessage: "Password changed" };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

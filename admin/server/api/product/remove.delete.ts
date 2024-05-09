@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const product: ProductDto | null = await Product.findByIdAndDelete(id);
 
     if (!product) {
-      return createError({
+      throw createError({
         statusMessage: "Product not found",
       });
     }
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Product deleted",
     };
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

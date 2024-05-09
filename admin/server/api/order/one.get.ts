@@ -6,10 +6,10 @@ export default defineEventHandler(async (event) => {
       select: "title quantity regularPrice salePrice",
     });
     if (!foundedOrder) {
-      return createError({ statusMessage: "Order not found" });
+      throw createError({ statusMessage: "Order not found" });
     }
     return foundedOrder;
   } catch (error: any) {
-    return createError({ statusMessage: error.message });
+    throw createError({ statusMessage: error.message });
   }
 });

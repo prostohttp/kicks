@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     const order = await Order.findById(body.id);
 
     if (!order) {
-      return createError({ statusMessage: "Order not found" });
+      throw createError({ statusMessage: "Order not found" });
     }
     if (
       !body.title ||
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
       !body.payment ||
       !body.date
     ) {
-      return createError({
+      throw createError({
         statusMessage:
           "Title, customer, shipping, payment, date fields are required",
       });
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       new: true,
     });
   } catch (error: any) {
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

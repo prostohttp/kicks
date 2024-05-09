@@ -24,11 +24,11 @@ export default defineEventHandler(async (event) => {
     const product: ProductDto | null = await Product.findById(updatedFields.id);
 
     if (!product) {
-      return createError({ statusMessage: "Category not found" });
+      throw createError({ statusMessage: "Category not found" });
     }
 
     if (!updatedFields.title) {
-      return createError({ statusMessage: "Title is required" });
+      throw createError({ statusMessage: "Title is required" });
     }
 
     if (image && image.length > 0) {
@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
     if (additionImages) {
       deleteFilesWithUseStorage(additionImages);
     }
-    return createError({
+    throw createError({
       statusMessage: error.message,
     });
   }

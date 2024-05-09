@@ -6,7 +6,7 @@ export default (fileNames: string[]): void => {
       fs.unlinkSync("public" + fileName);
       console.log("File deleted successfully");
     } catch (error) {
-      return createError({
+      throw createError({
         statusMessage: "Error deleting file",
       });
     }
