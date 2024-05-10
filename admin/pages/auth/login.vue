@@ -24,8 +24,6 @@ useHead({
 
 // Handlers
 const login = async (data: LoginFormDto) => {
-  console.log(data);
-
   isError.value = await signIn("credentials", {
     email: data.email,
     password: data.password,

@@ -1,23 +1,23 @@
-import { useId } from "nuxt/app";
+import { customAlphabet } from "nanoid";
 import { OrderDto } from "~/server/api/order/dto/order.dto";
 
+const nanoid = customAlphabet("1234567890", 5);
 export default defineEventHandler(async (event) => {
   try {
-    const id = useId();
     const body: OrderDto = await readBody(event);
     const user = await User.findById(body.customer);
     if (user && user.role.toString() !== Roles.CUSTOMER) {
-      throw createError({ statusMessage: "Only customers can order" });
+      return createError({ statusMessage: "Only customers can order" });
     }
     const newOrder = await Order.create({
       ...body,
-      orderId: "#" + id,
+      orderId: "#" + nanoid(),
       status: OrderStatus.PROCESSING,
     });
 
     return await newOrder.save();
   } catch (error: any) {
-    throw createError({
+    return createError({
       statusMessage: error.message,
     });
   }
