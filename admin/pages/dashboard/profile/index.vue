@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 // meta
 definePageMeta({
-  layout: "dashboard",
   name: "profile",
 });
 

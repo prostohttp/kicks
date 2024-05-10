@@ -10,7 +10,7 @@ export const Constants = {
   IMG_USERS: "img/users/",
   PER_PAGE_CAT: 8,
   PER_PAGE_PROD: 12,
-  PER_PAGE_ORDER: 8,
-  PER_PAGE_BRAND: 3,
-  PER_PAGE_ARTICLE: 3,
+  PER_PAGE_ORDER: 10,
+  PER_PAGE_BRAND: 20,
+  PER_PAGE_ARTICLE: 10,
 };

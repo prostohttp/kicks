@@ -1,0 +1,18 @@
+export const eng = {
+  copy: "kicks Dashboard",
+  allArticles: "All Articles",
+  allCategories: "All Categories",
+  allProducts: "All Products",
+  allBrands: "All Brands",
+  allOptions: "All Options",
+  allUsers: "All Users",
+  allOrders: "Order List",
+  article: "Article",
+  category: "Category",
+  product: "Product",
+  brand: "Brand",
+  option: "Option",
+  user: "User",
+  order: "Order",
+  dashboard: "Dashboard",
+};

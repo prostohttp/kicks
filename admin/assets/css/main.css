@@ -63,7 +63,7 @@
 } */
 
 body {
-  @apply font-[400] font-[Inter] text-dark-gray select-text selection:bg-blue selection:text-white;
+  @apply font-[400] font-[Inter] text-[15px] text-dark-gray select-text selection:bg-blue selection:text-white;
 }
 
 input[type="text"],
@@ -108,4 +108,16 @@ input[type="checkbox"]:checked:focus {
 
 .ui-modal p {
   @apply text-[16px] font-[400] leading-[30px];
+}
+
+a {
+  @apply transition-colors
+}
+
+.router-link-active {
+  @apply text-blue dark:text-yellow
+}
+
+a:hover {
+  @apply text-blue transition-colors dark:text-yellow;
 }

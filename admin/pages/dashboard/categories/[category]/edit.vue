@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: "dashboard",
   name: "edit-category",
 });
 useHead({

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: "dashboard",
   name: "add-product",
 });
 useHead({

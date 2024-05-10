@@ -11,7 +11,6 @@ interface ICategoriesDto {
 
 // meta
 definePageMeta({
-  layout: "dashboard",
   name: "all-categories",
 });
 useHead({

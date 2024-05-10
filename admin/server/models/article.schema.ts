@@ -1,5 +1,5 @@
-import {defineMongooseModel} from "#nuxt/mongoose";
-import {Types} from "mongoose";
+import { defineMongooseModel } from "#nuxt/mongoose";
+import { Types } from "mongoose";
 
 export const Article = defineMongooseModel({
   name: "Article",
@@ -22,11 +22,23 @@ export const Article = defineMongooseModel({
       required: true,
     },
     featuredProducts: [
-      {type: Types.ObjectId || String, required: false, ref: "Product"},
+      { type: Types.ObjectId || String, required: false, ref: "Product" },
     ],
     image: {
       type: String,
       required: false,
+    },
+    adminMenu: {
+      type: Boolean,
+      required: false,
+    },
+    siteMenu: {
+      type: Boolean,
+      required: false,
+    },
+    createdAt: {
+      type: Date,
+      required: true,
     },
   },
   hooks(schema) {

@@ -2,7 +2,6 @@
 const { signOut, data, status } = useAuth();
 // Meta
 definePageMeta({
-  layout: "dashboard",
   name: "dashboard",
 });
 useHead({

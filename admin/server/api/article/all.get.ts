@@ -6,22 +6,31 @@ export default defineEventHandler(async (event) => {
     let query = getQuery(event);
     const page = Number(query.page);
     const perPage = Number(query.perPage);
-    const article = await Article.find();
-    const articlesLength = article.length;
+    const adminMenu = query.adminMenu === "true";
+    const articles = await Article.find().select(
+      "title shortDescription isEnabled image",
+    );
+    const articlesLength = articles.length;
     const pagesInPagination = pageCount(articlesLength, perPage);
 
+    if (adminMenu) {
+      return await Article.find({ adminMenu: true }).select("title");
+    }
     if (
       isValidPaginationPage(page, pagesInPagination, articlesLength, perPage)
     ) {
       return {
-        article,
+        articles,
         pagesInPagination: 0,
       };
     }
 
     const skip = page * perPage - perPage;
 
-    const articleInPage = await Category.find().skip(skip).limit(perPage);
+    const articleInPage = await Category.find()
+      .select("title shortDescription isEnabled image")
+      .skip(skip)
+      .limit(perPage);
     return {
       articles: articleInPage,
       pagesInPagination,
