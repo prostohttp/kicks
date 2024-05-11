@@ -1,10 +1,10 @@
 export interface CategoryDto {
+  _id: string;
   id?: string;
   title: string;
   description?: string;
-  isParent: boolean;
+  isParent?: boolean;
   children?: string;
-  productCount?: number;
   image?: string;
   isEnabled?: boolean;
 }

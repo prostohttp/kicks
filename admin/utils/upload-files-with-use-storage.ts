@@ -1,5 +1,5 @@
 import path from "node:path";
-import type {MultiPartData} from "~/types";
+import type { MultiPartData } from "~/types/server/server.types";
 import renameFile from "./rename-file";
 
 export default (

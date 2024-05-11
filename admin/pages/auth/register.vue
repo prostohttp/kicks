@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
 import { Constants } from "~/constants";
+
 const { signIn } = useAuth();
-import { Roles, type RegisterFormDto } from "~/types";
+import { Roles, type RegisterFormDto } from "~/types/server/server.types";
 
 // Meta
 definePageMeta({

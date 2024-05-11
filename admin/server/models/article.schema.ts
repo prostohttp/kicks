@@ -40,6 +40,10 @@ export const Article = defineMongooseModel({
       type: Date,
       required: true,
     },
+    sort: {
+      type: Number,
+      required: false,
+    },
   },
   hooks(schema) {
     schema.pre("save", function (this, next) {

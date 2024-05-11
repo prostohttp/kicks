@@ -20,7 +20,6 @@ export default defineEventHandler(async (event) => {
     const newCategory = new Category({
       ...resultData,
       children: cleanStringToArray(resultData.children),
-      productCount: 0,
       image: image ? image[0] : "",
     });
 

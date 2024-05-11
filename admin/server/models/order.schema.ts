@@ -1,6 +1,6 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Types } from "mongoose";
-import { OrderStatus } from "~/types";
+import { OrderStatus } from "~/types/server/server.types";
 
 export const Order = defineMongooseModel({
   name: "Order",

@@ -4,7 +4,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import YandexProvider from "next-auth/providers/yandex";
 import DiscordProvider from "next-auth/providers/discord";
 import GitHubProvider from "next-auth/providers/github";
-import { type LoginFormDto } from "~/types";
+import { Roles, type LoginFormDto } from "~/types/server/server.types";
+
 import bcrypt from "bcrypt";
 
 const runtimeConfig = useRuntimeConfig();

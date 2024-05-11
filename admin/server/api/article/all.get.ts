@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     let query = getQuery(event);
     const page = Number(query.page);
     const perPage = Number(query.perPage);
-    const adminMenu = query.adminMenu === "true";
+    const adminMenu = query.adminMenu;
     const articles = await Article.find().select(
       "title shortDescription isEnabled image",
     );

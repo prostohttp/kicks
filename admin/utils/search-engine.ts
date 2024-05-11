@@ -1,4 +1,4 @@
-import { ModelNamesForSearchEngine } from "~/types";
+import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
 const foundedProducts = async (searchPhrase: string) => {
   const products = await Product.find({

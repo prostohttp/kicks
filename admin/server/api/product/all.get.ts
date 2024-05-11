@@ -6,10 +6,15 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
     const page = Number(query.page);
     const perPage = Number(query.perPage);
+    const forCategoryCount = Boolean(query.forCategoryCount);
+    const categoryId = query.categoryId;
     const products = await Product.find();
     const productsLength = products.length;
     const pagesInPagination = pageCount(productsLength, perPage);
 
+    if (forCategoryCount) {
+      return await Product.find().select("category");
+    }
     if (
       isValidPaginationPage(page, pagesInPagination, productsLength, perPage)
     ) {

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
-import { type LoginFormDto } from "~/types";
+import { type LoginFormDto } from "~/types/server/server.types";
 // Vars
 const isOpen = ref(false);
 const isError = ref();

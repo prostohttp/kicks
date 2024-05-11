@@ -111,7 +111,7 @@ input[type="checkbox"]:checked:focus {
 }
 
 a {
-  @apply transition-colors
+  @apply transition-colors text-dark-gray dark:text-fa-white
 }
 
 .router-link-active {

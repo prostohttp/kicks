@@ -1,4 +1,4 @@
-import { ModelNamesForSearchEngine } from "#imports";
+import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 import searchEngine from "~/utils/search-engine";
 
 export default defineEventHandler(async (event) => {

@@ -1,0 +1,31 @@
+<script lang="ts" setup>
+defineProps<{
+  _id: string;
+  title: string;
+  count: number;
+}>();
+</script>
+
+<template>
+  <li class="h-[35px] flex justify-between items-center mb-[16px]">
+    <NuxtLink
+      :to="'/dashboard/categories/' + _id"
+      class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
+    >
+      {{ title }}
+    </NuxtLink>
+    <NuxtLink
+      activeClass="active"
+      :to="'/dashboard/categories/' + _id"
+      class="flex items-center justify-center bg-[#e7e7e3] font-[600] rounded-[4px] w-[41px] h-[35px] hover:bg-blue hover:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:text-dark-gray"
+    >
+      {{ count }}
+    </NuxtLink>
+  </li>
+</template>
+
+<style scoped>
+.active {
+  @apply bg-blue text-fa-white dark:bg-yellow dark:text-dark-gray;
+}
+</style>

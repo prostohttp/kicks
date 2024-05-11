@@ -1,5 +1,5 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
-import { Roles } from "~/types";
+import { Roles } from "~/types/server/server.types";
 
 export const User = defineMongooseModel({
   name: "User",

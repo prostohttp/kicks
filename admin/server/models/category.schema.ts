@@ -24,10 +24,6 @@ export const Category = defineMongooseModel({
         ref: "Category",
       },
     ],
-    productCount: {
-      type: Number,
-      required: false,
-    },
     image: {
       type: String,
       required: false,

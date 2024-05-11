@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
 import { Constants } from "~/constants";
-import type { ForgotFormDto } from "~/types";
+import type { ForgotFormDto } from "~/types/server/server.types";
 
 // Meta
 definePageMeta({

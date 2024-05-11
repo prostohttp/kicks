@@ -1,1 +1,18 @@
-export const rus = {};
+export const rus = {
+  copy: "Панель управления Kicks",
+  allArticles: "Все статьи",
+  allCategories: "Все категории",
+  allProducts: "Все продукты",
+  allBrands: "Все бренды",
+  allOptions: "Все опции",
+  allUsers: "Все пользователи",
+  allOrders: "Список заказов",
+  article: "Статья",
+  category: "Категория",
+  product: "Продукт",
+  brand: "Бренд",
+  option: "Опция",
+  user: "Пользователь",
+  order: "Заказ",
+  dashboard: "Панель управления",
+};

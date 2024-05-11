@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { MultiPartData } from "~/types";
+import type { MultiPartData } from "~/types/server/server.types";
 import renameFile from "./rename-file";
 import checkExistsFolder from "./check-exists-folder";
 

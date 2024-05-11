@@ -1,6 +1,6 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Types } from "mongoose";
-import { OptionTypes } from "~/types";
+import { OptionTypes } from "~/types/server/server.types";
 
 export const Option = defineMongooseModel({
   name: "Option",
