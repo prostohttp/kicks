@@ -2,8 +2,10 @@
 
 <template>
   <div
-    class="bg-fa-white h-[96px] border-b border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray py-[10px] px-[60px] flex items-center justify-end"
+    class="bg-fa-white h-[96px] border-b border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray py-[10px] px-[60px] flex items-center justify-end gap-[50px] font-[Rubik] font-[400]"
   >
-    11111
+    <DashboardHeaderSearch />
+    <DashboardHeaderNotifications />
+    <DashboardHeaderAccount />
   </div>
 </template>

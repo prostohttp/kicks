@@ -1,5 +1,6 @@
 import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
+import { Roles } from "~/types/server/server.types";
 
 export default defineEventHandler(async (event) => {
   try {

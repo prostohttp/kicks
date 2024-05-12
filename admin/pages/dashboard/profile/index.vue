@@ -1,20 +1,27 @@
 <script lang="ts" setup>
+import type { UserDto } from "~/server/dto/user.dto";
+
+// store
+
+// vars
+
+const { data } = useAuth();
+
+// handlers
+const { data: user } = await useFetch<UserDto>("/api/user/one", {
+  method: "GET",
+  params: {
+    email: data.value?.user?.email,
+  },
+});
+
 // meta
 definePageMeta({
   name: "profile",
 });
 
-// store
-
-// vars
-const { data } = useAuth();
-
-// handlers
-const { data: user } = await useFetch("/api/user/one", {
-  method: "GET",
-  params: {
-    email: data.value?.user?.email,
-  },
+useHead({
+  title: user.value?.name,
 });
 // hooks
 </script>

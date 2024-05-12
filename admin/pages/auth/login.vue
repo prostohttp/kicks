@@ -48,7 +48,7 @@ const loginHandler = useThrottleFn(login, 1000);
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">Login</h1>
           <ULink
-            :to="{ name: 'forgot' }"
+            to="/auth/forgot"
             class="open-sans text-[16px] font-[600] underline decoration-gray-main"
             >Forgot your password?
           </ULink>

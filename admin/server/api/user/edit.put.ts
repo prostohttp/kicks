@@ -2,6 +2,7 @@ import { Constants } from "~/constants";
 import { UserDto } from "~/server/dto/user.dto";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
+import { Roles } from "~/types/server/server.types";
 
 export default defineEventHandler(async (event) => {
   try {

@@ -2,9 +2,11 @@ interface ElementCountForId {
   _id: string;
   category: string[];
 }
+
 interface ElementCount {
   [key: string]: number;
 }
+
 export const elementCountForId = (
   array: ElementCountForId[] | null,
 ): ElementCount => {

@@ -15,4 +15,6 @@ export const eng = {
   user: "User",
   order: "Order",
   dashboard: "Dashboard",
+  changePassword: "Change Password",
+  logOut: "Log Out",
 };

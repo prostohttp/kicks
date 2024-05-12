@@ -89,7 +89,7 @@ const isOpen = ref(false);
         <span>Register</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
-      <ULink :to="{ name: 'login' }">
+      <ULink to="/auth/login">
         <UButton
           type="submit"
           class="inverse h-[48px] px-[16px] flex justify-between w-full"

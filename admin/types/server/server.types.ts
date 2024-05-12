@@ -69,3 +69,10 @@ export interface ForgotFormDto {
 export interface ResetPasswordDto {
   password: string;
 }
+
+export interface AuthenticatedUserDto {
+  name: string;
+  email: string;
+  role: Roles;
+  image?: string;
+}

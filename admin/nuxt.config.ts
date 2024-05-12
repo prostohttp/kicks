@@ -65,7 +65,7 @@ export default defineNuxtConfig({
       Inter: [400, 500],
       "Open Sans": [400, 600],
       Poppins: [400],
-      Rubik: [500, 600, 700, 900],
+      Rubik: [400, 500, 600, 700, 900],
     },
   },
   modules: [

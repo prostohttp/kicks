@@ -18,6 +18,7 @@ useHead({
 });
 
 // vars
+const router = useRouter();
 const route = useRoute();
 const currentPage = ref(route.query.page);
 const perPage = Constants.PER_PAGE_CAT;
@@ -40,6 +41,7 @@ const { data, pending } = await useFetch<ICategoriesDto>("/api/category/all", {
     <template v-else>
       <h1>All categories</h1>
       <pre>{{ data }}</pre>
+      <!-- <pre>{{ router }}</pre> -->
     </template>
   </div>
 </template>

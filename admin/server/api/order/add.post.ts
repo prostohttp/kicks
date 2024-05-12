@@ -1,5 +1,6 @@
 import { customAlphabet } from "nanoid";
 import { OrderDto } from "~/server/api/order/dto/order.dto";
+import { OrderStatus, Roles } from "~/types/server/server.types";
 
 const nanoid = customAlphabet("1234567890", 5);
 export default defineEventHandler(async (event) => {

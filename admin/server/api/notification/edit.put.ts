@@ -4,7 +4,7 @@ import { NotificationDto } from "~/server/api/notification/dto/notification.dto"
 export default defineEventHandler(async (event) => {
   try {
     const notificationBody: NotificationDto = await readBody(event);
-    const notification: NotificationDto = await Notification.findById(
+    const notification: NotificationDto | null = await Notification.findById(
       notificationBody.id,
     );
 
