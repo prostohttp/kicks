@@ -88,7 +88,7 @@ const containerImageFooter = {
             <EColumn>
               <EHeading
                 style="
-                  font-size: 32;
+                  font-size: 32px;
                   font-weight: bold;
                   text-align: center;
                   margin-top: 20px;
