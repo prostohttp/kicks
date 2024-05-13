@@ -7,6 +7,13 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
     const page = Number(query.page);
     const perPage = Number(query.perPage);
+    const forUi = query.forUi || false;
+    const forUiLimit = Number(query.forUiLimit) || 4;
+
+    if (forUi) {
+      return await Notification.find({ isRead: false }).limit(forUiLimit);
+    }
+
     const notifications = await Notification.find();
     const notificationsLength = notifications.length;
     const pagesInPagination = pageCount(notificationsLength, perPage);

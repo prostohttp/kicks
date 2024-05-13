@@ -1,5 +1,6 @@
 export const eng = {
   copy: "kicks Dashboard",
+  siteName: "Kicks Club",
   allArticles: "Articles",
   allCategories: "Categories",
   allProducts: "Products",

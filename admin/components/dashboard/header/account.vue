@@ -1,64 +1,38 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
-import type { DropdownItem } from "#ui/types";
 import type { UserDto } from "~/server/dto/user.dto";
+import { Constants } from "~/constants";
 
 // Vars
 const { signOut, data } = useAuth();
 
-if (!data.value) {
+const authUser = data.value?.user as UserDto;
+
+if (!authUser) {
   throw createError({ statusMessage: "Access Denied", statusCode: 403 });
 }
 
-const { data: user } = await useFetch<UserDto>("/api/user/one", {
-  method: "GET",
-  params: {
-    email: data.value.user?.email,
-  },
-});
+const user: Ref<UserDto | null | undefined> = ref();
 
-if (!user.value) {
-  throw createError({ statusMessage: "Access Denied", statusCode: 403 });
+if (authUser.isRegistered === true) {
+  const { data } = await useFetch<UserDto>("/api/user/one", {
+    method: "GET",
+    params: {
+      email: authUser.email,
+    },
+  });
+  user.value = data.value;
+} else {
+  user.value = authUser;
 }
-
-const items: DropdownItem[][] = [
-  [
-    {
-      label: user.value.name,
-      to: "/dashboard/profile",
-      class:
-        "text-[20px] font-[600] hover:text-dark-gray dark:hover:text-fa-white",
-    },
-    {
-      label: eng.changePassword,
-      to: "/dashboard/profile",
-      class: "uppercase font-[Inter] flex flex-row-reverse justify-between ",
-      icon: "i-heroicons-chevron-right-16-solid scale-[1.6]",
-    },
-    {
-      label: eng.logOut,
-      to: "/dashboard/profile",
-      class: "uppercase font-[Inter] flex flex-row-reverse justify-between",
-      icon: "i-heroicons-arrow-right-end-on-rectangle-16-solid scale-[1.4]",
-      click: () => signOut({ callbackUrl: "/login" }),
-    },
-  ],
-];
 </script>
 
 <template>
   <div>
-    <UDropdown
-      :items="items"
+    <UPopover
       :popper="{ placement: 'bottom-end', offsetDistance: 46 }"
       :ui="{
         rounded: 'rounded-[8px]',
-        item: {
-          base: 'my-[8px] hover:bg-transparent dark:hover:bg-transparent',
-          icon: 'bg-dark-gray',
-          active: 'bg-transparent dark:bg-transparent',
-        },
-        padding: 'px-[16px] py-[8px]',
         ring: 'ring-[#e7e7e3] ring-1',
         shadow: 'shadow-none',
         width: 'w-auto',
@@ -69,11 +43,46 @@ const items: DropdownItem[][] = [
         :label="user?.role"
         trailing-icon="i-heroicons-chevron-down-20-solid"
       />
-    </UDropdown>
+      <template #panel>
+        <div class="p-[20px] flex flex-col gap-[20px] items-start">
+          <NuxtLink
+            to="/dashboard/profile"
+            class="text-[20px] font-[600] hover:text-dark-gray dark:hover:text-fa-white"
+          >
+            {{ user?.name }}
+          </NuxtLink>
+          <NuxtLink
+            activeClass="active"
+            to="/dashboard/profile"
+            class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
+            v-if="authUser?.isRegistered"
+          >
+            <span>{{ eng.changePassword }}</span>
+            <UIcon
+              name="i-heroicons-chevron-right-20-solid"
+              class="scale-[1.6]"
+            />
+          </NuxtLink>
+          <NuxtLink
+            class="uppercase font-[Inter] flex justify-between w-full items-center cursor-pointer"
+            @click="signOut({ callbackUrl: Constants.SITE_URL })"
+          >
+            <span>{{ eng.logOut }}</span>
+            <UIcon
+              name="i-heroicons-arrow-right-end-on-rectangle-20-solid"
+              class="scale-[1.3]"
+            />
+          </NuxtLink>
+        </div>
+      </template>
+    </UPopover>
   </div>
 </template>
 
 <style scoped>
+.active {
+  @apply text-dark-gray dark:text-fa-white hover:text-blue dark:hover:text-yellow;
+}
 div[data-headlessui-state="open"] button {
   @apply bg-blue text-fa-white border-blue dark:bg-yellow dark:text-dark-gray dark:border-yellow;
 }

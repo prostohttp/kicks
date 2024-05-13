@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
 import { Constants } from "~/constants";
+import { eng } from "~/lang/eng";
 import type { ForgotFormDto } from "~/types/server/server.types";
 
 // Meta
@@ -46,7 +47,7 @@ const forgot = async (data: ForgotFormDto) => {
       method: "POST",
       body: {
         email,
-        siteName: Constants.SITE_NAME,
+        siteName: eng.siteName,
         siteUrl: Constants.SITE_URL,
         token: `/token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
       },

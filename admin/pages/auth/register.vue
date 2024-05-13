@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
 import { Constants } from "~/constants";
+import { eng } from "~/lang/eng";
 
 const { signIn } = useAuth();
 import { Roles, type RegisterFormDto } from "~/types/server/server.types";
@@ -48,7 +49,7 @@ const register = async (data: RegisterFormDto) => {
         body: {
           name,
           userEmail: email,
-          siteName: Constants.SITE_NAME,
+          siteName: eng.siteName,
           siteUrl: Constants.SITE_URL + "/login",
         },
       });
@@ -58,7 +59,7 @@ const register = async (data: RegisterFormDto) => {
         body: {
           name,
           userEmail: email,
-          siteName: Constants.SITE_NAME,
+          siteName: eng.siteName,
           siteUrl: Constants.SITE_URL + "/login",
         },
       });

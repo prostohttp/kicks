@@ -5,4 +5,5 @@ export interface UserDto {
   password?: string;
   image?: string;
   role?: string;
+  isRegistered?: boolean;
 }
