@@ -10,11 +10,6 @@ export const Order = defineMongooseModel({
       required: true,
       unique: true,
     },
-    title: {
-      min: 3,
-      type: String,
-      required: true,
-    },
     products: [
       {
         productId: {
@@ -63,11 +58,6 @@ export const Order = defineMongooseModel({
     },
   },
   hooks(schema) {
-    schema.pre("save", function (this, next) {
-      this.title = this.title.toString().trim() as any;
-      next();
-    });
-
     schema.pre("validate", function (this, next) {
       if (!this.products.length) {
         next(new Error("Products array must not be empty"));

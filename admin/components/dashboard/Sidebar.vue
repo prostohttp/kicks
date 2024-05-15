@@ -2,9 +2,9 @@
 
 <template>
   <div
-    class="bg-fa-white h-svh hover:overflow-auto w-[260px] border-r border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray py-[32px] px-[24px]"
+    class="bg-fa-white h-dvh overflow-auto w-[260px] border-r border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray pt-[32px] px-[24px]"
   >
-    <NuxtLink to="/" class="flex justify-center mb-[62px]">
+    <NuxtLink to="/" class="flex justify-center mb-[46px]">
       <img
         src="~/assets/img/small-logo.svg"
         alt="kicks"

@@ -8,16 +8,9 @@ export default defineEventHandler(async (event) => {
     if (!order) {
       throw createError({ statusMessage: "Order not found" });
     }
-    if (
-      !body.title ||
-      !body.customer ||
-      !body.shipping ||
-      !body.payment ||
-      !body.date
-    ) {
+    if (!body.customer || !body.shipping || !body.payment || !body.date) {
       throw createError({
-        statusMessage:
-          "Title, customer, shipping, payment, date fields are required",
+        statusMessage: "Customer, shipping, payment, date fields are required",
       });
     }
 

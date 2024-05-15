@@ -43,11 +43,12 @@ if (authUser.isRegistered === true) {
         :label="user?.role"
         trailing-icon="i-heroicons-chevron-down-20-solid"
       />
-      <template #panel>
+      <template #panel="{ close }">
         <div class="p-[20px] flex flex-col gap-[20px] items-start">
           <NuxtLink
             to="/dashboard/profile"
             class="text-[20px] font-[600] hover:text-dark-gray dark:hover:text-fa-white"
+            @click="close"
           >
             {{ user?.name }}
           </NuxtLink>
@@ -56,6 +57,7 @@ if (authUser.isRegistered === true) {
             to="/dashboard/profile"
             class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
             v-if="authUser?.isRegistered"
+            @click="close"
           >
             <span>{{ eng.changePassword }}</span>
             <UIcon

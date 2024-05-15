@@ -18,4 +18,9 @@ export const eng = {
   dashboard: "Dashboard",
   changePassword: "Change Password",
   logOut: "Log Out",
+  siteHeading: "Kicks admin panel",
+  notifications: "Notifications",
+  markAllAsRead: "Mark all as read",
+  viewAllNotifications: "View all notifications",
+  noNotifications: "No notifications",
 };

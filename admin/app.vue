@@ -1,10 +1,12 @@
 <script lang="ts" setup>
+import { eng } from "./lang/eng";
+
 // meta
 useSeoMeta({
   ogImage: "/public/kicks-marketplace.svg",
 });
 useHead({
-  titleTemplate: "%s - Kicks admin panel",
+  titleTemplate: `%s -${eng.siteHeading}`,
 });
 </script>
 

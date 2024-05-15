@@ -12,4 +12,5 @@ export const Constants = {
   PER_PAGE_ORDER: 10,
   PER_PAGE_BRAND: 20,
   PER_PAGE_ARTICLE: 10,
+  NOTIFICATIONS_LIMIT: 3,
 };

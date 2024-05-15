@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const { id } = getQuery(event);
     const foundedOrder = await Order.findById(id).populate({
       path: "products.productId",
-      select: "title quantity regularPrice salePrice",
+      select: "quantity regularPrice salePrice",
     });
     if (!foundedOrder) {
       throw createError({ statusMessage: "Order not found" });
