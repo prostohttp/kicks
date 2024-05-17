@@ -107,7 +107,7 @@ watch(query, (oldValue, newValue) => {
           <h3 class="font-[Rubik] text-[20px] font-[600]">
             {{ eng.searchResult }}
           </h3>
-          <DashboardHeaderSearchList :data="founded" @close="isOpen = false" />
+          <DashboardHeaderSearchList :data="founded" v-model="isOpen" />
           <NuxtLink
             v-if="founded && founded.length"
             to="/dashboard/search"

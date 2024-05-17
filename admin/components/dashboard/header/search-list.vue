@@ -6,7 +6,7 @@ defineProps<{
   data: SearchProductDto[] | undefined;
 }>();
 
-defineEmits(["close"]);
+const model = defineModel();
 </script>
 
 <template>
@@ -23,7 +23,7 @@ defineEmits(["close"]);
           :to="`/dashboard/products/${el._id}`"
           :title="`${el.title}`"
           class="w-[10%]"
-          @click="$emit('close')"
+          @click="model = false"
         >
           <img
             v-if="el.image"
@@ -43,7 +43,7 @@ defineEmits(["close"]);
             activeClass="active"
             :to="`/dashboard/products/${el._id}`"
             class="text-[16px] font-[600]"
-            @click="$emit('close')"
+            @click="model = false"
           >
             {{ el.title }}
           </NuxtLink>
