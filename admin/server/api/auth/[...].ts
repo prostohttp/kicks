@@ -80,7 +80,6 @@ export default NuxtAuthHandler({
             name: existingUser.name,
             email: existingUser.email,
             role: existingUser.role,
-            isRegistered: existingUser.isRegistered,
           };
         } else {
           return null;

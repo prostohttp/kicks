@@ -27,11 +27,6 @@ const markAllAsRead = async () => {
     },
   });
 };
-
-// hooks
-watch(notifications, async (newData, oldData) => {
-  // notifications.value = newData;
-});
 </script>
 
 <template>
@@ -44,23 +39,22 @@ watch(notifications, async (newData, oldData) => {
         shadow: 'shadow-none',
         width: 'w-auto',
         wrapper: 'flex items-center ',
-        container: 'md:w-[470px] w-[90%]',
       }"
     >
       <UIcon
         v-if="isEmpty"
         name="i-heroicons-bell"
-        class="cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
+        class="icon cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
       />
       <UIcon
         v-else
         name="i-heroicons-bell-alert-solid"
-        class="cursor-pointer bg-blue dark:bg-yellow w-[24px] h-[24px]"
+        class="icon cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
       />
 
       <template #panel="{ close }">
         <div class="p-[20px] flex flex-col gap-[20px] items-start">
-          <div class="flex justify-between items-center w-full">
+          <div class="flex justify-between items-center w-full gap-[30px]">
             <span class="font-[Rubik] font-[600] text-[20px]">
               {{ eng.notifications }}
             </span>
@@ -72,7 +66,7 @@ watch(notifications, async (newData, oldData) => {
           </div>
           <div class="max-h-[400px] overflow-y-auto w-full">
             <template v-if="isEmpty">
-              <span>{{ eng.noNotifications }}</span>
+              <span>{{ eng.empty }}</span>
             </template>
             <template v-else>
               <DashboardHeaderNotificationsList
@@ -83,7 +77,7 @@ watch(notifications, async (newData, oldData) => {
           </div>
           <div
             v-if="!isEmpty"
-            class="flex justify-between items-center w-full uppercase mt-[10px]"
+            class="flex justify-between items-center w-full uppercase mt-[10px] gap-[40px]"
           >
             <NuxtLink
               class="flex justify-between items-center text-dark-gray dark:text-fa-white hover:text-blue dark:hover:text-yellow gap-[6px] cursor-pointer"
@@ -113,5 +107,8 @@ watch(notifications, async (newData, oldData) => {
 <style scoped>
 .active {
   @apply bg-dark-gray text-fa-white hover:bg-blue dark:bg-fa-white dark:text-dark-gray dark:hover:bg-yellow;
+}
+div[data-headlessui-state="open"] .icon {
+  @apply bg-blue dark:bg-yellow;
 }
 </style>

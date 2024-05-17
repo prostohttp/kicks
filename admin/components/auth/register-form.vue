@@ -36,13 +36,23 @@ const isOpen = ref(false);
     <div class="flex flex-col gap-[20px]">
       <h1 class="font-[Rubik] font-[600] text-[24px]">Your Name</h1>
       <UFormGroup name="name">
-        <UInput variant="outline" placeholder="Full Name *" v-model="name" />
+        <UInput
+          variant="outline"
+          placeholder="Full Name *"
+          v-model="name"
+          input-class="py-[15px] px-[16px]"
+        />
       </UFormGroup>
     </div>
     <div class="flex flex-col gap-[20px]">
       <h1 class="font-[Rubik] font-[600] text-[24px]">Login Details</h1>
       <UFormGroup name="email">
-        <UInput variant="outline" placeholder="Email *" v-model="email" />
+        <UInput
+          variant="outline"
+          placeholder="Email *"
+          v-model="email"
+          input-class="py-[15px] px-[16px]"
+        />
       </UFormGroup>
       <div class="flex flex-col gap-[5px]">
         <UFormGroup name="password">
@@ -51,6 +61,7 @@ const isOpen = ref(false);
             variant="outline"
             placeholder="Password *"
             v-model="password"
+            input-class="py-[15px] px-[16px]"
           />
         </UFormGroup>
       </div>

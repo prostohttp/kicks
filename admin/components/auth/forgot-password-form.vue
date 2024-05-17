@@ -23,7 +23,12 @@ const isOpen = ref(false);
   >
     <div class="flex flex-col gap-[24px]">
       <UFormGroup name="email">
-        <UInput variant="outline" placeholder="Email" v-model="email" />
+        <UInput
+          variant="outline"
+          placeholder="Email"
+          v-model="email"
+          input-class="py-[15px] px-[16px]"
+        />
       </UFormGroup>
     </div>
     <div class="flex flex-col gap-[20px]">

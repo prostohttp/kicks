@@ -23,6 +23,7 @@ export default <Partial<Config>>{
         grey: "#E7E7E3",
         "gray-main": "#70706E",
         "dark-gray": "#232321",
+        "dark-bg": "#101827",
       },
       fontSize: {},
       fontFamily: {},

@@ -69,7 +69,7 @@ body {
 input[type="text"],
 input[type="password"],
 textarea {
-  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] py-[15px] px-[16px] focus:ring-blue focus:shadow-none text-dark-gray;
+  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray;
 }
 
 button[type="submit"] {
@@ -120,4 +120,24 @@ a {
 
 a:hover {
   @apply text-blue transition-colors dark:text-yellow;
+}
+
+.v-enter-active {
+  @apply transform ease-out duration-300 transition;
+}
+
+.v-leave-active {
+  @apply transition ease-in duration-100;
+}
+
+.v-enter-to {
+  @apply translate-y-0 opacity-100 sm:translate-x-0;
+}
+
+.v-enter-from {
+  @apply translate-y-2 opacity-0 sm:translate-y-2;
+}
+
+.v-leave-to {
+  @apply opacity-0;
 }

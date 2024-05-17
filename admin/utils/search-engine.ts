@@ -1,41 +1,54 @@
+import { eng } from "~/lang/eng";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
-const foundedProducts = async (searchPhrase: string) => {
+const foundedProducts = async (searchPhrase: string, limit: number) => {
   const products = await Product.find({
-    title: { $regex: new RegExp(searchPhrase, "i") },
-  }).select("title description regularPrice salePrice image");
+    $or: [
+      { title: { $regex: new RegExp(searchPhrase, "i") } },
+      { description: { $regex: new RegExp(searchPhrase, "i") } },
+    ],
+  })
+    .limit(limit)
+    .select("title regularPrice description salePrice image");
   return {
-    title: "Products",
+    title: eng.allProducts,
     data: products,
   };
 };
 
-const foundedArticles = async (searchPhrase: string) => {
+const foundedArticles = async (searchPhrase: string, limit: number) => {
   const articles = await Article.find({
     title: { $regex: new RegExp(searchPhrase, "i") },
-  }).select("title image description");
+  })
+    .limit(limit)
+    .select("title image description");
   return {
-    title: "Articles",
+    title: eng.allArticles,
     data: articles,
   };
 };
 
-const foundedCategories = async (searchPhrase: string) => {
+const foundedCategories = async (searchPhrase: string, limit: number) => {
   const categories = await Category.find({
     title: { $regex: new RegExp(searchPhrase, "i") },
-  }).select("title productCount image");
+  })
+    .limit(limit)
+    .select("title productCount image");
+
   return {
-    title: "Categories",
+    title: eng.allCategories,
     data: categories,
   };
 };
 
-const foundedBrands = async (searchPhrase: string) => {
+const foundedBrands = async (searchPhrase: string, limit: number) => {
   const brands = await Brand.find({
     title: { $regex: new RegExp(searchPhrase, "i") },
-  }).select("title image");
+  })
+    .limit(limit)
+    .select("title image");
   return {
-    title: "Brands",
+    title: eng.allBrands,
     data: brands,
   };
 };
@@ -43,47 +56,48 @@ const foundedBrands = async (searchPhrase: string) => {
 export default async (
   model: ModelNamesForSearchEngine,
   searchPhrase: string,
+  limit: number,
 ) => {
   let founded: any;
   try {
     switch (model) {
       case ModelNamesForSearchEngine.PRODUCT:
-        founded = founded = {
-          result: { products: await foundedProducts(searchPhrase) },
+        founded = {
+          result: { products: await foundedProducts(searchPhrase, limit) },
         };
         break;
 
       case ModelNamesForSearchEngine.ARTICLES:
-        founded = founded = {
-          result: { articles: await foundedArticles(searchPhrase) },
+        founded = {
+          result: { articles: await foundedArticles(searchPhrase, limit) },
         };
         break;
 
       case ModelNamesForSearchEngine.CATEGORY:
-        founded = founded = {
-          result: { categories: await foundedCategories(searchPhrase) },
+        founded = {
+          result: { categories: await foundedCategories(searchPhrase, limit) },
         };
         break;
 
       case ModelNamesForSearchEngine.BRAND:
         founded = {
-          result: { brands: await foundedBrands(searchPhrase) },
+          result: { brands: await foundedBrands(searchPhrase, limit) },
         };
         break;
 
       case ModelNamesForSearchEngine.ALL:
         founded = {
           result: {
-            products: await foundedProducts(searchPhrase),
-            articles: await foundedArticles(searchPhrase),
-            categories: await foundedCategories(searchPhrase),
-            brands: await foundedBrands(searchPhrase),
+            products: await foundedProducts(searchPhrase, limit),
+            articles: await foundedArticles(searchPhrase, limit),
+            categories: await foundedCategories(searchPhrase, limit),
+            brands: await foundedBrands(searchPhrase, limit),
           },
         };
         break;
       default:
         founded = {
-          result: { products: await foundedProducts(searchPhrase) },
+          result: { products: await foundedProducts(searchPhrase, limit) },
         };
     }
     return founded;

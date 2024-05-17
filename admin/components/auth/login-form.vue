@@ -21,7 +21,12 @@ const { email, password } = storeToRefs(user);
   >
     <div class="flex flex-col gap-[24px]">
       <UFormGroup name="email">
-        <UInput variant="outline" placeholder="Email" v-model="email" />
+        <UInput
+          variant="outline"
+          placeholder="Email"
+          v-model="email"
+          input-class="py-[15px] px-[16px]"
+        />
       </UFormGroup>
       <UFormGroup name="password">
         <UInput
@@ -29,6 +34,7 @@ const { email, password } = storeToRefs(user);
           variant="outline"
           placeholder="Password"
           v-model="password"
+          input-class="py-[15px] px-[16px]"
         />
       </UFormGroup>
     </div>

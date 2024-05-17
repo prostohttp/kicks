@@ -1,0 +1,71 @@
+<script lang="ts" setup>
+import type { SearchProductDto } from "./dto/search-product.dto";
+import { eng } from "~/lang/eng";
+
+defineProps<{
+  data: SearchProductDto[] | undefined;
+}>();
+
+defineEmits(["close"]);
+</script>
+
+<template>
+  <div class="open-sans flex flex-col gap-[16px]">
+    <div v-if="data && !data.length">
+      <span>{{ eng.empty }}</span>
+    </div>
+    <ul
+      v-else
+      class="flex flex-col gap-[16px] min-w-[420px] w-full max-h-[400px] overflow-y-auto"
+    >
+      <li v-for="el in data" :key="el._id" class="flex gap-[15px]">
+        <NuxtLink
+          :to="`/dashboard/products/${el._id}`"
+          :title="`${el.title}`"
+          class="w-[10%]"
+          @click="$emit('close')"
+        >
+          <img
+            v-if="el.image"
+            :src="`/${el.image}`"
+            :alt="el.title"
+            class="image"
+          />
+          <img
+            v-else
+            src="~/public/no-image.svg"
+            :alt="el.title"
+            class="image"
+          />
+        </NuxtLink>
+        <div class="flex flex-col w-[80%]">
+          <NuxtLink
+            activeClass="active"
+            :to="`/dashboard/products/${el._id}`"
+            class="text-[16px] font-[600]"
+            @click="$emit('close')"
+          >
+            {{ el.title }}
+          </NuxtLink>
+          <span class="text-[12px] h-[3em] whitespace-normal line-clamp-2">
+            {{ el.description }}
+          </span>
+          <div v-if="el.salePrice" class="flex gap-[5px] items-center">
+            <span class="font-[600]">{{ el.salePrice }}</span>
+            <span class="text-[12px] line-through">{{ el.regularPrice }}</span>
+          </div>
+          <div v-else class="font-[600]">{{ el.regularPrice }}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<style scoped>
+.image {
+  @apply w-[60px];
+}
+.active {
+  @apply text-dark-gray dark:text-fa-white;
+}
+</style>

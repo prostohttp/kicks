@@ -22,5 +22,8 @@ export const eng = {
   notifications: "Notifications",
   markAllAsRead: "Mark all as read",
   viewAllNotifications: "View all notifications",
-  noNotifications: "No notifications",
+  search: "Search",
+  empty: "Nothing there",
+  searchResult: "Search results",
+  seeAll: "See all",
 };

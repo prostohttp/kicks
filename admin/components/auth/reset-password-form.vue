@@ -24,6 +24,7 @@ const password = ref("");
           placeholder="Password"
           v-model="password"
           type="password"
+          input-class="py-[15px] px-[16px]"
         />
       </UFormGroup>
     </div>

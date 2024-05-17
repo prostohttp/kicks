@@ -39,7 +39,7 @@ if (authUser.isRegistered === true) {
       }"
     >
       <UButton
-        class="uppercase flex justify-center items-center h-[40px] bg-transparent border border-dark-gray text-dark-gray px-[16px] hover:bg-blue hover:text-fa-white hover:border-blue rounded-[8px] dark:bg-transparent dark:border-yellow dark:text-yellow dark:hover:bg-yellow dark:hover:text-dark-gray"
+        class="uppercase flex justify-center items-center h-[40px] bg-transparent border border-dark-gray text-dark-gray px-[16px] hover:bg-blue hover:text-fa-white hover:border-blue rounded-[8px] dark:bg-transparent dark:border-fa-white dark:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:hover:border-yellow"
         :label="user?.role"
         trailing-icon="i-heroicons-chevron-down-20-solid"
       />

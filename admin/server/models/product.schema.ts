@@ -1,5 +1,5 @@
-import {defineMongooseModel} from "#nuxt/mongoose";
-import {Types} from "mongoose";
+import { defineMongooseModel } from "#nuxt/mongoose";
+import { Types } from "mongoose";
 
 export const Product = defineMongooseModel({
   name: "Product",
@@ -58,7 +58,7 @@ export const Product = defineMongooseModel({
     },
     regularPrice: {
       type: Number,
-      required: false,
+      required: true,
     },
     salePrice: {
       type: Number,
