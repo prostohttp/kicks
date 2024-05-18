@@ -26,4 +26,5 @@ export const eng = {
   empty: "Nothing there",
   searchResult: "Search results",
   seeAll: "See all",
+  breadcrumbs: {},
 };

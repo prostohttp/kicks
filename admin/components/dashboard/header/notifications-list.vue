@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
-import { Locales } from "~/lang/locale-types";
+import { Locales } from "~/types/ui/ui.types";
 import type { NotificationDto } from "~/server/api/notification/dto/notification.dto";
 
 // define

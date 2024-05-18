@@ -17,7 +17,7 @@ const isDark = computed({
       variant="ghost"
       aria-label="Theme"
       @click="isDark = !isDark"
-      class="absolute top-5 right-5"
+      class="absolute md:top-2 md:right-5 top-1 right-1"
     />
     <template #fallback>
       <div class="w-8 h-8 absolute" />

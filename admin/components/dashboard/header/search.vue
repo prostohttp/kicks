@@ -10,7 +10,6 @@ const query = ref("");
 const target: Ref<HTMLInputElement | null> = ref(null);
 const isActive = ref(false);
 const isOpen = ref(false);
-const error = ref("");
 const founded: Ref<SearchProductDto[] | undefined> = ref();
 
 // handlers
@@ -84,9 +83,9 @@ watch(query, (oldValue, newValue) => {
     </div>
     <UInput
       v-if="isActive"
-      input-class="bg-transparent border-dark-gray dark:border-fa-white h-[40px] pl-[44px] text-dark-gray w-[200px] relative"
+      input-class=" border-dark-gray dark:border-fa-white h-[40px] pl-[44px] text-dark-gray sm:w-[200px] w-[calc(100%-30px)] z-[100] sm:relative sm:left-0 sm:top-0 fixed left-[20px] top-[40px]"
       v-model="query"
-      name="q"
+      name="query"
       @keyup="prettySearchHandler"
       :placeholder="`${eng.search}...`"
       autocomplete="off"
@@ -101,7 +100,7 @@ watch(query, (oldValue, newValue) => {
     >
       <Transition>
         <div
-          class="absolute top-[90px] right-0 rounded-[8px] bg-white p-[20px] min-w-[210px] text-dark-gray dark:text-fa-white dark:bg-dark-bg flex flex-col gap-[16px]"
+          class="md:absolute fixed top-[90px] md:right-0 right-[10px] rounded-[8px] bg-white p-[20px] md:min-w-[210px] md:w-auto w-[calc(100%-30px)] text-dark-gray dark:text-fa-white dark:bg-dark-bg flex flex-col gap-[16px]"
           v-if="isOpen"
         >
           <h3 class="font-[Rubik] text-[20px] font-[600]">
@@ -120,7 +119,7 @@ watch(query, (oldValue, newValue) => {
       </Transition>
       <template #leading>
         <UButton
-          class="text-dark-gray hover:text-blue dark:text-fa-white"
+          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static left-[25px] top-[43px] z-[101]"
           variant="link"
           icon="i-heroicons-magnifying-glass-20-solid"
           :padded="true"
@@ -128,7 +127,7 @@ watch(query, (oldValue, newValue) => {
       </template>
       <template #trailing>
         <UButton
-          class="text-dark-gray hover:text-blue dark:text-fa-white"
+          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static right-[20px] top-[45px] z-[101]"
           variant="link"
           icon="i-heroicons-x-mark-20-solid"
           :padded="true"

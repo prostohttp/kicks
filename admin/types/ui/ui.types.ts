@@ -12,3 +12,13 @@ export interface BreadcrumbItem {
   link?: string;
   isActive?: boolean;
 }
+
+export enum Locales {
+  EN = "en-US",
+  RU = "ru",
+}
+
+export enum Currency {
+  USD = "USD",
+  RUB = "RUB",
+}

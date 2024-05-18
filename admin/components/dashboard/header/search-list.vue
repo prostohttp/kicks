@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Currency, Locales } from "~/types/ui/ui.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
 import { eng } from "~/lang/eng";
 
@@ -16,7 +17,7 @@ const model = defineModel();
     </div>
     <ul
       v-else
-      class="flex flex-col gap-[16px] min-w-[420px] w-full max-h-[400px] overflow-y-auto"
+      class="flex flex-col gap-[16px] sm:w-[420px] w-full md:h-[400px] h-[200px] overflow-y-auto"
     >
       <li v-for="el in data" :key="el._id" class="flex gap-[15px]">
         <NuxtLink
@@ -51,10 +52,16 @@ const model = defineModel();
             {{ el.description }}
           </span>
           <div v-if="el.salePrice" class="flex gap-[5px] items-center">
-            <span class="font-[600]">{{ el.salePrice }}</span>
-            <span class="text-[12px] line-through">{{ el.regularPrice }}</span>
+            <span class="font-[600]">
+              {{ currencyFormat(el.salePrice, Currency.USD, Locales.EN) }}
+            </span>
+            <span class="text-[12px] line-through">
+              {{ currencyFormat(el.regularPrice, Currency.USD, Locales.EN) }}
+            </span>
           </div>
-          <div v-else class="font-[600]">{{ el.regularPrice }}</div>
+          <div v-else class="font-[600]">
+            {{ currencyFormat(el.regularPrice, Currency.USD, Locales.EN) }}
+          </div>
         </div>
       </li>
     </ul>

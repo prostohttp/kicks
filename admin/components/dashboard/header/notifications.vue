@@ -37,9 +37,11 @@ const markAllAsRead = async () => {
         rounded: 'rounded-[8px]',
         ring: 'ring-[#e7e7e3] ring-1',
         shadow: 'shadow-none',
-        width: 'w-auto',
+        width: 'md:w-auto w-[calc(100%-10px)]',
         wrapper: 'flex items-center ',
+        base: 't-0',
       }"
+      class="top-0"
     >
       <UIcon
         v-if="isEmpty"
@@ -64,7 +66,7 @@ const markAllAsRead = async () => {
               class="w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
             />
           </div>
-          <div class="max-h-[400px] overflow-y-auto w-full">
+          <div class="md:h-[400px] h-[200px] overflow-y-auto w-full">
             <template v-if="isEmpty">
               <span>{{ eng.empty }}</span>
             </template>

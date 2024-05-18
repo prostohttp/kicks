@@ -1,10 +1,44 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const isOpen = ref(false);
+</script>
 
 <template>
-  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans">
-    <DashboardSidebar />
+  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans pt-[10px]">
+    <DashboardSidebar class="hidden md:block" />
+    <USlideover
+      v-model="isOpen"
+      side="left"
+      class="md:hidden flex flex-col"
+      :ui="{
+        base: 'max-w-[260px]',
+      }"
+    >
+      <div
+        class="flex items-center justify-end px-[10px] pt-[10px] bg-fa-white dark:bg-dark-gray border-r border-[#cfcfcf] dark:border-gray-main"
+      >
+        <UButton
+          color="gray"
+          variant="ghost"
+          icon="i-heroicons-x-mark-20-solid"
+          class="-my-1"
+          @click="isOpen = false"
+        />
+      </div>
+      <DashboardSidebar />
+    </USlideover>
     <div class="w-full bg-grey dark:bg-dark-gray flex flex-col">
-      <DashboardHeader />
+      <div
+        class="flex items-center w-full justify-between pl-[20px] bg-fa-white border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray border-b"
+      >
+        <UButton
+          active-class="active"
+          size="xl"
+          icon="i-heroicons-bars-3-bottom-left"
+          @click="isOpen = true"
+          class="md:hidden bg-blue hover:bg-blue dark:hover:bg-yellow h-[34px] w-[34px] flex items-center justify-center"
+        />
+        <DashboardHeader />
+      </div>
       <div class="py-[24px] pl-[24px] pr-[48px]">
         <slot />
       </div>
@@ -12,3 +46,9 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.active {
+  @apply bg-blue dark:bg-yellow;
+}
+</style>

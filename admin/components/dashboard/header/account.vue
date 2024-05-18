@@ -35,13 +35,17 @@ if (authUser.isRegistered === true) {
         rounded: 'rounded-[8px]',
         ring: 'ring-[#e7e7e3] ring-1',
         shadow: 'shadow-none',
-        width: 'w-auto',
+        width: 'md:w-auto w-[calc(100%-10px)]',
       }"
     >
       <UButton
-        class="uppercase flex justify-center items-center h-[40px] bg-transparent border border-dark-gray text-dark-gray px-[16px] hover:bg-blue hover:text-fa-white hover:border-blue rounded-[8px] dark:bg-transparent dark:border-fa-white dark:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:hover:border-yellow"
+        class="uppercase md:flex justify-center items-center h-[40px] bg-transparent border border-dark-gray text-dark-gray px-[16px] hover:bg-blue hover:text-fa-white hover:border-blue rounded-[8px] dark:bg-transparent dark:border-fa-white dark:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:hover:border-yellow hidden"
         :label="user?.role"
         trailing-icon="i-heroicons-chevron-down-20-solid"
+      />
+      <UButton
+        class="flex items-center justify-center md:hidden uppercase bg-transparent border border-dark-gray text-dark-gray hover:bg-blue hover:text-fa-white hover:border-blue rounded-[8px] dark:bg-transparent dark:border-fa-white dark:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:hover:border-yellow"
+        trailing-icon="i-heroicons-user"
       />
       <template #panel="{ close }">
         <div class="p-[20px] flex flex-col gap-[20px] items-start">
