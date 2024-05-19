@@ -77,3 +77,19 @@ a:hover {
 .v-leave-to {
   @apply opacity-0;
 }
+
+.page-title {
+  @apply font-[Rubik] text-[24px] font-[500] mb-[5px]
+}
+
+.content {
+  @apply mt-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e] p-[24px]
+}
+
+.input {
+  @apply py-[15px] px-[16px]
+}
+
+.input-label {
+  @apply py-[15px] px-[16px] pl-[35px]
+}

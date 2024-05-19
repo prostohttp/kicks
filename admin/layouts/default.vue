@@ -6,7 +6,7 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
 </script>
 
 <template>
-  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans pt-[10px]">
+  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans">
     <DashboardSidebar class="hidden md:block" />
     <USlideover
       v-model="isOpen"
@@ -42,7 +42,7 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
         />
         <DashboardHeader />
       </div>
-      <div class="py-[24px] pl-[24px] pr-[48px]">
+      <div class="py-[24px] pl-[24px] pr-[40px]">
         <slot />
       </div>
       <DashboardFooter class="mt-auto" />

@@ -9,7 +9,7 @@ export interface AccordionItem {
 
 export interface BreadcrumbItem {
   label: string;
-  link?: string;
+  to?: string;
   isActive?: boolean;
 }
 

@@ -24,14 +24,14 @@ const password = ref("");
           placeholder="Password"
           v-model="password"
           type="password"
-          input-class="py-[15px] px-[16px]"
+          input-class="input"
         />
       </UFormGroup>
     </div>
     <div class="flex flex-col gap-[20px]">
       <UButton
         type="submit"
-        class="h-[48px] px-[16px] flex justify-between"
+        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white"
         trailing
       >
         <span>Reset Password</span>

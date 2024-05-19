@@ -40,7 +40,7 @@ const isOpen = ref(false);
           variant="outline"
           placeholder="Full Name *"
           v-model="name"
-          input-class="py-[15px] px-[16px]"
+          input-class="input"
         />
       </UFormGroup>
     </div>
@@ -51,7 +51,7 @@ const isOpen = ref(false);
           variant="outline"
           placeholder="Email *"
           v-model="email"
-          input-class="py-[15px] px-[16px]"
+          input-class="input"
         />
       </UFormGroup>
       <div class="flex flex-col gap-[5px]">
@@ -61,7 +61,7 @@ const isOpen = ref(false);
             variant="outline"
             placeholder="Password *"
             v-model="password"
-            input-class="py-[15px] px-[16px]"
+            input-class="input"
           />
         </UFormGroup>
       </div>
@@ -94,7 +94,7 @@ const isOpen = ref(false);
       </UFormGroup>
       <UButton
         type="submit"
-        class="h-[48px] px-[16px] flex justify-between"
+        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white"
         trailing
       >
         <span>Register</span>
@@ -103,7 +103,7 @@ const isOpen = ref(false);
       <ULink to="/auth/login">
         <UButton
           type="submit"
-          class="inverse h-[48px] px-[16px] flex justify-between w-full"
+          class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white"
           trailing
         >
           <span>Login page</span>

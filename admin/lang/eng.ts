@@ -26,5 +26,15 @@ export const eng = {
   empty: "Nothing there",
   searchResult: "Search results",
   seeAll: "See all",
-  breadcrumbs: {},
+  breadcrumbs: {
+    profile: "Profile",
+    dashboard: "Home",
+    products: "All Products",
+    articles: "All Articles",
+    orders: "All Orders",
+    users: "All Users",
+    options: "All Options",
+    brands: "All Brands",
+    categories: "All Categories",
+  },
 };

@@ -3,7 +3,7 @@ import type { ArticleDto } from "~/server/api/article/dto/article.dto";
 
 // vars
 const articleId = useRoute().params.article;
-
+const router = useRouter();
 // handlers
 const { data: article, error } = await useFetch<ArticleDto>(
   `/api/article/one`,
@@ -25,5 +25,6 @@ useHead({
   <div>
     <div v-if="error">Nothing Found</div>
     <div v-else>{{ article?.title }}</div>
+    <pre>{{ router }}</pre>
   </div>
 </template>
