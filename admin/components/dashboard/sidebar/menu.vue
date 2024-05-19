@@ -1,43 +1,56 @@
 <script lang="ts" setup>
+import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
+
+// vars
+const menuItems = [
+  {
+    to: "/dashboard",
+    title: eng.dashboard,
+    icon: "i-heroicons-squares-plus",
+  },
+  {
+    to: "/dashboard/products",
+    title: eng.allProducts,
+    icon: "i-heroicons-list-bullet",
+  },
+  {
+    to: "/dashboard/orders",
+    title: eng.allOrders,
+    icon: "i-heroicons-clipboard-document-list",
+  },
+  {
+    to: "/dashboard/brands",
+    title: eng.allBrands,
+    icon: "i-heroicons-user-group",
+  },
+  {
+    to: "/dashboard/articles",
+    title: eng.allArticles,
+    icon: "i-heroicons-newspaper",
+  },
+  {
+    to: "/dashboard/users",
+    title: eng.allUsers,
+    icon: "i-heroicons-finger-print",
+  },
+  {
+    to: "/dashboard/options",
+    title: eng.allOptions,
+    icon: "i-heroicons-chart-bar",
+  },
+];
+const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
 </script>
 
 <template>
   <ul class="flex flex-col gap-[10px]">
     <DashboardSidebarMenuItem
-      to="/dashboard"
-      icon="i-heroicons-squares-plus"
-      :title="eng.dashboard"
-    />
-    <DashboardSidebarMenuItem
-      to="/dashboard/products"
-      icon="i-heroicons-list-bullet"
-      :title="eng.allProducts"
-    />
-    <DashboardSidebarMenuItem
-      to="/dashboard/orders"
-      icon="i-heroicons-clipboard-document-list"
-      :title="eng.allOrders"
-    />
-    <DashboardSidebarMenuItem
-      to="/dashboard/brands"
-      icon="i-heroicons-user-group"
-      :title="eng.allBrands"
-    />
-    <DashboardSidebarMenuItem
-      to="/dashboard/articles"
-      icon="i-heroicons-newspaper"
-      :title="eng.allArticles"
-    />
-    <DashboardSidebarMenuItem
-      to="/dashboard/users"
-      icon="i-heroicons-finger-print"
-      :title="eng.allUsers"
-    />
-    <DashboardSidebarMenuItem
-      to="/dashboard/options"
-      icon="i-heroicons-chart-bar"
-      :title="eng.allOptions"
+      v-for="item in menuItems"
+      :to="item.to"
+      :title="item.title"
+      :icon="item.icon"
+      @click="isOpenMobileSidebar = false"
     />
   </ul>
 </template>

@@ -36,6 +36,7 @@ const searchHandler = async () => {
   founded.value = data.result.products.data;
 };
 
+// TODO: Придумать как использовать searchThrottleHandler
 const searchThrottleHandler = useThrottleFn(searchHandler, 500);
 
 const prettySearchHandler = (event: KeyboardEvent) => {

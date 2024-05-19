@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import { Constants } from "~/constants";
+
 const isOpen = ref(false);
+provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
 </script>
 
 <template>
@@ -8,9 +11,9 @@ const isOpen = ref(false);
     <USlideover
       v-model="isOpen"
       side="left"
-      class="md:hidden flex flex-col"
+      class="md:hidden flex flex-col max-w-[260px]"
       :ui="{
-        base: 'max-w-[260px]',
+        base: 'w-auto max-w-[260px]',
       }"
     >
       <div

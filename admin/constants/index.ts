@@ -14,4 +14,5 @@ export const Constants = {
   PER_PAGE_ARTICLE: 10,
   NOTIFICATIONS_LIMIT: 4,
   SEARCH_LIMIT: 10,
+  PROVIDE_IS_OPEN_MOBILE_SIDEBAR: "isOpenMobileSidebar",
 };
