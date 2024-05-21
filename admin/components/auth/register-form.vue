@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/register.schema";
+import { eng } from "~/lang/eng";
 
 // Emits
 defineEmits(["submit"]);
@@ -34,7 +35,7 @@ const isOpen = ref(false);
     }"
   >
     <div class="flex flex-col gap-[20px]">
-      <h1 class="font-[Rubik] font-[600] text-[24px]">Your Name</h1>
+      <h1 class="font-[Rubik] font-[600] text-[24px]">{{ eng.yourName }}</h1>
       <UFormGroup name="name">
         <UInput
           variant="outline"
@@ -45,7 +46,9 @@ const isOpen = ref(false);
       </UFormGroup>
     </div>
     <div class="flex flex-col gap-[20px]">
-      <h1 class="font-[Rubik] font-[600] text-[24px]">Login Details</h1>
+      <h1 class="font-[Rubik] font-[600] text-[24px]">
+        {{ eng.loginDetails }}
+      </h1>
       <UFormGroup name="email">
         <UInput
           variant="outline"
@@ -70,14 +73,13 @@ const isOpen = ref(false);
       <UFormGroup name="terms">
         <UCheckbox v-model="terms">
           <template #label>
-            <span class="open-sans text-[16px] font-[600]"
-              >By clicking 'REGISTER' you agree to our website
+            <span class="open-sans text-[16px] font-[600]">
+              {{ eng.agreeText }}
               <small
                 @click.prevent="isOpen = true"
                 class="text-[16px] underline decoration-gray-main hover: cursor-pointer"
               >
-                KicksClub Terms & Conditions, Kicks Privacy Notice and Terms &
-                Conditions.
+                {{ eng.terms }}
               </small></span
             >
           </template>
@@ -86,30 +88,28 @@ const isOpen = ref(false);
       <UFormGroup name="keepLogged">
         <UCheckbox v-model="keepLogged">
           <template #label>
-            <span class="open-sans text-[16px] font-[600]"
-              >Keep me logged in after registration</span
-            >
+            <span class="open-sans text-[16px] font-[600]">
+              {{ eng.keepLogin }}
+            </span>
           </template>
         </UCheckbox>
       </UFormGroup>
       <UButton
         type="submit"
-        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white"
+        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow"
         trailing
       >
-        <span>Register</span>
+        <span>{{ eng.register }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
-      <ULink to="/auth/login">
-        <UButton
-          type="submit"
-          class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white"
-          trailing
-        >
-          <span>Login page</span>
-          <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
-        </UButton>
-      </ULink>
+      <UButton
+        to="/auth/login"
+        class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow uppercase font-[Rubik] bg-yellow hover:text-fa-white hover:bg-dark-gray"
+        trailing
+      >
+        <span>{{ eng.loginPage }}</span>
+        <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
+      </UButton>
     </div>
   </UForm>
   <UiModal

@@ -1,9 +1,16 @@
 export default defineEventHandler(async (event) => {
   try {
-    const { email } = getQuery(event);
-    const user = await User.findOne({ email }).select(
-      "name email image password role",
-    );
+    const { email, id } = getQuery(event);
+    let user;
+    if (email) {
+      user = await User.findOne({ email }).select(
+        "name email image password role",
+      );
+    }
+    if (id) {
+      user = await User.findById(id).select("name email image password role");
+    }
+
     if (!user) {
       throw createError({ statusMessage: "User not found" });
     }

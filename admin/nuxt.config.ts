@@ -31,9 +31,9 @@ export default defineNuxtConfig({
         base: "./public",
       },
     },
-    experimental: {
-      websocket: true,
-    },
+    // experimental: {
+    //   websocket: true,
+    // },
   },
   css: ["~/assets/css/main.css"],
   devtools: { enabled: false },

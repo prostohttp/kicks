@@ -6,14 +6,14 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
 </script>
 
 <template>
-  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans">
+  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans lg:h-dvh">
     <DashboardSidebar class="hidden md:block" />
     <USlideover
       v-model="isOpen"
       side="left"
-      class="md:hidden flex flex-col max-w-[260px]"
+      class="md:hidden flex flex-col"
       :ui="{
-        base: 'w-auto max-w-[260px]',
+        base: 'sidebar',
       }"
     >
       <div
@@ -31,7 +31,7 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
     </USlideover>
     <div class="w-full bg-grey dark:bg-dark-gray flex flex-col">
       <div
-        class="flex items-center w-full justify-between pl-[20px] bg-fa-white border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray border-b"
+        class="flex items-center w-full justify-between pl-[20px] pt-[10px] md:pt-0 bg-fa-white border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray border-b"
       >
         <UButton
           active-class="active"
@@ -42,7 +42,7 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
         />
         <DashboardHeader />
       </div>
-      <div class="py-[24px] pl-[24px] pr-[40px]">
+      <div class="py-[24px] pl-[24px] lg:pr-[40px] pr-[20px] overflow-x-auto">
         <slot />
       </div>
       <DashboardFooter class="mt-auto" />

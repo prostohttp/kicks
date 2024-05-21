@@ -1,30 +1,15 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
-import type { UserDto } from "~/server/dto/user.dto";
 import { Constants } from "~/constants";
+import { useUserDataStore } from "~/stores/user-data";
+
+// Store
+const userStore = useUserDataStore();
+await useAsyncData("user", () => userStore.getUser());
+const { savedUser: user } = storeToRefs(userStore);
 
 // Vars
-const { signOut, data } = useAuth();
-
-const authUser = data.value?.user as UserDto;
-
-if (!authUser) {
-  throw createError({ statusMessage: "Access Denied", statusCode: 403 });
-}
-
-const user: Ref<UserDto | null | undefined> = ref();
-
-if (authUser.isRegistered === true) {
-  const { data } = await useFetch<UserDto>("/api/user/one", {
-    method: "GET",
-    params: {
-      email: authUser.email,
-    },
-  });
-  user.value = data.value;
-} else {
-  user.value = authUser;
-}
+const { signOut } = useAuth();
 </script>
 
 <template>
@@ -50,6 +35,7 @@ if (authUser.isRegistered === true) {
       <template #panel="{ close }">
         <div class="p-[20px] flex flex-col gap-[20px] items-start">
           <NuxtLink
+            activeClass="active"
             to="/dashboard/profile"
             class="text-[20px] font-[600] hover:text-dark-gray dark:hover:text-fa-white"
             @click="close"
@@ -60,7 +46,7 @@ if (authUser.isRegistered === true) {
             activeClass="active"
             to="/dashboard/profile"
             class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
-            v-if="authUser?.isRegistered"
+            v-if="user?.isRegistered"
             @click="close"
           >
             <span>{{ eng.changePassword }}</span>
@@ -89,6 +75,7 @@ if (authUser.isRegistered === true) {
 .active {
   @apply text-dark-gray dark:text-fa-white hover:text-blue dark:hover:text-yellow;
 }
+
 div[data-headlessui-state="open"] button {
   @apply bg-blue text-fa-white border-blue dark:bg-yellow dark:text-dark-gray dark:border-yellow;
 }

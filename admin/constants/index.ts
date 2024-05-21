@@ -15,4 +15,7 @@ export const Constants = {
   NOTIFICATIONS_LIMIT: 4,
   SEARCH_LIMIT: 10,
   PROVIDE_IS_OPEN_MOBILE_SIDEBAR: "isOpenMobileSidebar",
+  MAX_FILE_SIZE: 5000,
+  // PROVIDE_REGISTERED_USER: "registeredUser",
+  // PROVIDE_UNREGISTERED_USER: "unregisteredUser",
 };

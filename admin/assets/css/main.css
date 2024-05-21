@@ -16,6 +16,10 @@ button.inverse {
   @apply bg-yellow hover:bg-dark-gray uppercase;
 }
 
+input {
+  @apply rounded-[8px]
+}
+
 input[type="checkbox"] {
   @apply border-dark-gray rounded-[2px] h-[15px] w-[15px];
 }
@@ -24,6 +28,10 @@ input[type="checkbox"]:checked,
 input[type="checkbox"]:checked:hover,
 input[type="checkbox"]:checked:focus {
   @apply bg-dark-gray;
+}
+
+button[type="submit"].dark-button {
+  @apply py-[16px] px-[42px] flex items-center justify-center bg-dark-gray hover:bg-blue dark:bg-yellow dark:hover:bg-dark-bg dark:hover:text-fa-white
 }
 
 .ui-modal {
@@ -92,4 +100,8 @@ a:hover {
 
 .input-label {
   @apply py-[15px] px-[16px] pl-[35px]
+}
+
+.sidebar {
+  @apply w-[260px] max-w-[260px]
 }

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/reset-password.schema";
+import { eng } from "~/lang/eng";
 
 // Emits
 defineEmits(["submit"]);
@@ -31,10 +32,10 @@ const password = ref("");
     <div class="flex flex-col gap-[20px]">
       <UButton
         type="submit"
-        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white"
+        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white bg-yellow hover:text-fa-white hover:bg-dark-gray"
         trailing
       >
-        <span>Reset Password</span>
+        <span>{{ eng.resetPassword }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
     </div>

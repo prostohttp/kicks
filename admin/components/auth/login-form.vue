@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/login.schema";
+import { eng } from "~/lang/eng";
 
 // Emits
 defineEmits(["submit"]);
@@ -41,21 +42,20 @@ const { email, password } = storeToRefs(user);
     <div class="flex flex-col gap-[20px]">
       <UButton
         type="submit"
-        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white"
+        class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow"
         trailing
       >
-        <span>Login</span>
+        <span>{{ eng.login }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
-      <ULink to="/auth/register">
-        <UButton
-          class="font-[Rubik] inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white"
-          trailing
-        >
-          <span>Register page</span>
-          <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
-        </UButton>
-      </ULink>
+      <UButton
+        to="/auth/register"
+        class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow uppercase font-[Rubik] bg-yellow hover:text-fa-white hover:bg-dark-gray"
+        trailing
+      >
+        <span>{{ eng.registerPage }}</span>
+        <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
+      </UButton>
     </div>
   </UForm>
 </template>

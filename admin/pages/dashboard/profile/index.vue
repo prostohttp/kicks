@@ -11,13 +11,6 @@ const { data } = useAuth();
 const tempUser = data.value?.user as UserDto;
 
 // handlers
-const { data: user } = await useFetch<UserDto>("/api/user/one", {
-  method: "GET",
-  params: {
-    email: tempUser?.email,
-  },
-  pick: ["name", "email", "image"],
-});
 
 // meta
 definePageMeta({
@@ -27,7 +20,6 @@ definePageMeta({
 useHead({
   title: tempUser.name,
 });
-// hooks
 </script>
 
 <template>
@@ -36,10 +28,9 @@ useHead({
     <DashboardBreadcrumbs :links="links" />
   </header>
   <main class="content">
-    <DashboardProfileInfo
-      v-if="tempUser.isRegistered"
-      :user="{ ...tempUser, image: user?.image }"
-    />
-    <DashboardProfileInfo v-else :user="tempUser" />
+    <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
+      <DashboardProfileInfoRegistered v-if="tempUser?.isRegistered" />
+      <DashboardProfileInfoUnregistered v-else />
+    </div>
   </main>
 </template>

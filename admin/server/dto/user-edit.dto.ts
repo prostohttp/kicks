@@ -1,9 +1,9 @@
-export interface UserDto {
-  _id?: string;
+export interface UserEditDto {
   id?: string;
   name: string;
   email: string;
-  password?: string;
+  oldPassword?: string;
+  newPassword?: string;
   image?: string;
   role?: string;
   isRegistered?: boolean;

@@ -84,7 +84,7 @@ watch(query, (oldValue, newValue) => {
     </div>
     <UInput
       v-if="isActive"
-      input-class=" border-dark-gray dark:border-fa-white h-[40px] pl-[44px] text-dark-gray sm:w-[200px] w-[calc(100%-30px)] z-[100] sm:relative sm:left-0 sm:top-0 fixed left-[20px] top-[40px]"
+      input-class=" border-dark-gray dark:border-fa-white h-[40px] pl-[44px] text-dark-gray sm:w-[200px] w-[calc(100%-30px)] z-[100] sm:relative sm:left-0 sm:top-0 fixed left-[20px] top-[32px]"
       v-model="query"
       name="query"
       @keyup="prettySearchHandler"
@@ -120,7 +120,7 @@ watch(query, (oldValue, newValue) => {
       </Transition>
       <template #leading>
         <UButton
-          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static left-[25px] top-[43px] z-[101]"
+          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static left-[25px] top-[37px] z-[101]"
           variant="link"
           icon="i-heroicons-magnifying-glass-20-solid"
           :padded="true"
@@ -128,7 +128,7 @@ watch(query, (oldValue, newValue) => {
       </template>
       <template #trailing>
         <UButton
-          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static right-[20px] top-[45px] z-[101]"
+          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static right-[20px] top-[37px] z-[101]"
           variant="link"
           icon="i-heroicons-x-mark-20-solid"
           :padded="true"

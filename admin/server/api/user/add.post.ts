@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { UserDto } from "~/server/dto/user.dto";
+import { Roles } from "~/types/server/server.types";
 
 export default defineEventHandler(async (event) => {
   try {
