@@ -6,14 +6,13 @@ export const schema = z.object({
   email: z.string().email("Invalid email"),
   oldPassword: z.string().optional(),
   newPassword: z.string().optional(),
-
-  // image: z
-  //   .any()
-  //   .refine((file) => file.size < Constants.MAX_FILE_SIZE, "Max size is 5MB.")
-  //   .refine(
-  //     (file) => checkFileType(file),
-  //     "Only .jpeg, .jpg, .png, .webp formats are supported.",
-  //   ),
+  image: z
+    .any()
+    .refine((file) => file.size < Constants.MAX_FILE_SIZE, "Max size is 5MB.")
+    .refine(
+      (file) => checkFileType(file),
+      "Only .jpeg, .jpg, .png, .webp formats are supported.",
+    ),
 });
 // .refine((data) => data.confirm === data.password, {
 //   message: "Passwords do not match.",

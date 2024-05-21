@@ -6,17 +6,19 @@ export const useUserDataStore = defineStore("userData", () => {
   const { data } = useAuth();
   const user = data.value?.user as UserDto;
 
+  const savedUser: Ref<UserDto | undefined> = ref();
+
   // Handlers
   const getUser = async () => {
     if (user.isRegistered) {
       try {
-        const foundedUser = await $fetch("/api/user/one", {
+        const foundedUser = await $fetch<UserDto>("/api/user/one", {
           method: "GET",
           query: {
             email: user?.email,
           },
         });
-        return {
+        savedUser.value = {
           ...foundedUser,
           isRegistered: true,
         };
@@ -26,11 +28,12 @@ export const useUserDataStore = defineStore("userData", () => {
         });
       }
     } else {
-      return user;
+      savedUser.value = user;
     }
   };
 
   return {
+    savedUser,
     getUser,
   };
 });

@@ -3,21 +3,20 @@ import { reactive } from "vue";
 import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { eng } from "~/lang/eng";
-import type { UserDto } from "~/server/dto/user.dto";
-import type { UserEditDto } from "~/server/dto/user-edit.dto";
 import { useUserDataStore } from "~/stores/user-data";
 
 // Store
 const userStore = useUserDataStore();
-const user = (await userStore.getUser()) as UserDto;
+await useAsyncData("user", () => userStore.getUser());
+const { savedUser: user } = storeToRefs(userStore);
 
 // Vars
 const toast = useToast();
 const state = reactive({
-  name: user?.name,
-  email: user?.email,
-  image: user?.image,
-  role: user?.role,
+  name: user.value?.name,
+  email: user.value?.email,
+  image: user.value?.image,
+  role: user.value?.role,
   oldPassword: "",
   newPassword: "",
 });
@@ -63,7 +62,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
     const formData = new FormData();
 
-    formData.append("id", user!!._id!.toString());
+    formData.append("id", user.value!._id!.toString());
     formData.append("name", event.data.name);
     formData.append("email", event.data.email);
     if (event.data.oldPassword) {
@@ -72,20 +71,20 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     if (event.data.newPassword) {
       formData.append("newPassword", event.data.newPassword);
     }
-    if (user?.name !== event.data.name || user?.email !== event.data.email) {
-      await $fetch("/api/user/edit", {
-        method: "PUT",
-        body: formData,
-      });
 
-      toast.add({
-        title: "Profile updated",
-      });
-    } else {
-      toast.add({ title: "Nothing to update" });
-    }
+    await $fetch("/api/user/edit", {
+      method: "PUT",
+      body: formData,
+    });
+
+    await userStore.getUser();
+
+    toast.add({
+      title: "Profile updated",
+      color: "green",
+    });
   } catch (error: any) {
-    toast.add({ title: error.message });
+    toast.add({ title: error.message, color: "red" });
   }
 };
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
@@ -129,7 +128,12 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
           v-if="!user?.image"
           class="w-[100px]"
         />
-        <img :src="`/${user?.image}`" class="w-full rounded-[8px]" v-else />
+        <img
+          :src="`/${user.image}`"
+          class="w-full rounded-[8px]"
+          :alt="user.name"
+          v-else
+        />
       </div>
     </div>
     <div class="flex justify-end">
