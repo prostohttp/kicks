@@ -2,6 +2,11 @@ body {
   @apply font-[400] font-[Inter] text-[15px] text-dark-gray select-text selection:bg-blue selection:text-white;
 }
 
+button,
+a {
+  @apply transition-all
+}
+
 input[type="text"],
 input[type="password"],
 textarea {

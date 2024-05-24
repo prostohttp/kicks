@@ -3,6 +3,7 @@ import { Constants } from "~/constants";
 import { UserEditDto } from "~/server/dto/user-edit.dto";
 import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
 import fromMultipartFormData from "~/utils/from-multipart-form-data";
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -31,12 +32,20 @@ export default defineEventHandler(async (event) => {
       savedPassword = bcrypt.hashSync(resultData.newPassword, 10);
     }
 
+    if (Array.isArray(image) && !image.length) {
+      deleteFilesWithUseStorage([user.image?.toString()]);
+    }
+
     const updatedUser = await User.findByIdAndUpdate(
       resultData.id,
       {
         ...resultData,
         password: savedPassword ? savedPassword : user.password,
-        image: image ? image[0] : "",
+        image: !image
+          ? user.image
+          : Array.isArray(image) && image.length
+            ? image[0]
+            : "",
       },
       {
         new: true,

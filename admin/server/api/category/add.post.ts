@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     const newCategory = new Category({
       ...resultData,
       children: cleanStringToArray(resultData.children),
-      image: image ? image[0] : "",
+      image: image.length ? image[0] : "",
     });
 
     return await newCategory.save();

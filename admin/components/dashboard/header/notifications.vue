@@ -66,7 +66,7 @@ const markAllAsRead = async () => {
               class="w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
             />
           </div>
-          <div class="md:h-[400px] h-[200px] overflow-y-auto w-full">
+          <div class="md:max-h-[400px] max-h-[200px] overflow-y-auto w-full">
             <template v-if="isEmpty">
               <span>{{ eng.empty }}</span>
             </template>
@@ -110,6 +110,7 @@ const markAllAsRead = async () => {
 .active {
   @apply bg-dark-gray text-fa-white hover:bg-blue dark:bg-fa-white dark:text-dark-gray dark:hover:bg-yellow;
 }
+
 div[data-headlessui-state="open"] .icon {
   @apply bg-blue dark:bg-yellow;
 }

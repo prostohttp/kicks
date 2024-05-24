@@ -18,4 +18,7 @@ export const Constants = {
   MAX_FILE_SIZE: 5000,
   // PROVIDE_REGISTERED_USER: "registeredUser",
   // PROVIDE_UNREGISTERED_USER: "unregisteredUser",
+  fileTypes: {
+    image: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
+  },
 };

@@ -36,7 +36,7 @@ export default defineNuxtConfig({
     // },
   },
   css: ["~/assets/css/main.css"],
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   experimental: {
     // componentIslands: true,
   },

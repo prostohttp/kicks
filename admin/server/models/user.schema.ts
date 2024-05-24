@@ -24,7 +24,7 @@ export const User = defineMongooseModel({
       enum: Object.values(Roles),
     },
     image: {
-      type: String,
+      type: String || Boolean,
       required: false,
     },
   },

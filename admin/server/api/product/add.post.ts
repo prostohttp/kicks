@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       ...resultData,
       category: cleanStringToArray(resultData.category),
       tags: cleanStringToArray(resultData.tags),
-      image: image ? image[0] : "",
+      image: image.length ? image[0] : "",
       additionImages: additionImages ? additionImages : [],
       options: resultData.options
         ? JSON.parse(resultData.options.toString())

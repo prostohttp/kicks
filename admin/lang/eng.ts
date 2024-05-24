@@ -48,6 +48,9 @@ export const eng = {
   password: "Old password",
   newPassword: "New password",
   confirmPassword: "Confirm password",
+  dragDropMessage: "Drag and drop image here",
+  or: "or",
+  clickToUpload: "Click to upload",
   breadcrumbs: {
     profile: "Profile",
     dashboard: "Home",

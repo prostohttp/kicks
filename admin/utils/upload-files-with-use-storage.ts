@@ -6,7 +6,7 @@ export default (
   data: MultiPartData[] | undefined,
   folderPath: string,
   fieldName: string,
-): string[] => {
+): string[] | false => {
   const files: string[] = [];
   try {
     if (data) {
@@ -21,11 +21,16 @@ export default (
           files!.push(filePath);
         }
       }
+      if (data.every((obj) => obj.name !== fieldName)) {
+        return false;
+      }
     }
   } catch (error: any) {
     throw createError({
       statusMessage: error.message,
     });
   }
+  console.log("files", files);
+
   return files;
 };
