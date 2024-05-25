@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     const resultData = fromMultipartFormData(data) as unknown as BrandDto;
     const newBrand = new Brand({
       ...resultData,
-      image: image.length ? image[0] : "",
+      image: image && image.length ? image[0] : "",
     });
 
     return await newBrand.save();

@@ -1,8 +1,13 @@
 import { Roles } from "~/types/server/server.types";
 import type { UserDto } from "~/server/dto/user.dto";
 
-export const useIsAdmin = () => {
+export const useIsAdmin = (): boolean => {
   const { data } = useAuth();
-  const user = data.value?.user as UserDto;
-  return computed(() => user.role === Roles.ADMIN);
+  let user: UserDto;
+  if (data.value) {
+    user = data.value.user as UserDto;
+  } else {
+    return false;
+  }
+  return user.role === Roles.ADMIN;
 };

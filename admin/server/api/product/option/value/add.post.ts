@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const resultData = fromMultipartFormData(data) as unknown as OptionValueDto;
     const newOptionValue = new OptionValue({
       ...resultData,
-      image: image.length ? image[0] : "",
+      image: image && image.length ? image[0] : "",
     });
 
     const savedOptionValue = await newOptionValue.save();

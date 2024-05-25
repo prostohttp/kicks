@@ -4,13 +4,14 @@ defineProps<{
   to: string;
   icon: string;
   title: string;
+  protected?: boolean;
 }>();
 
 // vars
 </script>
 
 <template>
-  <li>
+  <li v-if="!protected">
     <NuxtLink
       activeClass="active"
       :to="to"

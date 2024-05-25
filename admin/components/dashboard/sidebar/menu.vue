@@ -3,6 +3,7 @@ import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
 
 // vars
+const isAdmin = useIsAdmin();
 const menuItems = [
   {
     to: "/dashboard",
@@ -30,14 +31,15 @@ const menuItems = [
     icon: "i-heroicons-newspaper",
   },
   {
-    to: "/dashboard/users",
-    title: eng.allUsers,
-    icon: "i-heroicons-finger-print",
-  },
-  {
     to: "/dashboard/options",
     title: eng.allOptions,
     icon: "i-heroicons-chart-bar",
+  },
+  {
+    to: "/dashboard/users",
+    title: eng.allUsers,
+    icon: "i-heroicons-finger-print",
+    protected: !isAdmin,
   },
 ];
 const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
@@ -50,6 +52,7 @@ const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
       :to="item.to"
       :title="item.title"
       :icon="item.icon"
+      :protected="item.protected"
       @click="isOpenMobileSidebar = false"
     />
   </ul>

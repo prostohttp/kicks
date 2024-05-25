@@ -22,3 +22,12 @@ export enum Currency {
   USD = "USD",
   RUB = "RUB",
 }
+
+export interface UserData {
+  label: string;
+  name: string;
+  placeholder: string;
+  icon: string;
+  type?: string;
+  disabled?: boolean;
+}

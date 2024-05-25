@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     const newArticle = new Article({
       ...resultData,
       featuredProducts: cleanStringToArray(resultData.featuredProducts),
-      image: image.length ? image[0] : "",
+      image: image && image.length ? image[0] : "",
     });
 
     return await newArticle.save();

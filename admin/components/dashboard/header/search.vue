@@ -101,7 +101,7 @@ watch(query, (oldValue, newValue) => {
     >
       <Transition>
         <div
-          class="md:absolute fixed top-[90px] md:right-0 right-[10px] rounded-[8px] bg-white p-[20px] md:min-w-[210px] md:w-auto w-[calc(100%-30px)] text-dark-gray dark:text-fa-white dark:bg-dark-bg flex flex-col gap-[16px]"
+          class="md:absolute fixed top-[90px] md:right-0 right-[10px] rounded-[8px] bg-white p-[20px] md:min-w-[210px] md:w-auto w-[calc(100%-30px)] text-dark-gray dark:text-fa-white dark:bg-dark-bg flex flex-col gap-[16px] z-[101]"
           v-if="isOpen"
         >
           <h3 class="font-[Rubik] text-[20px] font-[600]">
