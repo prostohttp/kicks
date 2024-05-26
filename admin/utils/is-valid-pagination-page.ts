@@ -7,8 +7,9 @@ export default (
   return (
     !page ||
     !Number.isInteger(Number(page)) ||
+    !pagesInPagination ||
     page > pagesInPagination ||
     page <= 0 ||
-    elementLength < limit
+    elementLength <= limit
   );
 };

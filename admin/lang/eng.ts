@@ -51,6 +51,8 @@ export const eng = {
   dragDropMessage: "Drag and drop image here",
   or: "or",
   clickToUpload: "Click to upload",
+  prev: "PREV",
+  next: "NEXT",
   breadcrumbs: {
     profile: "Profile",
     dashboard: "Home",

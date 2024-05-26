@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import type { FormSubmitEvent } from "#ui/types";
+import { reactive } from "vue";
 import { schema, type Schema } from "./schema/user-info.schema";
+import type { FormSubmitEvent } from "#ui/types";
+import { eng } from "~/lang/eng";
+import { useUserDataStore } from "~/stores/user-data";
 import { Constants } from "~/constants";
 import type { UserData } from "~/types/ui/ui.types";
-import { eng } from "~/lang/eng";
 
-// defines
-defineProps<{
-  userData: UserData[];
-}>();
+// define
+defineProps<{ userData: UserData[] }>();
 
 // Store
 const userStore = useUserDataStore();
@@ -43,8 +43,6 @@ useDropZone(dropZoneRef, {
 });
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
-  console.log("EVENT", event);
-
   try {
     const formData = new FormData();
 
@@ -95,7 +93,6 @@ const deleteImageHandler = () => {
 };
 
 const inputHandler = (e: Event) => {
-  console.log("INPUT HANDLER", e);
   let fileInput = e.target as HTMLInputElement;
   if (fileInput && fileInput.files) {
     let file: File | undefined = fileInput.files[0];

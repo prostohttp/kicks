@@ -23,11 +23,10 @@ useHead({
 </script>
 
 <template>
-  <header>
-    <h1 class="page-title">{{ eng.breadcrumbs.profile }}</h1>
-    <DashboardBreadcrumbs :links="links" />
-  </header>
-  <main class="content">
+  <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.profile" />
+  <main
+    class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
+  >
     <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
       <DashboardProfileInfoRegistered v-if="tempUser?.isRegistered" />
       <DashboardProfileInfoUnregistered v-else />
