@@ -5,6 +5,7 @@ import type { UserDto } from "~/server/dto/user.dto";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // vars
+const toast = useToast();
 const router = useRouter();
 const page = useRoute().query.page;
 const path = router.currentRoute.value.path;
@@ -23,6 +24,25 @@ const { data } = await useFetch<{
     page,
   },
 });
+
+const deletePerson = async (id: string) => {
+  try {
+    await $fetch("/api/user/remove", {
+      method: "DELETE",
+      body: {
+        id,
+      },
+    });
+    data.value = await $fetch("/api/user/all", {
+      method: "GET",
+      query: {
+        page,
+      },
+    });
+  } catch (error: any) {
+    toast.add({ title: error.message });
+  }
+};
 
 const activePage = ref(data.value?.activePage);
 
@@ -51,11 +71,12 @@ watch(activePage, async (newValue) => {
 <template>
   <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.users" />
   <main class="flex flex-col">
-    <div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-[14px]">
+    <div class="grid 2xl:grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-[14px]">
       <DashboardUserCard
         v-for="user in data?.users"
         :key="user._id"
         :user="user"
+        @deletePerson="deletePerson"
       />
     </div>
     <UiPagination

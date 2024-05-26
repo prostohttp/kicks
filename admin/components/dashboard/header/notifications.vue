@@ -48,11 +48,14 @@ const markAllAsRead = async () => {
         name="i-heroicons-bell"
         class="icon cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
       />
-      <UIcon
-        v-else
-        name="i-heroicons-bell-alert-solid"
-        class="icon cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
-      />
+      <template v-else>
+        <UChip color="red" :text="notifications?.length" size="2xl">
+          <UIcon
+            name="i-heroicons-bell-alert-solid"
+            class="icon cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
+          />
+        </UChip>
+      </template>
 
       <template #panel="{ close }">
         <div class="p-[20px] flex flex-col gap-[20px] items-start">

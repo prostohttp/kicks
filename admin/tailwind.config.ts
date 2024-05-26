@@ -24,6 +24,7 @@ export default <Partial<Config>>{
         "gray-main": "#70706E",
         "dark-gray": "#232321",
         "dark-bg": "#101827",
+        danger: "#e40000",
       },
       fontSize: {},
       fontFamily: {},

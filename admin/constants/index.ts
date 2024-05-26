@@ -8,7 +8,7 @@ export const Constants = {
   IMG_ARTICLES: "img/articles/",
   IMG_USERS: "img/users/",
   PER_PAGE_CAT: 8,
-  PER_PAGE_USERS: 5,
+  PER_PAGE_USERS: 6,
   PER_PAGE_PROD: 12,
   PER_PAGE_ORDER: 10,
   PER_PAGE_BRAND: 20,

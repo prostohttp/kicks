@@ -53,6 +53,12 @@ export const eng = {
   clickToUpload: "Click to upload",
   prev: "PREV",
   next: "NEXT",
+  noImage: "No image",
+  editProfile: "Edit Profile",
+  deletePerson: "Delete Person",
+  deletePersonText: "Are you sure you want to delete this person?",
+  cancel: "Cancel",
+  deletePersonSuccess: "Person deleted successfully",
   breadcrumbs: {
     profile: "Profile",
     dashboard: "Home",
