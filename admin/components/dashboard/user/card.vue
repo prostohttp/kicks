@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { UserDto } from "~/server/dto/user.dto";
 import { eng } from "~/lang/eng";
+import { DashboardUserEditModal } from "#components";
+import { DashboardUserDeleteModal } from "#components";
 
 // defines
 const { user } = defineProps<{
@@ -8,16 +10,61 @@ const { user } = defineProps<{
 }>();
 
 const emit = defineEmits(["delete-person"]);
+
 // vars
 const toast = useToast();
-const isOpenModal = ref(false);
+const modal = useModal();
+const route = useRoute();
+const router = useRouter();
 
 // handlers
-const deletePerson = () => {
-  emit("delete-person", user._id);
-  isOpenModal.value = false;
-  toast.add({ title: eng.deletePersonSuccess });
+
+const createLink = (userId: string) => {
+  const currentQuery = { ...route.query, edit: userId };
+  return {
+    path: route.path,
+    query: currentQuery,
+  };
 };
+
+const removeEditQuery = () => {
+  const currentQuery = { ...route.query };
+  delete currentQuery.edit;
+  router.push({
+    path: route.path,
+    query: currentQuery,
+  });
+};
+
+const openEditUserModal = (userId: string) => {
+  modal.open(DashboardUserEditModal, {
+    userId,
+    onClose() {
+      removeEditQuery();
+      modal.close();
+    },
+  });
+};
+
+const openDeleteUserModal = () => {
+  modal.open(DashboardUserDeleteModal, {
+    onClose() {
+      modal.close();
+    },
+    onDelete() {
+      emit("delete-person", user._id);
+      modal.close();
+      toast.add({ title: eng.deletePersonSuccess });
+    },
+  });
+};
+
+// hooks
+onMounted(() => {
+  if (route.query.edit) {
+    openEditUserModal(route.query.edit.toString());
+  }
+});
 </script>
 
 <template>
@@ -62,60 +109,29 @@ const deletePerson = () => {
           class="bg-[#efefef] dark:bg-[#efefef] text-dark-gray hover:bg-dark-gray dark:hover:bg-dark-gray dark:hover:text-fa-white hover:text-fa-white py-1"
         />
 
-        <template #panel="{ close }">
+        <template #panel>
           <ul class="p-4 flex flex-col gap-[10px]">
-            <NuxtLink :to="`/dashboard/users/${user._id}`">
+            <NuxtLink
+              active-class="active"
+              :to="createLink(user._id)"
+              @click="openEditUserModal(user._id)"
+              class="cursor-pointer"
+            >
               {{ eng.editProfile }}
             </NuxtLink>
-            <NuxtLink @click="isOpenModal = true" class="cursor-pointer">
+
+            <NuxtLink @click="openDeleteUserModal" class="cursor-pointer">
               {{ eng.deletePerson }}
             </NuxtLink>
-            <UModal v-model="isOpenModal" prevent-close>
-              <UCard
-                :ui="{
-                  ring: '',
-                  divide: 'divide-y divide-gray-100 dark:divide-gray-800',
-                }"
-              >
-                <template #header>
-                  <div class="flex items-center justify-between">
-                    <h3
-                      class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
-                    >
-                      {{ eng.deletePerson }}
-                    </h3>
-                    <UButton
-                      color="gray"
-                      variant="ghost"
-                      icon="i-heroicons-x-mark-20-solid"
-                      class="-my-1"
-                      @click="isOpenModal = false"
-                    />
-                  </div>
-                </template>
-
-                <div class="flex flex-col gap-[20px]">
-                  <p class="dark:text-fa-white">{{ eng.deletePersonText }}</p>
-                  <div class="flex gap-[10px] mt-auto justify-end">
-                    <UButton
-                      class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
-                      @click="isOpenModal = false"
-                    >
-                      {{ eng.cancel }}
-                    </UButton>
-                    <UButton
-                      @click="deletePerson"
-                      class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
-                    >
-                      {{ eng.deletePerson }}
-                    </UButton>
-                  </div>
-                </div>
-              </UCard>
-            </UModal>
           </ul>
         </template>
       </UPopover>
     </div>
   </div>
 </template>
+
+<style scoped>
+.active {
+  @apply dark:text-fa-white dark:hover:text-yellow text-dark-gray hover:text-blue;
+}
+</style>

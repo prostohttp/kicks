@@ -18,5 +18,6 @@ useHead({
       <NuxtPage />
     </NuxtLayout>
     <UNotifications />
+    <UModals />
   </div>
 </template>
