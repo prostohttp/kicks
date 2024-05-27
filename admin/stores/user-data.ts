@@ -1,10 +1,19 @@
 import { defineStore } from "pinia";
+import type { UserEditDto } from "~/server/dto/user-edit.dto";
 import type { UserDto } from "~/server/dto/user.dto";
+
+interface UsersPayload {
+  users: UserDto[];
+  pagesInPagination?: number;
+  allItems: number;
+  activePage?: number;
+}
 
 export const useUserDataStore = defineStore("userData", () => {
   // Vars
   const { data } = useAuth();
   const user = data.value?.user as UserDto;
+  const allUsers: Ref<UsersPayload | undefined> = ref();
 
   const savedUser: Ref<UserDto | undefined> = ref();
 
@@ -32,8 +41,25 @@ export const useUserDataStore = defineStore("userData", () => {
     }
   };
 
+  const getAllUsers = async (page: number) => {
+    try {
+      allUsers.value = await $fetch<UsersPayload>("/api/user/all", {
+        method: "GET",
+        query: {
+          page,
+        },
+      });
+    } catch (error: any) {
+      throw createError({
+        statusMessage: error.message,
+      });
+    }
+  };
+
   return {
+    allUsers,
     savedUser,
     getUser,
+    getAllUsers,
   };
 });

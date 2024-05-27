@@ -1,29 +1,23 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
-import type { UserDto } from "~/server/dto/user.dto";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
+
+// store
+const userDataStore = useUserDataStore();
+const { allUsers: data } = storeToRefs(userDataStore);
 
 // vars
 const toast = useToast();
 const router = useRouter();
-const page = useRoute().query.page;
+const page = useRoute().query.page as never as number;
 const path = router.currentRoute.value.path;
 
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 
 // handlers
-const { data } = await useFetch<{
-  users: UserDto[];
-  pagesInPagination?: number;
-  allItems: number;
-  activePage?: number;
-}>("/api/user/all", {
-  method: "GET",
-  query: {
-    page,
-  },
-});
+
+await userDataStore.getAllUsers(page);
 
 const deletePerson = async (id: string) => {
   try {
@@ -33,12 +27,7 @@ const deletePerson = async (id: string) => {
         id,
       },
     });
-    data.value = await $fetch("/api/user/all", {
-      method: "GET",
-      query: {
-        page,
-      },
-    });
+    await userDataStore.getAllUsers(page);
   } catch (error: any) {
     toast.add({ title: error.message });
   }
@@ -59,12 +48,7 @@ useHead({
 // Hooks
 watch(activePage, async (newValue) => {
   router.push({ query: { page: newValue } });
-  data.value = await $fetch("/api/user/all", {
-    method: "GET",
-    query: {
-      page: newValue,
-    },
-  });
+  await userDataStore.getAllUsers(newValue!);
 });
 </script>
 

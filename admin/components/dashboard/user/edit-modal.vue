@@ -9,6 +9,29 @@ const { userId } = defineProps<{
 
 defineEmits(["close"]);
 
+// vars
+const formFieldsData = [
+  {
+    label: eng.userName,
+    name: "name",
+    placeholder: eng.userName,
+    icon: "i-heroicons-user-circle-16-solid",
+  },
+  {
+    label: eng.email,
+    name: "email",
+    placeholder: eng.email,
+    icon: "i-heroicons-envelope",
+  },
+  {
+    label: eng.role,
+    name: "role",
+    placeholder: eng.role,
+    icon: "i-heroicons-shield-exclamation-20-solid",
+    type: "select",
+  },
+];
+
 // handlers
 const { data: user, pending } = await useFetch<UserDto>("/api/user/one", {
   method: "GET",
@@ -45,7 +68,11 @@ const { data: user, pending } = await useFetch<UserDto>("/api/user/one", {
         </div>
       </template>
       <div class="dark:text-fa-white text-dark-gray" v-if="user">
-        <DashboardUserEditForm :user="user" />
+        <DashboardUserEditForm
+          :user="user"
+          :data="formFieldsData"
+          @close="$emit('close')"
+        />
       </div>
       <div v-else class="dark:text-fa-white">
         <h2>{{ eng.empty }}</h2>

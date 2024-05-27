@@ -72,7 +72,7 @@ onMounted(() => {
     class="bg-white rounded-[16px] p-[16px] dark:bg-dark-bg dark:text-fa-white flex items-center sm:items-start sm:flex-row flex-col gap-[18px] open-sans text-dark-gray relative"
   >
     <div
-      class="md:min-w-[90px] md:max-w-[90px] w-[60%] rounded-[8px] overflow-hidden p-[5px] bg-fa-white dark:bg-dark-gray flex items-center justify-center"
+      class="md:min-w-[90px] md:max-w-[90px] w-[60%] rounded-[8px] overflow-hidden p-[5px] bg-fa-white dark:bg-dark-gray flex items-center justify-center h-full"
     >
       <template v-if="user.image">
         <img :src="`/${user.image}`" :alt="user.name" class="rounded-[8px]" />

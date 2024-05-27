@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { reactive } from "vue";
 import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { eng } from "~/lang/eng";

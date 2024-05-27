@@ -36,7 +36,7 @@ input[type="checkbox"]:checked:focus {
 }
 
 button[type="submit"].dark-button {
-  @apply py-[16px] px-[42px] flex items-center justify-center bg-dark-gray hover:bg-blue dark:bg-yellow dark:hover:bg-dark-bg dark:hover:text-fa-white
+  @apply py-[16px] px-[42px] flex items-center justify-center bg-dark-gray hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow
 }
 
 .ui-modal {
@@ -105,4 +105,8 @@ a:hover {
 
 .sidebar {
   @apply w-[260px] max-w-[260px]
+}
+
+.select-label {
+  @apply ring-0 border border-dark-gray dark:border-[#374151] text-[16px] shadow-none h-[52px];
 }
