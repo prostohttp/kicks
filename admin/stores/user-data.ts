@@ -15,9 +15,10 @@ export const useUserDataStore = defineStore("userData", () => {
   const allUsers: Ref<UsersPayload | undefined> = ref();
 
   const savedUser: Ref<UserDto | undefined> = ref();
+  const userById: Ref<UserDto | undefined> = ref();
 
   // Handlers
-  const getUser = async () => {
+  const getUser = async (): Promise<void> => {
     if (user.isRegistered) {
       try {
         const foundedUser = await $fetch<UserDto>("/api/user/one", {
@@ -40,7 +41,7 @@ export const useUserDataStore = defineStore("userData", () => {
     }
   };
 
-  const getAllUsers = async (page: number) => {
+  const getAllUsers = async (page: number): Promise<void> => {
     try {
       allUsers.value = await $fetch<UsersPayload>("/api/user/all", {
         method: "GET",
@@ -55,10 +56,25 @@ export const useUserDataStore = defineStore("userData", () => {
     }
   };
 
+  const getUserById = async (id: string): Promise<void> => {
+    try {
+      userById.value = await $fetch("/api/user/one", {
+        method: "GET",
+        query: {
+          id,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
   return {
     allUsers,
     savedUser,
+    userById,
     getUser,
     getAllUsers,
+    getUserById,
   };
 });

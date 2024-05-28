@@ -3,7 +3,6 @@ import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { eng } from "~/lang/eng";
 import { useUserDataStore } from "~/stores/user-data";
-import { Constants } from "~/constants";
 import type { UserData } from "~/types/ui/ui.types";
 
 // define
@@ -30,6 +29,7 @@ const state = reactive({
 
 // Handlers
 const uploadImage = async (id: string, image: File) => {
+  isLoading.value = true;
   try {
     const formData = new FormData();
     if (user.value) {
@@ -43,21 +43,20 @@ const uploadImage = async (id: string, image: File) => {
       body: formData,
     });
     await userStore.getUser();
+    toast.add({ title: "Image uploaded", color: "green" });
+    isLoading.value = false;
   } catch (_error) {
     toast.add({ title: "File upload error, must be an image", color: "red" });
   }
 };
+
 const onDrop = async (files: File[] | null) => {
-  isLoading.value = true;
   if (user.value && files) {
     uploadImage(user.value._id, files[0]);
   }
-  isLoading.value = false;
 };
 
-useDropZone(dropZoneRef, {
-  onDrop,
-});
+useDropZone(dropZoneRef, { onDrop });
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
@@ -91,19 +90,27 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
 
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 
-const deleteImageHandler = () => {
-  if (inputRef.value) {
-    inputRef.value.value = "";
+const deleteImageHandler = async () => {
+  try {
+    await $fetch("/api/user/photo", {
+      method: "DELETE",
+      body: {
+        id: user.value!._id!.toString(),
+      },
+    });
+    inputRef.value!.value = "";
+    await userStore.getUser();
+    toast.add({ title: "File deleted", color: "green" });
+  } catch (_error) {
+    toast.add({ title: "File delete error", color: "red" });
   }
 };
 
 const inputHandler = async (e: Event) => {
-  isLoading.value = true;
   let fileInput = e.target as HTMLInputElement;
-  if (user.value) {
+  if (fileInput && user.value) {
     uploadImage(user.value._id, fileInput.files![0]);
   }
-  isLoading.value = false;
 };
 
 // hooks
@@ -152,6 +159,7 @@ onUnmounted(() => {
       <div
         class="rounded-[8px] basis-[40%] p-[20px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
       >
+        <input type="file" ref="inputRef" class="hidden" />
         <div
           v-if="user && !user.image"
           class="w-full h-full flex items-center justify-center flex-col text-center gap-[20px]"
@@ -162,7 +170,6 @@ onUnmounted(() => {
             alt="No Image"
             class="lg:w-[100px] w-[40px]"
           />
-          <input type="file" ref="inputRef" class="hidden" />
           <div class="flex flex-col gap-[10px] text-[14px] items-center">
             <h3>{{ eng.dragDropMessage }}</h3>
             <UDivider

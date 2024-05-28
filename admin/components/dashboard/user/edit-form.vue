@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
-import type { UserDto } from "~/server/dto/user.dto";
 import type { UserData } from "~/types/ui/ui.types";
 import { eng } from "~/lang/eng";
 import { Roles } from "~/types/server/server.types";
-import { Constants } from "~/constants";
 
 // defines
-const { user, data } = defineProps<{
-  user: UserDto;
+const { userId, data } = defineProps<{
+  userId: string;
   data: UserData[];
 }>();
 
@@ -17,50 +15,75 @@ const emit = defineEmits(["close"]);
 
 // store
 const userStore = useUserDataStore();
+await userStore.getUserById(userId);
+const { userById: user } = storeToRefs(userStore);
 
 // vars
 const state = reactive({
-  name: user.name,
-  email: user.email,
-  image: user.image,
-  role: user.role,
+  name: user.value?.name,
+  email: user.value?.email,
+  role: user.value?.role,
 });
+const isLoading = ref(false);
 const page = useRoute().query.page as never as number;
 const toast = useToast();
-const imageIsChanged = ref(false);
 const inputRef = ref<HTMLInputElement>();
-const imageRef = ref<HTMLImageElement>();
 const dropZoneRef = ref<HTMLDivElement | null>();
 const roles = Object.values(Roles).filter((role) => role !== Roles.ADMIN);
 
 // handlers
-const deleteImageHandler = () => {
-  imageIsChanged.value = true;
-  state.image = "";
-  if (imageRef.value) {
-    imageRef.value.setAttribute("src", "");
+const uploadImage = async (id: string, image: File) => {
+  isLoading.value = true;
+  try {
+    const formData = new FormData();
+    if (user.value) {
+      formData.append("id", id);
+    }
+    if (image) {
+      formData.append("image", image);
+    }
+    await $fetch("/api/user/photo", {
+      method: "POST",
+      body: formData,
+    });
+    await userStore.getAllUsers(page);
+    await userStore.getUserById(userId);
+    toast.add({ title: "Image uploaded", color: "green" });
+    isLoading.value = false;
+  } catch (_error) {
+    toast.add({ title: "File upload error, must be an image", color: "red" });
   }
-  if (inputRef.value) {
-    inputRef.value.value = "";
+};
+
+const deleteImageHandler = async () => {
+  try {
+    await $fetch("/api/user/photo", {
+      method: "DELETE",
+      body: {
+        id: user.value?._id!.toString(),
+      },
+    });
+    await userStore.getAllUsers(page);
+    await userStore.getUserById(userId);
+    inputRef.value!.value = "";
+    toast.add({ title: "Image delete", color: "green" });
+  } catch (_error) {
+    toast.add({ title: "File delete error", color: "red" });
   }
 };
 
 const onDrop = (files: File[] | null) => {
-  makeImagePreview(files![0], state, imageRef.value);
-  imageIsChanged.value = true;
+  if (files && user.value) {
+    uploadImage(user.value?._id, files[0]);
+  }
 };
 
-useDropZone(dropZoneRef, {
-  onDrop,
-  dataTypes: Constants.fileTypes.image,
-});
+useDropZone(dropZoneRef, { onDrop });
 
 const inputHandler = (e: Event) => {
   let fileInput = e.target as HTMLInputElement;
-  if (fileInput && fileInput.files) {
-    let file: File | undefined = fileInput.files[0];
-    makeImagePreview(file, state, imageRef.value);
-    imageIsChanged.value = true;
+  if (user.value) {
+    uploadImage(user.value._id, fileInput.files![0]);
   }
 };
 
@@ -68,17 +91,10 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
     const formData = new FormData();
 
-    formData.append("id", user!._id!.toString());
+    formData.append("id", user.value!._id!.toString());
     formData.append("name", event.data.name);
     formData.append("email", event.data.email);
     formData.append("role", event.data.role);
-    if (inputRef.value && inputRef.value.files) {
-      formData.append("image", inputRef.value.files[0]);
-    }
-
-    if (!imageIsChanged.value) {
-      formData.delete("image");
-    }
 
     await $fetch("/api/user/edit", {
       method: "PUT",
@@ -86,7 +102,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
 
     emit("close");
-    userStore.getAllUsers(page);
+    await userStore.getAllUsers(page);
 
     toast.add({
       title: "Profile updated",
@@ -123,8 +139,9 @@ onUnmounted(() => {
     <div
       class="rounded-[8px] basis-[40%] p-[20px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
     >
+      <input type="file" ref="inputRef" class="hidden" />
       <div
-        v-show="!state.image"
+        v-if="!user?.image"
         class="w-full h-full flex items-center justify-center flex-col text-center gap-[20px]"
         ref="dropZoneRef"
       >
@@ -133,7 +150,6 @@ onUnmounted(() => {
           alt="No Image"
           class="lg:w-[100px] w-[40px]"
         />
-        <input type="file" ref="inputRef" class="hidden" />
         <div class="flex flex-col gap-[10px] text-[14px] items-center">
           <h3>{{ eng.dragDropMessage }}</h3>
           <UDivider
@@ -154,7 +170,7 @@ onUnmounted(() => {
           </button>
         </div>
       </div>
-      <div v-show="state.image" class="w-full">
+      <div v-else class="w-full">
         <img
           ref="imageRef"
           :src="`/${user.image}`"

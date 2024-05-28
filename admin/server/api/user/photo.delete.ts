@@ -1,3 +1,5 @@
+import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
+
 export default defineEventHandler(async (event) => {
   try {
     const { id } = await readBody(event);
@@ -5,7 +7,9 @@ export default defineEventHandler(async (event) => {
     if (!user) {
       throw createError({ statusMessage: "User not found" });
     }
-    return user;
+    await User.findByIdAndUpdate(id, { image: "" }, { new: true });
+
+    deleteFilesWithUseStorage([user.image.toString()]);
   } catch (error: any) {
     throw createError({ statusMessage: error.message });
   }

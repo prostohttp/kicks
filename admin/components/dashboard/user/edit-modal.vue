@@ -69,7 +69,7 @@ const { data: user, pending } = await useFetch<UserDto>("/api/user/one", {
       </template>
       <div class="dark:text-fa-white text-dark-gray" v-if="user">
         <DashboardUserEditForm
-          :user="user"
+          :userId="user._id"
           :data="formFieldsData"
           @close="$emit('close')"
         />
