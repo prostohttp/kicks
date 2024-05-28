@@ -13,32 +13,50 @@ defineProps<{ userData: UserData[] }>();
 const userStore = useUserDataStore();
 await userStore.getUser();
 const { savedUser: user } = storeToRefs(userStore);
+const isLoading = ref(false);
 
 // Vars
 const toast = useToast();
-const imageIsChanged = ref(false);
 const inputRef = ref<HTMLInputElement>();
-const imageRef = ref<HTMLImageElement>();
 const dropZoneRef = ref<HTMLDivElement | null>();
 
 const state = reactive({
   name: user.value?.name,
   email: user.value?.email,
-  image: user.value?.image,
   role: user.value?.role,
   oldPassword: "",
   newPassword: "",
 });
 
 // Handlers
-const onDrop = (files: File[] | null) => {
-  makeImagePreview(files![0], state, imageRef.value);
-  imageIsChanged.value = true;
+const uploadImage = async (id: string, image: File) => {
+  try {
+    const formData = new FormData();
+    if (user.value) {
+      formData.append("id", id);
+    }
+    if (image) {
+      formData.append("image", image);
+    }
+    await $fetch("/api/user/photo", {
+      method: "POST",
+      body: formData,
+    });
+    await userStore.getUser();
+  } catch (_error) {
+    toast.add({ title: "File upload error, must be an image", color: "red" });
+  }
+};
+const onDrop = async (files: File[] | null) => {
+  isLoading.value = true;
+  if (user.value && files) {
+    uploadImage(user.value._id, files[0]);
+  }
+  isLoading.value = false;
 };
 
 useDropZone(dropZoneRef, {
   onDrop,
-  dataTypes: Constants.fileTypes.image,
 });
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
@@ -53,13 +71,6 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     }
     if (event.data.newPassword) {
       formData.append("newPassword", event.data.newPassword);
-    }
-    if (inputRef.value && inputRef.value.files) {
-      formData.append("image", inputRef.value.files[0]);
-    }
-
-    if (!imageIsChanged.value) {
-      formData.delete("image");
     }
 
     await $fetch("/api/user/edit", {
@@ -81,23 +92,18 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 
 const deleteImageHandler = () => {
-  imageIsChanged.value = true;
-  state.image = "";
-  if (imageRef.value) {
-    imageRef.value.setAttribute("src", "");
-  }
   if (inputRef.value) {
     inputRef.value.value = "";
   }
 };
 
-const inputHandler = (e: Event) => {
+const inputHandler = async (e: Event) => {
+  isLoading.value = true;
   let fileInput = e.target as HTMLInputElement;
-  if (fileInput && fileInput.files) {
-    let file: File | undefined = fileInput.files[0];
-    makeImagePreview(file, state, imageRef.value);
-    imageIsChanged.value = true;
+  if (user.value) {
+    uploadImage(user.value._id, fileInput.files![0]);
   }
+  isLoading.value = false;
 };
 
 // hooks
@@ -147,7 +153,7 @@ onUnmounted(() => {
         class="rounded-[8px] basis-[40%] p-[20px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
       >
         <div
-          v-show="!state.image"
+          v-if="user && !user.image"
           class="w-full h-full flex items-center justify-center flex-col text-center gap-[20px]"
           ref="dropZoneRef"
         >
@@ -177,18 +183,20 @@ onUnmounted(() => {
             </button>
           </div>
         </div>
-        <div v-show="state.image" class="w-full">
-          <img
-            ref="imageRef"
-            :src="`/${user?.image}`"
-            class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
-            :alt="user?.name"
-          />
-          <UButton
-            icon="i-heroicons-trash"
-            @click="deleteImageHandler"
-            class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
-          />
+        <div v-else class="w-full">
+          <UiSpinner v-if="isLoading" />
+          <template v-else>
+            <img
+              :src="`/${user?.image}`"
+              class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
+              :alt="user?.name"
+            />
+            <UButton
+              icon="i-heroicons-trash"
+              @click="deleteImageHandler"
+              class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
+            />
+          </template>
         </div>
       </div>
     </div>

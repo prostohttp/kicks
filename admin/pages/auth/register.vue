@@ -35,6 +35,7 @@ const register = async (data: RegisterFormDto) => {
         password,
         role: Roles.MANAGER,
         keepLogged,
+        image: "",
       },
     });
     if (!data.keepLogged) {

@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import type { UserEditDto } from "~/server/dto/user-edit.dto";
 import type { UserDto } from "~/server/dto/user.dto";
 
 interface UsersPayload {

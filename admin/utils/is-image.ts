@@ -1,3 +1,3 @@
-export default (type: string): boolean => {
+export const isImage = (type: string): boolean => {
   return type.startsWith("image");
 };

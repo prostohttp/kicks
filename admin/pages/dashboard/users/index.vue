@@ -16,8 +16,8 @@ const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 
 // handlers
-
 await userDataStore.getAllUsers(page);
+const activePage = ref(data.value?.activePage);
 
 const deletePerson = async (id: string) => {
   try {
@@ -27,13 +27,11 @@ const deletePerson = async (id: string) => {
         id,
       },
     });
-    await userDataStore.getAllUsers(page);
+    await userDataStore.getAllUsers(activePage.value!);
   } catch (error: any) {
     toast.add({ title: error.message });
   }
 };
-
-const activePage = ref(data.value?.activePage);
 
 // Meta
 definePageMeta({
