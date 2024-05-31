@@ -17,7 +17,7 @@ const model = defineModel();
     </div>
     <ul
       v-else
-      class="flex flex-col gap-[16px] sm:w-[420px] w-full md:h-[400px] h-[200px] overflow-y-auto"
+      class="flex flex-col gap-[16px] sm:w-[420px] w-full md:max-h-[400px] max-h-[200px] overflow-y-auto"
     >
       <li v-for="el in data" :key="el._id" class="flex gap-[15px]">
         <NuxtLink

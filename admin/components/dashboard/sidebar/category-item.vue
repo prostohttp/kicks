@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 
-// defines
+// define
 defineProps<{
   _id: string;
   title: string;

@@ -6,7 +6,7 @@ import { eng } from "~/lang/eng";
 const { signIn } = useAuth();
 import { Roles, type RegisterFormDto } from "~/types/server/server.types";
 
-// Meta
+// meta
 definePageMeta({
   layout: "auth",
   name: "register",

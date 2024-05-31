@@ -4,8 +4,9 @@ import type { FormSubmitEvent } from "#ui/types";
 import type { UserData } from "~/types/ui/ui.types";
 import { eng } from "~/lang/eng";
 import { Roles } from "~/types/server/server.types";
+import { Constants } from "~/constants";
 
-// defines
+// define
 const { userId, data } = defineProps<{
   userId: string;
   data: UserData[];
@@ -27,48 +28,67 @@ const state = reactive({
 const isLoading = ref(false);
 const page = useRoute().query.page as never as number;
 const toast = useToast();
-const inputRef = ref<HTMLInputElement>();
-const dropZoneRef = ref<HTMLDivElement | null>();
+const inputRef = ref<HTMLInputElement | undefined>();
+const dropZoneRef = ref<HTMLDivElement | undefined>();
 const roles = Object.values(Roles).filter((role) => role !== Roles.ADMIN);
 
 // handlers
 const uploadImage = async (id: string, image: File) => {
   isLoading.value = true;
   try {
-    const formData = new FormData();
-    if (user.value) {
-      formData.append("id", id);
-    }
+    const formDataForUploadImage = new FormData();
+    formDataForUploadImage.append("folderName", Constants.IMG_USERS);
+
     if (image) {
-      formData.append("image", image);
+      formDataForUploadImage.append("image", image);
     }
-    await $fetch("/api/user/photo", {
+    const uploadedImage = await $fetch("/api/image/add", {
       method: "POST",
-      body: formData,
+      body: formDataForUploadImage,
     });
+
+    if (!uploadedImage) {
+      toast.add({ title: eng.notImage, color: "red" });
+    }
+
+    await $fetch("/api/user/edit", {
+      method: "PUT",
+      body: {
+        id: user.value?._id,
+        image: uploadedImage,
+      },
+    });
+
     await userStore.getAllUsers(page);
     await userStore.getUserById(userId);
-    toast.add({ title: "Image uploaded", color: "green" });
+    toast.add({ title: eng.imageUploaded, color: "green" });
     isLoading.value = false;
   } catch (_error) {
-    toast.add({ title: "File upload error, must be an image", color: "red" });
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
 const deleteImageHandler = async () => {
   try {
-    await $fetch("/api/user/photo", {
+    await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        id: user.value?._id!.toString(),
+        image: user.value?.image,
+      },
+    });
+    await $fetch("/api/user/edit", {
+      method: "PUT",
+      body: {
+        id: user.value?._id,
+        image: "",
       },
     });
     await userStore.getAllUsers(page);
     await userStore.getUserById(userId);
     inputRef.value!.value = "";
-    toast.add({ title: "Image delete", color: "green" });
+    toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
-    toast.add({ title: "File delete error", color: "red" });
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
@@ -89,19 +109,16 @@ const inputHandler = (e: Event) => {
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const formData = new FormData();
-
-    formData.append("id", user.value!._id!.toString());
-    formData.append("name", event.data.name);
-    formData.append("email", event.data.email);
-    formData.append("role", event.data.role);
-
     await $fetch("/api/user/edit", {
       method: "PUT",
-      body: formData,
+      body: {
+        id: user.value?._id,
+        name: event.data.name,
+        email: event.data.email,
+        role: event.data.role,
+      },
     });
 
-    emit("close");
     await userStore.getAllUsers(page);
 
     toast.add({
@@ -203,7 +220,7 @@ onUnmounted(() => {
           selectClass="select-label"
         />
       </template>
-      <template v-else class="">
+      <template v-else>
         <UInput
           :placeholder="placeholder"
           :icon="icon"

@@ -110,3 +110,7 @@ a:hover {
 .select-label {
   @apply ring-0 border border-dark-gray dark:border-[#374151] text-[16px] shadow-none h-[52px];
 }
+
+.red-button[type="submit"] {
+  @apply bg-danger hover:bg-danger
+}

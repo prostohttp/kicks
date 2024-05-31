@@ -33,7 +33,7 @@ const deletePerson = async (id: string) => {
   }
 };
 
-// Meta
+// meta
 definePageMeta({
   middleware: ["only-admin-access"],
   name: eng.breadcrumbs.users,

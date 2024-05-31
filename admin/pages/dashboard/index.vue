@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// Meta
+// meta
 definePageMeta({
   name: "dashboard",
 });

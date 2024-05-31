@@ -4,7 +4,7 @@ import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
 import type { ForgotFormDto } from "~/types/server/server.types";
 
-// Meta
+// meta
 definePageMeta({
   layout: "auth",
   name: "forgot",

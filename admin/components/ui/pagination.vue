@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
 
-// defines
+// define
 const { allItems, elementInPage } = defineProps<{
   allItems: number | undefined;
   elementInPage: number | undefined;

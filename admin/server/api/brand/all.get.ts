@@ -1,11 +1,12 @@
+import { Constants } from "~/constants";
 import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
 
 export default defineEventHandler(async (event) => {
   try {
     const query = getQuery(event);
-    const page = Number(query.page);
-    const perPage = Number(query.perPage);
+    const page = Number(query.page) || 1;
+    const perPage = Number(query.perPage) || Constants.PER_PAGE_BRAND;
     const brands = await Brand.find();
     const brandLength = brands.length;
     const pagesInPagination = pageCount(brandLength, perPage);
@@ -14,6 +15,7 @@ export default defineEventHandler(async (event) => {
       return {
         brands,
         pagesInPagination: 0,
+        allItems: brandLength,
       };
     }
 
@@ -24,6 +26,7 @@ export default defineEventHandler(async (event) => {
       brands: brandInPage,
       pagesInPagination,
       activePage: page,
+      allItems: brandLength,
     };
   } catch (error: any) {
     throw createError({

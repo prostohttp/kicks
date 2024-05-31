@@ -5,7 +5,7 @@ import { eng } from "~/lang/eng";
 // Emits
 defineEmits(["submit"]);
 
-// Stores
+// Store
 const user = useAuthDataStore();
 const { name, email, password, terms, keepLogged } = storeToRefs(user);
 

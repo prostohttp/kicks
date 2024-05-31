@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import type { UserDto } from "~/server/dto/user.dto";
 import { eng } from "~/lang/eng";
-import { DashboardUserEditModal } from "#components";
-import { DashboardUserDeleteModal } from "#components";
+import { DashboardUserEditModal, DashboardUserDeleteModal } from "#components";
 
-// defines
+// define
 const { user } = defineProps<{
   user: UserDto;
 }>();
@@ -15,32 +14,13 @@ const emit = defineEmits(["delete-person"]);
 const toast = useToast();
 const modal = useModal();
 const route = useRoute();
-const router = useRouter();
 
 // handlers
-
-const createLink = (userId: string) => {
-  const currentQuery = { ...route.query, edit: userId };
-  return {
-    path: route.path,
-    query: currentQuery,
-  };
-};
-
-const removeEditQuery = () => {
-  const currentQuery = { ...route.query };
-  delete currentQuery.edit;
-  router.push({
-    path: route.path,
-    query: currentQuery,
-  });
-};
-
 const openEditUserModal = (userId: string) => {
   modal.open(DashboardUserEditModal, {
     userId,
     onClose() {
-      removeEditQuery();
+      removeQuery("edit");
       modal.close();
     },
   });
@@ -72,7 +52,7 @@ onMounted(() => {
     class="bg-white rounded-[16px] p-[16px] dark:bg-dark-bg dark:text-fa-white flex items-center sm:items-start sm:flex-row flex-col gap-[18px] open-sans text-dark-gray relative"
   >
     <div
-      class="md:min-w-[90px] md:max-w-[90px] w-[60%] rounded-[8px] overflow-hidden p-[5px] bg-fa-white dark:bg-dark-gray flex items-center justify-center h-full"
+      class="sm:min-w-[90px] sm:max-w-[90px] w-[60%] rounded-[8px] overflow-hidden p-[5px] bg-fa-white dark:bg-dark-gray flex items-center justify-center h-full"
     >
       <template v-if="user.image">
         <img :src="`/${user.image}`" :alt="user.name" class="rounded-[8px]" />
@@ -101,7 +81,8 @@ onMounted(() => {
           rounded: 'rounded-[8px]',
           ring: 'ring-[#e7e7e3] ring-1',
           shadow: 'shadow-none',
-          width: 'md:w-auto w-[calc(100%-10px)]',
+          width: 'md:w-auto w-[calc(100%-20px)]',
+          position: 'right-[10px] sm:right-auto',
         }"
       >
         <UButton
@@ -113,7 +94,7 @@ onMounted(() => {
           <ul class="p-4 flex flex-col gap-[10px]">
             <NuxtLink
               active-class="active"
-              :to="createLink(user._id)"
+              :to="addQuery('edit', user._id)"
               @click="openEditUserModal(user._id)"
               class="cursor-pointer"
             >

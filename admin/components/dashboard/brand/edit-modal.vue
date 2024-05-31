@@ -2,7 +2,10 @@
 import { eng } from "~/lang/eng";
 
 // define
-defineEmits(["close", "delete"]);
+const { brandId } = defineProps<{
+  brandId: string;
+}>();
+const emit = defineEmits(["edit", "close"]);
 </script>
 
 <template>
@@ -18,7 +21,7 @@ defineEmits(["close", "delete"]);
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ eng.deletePerson }}
+            {{ eng.editBrand }}
           </h3>
           <UButton
             color="gray"
@@ -31,7 +34,6 @@ defineEmits(["close", "delete"]);
       </template>
 
       <div class="flex flex-col gap-[20px]">
-        <p class="dark:text-fa-white">{{ eng.deletePersonText }}</p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
@@ -40,10 +42,10 @@ defineEmits(["close", "delete"]);
             {{ eng.cancel }}
           </UButton>
           <UButton
-            @click="$emit('delete')"
+            @click="$emit('edit')"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ eng.deletePerson }}
+            {{ eng.save }}
           </UButton>
         </div>
       </div>

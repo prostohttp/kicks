@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
-// defines
+// define
 defineProps<{
   links: BreadcrumbItem[];
   title: string;

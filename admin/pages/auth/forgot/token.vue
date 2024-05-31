@@ -3,7 +3,7 @@ import { useThrottleFn } from "@vueuse/core";
 import ResetPasswordForm from "~/components/auth/reset-password-form.vue";
 import type { ResetPasswordDto } from "~/types/server/server.types";
 
-// Meta
+// meta
 definePageMeta({
   layout: "auth",
   name: "reset-password",

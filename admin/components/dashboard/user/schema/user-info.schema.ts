@@ -10,7 +10,6 @@ export const schema = z.object({
       (role) => Object.values(Roles).includes(role as Roles),
       "Invalid role",
     ),
-  image: z.any().optional(),
 });
 
 export type Schema = z.output<typeof schema>;

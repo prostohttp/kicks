@@ -7,7 +7,7 @@ const isError = ref();
 const { signIn } = useAuth();
 const toast = useToast();
 
-// Meta
+// meta
 definePageMeta({
   layout: "auth",
   name: "login",

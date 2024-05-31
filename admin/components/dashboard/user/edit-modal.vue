@@ -2,7 +2,7 @@
 import { eng } from "~/lang/eng";
 import type { UserDto } from "~/server/dto/user.dto";
 
-// defines
+// define
 const { userId } = defineProps<{
   userId: string;
 }>();

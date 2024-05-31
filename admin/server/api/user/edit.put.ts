@@ -1,22 +1,19 @@
 import bcrypt from "bcrypt";
-import { UserEditDto } from "~/server/dto/user-edit.dto";
-import fromMultipartFormData from "~/utils/from-multipart-form-data";
+import { UserEditDto } from "./dto/user-edit.dto";
 
 export default defineEventHandler(async (event) => {
   try {
-    const data = await readMultipartFormData(event);
-    const resultData = fromMultipartFormData(data) as unknown as UserEditDto;
-
-    const user = await User.findById(resultData.id);
+    const body = await readBody<UserEditDto>(event);
+    const user = await User.findById(body.id);
     if (!user) {
       throw createError({
         statusMessage: "User not found",
       });
     }
     let savedPassword: string | undefined = undefined;
-    if (resultData.oldPassword && resultData.newPassword) {
+    if (body.oldPassword && body.newPassword) {
       const correctPassword = await bcrypt.compare(
-        resultData.oldPassword,
+        body.oldPassword.toString(),
         user.password.toString(),
       );
       if (!correctPassword) {
@@ -25,13 +22,13 @@ export default defineEventHandler(async (event) => {
           statusCode: 400,
         });
       }
-      savedPassword = bcrypt.hashSync(resultData.newPassword, 10);
+      savedPassword = bcrypt.hashSync(body.newPassword.toString(), 10);
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-      resultData.id,
+      body.id,
       {
-        ...resultData,
+        ...body,
         password: savedPassword ? savedPassword : user.password,
       },
       {
