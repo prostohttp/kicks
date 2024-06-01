@@ -36,15 +36,15 @@ const roles = Object.values(Roles).filter((role) => role !== Roles.ADMIN);
 const uploadImage = async (id: string, image: File) => {
   isLoading.value = true;
   try {
-    const formDataForUploadImage = new FormData();
-    formDataForUploadImage.append("folderName", Constants.IMG_USERS);
+    const formData = new FormData();
+    formData.append("folderName", Constants.IMG_USERS);
 
     if (image) {
-      formDataForUploadImage.append("image", image);
+      formData.append("image", image);
     }
     const uploadedImage = await $fetch("/api/image/add", {
       method: "POST",
-      body: formDataForUploadImage,
+      body: formData,
     });
 
     if (!uploadedImage) {
@@ -126,7 +126,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       color: "green",
     });
   } catch (error: any) {
-    toast.add({ title: error.message, color: "red" });
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 

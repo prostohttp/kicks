@@ -4,6 +4,7 @@ import type { FormSubmitEvent } from "#ui/types";
 import { eng } from "~/lang/eng";
 import { useUserDataStore } from "~/stores/user-data";
 import type { UserData } from "~/types/ui/ui.types";
+import { Constants } from "~/constants";
 
 // define
 defineProps<{ userData: UserData[] }>();
@@ -32,21 +33,32 @@ const uploadImage = async (id: string, image: File) => {
   isLoading.value = true;
   try {
     const formData = new FormData();
-    if (user.value) {
-      formData.append("id", id);
-    }
+    formData.append("folderName", Constants.IMG_USERS);
+
     if (image) {
       formData.append("image", image);
     }
-    await $fetch("/api/user/photo", {
+    const uploadedImage = await $fetch("/api/image/add", {
       method: "POST",
       body: formData,
     });
+
+    if (!uploadedImage) {
+      toast.add({ title: eng.notImage, color: "red" });
+    }
+
+    await $fetch("/api/user/edit", {
+      method: "PUT",
+      body: {
+        id: user.value?._id,
+        image: uploadedImage,
+      },
+    });
     await userStore.getUser();
-    toast.add({ title: "Image uploaded", color: "green" });
+    toast.add({ title: eng.imageUploaded, color: "green" });
     isLoading.value = false;
   } catch (_error) {
-    toast.add({ title: "File upload error, must be an image", color: "red" });
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
@@ -60,21 +72,15 @@ useDropZone(dropZoneRef, { onDrop });
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const formData = new FormData();
-
-    formData.append("id", user.value!._id!.toString());
-    formData.append("name", event.data.name);
-    formData.append("email", event.data.email);
-    if (event.data.oldPassword) {
-      formData.append("oldPassword", event.data.oldPassword);
-    }
-    if (event.data.newPassword) {
-      formData.append("newPassword", event.data.newPassword);
-    }
-
     await $fetch("/api/user/edit", {
       method: "PUT",
-      body: formData,
+      body: {
+        id: user.value?._id,
+        name: event.data.name,
+        email: event.data.email,
+        oldPassword: event.data.oldPassword,
+        newPassword: event.data.newPassword,
+      },
     });
 
     await userStore.getUser();
@@ -84,7 +90,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       color: "green",
     });
   } catch (error: any) {
-    toast.add({ title: error.message, color: "red" });
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
@@ -92,17 +98,24 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 
 const deleteImageHandler = async () => {
   try {
-    await $fetch("/api/user/photo", {
+    await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        id: user.value!._id!.toString(),
+        image: user.value?.image,
       },
     });
-    inputRef.value!.value = "";
+    await $fetch("/api/user/edit", {
+      method: "PUT",
+      body: {
+        id: user.value?._id,
+        image: "",
+      },
+    });
     await userStore.getUser();
-    toast.add({ title: "File deleted", color: "green" });
+    inputRef.value!.value = "";
+    toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
-    toast.add({ title: "File delete error", color: "red" });
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
