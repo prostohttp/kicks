@@ -7,9 +7,6 @@ export default defineEventHandler(async (event) => {
     const data = await readMultipartFormData(event);
     const resultData = fromMultipartFormData(data) as unknown as ImageDto;
 
-    console.log("data", data);
-    console.log("resultData", resultData);
-
     const image = uploadFilesWithUseStorage(
       data,
       resultData.folderName,

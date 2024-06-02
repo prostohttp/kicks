@@ -189,7 +189,6 @@ onUnmounted(() => {
       </div>
       <div v-else class="w-full">
         <img
-          ref="imageRef"
           :src="`/${user.image}`"
           class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
           :alt="user?.name"

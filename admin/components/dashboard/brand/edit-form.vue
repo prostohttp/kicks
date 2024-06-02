@@ -2,24 +2,28 @@
 import { eng } from "~/lang/eng";
 import { schema, type Schema } from "./schema/add-new-brand.schema";
 import type { FormSubmitEvent } from "#ui/types";
-import { usePersistDataStore } from "~/stores/persist-data";
 import { Constants } from "~/constants";
 
 // define
+const { brandId } = defineProps<{
+  brandId: string;
+}>();
 const emit = defineEmits(["close"]);
 
 // store
 const brandStore = useBrandDataStore();
-const persistStore = usePersistDataStore();
-const { brandImage } = storeToRefs(persistStore);
+await brandStore.getBrandById(brandId);
+const { brand } = storeToRefs(brandStore);
 
 // vars
 const toast = useToast();
 const state = reactive({
-  title: "",
-  description: "",
+  image: brand.value?.image,
+  title: brand.value?.title,
+  description: brand.value?.description,
 });
 const isLoading = ref(false);
+const isOpenDeleteModal = ref(false);
 const page = useRoute().query.page as never as number;
 const inputRef: Ref<HTMLInputElement | undefined> = ref();
 const dropZoneRef = ref<HTMLDivElement | undefined>();
@@ -40,7 +44,15 @@ const uploadImage = async (image: File) => {
     if (!uploadedImage) {
       toast.add({ title: eng.noImage, color: "red" });
     }
-    brandImage.value = uploadedImage;
+    await $fetch("/api/brand/edit", {
+      method: "PUT",
+      body: {
+        _id: brand.value?._id,
+        image: uploadedImage,
+      },
+    });
+    brandStore.getBrandById(brandId);
+    brandStore.getAllBrands(page);
     toast.add({ title: eng.imageUploaded, color: "green" });
     isLoading.value = false;
   } catch (_error) {
@@ -63,18 +75,19 @@ const inputHandler = (e: Event) => {
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    await $fetch("/api/brand/add", {
-      method: "POST",
+    await $fetch("/api/brand/edit", {
+      method: "PUT",
       body: {
+        _id: brand.value?._id,
         title: event.data.title,
         description: event.data.description,
-        image: brandImage.value || "",
+        image: brand.value?.image || "",
       },
     });
+    brandStore.getBrandById(brandId);
     brandStore.getAllBrands(page);
-    toast.add({ title: eng.successAddMessage });
     emit("close");
-    brandImage.value = "";
+    toast.add({ title: eng.successEdit });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong });
   }
@@ -87,12 +100,45 @@ const deleteImageHandler = async () => {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: brandImage.value,
+        image: brand.value?.image,
       },
     });
-    brandImage.value = "";
+    await $fetch("/api/brand/edit", {
+      method: "PUT",
+      body: {
+        _id: brand.value?._id,
+        image: "",
+      },
+    });
+    brandStore.getBrandById(brandId);
+    brandStore.getAllBrands(page);
+
     inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
+  } catch (_error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
+  }
+};
+
+const deleteBrandHandler = async () => {
+  try {
+    if (brand.value?.image) {
+      await $fetch("/api/image/remove", {
+        method: "DELETE",
+        body: {
+          image: brand.value.image,
+        },
+      });
+    }
+    await $fetch("/api/brand/remove", {
+      method: "DELETE",
+      body: {
+        id: brand.value?._id,
+      },
+    });
+    brandStore.getAllBrands(page);
+    emit("close");
+    toast.add({ title: eng.successDeleteMessage, color: "red" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
@@ -119,7 +165,7 @@ onUnmounted(() => {
     >
       <input type="file" ref="inputRef" class="hidden" />
       <div
-        v-if="!brandImage"
+        v-if="!brand?.image"
         class="w-full h-full flex items-center justify-center flex-col text-center gap-[20px]"
         ref="dropZoneRef"
       >
@@ -152,14 +198,14 @@ onUnmounted(() => {
       </div>
       <div v-else class="w-full">
         <img
-          :src="`/${brandImage}`"
-          class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
+          :src="`/${brand.image}`"
+          class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity dark:brightness-0 dark:invert-[0.5]"
           alt="new brand"
         />
         <UButton
           icon="i-heroicons-trash"
           @click="deleteImageHandler"
-          class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
+          class="top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity absolute"
         />
       </div>
     </div>
@@ -199,6 +245,22 @@ onUnmounted(() => {
     <div
       class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
     >
+      <UTooltip
+        :text="eng.delete"
+        class="mr-auto"
+        :popper="{ placement: 'top' }"
+      >
+        <UButton
+          class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white flex sm:w-auto w-full text-center justify-center"
+          icon="i-heroicons-trash"
+          @click="isOpenDeleteModal = true"
+        >
+        </UButton>
+      </UTooltip>
+      <DashboardBrandDeleteModal
+        v-model="isOpenDeleteModal"
+        @delete="deleteBrandHandler"
+      />
       <UButton
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
         @click="$emit('close')"

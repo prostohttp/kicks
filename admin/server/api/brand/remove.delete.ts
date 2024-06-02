@@ -1,5 +1,3 @@
-import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
-
 export default defineEventHandler(async (event) => {
   try {
     const { id } = await readBody(event);
@@ -9,8 +7,6 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Brand not found",
       });
     }
-
-    deleteFilesWithUseStorage([brand.image?.toString()]);
     return {
       statusMessage: "Brand deleted",
     };

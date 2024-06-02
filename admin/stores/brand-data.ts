@@ -10,6 +10,7 @@ interface BrandsPayload {
 export const useBrandDataStore = defineStore("brandData", () => {
   // vars
   const brands: Ref<BrandsPayload | undefined> = ref();
+  const brand: Ref<BrandDto | undefined> = ref();
 
   // handlers
   const getAllBrands = async (page: number): Promise<void> => {
@@ -25,11 +26,11 @@ export const useBrandDataStore = defineStore("brandData", () => {
     }
   };
 
-  const getBrandById = async (id: string): Promise<BrandDto> => {
+  const getBrandById = async (id: string): Promise<void> => {
     try {
-      return await $fetch("/api/brand/one", {
+      brand.value = await $fetch("/api/brand/one", {
         method: "GET",
-        body: {
+        query: {
           id,
         },
       });
@@ -38,6 +39,7 @@ export const useBrandDataStore = defineStore("brandData", () => {
     }
   };
   return {
+    brand,
     brands,
     getAllBrands,
     getBrandById,

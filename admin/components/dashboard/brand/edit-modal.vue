@@ -5,7 +5,7 @@ import { eng } from "~/lang/eng";
 const { brandId } = defineProps<{
   brandId: string;
 }>();
-const emit = defineEmits(["edit", "close"]);
+const emit = defineEmits(["close"]);
 </script>
 
 <template>
@@ -33,22 +33,7 @@ const emit = defineEmits(["edit", "close"]);
         </div>
       </template>
 
-      <div class="flex flex-col gap-[20px]">
-        <div class="flex gap-[10px] mt-auto justify-end">
-          <UButton
-            class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
-            @click="$emit('close')"
-          >
-            {{ eng.cancel }}
-          </UButton>
-          <UButton
-            @click="$emit('edit')"
-            class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
-          >
-            {{ eng.save }}
-          </UButton>
-        </div>
-      </div>
+      <DashboardBrandEditForm @close="$emit('close')" :brandId="brandId" />
     </UCard>
   </UModal>
 </template>
