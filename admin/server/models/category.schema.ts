@@ -24,10 +24,6 @@ export const Category = defineMongooseModel({
         ref: "Category",
       },
     ],
-    image: {
-      type: String,
-      required: false,
-    },
     isEnabled: {
       type: Boolean,
       required: true,

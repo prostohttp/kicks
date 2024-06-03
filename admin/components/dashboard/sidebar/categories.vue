@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 // vars
+import { eng } from "~/lang/eng";
 import type { AccordionItem } from "~/types/ui/ui.types";
 
 const { data: categories } = await useFetch("/api/category/all", {
   method: "GET",
+  query: {
+    isParent: true,
+  },
   pick: ["categories"],
 });
 
@@ -63,6 +67,16 @@ const items: AccordionItem[] | undefined = [
                 : 0
             "
           />
+          <li
+            class="h-[35px] flex justify-between items-center mb-[16px] border-t border-grey dark:border-[#70706e] pt-[15px]"
+          >
+            <NuxtLink
+              to="/dashboard/categories"
+              class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
+            >
+              {{ eng.allCategories }}
+            </NuxtLink>
+          </li>
         </ul>
       </template>
     </UAccordion>

@@ -24,7 +24,7 @@ await brandsDataStore.getAllBrands(page);
 const openAddNewBrandModal = () => {
   modal.open(DashboardBrandAddNewModal, {
     onClose() {
-      removeQuery("add");
+      removeQuery("brandNew");
       modal.close();
     },
   });
@@ -46,7 +46,7 @@ watch(activePage, async (newValue) => {
 });
 
 onMounted(() => {
-  if (route.query.add) {
+  if (route.query.brandNew) {
     openAddNewBrandModal();
   }
 });
@@ -61,13 +61,15 @@ onMounted(() => {
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
       :label="eng.addNewBrand"
-      :to="addQuery('add', 'new')"
+      :to="addQuery('brandNew', 'yes')"
       @click="openAddNewBrandModal"
     />
   </div>
   <main class="flex flex-col">
+    <UiEmpty v-if="!data?.allItems" />
     <div
       class="grid 2xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 md:gap-[30px] gap-[15px]"
+      v-else
     >
       <DashboardBrandCard
         v-for="brand in data?.brands"

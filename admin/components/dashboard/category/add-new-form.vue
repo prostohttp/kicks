@@ -1,0 +1,101 @@
+<script lang="ts" setup>
+import { eng } from "~/lang/eng";
+import { schema, type Schema } from "./schema/add-new-category.schema";
+import type { FormSubmitEvent } from "#ui/types";
+import { useCategoryDataStore } from "~/stores/category-data";
+
+// define
+const emit = defineEmits(["close"]);
+
+// store
+const categoryStore = useCategoryDataStore();
+
+// vars
+const toast = useToast();
+const state = reactive({
+  title: "",
+  description: "",
+  isParent: false,
+  isEnabled: false,
+  children: [],
+});
+const isLoading = ref(false);
+const page = useRoute().query.page as never as number;
+
+// handlers
+const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
+  try {
+    await $fetch("/api/category/add", {
+      method: "POST",
+      body: {
+        title: event.data.title,
+        description: event.data.description,
+        isParent: event.data.isParent,
+        isEnabled: event.data.isEnabled,
+        children: cleanStringFromArray(event.data.children),
+      },
+    });
+    categoryStore.getAllCategories(page);
+    toast.add({ title: eng.successAddMessage });
+    emit("close");
+  } catch (_error) {
+    toast.add({ title: eng.somethingWentWrong });
+  }
+};
+
+const onSubmit = useThrottleFn(onSubmitHandler, 3000);
+</script>
+
+<template>
+  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <UFormGroup
+      :label="eng.title"
+      name="title"
+      :ui="{
+        label: {
+          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+        },
+      }"
+    >
+      <UInput
+        :placeholder="eng.title"
+        v-model="state.title"
+        inputClass="input-label"
+        icon="i-heroicons-queue-list"
+      />
+    </UFormGroup>
+
+    <UFormGroup
+      :label="eng.description"
+      name="description"
+      :ui="{
+        label: {
+          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+        },
+      }"
+    >
+      <UInput
+        :placeholder="eng.description"
+        v-model="state.description"
+        inputClass="input-label"
+        icon="i-heroicons-document-text-16-solid"
+      />
+    </UFormGroup>
+    <div
+      class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
+    >
+      <UButton
+        class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
+        @click="$emit('close')"
+      >
+        {{ eng.cancel }}
+      </UButton>
+      <UButton
+        type="submit"
+        class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
+      >
+        {{ eng.save }}
+      </UButton>
+    </div>
+  </UForm>
+</template>

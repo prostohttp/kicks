@@ -7,8 +7,6 @@ export default defineEventHandler(async (event) => {
     }
     return category;
   } catch (error: any) {
-    throw createError({
-      statusMessage: error.message,
-    });
+    throw createError({ statusMessage: error.message });
   }
 });

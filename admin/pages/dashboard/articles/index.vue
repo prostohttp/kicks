@@ -9,8 +9,6 @@ useHead({
 });
 
 // vars
-const page = ref(1);
-const perPage = ref(Constants.PER_PAGE_ARTICLE);
 
 // handlers
 const { data } = useFetch<{ articles: ArticleDto[] }>("/api/article/all", {
@@ -20,8 +18,8 @@ const { data } = useFetch<{ articles: ArticleDto[] }>("/api/article/all", {
 </script>
 
 <template>
-  <div>
-    <NuxtPage />
+  <UiEmpty v-if="!data?.articles.length" />
+  <div v-else>
     <ul>
       <li v-for="article in data?.articles" :key="article._id">
         <NuxtLink :to="`/dashboard/articles/${article._id}`">

@@ -20,7 +20,7 @@ const openEditUserModal = (userId: string) => {
   modal.open(DashboardUserEditModal, {
     userId,
     onClose() {
-      removeQuery("edit");
+      removeQuery("userEdit");
       modal.close();
     },
   });
@@ -41,8 +41,8 @@ const openDeleteUserModal = () => {
 
 // hooks
 onMounted(() => {
-  if (route.query.edit) {
-    openEditUserModal(route.query.edit.toString());
+  if (route.query.userEdit) {
+    openEditUserModal(route.query.userEdit.toString());
   }
 });
 </script>
@@ -94,7 +94,7 @@ onMounted(() => {
           <ul class="p-4 flex flex-col gap-[10px]">
             <NuxtLink
               active-class="active"
-              :to="addQuery('edit', user._id)"
+              :to="addQuery('userEdit', user._id)"
               @click="openEditUserModal(user._id)"
               class="cursor-pointer"
             >

@@ -53,7 +53,11 @@ watch(activePage, async (newValue) => {
 <template>
   <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.users" />
   <main class="flex flex-col">
-    <div class="grid 2xl:grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-[14px]">
+    <UiEmpty v-if="!data?.allItems" />
+    <div
+      class="grid 2xl:grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-[14px]"
+      v-else
+    >
       <DashboardUserCard
         v-for="user in data?.users"
         :key="user._id"

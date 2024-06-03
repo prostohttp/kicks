@@ -1,47 +1,68 @@
 <script lang="ts" setup>
-import { Constants } from "~/constants";
-import type { CategoryDto } from "~/server/api/category/dto/category.dto";
-
-// types
-interface ICategoriesDto {
-  categories: CategoryDto[];
-  page?: number;
-  perPage: number;
-}
+import { DashboardCategoryAddNewModal } from "#components";
+import { eng } from "~/lang/eng";
+import { useCategoryDataStore } from "~/stores/category-data";
+import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // meta
 definePageMeta({
   name: "all-categories",
 });
 useHead({
-  title: "All categories",
+  title: eng.allCategories,
 });
 
+// store
+const categoryDataStore = useCategoryDataStore();
+const { categories: data } = storeToRefs(categoryDataStore);
+
 // vars
+const modal = useModal();
 const router = useRouter();
 const route = useRoute();
-const currentPage = ref(route.query.page);
-const perPage = Constants.PER_PAGE_CAT;
+const page = useRoute().query.page as never as number;
+const activePage = ref(data.value?.activePage);
+const path = router.currentRoute.value.path;
+const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 
 // handlers
+categoryDataStore.getAllCategories(page);
+const openAddNewCategoryModal = () => {
+  modal.open(DashboardCategoryAddNewModal, {
+    onClose() {
+      removeQuery("categoryNew");
+      modal.close();
+    },
+  });
+};
 
 // hooks
-const { data, pending } = await useFetch<ICategoriesDto>("/api/category/all", {
-  method: "POST",
-  body: {
-    page: currentPage.value,
-    perPage: perPage,
-  },
+watch(activePage, async (newValue) => {
+  router.push({ query: { page: newValue } });
+  await categoryDataStore.getAllCategories(newValue!);
+});
+
+onMounted(() => {
+  if (route.query.categoryNew) {
+    openAddNewCategoryModal();
+  }
 });
 </script>
 
 <template>
+  <div
+    class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
+  >
+    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.categories" />
+    <UButton
+      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
+      icon="i-heroicons-plus-circle"
+      :label="eng.addNewCategory"
+      :to="addQuery('categoryNew', 'yes')"
+      @click="openAddNewCategoryModal()"
+    />
+  </div>
   <div>
-    <LazyUiSpinner v-if="pending" />
-    <template v-else>
-      <h1>All categories</h1>
-      <pre>{{ data }}</pre>
-      <!-- <pre>{{ router }}</pre> -->
-    </template>
+    <pre>{{ data?.categories }}</pre>
   </div>
 </template>

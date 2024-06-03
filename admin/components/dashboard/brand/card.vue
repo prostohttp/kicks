@@ -16,7 +16,7 @@ const openEditBrandModal = (brandId: string) => {
   modal.open(DashboardBrandEditModal, {
     brandId,
     onClose() {
-      removeQuery("edit");
+      removeQuery("brandEdit");
       modal.close();
     },
   });
@@ -24,14 +24,14 @@ const openEditBrandModal = (brandId: string) => {
 
 // hooks
 onMounted(() => {
-  if (route.query.edit) {
-    openEditBrandModal(route.query.edit.toString());
+  if (route.query.brandEdit) {
+    openEditBrandModal(route.query.brandEdit.toString());
   }
 });
 </script>
 <template>
   <NuxtLink
-    :to="addQuery('edit', brand._id)"
+    :to="addQuery('brandEdit', brand._id)"
     @click="openEditBrandModal(brand._id)"
     class="flex flex-col gap-[15px] justify-center text-center bg-fa-white dark:bg-dark-bg rounded-[16px] p-[16px] cursor-pointer"
   >
