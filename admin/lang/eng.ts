@@ -82,6 +82,11 @@ export const eng = {
   delete: "Delete",
   successAddMessage: "New element added successfully",
   successDeleteMessage: "Element successfully deleted",
+  childCategories: "Child category",
+  isParentTitle: "Is parent",
+  isParent: "Add to category menu",
+  isEnabled: "Enable",
+  selectChildrenItems: "Select children items",
   breadcrumbs: {
     profile: "Profile",
     dashboard: "Home",

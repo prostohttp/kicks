@@ -1,15 +1,14 @@
 <script lang="ts" setup>
+// store
+const categoryStore = useCategoryDataStore();
+const { parentTitles } = storeToRefs(categoryStore);
+
 // vars
 import { eng } from "~/lang/eng";
+await categoryStore.getAllTitles();
 import type { AccordionItem } from "~/types/ui/ui.types";
 
-const { data: categories } = await useFetch("/api/category/all", {
-  method: "GET",
-  query: {
-    isParent: true,
-  },
-  pick: ["categories"],
-});
+// handlers
 
 const { data: products } = await useFetch<
   Array<{ _id: string; category: string[] }>
@@ -24,18 +23,11 @@ const computedProducts = computed(() => {
   return elementCountForId(products.value);
 });
 
-const computedCategories = computed(() => {
-  return categories.value?.categories.map((item: any) => ({
-    _id: item?._id,
-    title: item?.title,
-  }));
-});
-
 const items: AccordionItem[] | undefined = [
   {
     label: "Categories",
     defaultOpen: true,
-    content: computedCategories.value,
+    content: parentTitles.value,
   },
 ];
 </script>
@@ -57,7 +49,7 @@ const items: AccordionItem[] | undefined = [
       <template #item="{ item }">
         <ul>
           <DashboardSidebarCategoryItem
-            v-for="category in item.content"
+            v-for="category in parentTitles"
             :key="category._id"
             :_id="category._id"
             :title="category.title"

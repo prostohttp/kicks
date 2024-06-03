@@ -114,3 +114,7 @@ a:hover {
 .red-button[type="submit"] {
   @apply bg-danger hover:bg-danger
 }
+
+.select-wrapper button {
+  @apply h-[52px] dark:text-[#6b7280] text-[16px] shadow-none ring-dark-gray
+}

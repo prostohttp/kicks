@@ -11,6 +11,18 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
   // vars
   const categories: Ref<CategoriesPayload | undefined> = ref();
   const category: Ref<CategoryDto | undefined> = ref();
+  const titles: Ref<
+    Array<{
+      _id: string;
+      title: string;
+    }>
+  > = ref([]);
+  const parentTitles: Ref<
+    Array<{
+      _id: string;
+      title: string;
+    }>
+  > = ref([]);
 
   // handlers
   const getAllCategories = async (page: number): Promise<void> => {
@@ -38,7 +50,30 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
       throw createError({ statusMessage: error.message });
     }
   };
+
+  const getAllTitles = async () => {
+    try {
+      titles.value = await $fetch("/api/category/all", {
+        method: "GET",
+        query: {
+          titles: true,
+        },
+      });
+      parentTitles.value = await $fetch("/api/category/all", {
+        method: "GET",
+        query: {
+          parents: true,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
   return {
+    parentTitles,
+    titles,
+    getAllTitles,
     category,
     categories,
     getAllCategories,

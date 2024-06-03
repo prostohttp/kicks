@@ -27,6 +27,7 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 
 // handlers
 categoryDataStore.getAllCategories(page);
+
 const openAddNewCategoryModal = () => {
   modal.open(DashboardCategoryAddNewModal, {
     onClose() {
@@ -62,7 +63,5 @@ onMounted(() => {
       @click="openAddNewCategoryModal()"
     />
   </div>
-  <div>
-    <pre>{{ data?.categories }}</pre>
-  </div>
+  <div>1</div>
 </template>

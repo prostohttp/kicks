@@ -31,3 +31,12 @@ export interface UserData {
   type?: string;
   disabled?: boolean;
 }
+
+export interface InputData {
+  label: string;
+  name: string;
+  placeholder: string;
+  icon?: string;
+  type?: string;
+  disabled?: boolean;
+}

@@ -5,6 +5,39 @@ import { eng } from "~/lang/eng";
 const emit = defineEmits(["close"]);
 
 // vars
+const inputData = [
+  {
+    label: eng.title,
+    name: "title",
+    placeholder: eng.title,
+    icon: "i-heroicons-queue-list",
+  },
+  {
+    label: eng.description,
+    name: "description",
+    placeholder: eng.description,
+    icon: "i-heroicons-document-text-16-solid",
+  },
+  {
+    label: eng.childCategories,
+    name: "children",
+    type: "select",
+    placeholder: eng.selectChildrenItems,
+    icon: "i-heroicons-list-bullet",
+  },
+  {
+    label: eng.isParentTitle,
+    name: "isParent",
+    type: "checkbox",
+    placeholder: eng.isParent,
+  },
+  {
+    label: eng.isEnabled,
+    name: "isEnabled",
+    type: "checkbox",
+    placeholder: eng.isEnabled,
+  },
+];
 </script>
 
 <template>
@@ -31,7 +64,10 @@ const emit = defineEmits(["close"]);
           />
         </div>
       </template>
-      <DashboardCategoryAddNewForm @close="$emit('close')" />
+      <DashboardCategoryAddNewForm
+        @close="$emit('close')"
+        :inputData="inputData"
+      />
     </UCard>
   </UModal>
 </template>

@@ -3,12 +3,19 @@ import { eng } from "~/lang/eng";
 import { schema, type Schema } from "./schema/add-new-category.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { useCategoryDataStore } from "~/stores/category-data";
+import type { InputData } from "~/types/ui/ui.types";
 
 // define
 const emit = defineEmits(["close"]);
+const { inputData } = defineProps<{
+  inputData: InputData[];
+}>();
 
 // store
 const categoryStore = useCategoryDataStore();
+await categoryStore.getAllTitles();
+const { titles: data } = storeToRefs(categoryStore);
+const titles = ref(data.value.map((el) => el.title));
 
 // vars
 const toast = useToast();
@@ -19,25 +26,28 @@ const state = reactive({
   isEnabled: false,
   children: [],
 });
-const isLoading = ref(false);
 const page = useRoute().query.page as never as number;
 
 // handlers
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    await $fetch("/api/category/add", {
+    const result = await $fetch("/api/category/add", {
       method: "POST",
       body: {
         title: event.data.title,
         description: event.data.description,
         isParent: event.data.isParent,
         isEnabled: event.data.isEnabled,
-        children: cleanStringFromArray(event.data.children),
+        children: data.value.filter((el) =>
+          event.data.children?.includes(el.title),
+        ),
       },
     });
     categoryStore.getAllCategories(page);
+    categoryStore.getAllTitles();
     toast.add({ title: eng.successAddMessage });
     emit("close");
+    console.log(result);
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong });
   }
@@ -49,36 +59,48 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormGroup
-      :label="eng.title"
-      name="title"
+      v-for="{ name, label, placeholder, icon, type } in inputData"
+      :label="type === 'checkbox' ? '' : label"
+      :name="name"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
         },
       }"
     >
-      <UInput
-        :placeholder="eng.title"
-        v-model="state.title"
-        inputClass="input-label"
-        icon="i-heroicons-queue-list"
+      <UCheckbox
+        v-if="type === 'checkbox'"
+        :label="placeholder"
+        v-model="state[name as keyof typeof state]"
+        class="mb-[25px]"
+        :ui="{
+          label: 'dark:text-[#6b7280] text-[16px]',
+        }"
       />
-    </UFormGroup>
-
-    <UFormGroup
-      :label="eng.description"
-      name="description"
-      :ui="{
-        label: {
-          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
-        },
-      }"
-    >
+      <USelectMenu
+        :icon="icon"
+        v-else-if="type === 'select'"
+        multiple
+        v-model="state.children"
+        :options="titles"
+        :placeholder="placeholder"
+        class="mb-[25px]"
+        :uiMenu="{
+          option: {
+            color: 'dark:text-[#6b7280]',
+          },
+        }"
+        :ui="{
+          wrapper: 'select-wrapper',
+        }"
+      />
       <UInput
-        :placeholder="eng.description"
-        v-model="state.description"
+        v-else
+        :placeholder="placeholder"
+        v-model="state[name as keyof typeof state]"
         inputClass="input-label"
-        icon="i-heroicons-document-text-16-solid"
+        :icon="icon"
+        class="mb-[25px]"
       />
     </UFormGroup>
     <div
