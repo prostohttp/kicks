@@ -42,7 +42,9 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
         />
         <DashboardHeader />
       </div>
-      <div class="py-[24px] pl-[24px] lg:pr-[40px] pr-[20px] overflow-x-auto">
+      <div
+        class="py-[24px] pl-[24px] lg:pr-[40px] pr-[20px] overflow-x-auto h-full flex flex-col"
+      >
         <slot />
       </div>
       <DashboardFooter class="mt-auto" />

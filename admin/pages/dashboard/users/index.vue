@@ -17,7 +17,7 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 
 // handlers
 await userDataStore.getAllUsers(page);
-const activePage = ref(data.value?.activePage);
+const activePage = ref(data.value?.activePage || 1);
 
 const deletePerson = async (id: string) => {
   try {
@@ -47,6 +47,12 @@ useHead({
 watch(activePage, async (newValue) => {
   router.push({ query: { page: newValue } });
   await userDataStore.getAllUsers(newValue!);
+});
+
+onMounted(() => {
+  if (activePage.value) {
+    userDataStore.getAllUsers(activePage.value);
+  }
 });
 </script>
 

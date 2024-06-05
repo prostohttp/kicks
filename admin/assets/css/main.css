@@ -118,3 +118,7 @@ a:hover {
 .select-wrapper button {
   @apply h-[52px] dark:text-[#6b7280] text-[16px] shadow-none ring-dark-gray
 }
+
+.checkbox input[type="checkbox"] {
+  @apply text-dark-gray dark:text-yellow
+}

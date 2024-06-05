@@ -87,6 +87,9 @@ export const eng = {
   isParent: "Add to category menu",
   isEnabled: "Enable",
   selectChildrenItems: "Select children items",
+  loadingText: "Loading...",
+  yesText: "Yes",
+  noText: "No",
   breadcrumbs: {
     profile: "Profile",
     dashboard: "Home",

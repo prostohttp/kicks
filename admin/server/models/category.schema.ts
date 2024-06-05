@@ -32,7 +32,6 @@ export const Category = defineMongooseModel({
   hooks(schema) {
     schema.pre("save", function (this, next) {
       this.title = this.title.toString().trim() as any;
-      this.isEnabled = true as any;
       next();
     });
   },

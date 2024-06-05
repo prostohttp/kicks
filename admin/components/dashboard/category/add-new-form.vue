@@ -31,7 +31,7 @@ const page = useRoute().query.page as never as number;
 // handlers
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const result = await $fetch("/api/category/add", {
+    await $fetch("/api/category/add", {
       method: "POST",
       body: {
         title: event.data.title,
@@ -47,7 +47,6 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     categoryStore.getAllTitles();
     toast.add({ title: eng.successAddMessage });
     emit("close");
-    console.log(result);
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong });
   }

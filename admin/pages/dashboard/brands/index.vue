@@ -16,7 +16,7 @@ const modal = useModal();
 const page = useRoute().query.page as never as number;
 const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
-const activePage = ref(data.value?.activePage);
+const activePage = ref(data.value?.activePage || 1);
 
 // handlers
 await brandsDataStore.getAllBrands(page);
@@ -46,6 +46,9 @@ watch(activePage, async (newValue) => {
 });
 
 onMounted(() => {
+  if (activePage.value) {
+    brandsDataStore.getAllBrands(activePage.value);
+  }
   if (route.query.brandNew) {
     openAddNewBrandModal();
   }

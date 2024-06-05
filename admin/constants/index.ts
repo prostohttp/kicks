@@ -19,8 +19,6 @@ export const Constants = {
   MAX_VISIBLE_IN_PAGINATION: 5,
   PROVIDE_IS_OPEN_MOBILE_SIDEBAR: "isOpenMobileSidebar",
   MAX_FILE_SIZE: 5000,
-  // PROVIDE_REGISTERED_USER: "registeredUser",
-  // PROVIDE_UNREGISTERED_USER: "unregisteredUser",
   fileTypes: {
     image: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
   },

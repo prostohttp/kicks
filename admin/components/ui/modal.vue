@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Defines
+// define
 defineProps<{ title: string; fullscreen?: boolean }>();
 const isOpen = defineModel<boolean>();
 </script>

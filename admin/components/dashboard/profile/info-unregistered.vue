@@ -2,7 +2,7 @@
 import { eng } from "~/lang/eng";
 import type { UserDto } from "~/server/dto/user.dto";
 
-// Defines
+// define
 const { data } = useAuth();
 const user = data.value?.user as UserDto;
 // vars
