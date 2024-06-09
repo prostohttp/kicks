@@ -15,38 +15,47 @@ const { inputData, categoryId } = defineProps<{
 // store
 const categoryStore = useCategoryDataStore();
 await categoryStore.getAllTitles();
-const { titles: data } = storeToRefs(categoryStore);
-const titles = ref(data.value.map((el) => el.title));
+await categoryStore.getCategoryById(categoryId);
+const { titles: data, category, selected } = storeToRefs(categoryStore);
+const titles = ref(
+  data.value
+    .filter((el) => el.title !== category.value?.title)
+    .map((el) => el.title),
+);
 
 // vars
 const toast = useToast();
 const state = reactive({
-  title: "",
-  description: "",
-  isParent: false,
-  isEnabled: false,
-  children: [],
+  title: category.value?.title,
+  description: category.value?.description,
+  isParent: category.value?.isParent,
+  isEnabled: category.value?.isEnabled,
+  children: category.value?.children.map((el) => el.title),
 });
 const page = Number(useRoute().query.page);
 
 // handlers
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    await $fetch("/api/category/add", {
-      method: "POST",
+    await $fetch("/api/category/edit", {
+      method: "PUT",
       body: {
+        _id: category.value?._id,
         title: event.data.title,
         description: event.data.description,
         isParent: event.data.isParent,
         isEnabled: event.data.isEnabled,
-        children: data.value.filter((el) =>
-          event.data.children?.includes(el.title),
+        children: data.value.filter(
+          (el) =>
+            event.data.children?.includes(el.title) &&
+            el.title !== category.value?.title,
         ),
       },
     });
     categoryStore.getAllCategories(page);
     categoryStore.getAllTitles();
-    toast.add({ title: eng.successAddMessage });
+    selected.value = [];
+    toast.add({ title: eng.successEdit });
     emit("close");
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong });

@@ -14,7 +14,7 @@ const { inputData } = defineProps<{
 // store
 const categoryStore = useCategoryDataStore();
 await categoryStore.getAllTitles();
-const { titles: data } = storeToRefs(categoryStore);
+const { titles: data, selected } = storeToRefs(categoryStore);
 const titles = ref(data.value.map((el) => el.title));
 
 // vars
@@ -45,6 +45,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
     categoryStore.getAllCategories(page);
     categoryStore.getAllTitles();
+    selected.value = [];
     toast.add({ title: eng.successAddMessage });
     emit("close");
   } catch (_error) {

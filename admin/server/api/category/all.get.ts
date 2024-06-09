@@ -1,6 +1,5 @@
 import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
-import { CategoryDto } from "~/server/api/category/dto/category.dto";
 import { Constants } from "~/constants";
 
 export default defineEventHandler(async (event) => {

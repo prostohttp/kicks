@@ -7,7 +7,6 @@ import { eng } from "~/lang/eng";
 import type { ITable } from "~/pages/dashboard/categories/index.vue";
 
 // define
-const selected: Ref<ITable[] | undefined> = defineModel("selected");
 const activePage = defineModel("activePage");
 
 // vars
@@ -16,6 +15,7 @@ const route = useRoute();
 
 // store
 const categoryDataStore = useCategoryDataStore();
+const { selected } = storeToRefs(categoryDataStore);
 
 // handlers
 const openEditCategoryModal = (categoryId: string) => {

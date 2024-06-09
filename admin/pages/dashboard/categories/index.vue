@@ -23,7 +23,7 @@ useHead({
 
 // store
 const categoryDataStore = useCategoryDataStore();
-const { categories: data } = storeToRefs(categoryDataStore);
+const { categories: data, selected } = storeToRefs(categoryDataStore);
 
 // vars
 const modal = useModal();
@@ -56,7 +56,6 @@ await useAsyncData("categories", () =>
 const activePage = ref(data.value?.activePage || 1);
 const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
-const selected: Ref<ITable[] | undefined> = ref([]);
 
 // handlers
 const openAddNewCategoryModal = () => {
@@ -156,10 +155,7 @@ onMounted(async () => {
           <span>
             {{ eng.breadcrumbs.categories }}
           </span>
-          <DashboardCategoryMenuAction
-            v-model:selected="selected"
-            v-model:activePage="activePage"
-          />
+          <DashboardCategoryMenuAction v-model:activePage="activePage" />
         </caption>
       </template>
     </UTable>

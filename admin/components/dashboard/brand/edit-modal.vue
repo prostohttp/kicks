@@ -7,7 +7,7 @@ const { brandId } = defineProps<{
 }>();
 const emit = defineEmits(["close"]);
 
-// handler
+// vars
 const { data: brand } = await useFetch("/api/brand/one", {
   method: "GET",
   query: {

@@ -42,6 +42,13 @@ const inputData = [
     placeholder: eng.isEnabled,
   },
 ];
+
+const { data: category } = await useFetch("/api/category/one", {
+  method: "GET",
+  query: {
+    id: categoryId,
+  },
+});
 </script>
 
 <template>
@@ -57,7 +64,7 @@ const inputData = [
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ eng.addNewCategory }}
+            {{ eng.editCategory }}
           </h3>
           <UButton
             color="gray"
@@ -72,7 +79,11 @@ const inputData = [
         @close="$emit('close')"
         :inputData="inputData"
         :categoryId="categoryId"
+        v-if="category"
       />
+      <div v-else class="dark:text-fa-white">
+        <h2>{{ eng.empty }}</h2>
+      </div>
     </UCard>
   </UModal>
 </template>

@@ -1,5 +1,5 @@
 import type { CategoryDto } from "~/server/api/category/dto/category.dto";
-
+import type { ITable } from "~/pages/dashboard/categories/index.vue";
 interface CategoriesPayload {
   categories: CategoryDto[];
   pagesInPagination?: number;
@@ -11,6 +11,7 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
   // vars
   const categories: Ref<CategoriesPayload | undefined> = ref();
   const category: Ref<CategoryDto | undefined> = ref();
+  const selected: Ref<ITable[]> = ref([]);
   const titles: Ref<
     Array<{
       _id: string;
@@ -73,6 +74,7 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
   return {
     parentTitles,
     titles,
+    selected,
     getAllTitles,
     category,
     categories,

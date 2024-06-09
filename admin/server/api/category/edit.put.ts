@@ -1,60 +1,16 @@
-import { Constants } from "~/constants";
-import cleanStringToArray from "~/utils/clean-string-to-array";
-import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
-import fromMultipartFormData from "~/utils/from-multipart-form-data";
-import uploadFilesWithUseStorage from "~/utils/upload-files-with-use-storage";
-import { CategoryDto } from "~/server/api/category/dto/category.dto";
+import { CategoryDto } from "./dto/category.dto";
 
 export default defineEventHandler(async (event) => {
-  const data = await readMultipartFormData(event);
-
-  const images = uploadFilesWithUseStorage(
-    data,
-    Constants.IMG_CATEGORIES,
-    "image",
-  );
-
   try {
-    const updatedFields = fromMultipartFormData(data) as unknown as CategoryDto;
-    const category: CategoryDto | null = await Category.findById(
-      updatedFields.id,
-    );
-
+    const body = await readBody<CategoryDto>(event);
+    const category = await Category.findById(body._id);
     if (!category) {
       throw createError({ statusMessage: "Category not found" });
     }
-    if (
-      !updatedFields.title ||
-      !updatedFields.isParent ||
-      !updatedFields.isEnabled
-    ) {
-      throw createError({
-        statusMessage: "Title, isParent and isEnabled are required",
-      });
-    }
-
-    if (images && images.length > 0) {
-      updatedFields.image = images[0];
-    } else if (images && !images.length) {
-      updatedFields.image = "";
-      deleteFilesWithUseStorage(
-        updatedFields.image ? [updatedFields.image] : undefined,
-      );
-    }
-
-    const updatedCategory = await Category.findByIdAndUpdate(
-      updatedFields.id,
-      {
-        ...updatedFields,
-        children: cleanStringToArray(updatedFields.children as string),
-      },
-      { new: true },
-    );
-    return updatedCategory;
+    return await Category.findByIdAndUpdate(body._id, body, {
+      new: true,
+    });
   } catch (error: any) {
-    if (images) {
-      deleteFilesWithUseStorage(images);
-    }
     throw createError({
       statusMessage: error.message,
     });
