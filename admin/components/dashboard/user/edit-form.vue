@@ -26,7 +26,7 @@ const state = reactive({
   role: user.value?.role,
 });
 const isLoading = ref(false);
-const page = useRoute().query.page as never as number;
+const page = Number(useRoute().query.page);
 const toast = useToast();
 const inputRef = ref<HTMLInputElement | undefined>();
 const dropZoneRef = ref<HTMLDivElement | undefined>();

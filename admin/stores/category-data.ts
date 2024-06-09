@@ -1,6 +1,6 @@
 import type { CategoryDto } from "~/server/api/category/dto/category.dto";
 
-export interface CategoriesPayload {
+interface CategoriesPayload {
   categories: CategoryDto[];
   pagesInPagination?: number;
   allItems: number;

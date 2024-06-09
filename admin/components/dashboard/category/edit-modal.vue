@@ -2,6 +2,9 @@
 import { eng } from "~/lang/eng";
 
 // define
+const { categoryId } = defineProps<{
+  categoryId: string;
+}>();
 const emit = defineEmits(["close"]);
 
 // vars
@@ -65,9 +68,10 @@ const inputData = [
           />
         </div>
       </template>
-      <DashboardCategoryAddNewForm
+      <DashboardCategoryEditForm
         @close="$emit('close')"
         :inputData="inputData"
+        :categoryId="categoryId"
       />
     </UCard>
   </UModal>

@@ -13,6 +13,10 @@ textarea {
   @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray;
 }
 
+.textarea textarea {
+  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray py-[15px] px-[16px];
+}
+
 button[type="submit"] {
   @apply bg-dark-gray rounded-[8px] uppercase font-[Rubik] font-[500] hover:bg-yellow transition-colors;
 }

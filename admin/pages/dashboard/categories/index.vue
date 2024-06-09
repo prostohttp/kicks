@@ -5,7 +5,7 @@ import { Constants } from "~/constants";
 import { useCategoryDataStore } from "~/stores/category-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
-interface ITable {
+export interface ITable {
   id: string;
   title: string;
   children: string;
@@ -29,36 +29,7 @@ const { categories: data } = storeToRefs(categoryDataStore);
 const modal = useModal();
 const router = useRouter();
 const route = useRoute();
-const page = useRoute().query.page as never as number;
-const activePage = ref(data.value?.activePage || 1);
-const path = router.currentRoute.value.path;
-const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
-const selected: Ref<ITable[] | undefined> = ref([]);
-
-// handlers
-categoryDataStore.getAllCategories(page);
-
-const openAddNewCategoryModal = () => {
-  modal.open(DashboardCategoryAddNewModal, {
-    onClose() {
-      removeQuery("categoryNew");
-      modal.close();
-    },
-  });
-};
-
-const categories = computed((): Array<Partial<ITable>> | undefined => {
-  return data.value?.categories.map((category) => {
-    return {
-      id: category._id,
-      title: category.title,
-      children: cleanStringFromArray(category.children) || "...",
-      parent: category.isParent ? eng.yesText : eng.noText,
-      enabled: category.isEnabled ? eng.yesText : eng.noText,
-    };
-  });
-});
-
+const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "title",
@@ -78,12 +49,52 @@ const columns = [
   },
 ];
 
+await useAsyncData("categories", () =>
+  categoryDataStore.getAllCategories(page),
+);
+
+const activePage = ref(data.value?.activePage || 1);
+const path = router.currentRoute.value.path;
+const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
+const selected: Ref<ITable[] | undefined> = ref([]);
+
+// handlers
+const openAddNewCategoryModal = () => {
+  modal.open(DashboardCategoryAddNewModal, {
+    onClose() {
+      removeQuery("categoryNew");
+      modal.close();
+    },
+  });
+};
+
+const categories = computed((): Array<ITable> | undefined => {
+  return data.value?.categories.map((category) => {
+    return {
+      id: category._id,
+      title: category.title,
+      children: category.children.map((cat) => cat.title).join(", "),
+      parent: category.isParent ? eng.yesText : eng.noText,
+      enabled: category.isEnabled ? eng.yesText : eng.noText,
+    };
+  });
+});
+
 // hooks
 watch(activePage, (newValue) => {
   router.push({ query: { page: newValue } });
   selected.value = [];
   categoryDataStore.getAllCategories(newValue!);
 });
+
+watch(
+  () => route.query,
+  (newValue) => {
+    if (!newValue.page) {
+      activePage.value = 1;
+    }
+  },
+);
 
 onMounted(async () => {
   if (activePage.value) {
@@ -101,7 +112,7 @@ onMounted(async () => {
   >
     <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.categories" />
     <UButton
-      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
+      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
       :label="eng.addNewCategory"
       :to="addQuery('categoryNew', 'yes')"
@@ -127,6 +138,7 @@ onMounted(async () => {
       }"
       :ui="{
         td: {
+          base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal',
           color: 'text-dark-gray dark:text-fa-white',
         },
         default: {
@@ -144,9 +156,9 @@ onMounted(async () => {
           <span>
             {{ eng.breadcrumbs.categories }}
           </span>
-          <UIcon
-            name="i-heroicons-ellipsis-vertical-20-solid"
-            class="cursor-pointer absolute top-[5px] right-0"
+          <DashboardCategoryMenuAction
+            v-model:selected="selected"
+            v-model:activePage="activePage"
           />
         </caption>
       </template>
@@ -158,5 +170,10 @@ onMounted(async () => {
     :element-in-page="Constants.PER_PAGE_CATEGORY"
     :allItems="data?.allItems"
   />
-  <!-- {{ selected }} -->
 </template>
+
+<style scoped>
+.active {
+  @apply dark:text-fa-white dark:hover:text-yellow text-dark-gray hover:text-blue;
+}
+</style>

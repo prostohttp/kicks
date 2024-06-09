@@ -10,7 +10,7 @@ const { allUsers: data } = storeToRefs(userDataStore);
 // vars
 const toast = useToast();
 const router = useRouter();
-const page = useRoute().query.page as never as number;
+const page = Number(useRoute().query.page);
 const path = router.currentRoute.value.path;
 
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));

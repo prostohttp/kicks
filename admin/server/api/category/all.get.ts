@@ -10,7 +10,10 @@ export default defineEventHandler(async (event) => {
     const parents = query.parents;
     const page = Number(query.page) || 1;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_CATEGORY;
-    const categories: CategoryDto[] = await Category.find();
+    const categories = await Category.find().populate({
+      path: "children",
+      select: "title",
+    });
     const catLength = categories.length;
     const pagesInPagination = pageCount(catLength, perPage);
 
@@ -32,7 +35,13 @@ export default defineEventHandler(async (event) => {
 
     const skip = page * perPage - perPage;
 
-    const catInPage = await Category.find().skip(skip).limit(perPage);
+    const catInPage = await Category.find()
+      .populate({
+        path: "children",
+        select: "title",
+      })
+      .skip(skip)
+      .limit(perPage);
     return {
       categories: catInPage,
       pagesInPagination,

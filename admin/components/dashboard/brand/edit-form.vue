@@ -24,7 +24,7 @@ const state = reactive({
 });
 const isLoading = ref(false);
 const isOpenDeleteModal = ref(false);
-const page = useRoute().query.page as never as number;
+const page = Number(useRoute().query.page);
 const inputRef: Ref<HTMLInputElement | undefined> = ref();
 const dropZoneRef = ref<HTMLDivElement | undefined>();
 
@@ -235,11 +235,10 @@ onUnmounted(() => {
         },
       }"
     >
-      <UInput
-        :placeholder="eng.description"
+      <UTextarea
         v-model="state.description"
-        inputClass="input-label"
-        icon="i-heroicons-document-text-16-solid"
+        :placeholder="eng.description"
+        class="textarea"
       />
     </UFormGroup>
     <div

@@ -7,8 +7,9 @@ import type { InputData } from "~/types/ui/ui.types";
 
 // define
 const emit = defineEmits(["close"]);
-const { inputData } = defineProps<{
+const { inputData, categoryId } = defineProps<{
   inputData: InputData[];
+  categoryId: string;
 }>();
 
 // store

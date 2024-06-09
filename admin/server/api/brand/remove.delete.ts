@@ -7,6 +7,8 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Brand not found",
       });
     }
+
+    await Product.updateMany({ brand: id }, { $unset: { brand: "" } });
     return {
       statusMessage: "Brand deleted",
     };
