@@ -69,7 +69,6 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    "@nuxt/image",
     "@vueuse/nuxt",
     "nuxt-mongoose",
     "@pinia/nuxt",
@@ -80,5 +79,9 @@ export default defineNuxtConfig({
     "nuxt-aos",
     "@nuxt/ui",
     "@nuxtjs/google-fonts",
+    "nuxt-tiptap-editor",
   ],
+  tiptap: {
+    prefix: "Tiptap",
+  },
 });

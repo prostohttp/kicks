@@ -126,3 +126,52 @@ a:hover {
 .checkbox input[type="checkbox"] {
   @apply text-dark-gray dark:text-yellow
 }
+
+.tiptap {
+  @apply min-h-[150px] px-[15px] py-[16px];
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  @apply font-[600];
+}
+
+.tiptap h1 {
+  @apply text-[46px];
+}
+
+.tiptap h2 {
+  @apply text-[36px];
+}
+
+.tiptap h3 {
+  @apply text-[28px];
+}
+
+.tiptap h4 {
+  @apply text-[22px];
+}
+
+.tiptap h5 {
+  @apply text-[18px];
+}
+
+.tiptap h6 {
+  @apply text-[14px];
+}
+
+.tiptap strong {
+  @apply font-[900]
+}
+
+.tiptap ul {
+  @apply pl-[20px] list-disc
+}
+
+.tiptap ol {
+  @apply pl-[20px] list-decimal
+}

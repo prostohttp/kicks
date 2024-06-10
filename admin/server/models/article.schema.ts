@@ -11,7 +11,7 @@ export const Article = defineMongooseModel({
     },
     shortDescription: {
       type: String,
-      required: false,
+      required: true,
     },
     description: {
       type: String,

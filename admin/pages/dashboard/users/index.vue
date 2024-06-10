@@ -71,11 +71,11 @@ onMounted(() => {
         @deletePerson="deletePerson"
       />
     </div>
-    <UiPagination
-      v-if="data?.pagesInPagination"
-      v-model="activePage"
-      :element-in-page="Constants.PER_PAGE_USERS"
-      :allItems="data?.allItems"
-    />
   </main>
+  <UiPagination
+    v-if="data?.pagesInPagination"
+    v-model="activePage"
+    :element-in-page="Constants.PER_PAGE_USERS"
+    :allItems="data?.allItems"
+  />
 </template>

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     const perPage = Number(query.perPage);
     const adminMenu = query.adminMenu;
     const articles = await Article.find().select(
-      "title shortDescription isEnabled image",
+      "title shortDescription isEnabled image createdAt",
     );
     const articlesLength = articles.length;
     const pagesInPagination = pageCount(articlesLength, perPage);
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     const skip = page * perPage - perPage;
 
     const articleInPage = await Category.find()
-      .select("title shortDescription isEnabled image")
+      .select("title shortDescription isEnabled image createdAt")
       .skip(skip)
       .limit(perPage);
     return {

@@ -93,11 +93,13 @@ export const eng = {
   loadingText: "Loading...",
   yesText: "Yes",
   noText: "No",
+  placeholderText: "Text...",
   breadcrumbs: {
     profile: "Profile",
     dashboard: "Home",
     products: "All Products",
     articles: "All Articles",
+    new: "Add New",
     orders: "All Orders",
     users: "All Users",
     options: "All Options",
