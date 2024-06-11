@@ -1,17 +1,13 @@
-import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
-
 export default defineEventHandler(async (event) => {
+  const { ids } = await readBody(event);
   try {
-    const { id } = await readBody(event);
-    const article = await Article.findByIdAndDelete(id);
-    if (!article) {
-      throw createError({
-        statusMessage: "Article not found",
-      });
+    const articles = await Article.deleteMany({ _id: { $in: ids } });
+    if (!articles) {
+      throw createError({ statusMessage: "Article not found" });
     }
-    deleteFilesWithUseStorage([article.image?.toString()]);
+
     return {
-      statusMessage: "Article deleted",
+      statusMessage: "Articles deleted",
     };
   } catch (error: any) {
     throw createError({

@@ -1,3 +1,4 @@
+import type { IArticle } from "~/pages/dashboard/articles/index.vue";
 import type { ArticleDto } from "~/server/api/article/dto/article.dto";
 
 export const useArticleDataStore = defineStore("articleData", () => {
@@ -9,6 +10,7 @@ export const useArticleDataStore = defineStore("articleData", () => {
   }
   // vars
   const articles: Ref<ArticlesPayload | undefined> = ref();
+  const selected: Ref<IArticle[]> = ref([]);
 
   // handlers
   const getAllArticles = async (page: number) => {
@@ -25,6 +27,7 @@ export const useArticleDataStore = defineStore("articleData", () => {
   };
   return {
     articles,
+    selected,
     getAllArticles,
   };
 });

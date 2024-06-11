@@ -111,7 +111,7 @@ onMounted(async () => {
   >
     <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.categories" />
     <UButton
-      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
+      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
       :label="eng.addNewCategory"
       :to="addQuery('categoryNew', 'yes')"

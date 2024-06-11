@@ -34,10 +34,8 @@ onClickOutside(editorRef, () => (isVisible.value = false));
 
 // hooks
 onBeforeUnmount(() => {
-  if (editor) {
-    // @ts-ignore
-    unref(editor).destroy();
-  }
+  // @ts-ignore
+  unref(editor).destroy();
 });
 </script>
 

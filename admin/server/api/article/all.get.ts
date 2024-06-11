@@ -1,11 +1,12 @@
+import { Constants } from "~/constants";
 import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
 
 export default defineEventHandler(async (event) => {
   try {
     let query = getQuery(event);
-    const page = Number(query.page);
-    const perPage = Number(query.perPage);
+    const page = Number(query.page) || 1;
+    const perPage = Number(query.perPage) || Constants.PER_PAGE_ARTICLE;
     const adminMenu = query.adminMenu;
     const articles = await Article.find().select(
       "title shortDescription isEnabled image createdAt",
@@ -22,12 +23,13 @@ export default defineEventHandler(async (event) => {
       return {
         articles,
         pagesInPagination: 0,
+        allItems: articlesLength,
       };
     }
 
     const skip = page * perPage - perPage;
 
-    const articleInPage = await Category.find()
+    const articleInPage = await Article.find()
       .select("title shortDescription isEnabled image createdAt")
       .skip(skip)
       .limit(perPage);
@@ -35,6 +37,7 @@ export default defineEventHandler(async (event) => {
       articles: articleInPage,
       pagesInPagination,
       activePage: page,
+      allItems: articlesLength,
     };
   } catch (error: any) {
     throw createError({

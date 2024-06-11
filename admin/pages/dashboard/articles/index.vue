@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
 import { Constants } from "~/constants";
-import type { BreadcrumbItem } from "~/types/ui/ui.types";
+import { Locales, type BreadcrumbItem } from "~/types/ui/ui.types";
 
 export interface IArticle {
   id: string;
@@ -22,12 +22,11 @@ useHead({
 
 // store
 const articleDataStore = useArticleDataStore();
-const { articles: data } = storeToRefs(articleDataStore);
+const { articles: data, selected } = storeToRefs(articleDataStore);
 
 // vars
 const router = useRouter();
 const route = useRoute();
-const selected = ref([]);
 const page = Number(useRoute().query.page);
 const columns = [
   {
@@ -67,7 +66,7 @@ const articles = computed((): Array<IArticle> | undefined => {
       title: article.title,
       description: article.shortDescription,
       enabled: article.isEnabled ? eng.yesText : eng.noText,
-      createdAt: article.createdAt,
+      createdAt: dateTimeFormat(article.createdAt, Locales.RU),
     };
   });
 });
@@ -101,7 +100,7 @@ onMounted(async () => {
   >
     <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.articles" />
     <UButton
-      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
+      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
       :label="eng.addNewArticle"
       to="/dashboard/articles/new"
@@ -144,7 +143,7 @@ onMounted(async () => {
           <span>
             {{ eng.breadcrumbs.articles }}
           </span>
-          <DashboardCategoryMenuAction v-model:activePage="activePage" />
+          <DashboardArticleMenuAction v-model:activePage="activePage" />
         </caption>
       </template>
     </UTable>
