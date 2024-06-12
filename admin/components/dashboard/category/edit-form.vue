@@ -24,6 +24,7 @@ const titles = ref(
 );
 
 // vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 const state = reactive({
   title: category.value?.title,
@@ -120,6 +121,7 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
     </UFormGroup>
     <div
       class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
+      v-if="isAdmin"
     >
       <UButton
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"

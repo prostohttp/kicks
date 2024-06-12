@@ -9,6 +9,7 @@ const { categories } = defineProps<{
 }>();
 
 // vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 
 // handlers
@@ -56,7 +57,7 @@ const deleteCategory = async () => {
           />
         </div>
       </template>
-      <div class="flex flex-col gap-[20px]">
+      <div class="flex flex-col gap-[20px]" v-if="isAdmin">
         <p class="dark:text-fa-white">{{ eng.deleteCategoryText }}</p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton

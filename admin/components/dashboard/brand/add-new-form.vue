@@ -14,6 +14,7 @@ const persistStore = usePersistDataStore();
 const { brandImage } = storeToRefs(persistStore);
 
 // vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 const state = reactive({
   title: "",
@@ -37,13 +38,16 @@ const uploadImage = async (image: File) => {
       method: "POST",
       body: formData,
     });
+
     if (!uploadedImage) {
       toast.add({ title: eng.noImage, color: "red" });
     }
+
     brandImage.value = uploadedImage;
     toast.add({ title: eng.imageUploaded, color: "green" });
     isLoading.value = false;
-  } catch (_error) {
+  } catch (_error: any) {
+    console.log(_error.message);
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
@@ -74,7 +78,6 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     brandStore.getAllBrands(page);
     toast.add({ title: eng.successAddMessage });
     emit("close");
-    brandImage.value = "";
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong });
   }
@@ -116,52 +119,17 @@ onUnmounted(() => {
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <div
       class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group mb-[40px]"
+      v-if="isAdmin"
     >
-      <input type="file" ref="inputRef" class="hidden" />
-      <div
-        v-if="!brandImage"
-        class="w-full h-full flex items-center justify-center flex-col text-center gap-[20px]"
-        ref="dropZoneRef"
-      >
-        <img
-          src="~/public/no-image.svg"
-          alt="No Image"
-          class="lg:w-[100px] w-[40px]"
-        />
-        <div
-          class="flex flex-col gap-[10px] text-[14px] items-center dark:text-fa-white"
-        >
-          <h3>{{ eng.dragDropMessage }}</h3>
-          <UDivider
-            :label="eng.or"
-            :ui="{
-              border: {
-                base: 'dark:border-[#70706e]',
-              },
-              label: 'text-[12px]',
-            }"
-          />
-          <button
-            type="button"
-            @click="inputRef?.click()"
-            class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] dark:hover:bg-gray-main"
-          >
-            {{ eng.clickToUpload }}
-          </button>
-        </div>
-      </div>
-      <div v-else class="w-full">
-        <img
-          :src="`/${brandImage}`"
-          class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
-          alt="new brand"
-        />
-        <UButton
-          icon="i-heroicons-trash"
-          @click="deleteImageHandler"
-          class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
-        />
-      </div>
+      <UiImageUpload
+        v-model:image="brandImage"
+        v-model:isLoading="isLoading"
+        alt="Brand Image"
+        :add-new="true"
+        v-model:input-ref="inputRef"
+        v-model:drop-zone-ref="dropZoneRef"
+        @delete="deleteImageHandler"
+      />
     </div>
     <UFormGroup
       :label="eng.title"
@@ -195,8 +163,10 @@ onUnmounted(() => {
         class="textarea"
       />
     </UFormGroup>
+    {{ brandImage }}
     <div
       class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
+      v-if="isAdmin"
     >
       <UButton
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"

@@ -154,7 +154,7 @@ onUnmounted(() => {
     class="w-full flex flex-col gap-[20px]"
   >
     <div
-      class="rounded-[8px] basis-[40%] p-[20px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
+      class="rounded-[8px] basis-[40%] p-[5px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
     >
       <UiImageUpload
         v-model:image="user"

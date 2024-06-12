@@ -7,8 +7,9 @@ interface IImageModel {
   title?: string;
 }
 // define
-const { alt } = defineProps<{
+const { alt, addNew } = defineProps<{
   alt: string | undefined;
+  addNew?: boolean;
 }>();
 const model: Ref<IImageModel | undefined> = defineModel("image");
 const isLoading: Ref<boolean | undefined> = defineModel("isLoading");
@@ -26,14 +27,14 @@ const emit = defineEmits(["delete"]);
 <template>
   <input type="file" ref="inputRef" class="hidden" />
   <div
-    v-if="model && !model.image"
-    class="w-full flex aspect-square items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-grey dark:bg-[#2c2c2c]"
+    v-if="!addNew ? !model?.image : !model"
+    class="w-full flex items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-fa-white dark:bg-[#2c2c2c] dark:text-fa-white"
     ref="dropZoneRef"
   >
     <img
       src="~/public/no-image.svg"
       alt="No Image"
-      class="lg:w-[100px] w-[40px]"
+      class="lg:w-[100px] w-[40px] my-[30px]"
     />
     <div class="flex flex-col gap-[10px] text-[14px] items-center">
       <h3>{{ eng.dragDropMessage }}</h3>
@@ -55,14 +56,11 @@ const emit = defineEmits(["delete"]);
       </button>
     </div>
   </div>
-  <div
-    v-else
-    class="w-full p-[5px] rounded-[8px] bg-grey dark:bg-[#2c2c2c] relative"
-  >
+  <div v-else class="w-full p-[5px] rounded-[8px] relative">
     <UiSpinner v-if="isLoading" />
     <template v-else>
       <img
-        :src="`/${model?.image}`"
+        :src="`/${addNew ? model : model?.image}`"
         class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
         :alt="alt"
       />

@@ -16,6 +16,7 @@ await brandStore.getBrandById(brandId);
 const { brand } = storeToRefs(brandStore);
 
 // vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 const state = reactive({
   image: brand.value?.image,
@@ -162,50 +163,26 @@ onUnmounted(() => {
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <div
       class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group mb-[40px]"
+      v-if="isAdmin"
     >
-      <input type="file" ref="inputRef" class="hidden" />
-      <div
-        v-if="!brand?.image"
-        class="w-full h-full flex items-center justify-center flex-col text-center gap-[20px]"
-        ref="dropZoneRef"
-      >
-        <img
-          src="~/public/no-image.svg"
-          alt="No Image"
-          class="lg:w-[100px] w-[40px]"
-        />
-        <div
-          class="flex flex-col gap-[10px] text-[14px] items-center dark:text-fa-white"
-        >
-          <h3>{{ eng.dragDropMessage }}</h3>
-          <UDivider
-            :label="eng.or"
-            :ui="{
-              border: {
-                base: 'dark:border-[#70706e]',
-              },
-              label: 'text-[12px]',
-            }"
-          />
-          <button
-            type="button"
-            @click="inputRef?.click()"
-            class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] dark:hover:bg-gray-main"
-          >
-            {{ eng.clickToUpload }}
-          </button>
-        </div>
-      </div>
-      <div v-else class="w-full">
+      <UiImageUpload
+        v-model:image="brand"
+        v-model:isLoading="isLoading"
+        :alt="brand?.title"
+        v-model:input-ref="inputRef"
+        v-model:drop-zone-ref="dropZoneRef"
+        @delete="deleteImageHandler"
+      />
+    </div>
+    <div
+      class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group mb-[40px]"
+      v-else-if="!isAdmin && brand?.image"
+    >
+      <div class="w-full">
         <img
           :src="`/${brand.image}`"
-          class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity dark:brightness-0 dark:invert-[0.5]"
+          class="w-full rounded-[8px] dark:brightness-0 dark:invert-[0.5]"
           alt="new brand"
-        />
-        <UButton
-          icon="i-heroicons-trash"
-          @click="deleteImageHandler"
-          class="top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity absolute"
         />
       </div>
     </div>
@@ -243,6 +220,7 @@ onUnmounted(() => {
     </UFormGroup>
     <div
       class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
+      v-if="isAdmin"
     >
       <UTooltip
         :text="eng.delete"

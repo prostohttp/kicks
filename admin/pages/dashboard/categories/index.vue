@@ -26,6 +26,7 @@ const categoryDataStore = useCategoryDataStore();
 const { categories: data, selected } = storeToRefs(categoryDataStore);
 
 // vars
+const isAdmin = useIsAdmin();
 const modal = useModal();
 const router = useRouter();
 const route = useRoute();
@@ -155,7 +156,10 @@ onMounted(async () => {
           <span>
             {{ eng.breadcrumbs.categories }}
           </span>
-          <DashboardCategoryMenuAction v-model:activePage="activePage" />
+          <DashboardCategoryMenuAction
+            v-model:activePage="activePage"
+            v-if="isAdmin"
+          />
         </caption>
       </template>
     </UTable>
