@@ -10,6 +10,7 @@ const { allUsers: data } = storeToRefs(userDataStore);
 // vars
 const toast = useToast();
 const router = useRouter();
+const route = useRoute();
 const page = Number(useRoute().query.page);
 const path = router.currentRoute.value.path;
 
@@ -44,6 +45,15 @@ useHead({
 });
 
 // Hooks
+watch(
+  () => route.query,
+  (newValue) => {
+    if (!newValue.page) {
+      activePage.value = 1;
+    }
+  },
+);
+
 watch(activePage, async (newValue) => {
   router.push({ query: { page: newValue } });
   await userDataStore.getAllUsers(newValue!);

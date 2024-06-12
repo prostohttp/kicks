@@ -1,0 +1,76 @@
+<script lang="ts" setup>
+import { eng } from "~/lang/eng";
+
+interface IImageModel {
+  image: string;
+  name?: string;
+  title?: string;
+}
+// define
+const { alt } = defineProps<{
+  alt: string | undefined;
+}>();
+const model: Ref<IImageModel | undefined> = defineModel("image");
+const isLoading: Ref<boolean | undefined> = defineModel("isLoading");
+
+const inputRef: Ref<HTMLInputElement | undefined> = defineModel("inputRef");
+const dropZoneRef: Ref<HTMLInputElement | undefined> =
+  defineModel("dropZoneRef");
+const emit = defineEmits(["delete"]);
+
+// vars
+
+// handlers
+</script>
+
+<template>
+  <input type="file" ref="inputRef" class="hidden" />
+  <div
+    v-if="model && !model.image"
+    class="w-full flex aspect-square items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-grey dark:bg-[#2c2c2c]"
+    ref="dropZoneRef"
+  >
+    <img
+      src="~/public/no-image.svg"
+      alt="No Image"
+      class="lg:w-[100px] w-[40px]"
+    />
+    <div class="flex flex-col gap-[10px] text-[14px] items-center">
+      <h3>{{ eng.dragDropMessage }}</h3>
+      <UDivider
+        :label="eng.or"
+        :ui="{
+          border: {
+            base: 'dark:border-[#70706e]',
+          },
+          label: 'text-[12px]',
+        }"
+      />
+      <button
+        type="button"
+        @click="inputRef?.click()"
+        class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] dark:hover:bg-gray-main"
+      >
+        {{ eng.clickToUpload }}
+      </button>
+    </div>
+  </div>
+  <div
+    v-else
+    class="w-full p-[5px] rounded-[8px] bg-grey dark:bg-[#2c2c2c] relative"
+  >
+    <UiSpinner v-if="isLoading" />
+    <template v-else>
+      <img
+        :src="`/${model?.image}`"
+        class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
+        :alt="alt"
+      />
+      <UButton
+        icon="i-heroicons-trash"
+        @click="$emit('delete')"
+        class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
+      />
+    </template>
+  </div>
+</template>

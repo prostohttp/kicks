@@ -169,55 +169,15 @@ onUnmounted(() => {
           />
         </UFormGroup>
       </div>
-      <div
-        class="rounded-[8px] basis-[40%] p-[20px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
-      >
-        <input type="file" ref="inputRef" class="hidden" />
-        <div
-          v-if="user && !user.image"
-          class="w-full h-full flex items-center justify-center flex-col text-center gap-[20px]"
-          ref="dropZoneRef"
-        >
-          <img
-            src="~/public/no-image.svg"
-            alt="No Image"
-            class="lg:w-[100px] w-[40px]"
-          />
-          <div class="flex flex-col gap-[10px] text-[14px] items-center">
-            <h3>{{ eng.dragDropMessage }}</h3>
-            <UDivider
-              :label="eng.or"
-              :ui="{
-                border: {
-                  base: 'dark:border-[#70706e]',
-                },
-                label: 'text-[12px]',
-              }"
-            />
-            <button
-              type="button"
-              @click="inputRef?.click()"
-              class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] dark:hover:bg-gray-main"
-            >
-              {{ eng.clickToUpload }}
-            </button>
-          </div>
-        </div>
-        <div v-else class="w-full">
-          <UiSpinner v-if="isLoading" />
-          <template v-else>
-            <img
-              :src="`/${user?.image}`"
-              class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
-              :alt="user?.name"
-            />
-            <UButton
-              icon="i-heroicons-trash"
-              @click="deleteImageHandler"
-              class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
-            />
-          </template>
-        </div>
+      <div class="rounded-[8px] basis-[40%] flex flex-col relative group">
+        <UiImageUpload
+          v-model:image="user"
+          v-model:isLoading="isLoading"
+          :alt="user?.name"
+          v-model:input-ref="inputRef"
+          v-model:drop-zone-ref="dropZoneRef"
+          @delete="deleteImageHandler"
+        />
       </div>
     </div>
     <div class="flex justify-end">

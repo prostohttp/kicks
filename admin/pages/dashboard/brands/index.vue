@@ -16,10 +16,10 @@ const modal = useModal();
 const page = Number(useRoute().query.page);
 const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
-const activePage = ref(data.value?.activePage || 1);
 
 // handlers
 await brandsDataStore.getAllBrands(page);
+const activePage = ref(data.value?.activePage || 1);
 
 const openAddNewBrandModal = () => {
   modal.open(DashboardBrandAddNewModal, {
@@ -40,6 +40,15 @@ useHead({
 });
 
 // Hooks
+watch(
+  () => route.query,
+  (newValue) => {
+    if (!newValue.page) {
+      activePage.value = 1;
+    }
+  },
+);
+
 watch(activePage, async (newValue) => {
   router.push({ query: { page: newValue } });
   await brandsDataStore.getAllBrands(newValue!);
@@ -81,10 +90,12 @@ onMounted(() => {
       />
     </div>
   </main>
+  <!-- <ClientOnly> -->
   <UiPagination
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_BRAND"
     :allItems="data?.allItems"
   />
+  <!-- </ClientOnly> -->
 </template>

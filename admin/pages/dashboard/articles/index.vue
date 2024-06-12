@@ -146,6 +146,27 @@ onMounted(async () => {
           <DashboardArticleMenuAction v-model:activePage="activePage" />
         </caption>
       </template>
+      <template #image-data="{ row }">
+        <NuxtLink :to="`/dashboard/articles/${row.id}`">
+          <img
+            src="~/public/no-image.svg"
+            :alt="eng.noImage"
+            class="w-[40px] dark:brightness-0 dark:invert-[0.5]"
+            v-if="!row.image"
+          />
+          <img
+            :src="`/${row.image}`"
+            :alt="eng.noImage"
+            class="w-[40px] dark:brightness-0 dark:invert-[0.5]"
+            v-else
+          />
+        </NuxtLink>
+      </template>
+      <template #title-data="{ row }">
+        <NuxtLink :to="`/dashboard/articles/${row.id}`">
+          {{ row.title }}
+        </NuxtLink>
+      </template>
     </UTable>
   </main>
   <UiPagination
