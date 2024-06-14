@@ -2,24 +2,23 @@
 import { onClickOutside } from "@vueuse/core";
 
 // define
-const { placeholder, content } = defineProps<{
+const { placeholder } = defineProps<{
   placeholder: string;
-  content?: string;
 }>();
 
-const emit = defineEmits(["getValue"]);
+const content = defineModel();
 
 // vars
 const editor = useEditor({
-  onBlur({ editor, event }) {
-    emit("getValue", editor.getHTML());
+  onUpdate({ editor }) {
+    content.value = editor.getHTML();
   },
-  content,
+  content: content.value || "",
   extensions: [
     TiptapStarterKit,
     TiptapPlaceholder.configure({
       emptyEditorClass:
-        "first:before:text-gray-400 first:before:float-left first:before:content-[attr(data-placeholder)] first:before:pointer-events-none",
+        "first:before:text-[#78767d] first:before:float-left first:before:content-[attr(data-placeholder)] first:before:pointer-events-none",
       includeChildren: true,
       placeholder,
     }),
@@ -131,11 +130,11 @@ button {
 }
 
 .editor {
-  @apply border rounded-[8px] border-[grey] dark:border-fa-white z-20;
+  @apply border rounded-[8px] text-[16px] border-dark-gray dark:border-[#374151] dark:bg-dark-bg z-20;
 }
 
 .buttons {
-  @apply absolute -top-[40px] left-0 flex gap-[5px];
+  @apply absolute sm:-top-[40px] -top-[60px] left-0 flex gap-[5px] flex-wrap;
 }
 
 .is-active {

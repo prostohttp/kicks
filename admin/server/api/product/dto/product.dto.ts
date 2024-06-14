@@ -1,7 +1,7 @@
 import { OptionDto } from "./option.dto";
 
 export interface ProductDto {
-  id?: string;
+  _id?: string;
   title: string;
   description?: string;
   category?: string;

@@ -9,5 +9,5 @@ export interface ArticleDto {
   adminMenu?: boolean;
   siteMenu?: boolean;
   createdAt: string;
-  sort?: string;
+  sort: string;
 }

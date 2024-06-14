@@ -47,7 +47,6 @@ const uploadImage = async (image: File) => {
     toast.add({ title: eng.imageUploaded, color: "green" });
     isLoading.value = false;
   } catch (_error: any) {
-    console.log(_error.message);
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };

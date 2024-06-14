@@ -175,3 +175,7 @@ a:hover {
 .tiptap ol {
   @apply pl-[20px] list-decimal
 }
+
+.no-left-icon {
+  @apply py-[15px] px-[16px]
+}

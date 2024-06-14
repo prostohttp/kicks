@@ -3,9 +3,11 @@ export const usePersistDataStore = defineStore(
   () => {
     // vars
     const brandImage = ref("");
+    const articleImage = ref("");
 
     return {
       brandImage,
+      articleImage,
     };
   },
   { persist: true },

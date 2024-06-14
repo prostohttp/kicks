@@ -42,7 +42,7 @@ export const Article = defineMongooseModel({
     },
     sort: {
       type: Number,
-      required: false,
+      required: true,
     },
   },
   hooks(schema) {

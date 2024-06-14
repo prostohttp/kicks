@@ -27,8 +27,8 @@ const emit = defineEmits(["delete"]);
 <template>
   <input type="file" ref="inputRef" class="hidden" />
   <div
-    v-if="!addNew ? !model?.image : !model"
-    class="w-full flex items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-fa-white dark:bg-[#2c2c2c] dark:text-fa-white"
+    v-if="addNew ? !model : !model?.image"
+    class="w-full flex items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-fa-white dark:bg-[#2c2c2c] dark:text-fa-white aspect-square"
     ref="dropZoneRef"
   >
     <img
