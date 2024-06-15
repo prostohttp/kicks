@@ -15,7 +15,7 @@ export const Article = defineMongooseModel({
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     isEnabled: {
       type: Boolean,

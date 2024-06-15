@@ -11,7 +11,12 @@ export const useProductDataStore = defineStore("productData", () => {
   // vars
   const products: Ref<ProductsPayload | undefined> = ref();
   const selected: Ref<IArticle[]> = ref([]);
-  const titles: Ref<string[]> = ref([]);
+  const titles: Ref<
+    Array<{
+      _id: string;
+      title: string;
+    }>
+  > = ref([]);
 
   // handlers
   const getAllProducts = async (page: number) => {

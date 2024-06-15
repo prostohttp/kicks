@@ -2,6 +2,7 @@
 import { DashboardArticleDeleteModal } from "#components";
 import { eng } from "~/lang/eng";
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
+import { useUploadDeleteDataStore } from "~/stores/upload-delete-data.js";
 
 // define
 const activePage = defineModel("activePage");
@@ -11,6 +12,7 @@ const modal = useModal();
 
 // store
 const articleDataStore = useArticleDataStore();
+const uploadDeleteDataStore = useUploadDeleteDataStore();
 const { selected } = storeToRefs(articleDataStore);
 
 // handlers
@@ -21,9 +23,15 @@ const openDeleteArticleModal = (articles: IArticle[]) => {
       modal.close();
     },
     async onDelete() {
-      selected.value = [];
+      for (const item of selected.value) {
+        if (item.image) {
+          await uploadDeleteDataStore.deleteHandler(item.image);
+        }
+      }
+      articleDataStore.getAllArticlesForAdminMenu();
       articleDataStore.getAllArticles(1);
       activePage.value = 1;
+      selected.value = [];
       modal.close();
     },
   });

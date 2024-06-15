@@ -179,3 +179,11 @@ a:hover {
 .no-left-icon {
   @apply py-[15px] px-[16px]
 }
+
+.tiptap .tiptap-placeholder .tiptap-placeholder {
+  @apply block;
+}
+
+.tiptap.ProseMirror-focused .tiptap-placeholder {
+  @apply hidden;
+}

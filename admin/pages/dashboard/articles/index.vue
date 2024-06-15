@@ -25,6 +25,7 @@ const articleDataStore = useArticleDataStore();
 const { articles: data, selected } = storeToRefs(articleDataStore);
 
 // vars
+const isAdmin = useIsAdmin();
 const router = useRouter();
 const route = useRoute();
 const page = Number(useRoute().query.page);
@@ -104,6 +105,7 @@ onMounted(async () => {
       icon="i-heroicons-plus-circle"
       :label="eng.addNewArticle"
       to="/dashboard/articles/new"
+      v-if="isAdmin"
     />
   </div>
   <main

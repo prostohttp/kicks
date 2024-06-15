@@ -1,10 +1,8 @@
 import { z } from "zod";
 
-const regex = /<\/?[^>]+(>|$)/g;
-
 export const schema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
-  description: z.string(),
+  description: z.string().optional(),
   shortDescription: z
     .string()
     .min(10, "Short description must be at least 10 characters"),
@@ -20,8 +18,8 @@ export const schema = z.object({
     .string()
     .min(1, "Required field")
     .transform((val) => Number(val))
-    .refine((val) => !isNaN(val), {
-      message: "Must be a valid number",
+    .refine((val) => !isNaN(val) && val > 0, {
+      message: "Must be a valid number and greater then 1",
     }),
 });
 

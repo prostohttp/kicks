@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     let query = getQuery(event);
     const page = Number(query.page) || 1;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_ARTICLE;
+    const sortedTitles = query.sortedTitles;
     const adminMenu = query.adminMenu;
     const articles = await Article.find().select(
       "title shortDescription isEnabled image createdAt",
@@ -14,8 +15,10 @@ export default defineEventHandler(async (event) => {
     const articlesLength = articles.length;
     const pagesInPagination = pageCount(articlesLength, perPage);
 
-    if (adminMenu) {
-      return await Article.find({ adminMenu: true }).select("title");
+    if (adminMenu && sortedTitles) {
+      return await Article.find({ adminMenu: true })
+        .sort({ sort: 1 })
+        .select("title");
     }
     if (
       isValidPaginationPage(page, pagesInPagination, articlesLength, perPage)

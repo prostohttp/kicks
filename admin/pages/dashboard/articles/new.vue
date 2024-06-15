@@ -57,6 +57,7 @@ const articleData: InputData[] = [
 
 // meta
 definePageMeta({
+  middleware: ["only-admin-access"],
   name: eng.addNewArticle,
 });
 

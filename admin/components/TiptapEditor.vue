@@ -18,7 +18,7 @@ const editor = useEditor({
     TiptapStarterKit,
     TiptapPlaceholder.configure({
       emptyEditorClass:
-        "first:before:text-[#78767d] first:before:float-left first:before:content-[attr(data-placeholder)] first:before:pointer-events-none",
+        "first:before:text-[#78767d] first:before:float-left first:before:content-[attr(data-placeholder)] first:before:pointer-events-none tiptap-placeholder",
       includeChildren: true,
       placeholder,
     }),
@@ -28,7 +28,7 @@ const editor = useEditor({
 const editorRef = ref(null);
 const isVisible = ref();
 
-// handlers.value
+// handlers
 onClickOutside(editorRef, () => (isVisible.value = false));
 
 // hooks

@@ -1,16 +1,15 @@
 <script lang="ts" setup>
+// store
+const articleDataStore = useArticleDataStore();
+const { forAdminMenu } = storeToRefs(articleDataStore);
+
 // handlers
-const { data: articles } = await useFetch("/api/article/all", {
-  method: "GET",
-  query: {
-    adminMenu: true,
-  },
-});
+await articleDataStore.getAllArticlesForAdminMenu();
 </script>
 
 <template>
   <ul class="font-[600] flex gap-[16px]">
-    <li v-for="{ _id, title } in articles" :key="_id">
+    <li v-for="{ _id, title } in forAdminMenu" :key="_id">
       <NuxtLink :to="'/dashboard/articles/' + _id">{{ title }}</NuxtLink>
     </li>
   </ul>
