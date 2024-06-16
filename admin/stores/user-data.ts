@@ -17,7 +17,7 @@ export const useUserDataStore = defineStore("userData", () => {
   const userById: Ref<UserDto | undefined> = ref();
 
   // Handlers
-  const getUser = async (): Promise<void> => {
+  const getUser = async () => {
     if (user.isRegistered) {
       try {
         const foundedUser = await $fetch<UserDto>("/api/user/one", {
@@ -38,6 +38,7 @@ export const useUserDataStore = defineStore("userData", () => {
     } else {
       savedUser.value = user;
     }
+    return true;
   };
 
   const getAllUsers = async (page: number): Promise<void> => {

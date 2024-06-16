@@ -20,7 +20,7 @@
     "@vueuse/nuxt": "^10.11.0",
     "bcrypt": "^5.1.1",
     "nanoid": "^5.0.7",
-    "nuxt": "^3.12.1",
+    "nuxt": "^3.12.2",
     "nuxt-aos": "^1.2.4",
     "nuxt-mongoose": "^1.0.6",
     "nuxt-tiptap-editor": "^1.1.2",

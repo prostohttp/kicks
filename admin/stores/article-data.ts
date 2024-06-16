@@ -31,6 +31,7 @@ export const useArticleDataStore = defineStore("articleData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
+    return true;
   };
 
   const getAllArticlesForAdminMenu = async () => {
