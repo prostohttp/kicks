@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <header class="mb-[24px]">
-    <h1 class="page-title">{{ title }}</h1>
+    <h1 class="page-title capitalize">{{ title }}</h1>
     <UBreadcrumb
       :links="links"
       :ui="{

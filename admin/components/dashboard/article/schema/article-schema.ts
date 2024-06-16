@@ -14,13 +14,7 @@ export const schema = z.object({
   adminMenu: z.boolean(),
   siteMenu: z.boolean(),
   featuredProducts: z.array(z.string()),
-  sort: z
-    .string()
-    .min(1, "Required field")
-    .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val > 0, {
-      message: "Must be a valid number and greater then 1",
-    }),
+  sort: z.number().min(1, "Must be a number and greater then 1"),
 });
 
 export type Schema = z.output<typeof schema>;

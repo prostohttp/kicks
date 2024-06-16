@@ -9,6 +9,7 @@ export const useArticleDataStore = defineStore("articleData", () => {
     activePage?: number;
   }
   // vars
+  const article: Ref<ArticleDto | undefined> = ref();
   const articles: Ref<ArticlesPayload | undefined> = ref();
   const selected: Ref<IArticle[]> = ref([]);
   const forAdminMenu: Ref<
@@ -46,10 +47,25 @@ export const useArticleDataStore = defineStore("articleData", () => {
     }
   };
 
+  const getArticle = async (id: string) => {
+    try {
+      article.value = await $fetch("/api/article/one", {
+        method: "GET",
+        query: {
+          id,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
   return {
     forAdminMenu,
+    article,
     articles,
     selected,
+    getArticle,
     getAllArticles,
     getAllArticlesForAdminMenu,
   };

@@ -60,6 +60,7 @@ export const eng = {
   editProfile: "Edit Profile",
   editBrand: "Edit Brand",
   editCategory: "Edit Category",
+  editArticle: "Edit Article",
   deletePerson: "Delete Person",
   deleteCategory: "Delete Category",
   deleteBrand: "Delete Brand",

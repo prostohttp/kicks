@@ -20,12 +20,13 @@ const dropZoneRef: Ref<HTMLInputElement | undefined> =
 const emit = defineEmits(["delete"]);
 
 // vars
+const isAdmin = useIsAdmin();
 
 // handlers
 </script>
 
 <template>
-  <input type="file" ref="inputRef" class="hidden" />
+  <input type="file" ref="inputRef" class="hidden" v-if="isAdmin" />
   <div
     v-if="addNew ? !model : !model?.image"
     class="w-full flex items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-fa-white dark:bg-[#2c2c2c] dark:text-fa-white aspect-square"
@@ -36,7 +37,10 @@ const emit = defineEmits(["delete"]);
       alt="No Image"
       class="lg:w-[100px] w-[40px] my-[30px]"
     />
-    <div class="flex flex-col gap-[10px] text-[14px] items-center">
+    <div
+      class="flex flex-col gap-[10px] text-[14px] items-center"
+      v-if="isAdmin"
+    >
       <h3>{{ eng.dragDropMessage }}</h3>
       <UDivider
         :label="eng.or"
@@ -68,6 +72,7 @@ const emit = defineEmits(["delete"]);
         icon="i-heroicons-trash"
         @click="$emit('delete')"
         class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
+        v-if="isAdmin"
       />
     </template>
   </div>
