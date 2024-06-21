@@ -4,8 +4,7 @@ import { Types } from "mongoose";
 export const OptionValue = defineMongooseModel({
   name: "OptionValue",
   schema: {
-    title: {
-      min: 3,
+    value: {
       type: String,
       required: true,
     },
@@ -13,19 +12,31 @@ export const OptionValue = defineMongooseModel({
       type: String,
       required: false,
     },
-    value: {
-      type: String,
-      required: true,
-    },
     parentOption: {
       type: Types.ObjectId || String,
       required: true,
       ref: "Option",
     },
+    sort: {
+      type: Number,
+      required: true,
+    },
+    count: {
+      type: Number,
+      required: false,
+    },
+    price: {
+      type: Number,
+      required: false,
+    },
+    deduct: {
+      type: Boolean,
+      required: false,
+    },
   },
   hooks(schema) {
     schema.pre("save", function (this, next) {
-      this.title = this.title.toString().trim() as any;
+      this.value = this.value!.toString().trim() as any;
       next();
     });
   },

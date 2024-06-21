@@ -1,6 +1,4 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
-import { Types } from "mongoose";
-import { OptionTypes } from "~/types/server/server.types";
 
 export const Option = defineMongooseModel({
   name: "Option",
@@ -13,14 +11,26 @@ export const Option = defineMongooseModel({
     },
     type: {
       type: String,
-      enum: Object.values(OptionTypes),
+      required: true,
+    },
+    sort: {
+      type: Number,
       required: true,
     },
     values: [
       {
-        type: Types.ObjectId || String,
-        required: true,
-        ref: "OptionValue",
+        valueTitle: {
+          type: String,
+          required: true,
+        },
+        valueSort: {
+          type: Number,
+          required: true,
+        },
+        valueimage: {
+          type: String,
+          required: false,
+        },
       },
     ],
   },

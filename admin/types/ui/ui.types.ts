@@ -1,3 +1,5 @@
+import { eng } from "~/lang/eng";
+
 export interface AccordionItem {
   label: string;
   slot?: string;
@@ -40,3 +42,14 @@ export interface InputData {
   type?: string;
   disabled?: boolean;
 }
+
+export const optionTypes = {
+  [eng.optionTypes.list]: "select",
+  [eng.optionTypes.select]: "select",
+  [eng.optionTypes.checkbox]: "select",
+  [eng.optionTypes.text]: "text",
+  [eng.optionTypes.textarea]: "textarea",
+  [eng.optionTypes.date]: "date",
+  [eng.optionTypes.time]: "time",
+  [eng.optionTypes.datetime]: "datetime",
+};

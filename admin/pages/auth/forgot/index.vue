@@ -49,7 +49,7 @@ const forgot = async (data: ForgotFormDto) => {
         email,
         siteName: eng.siteName,
         siteUrl: Constants.SITE_URL,
-        token: `/token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
+        token: `token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
       },
     });
   } catch (error: any) {

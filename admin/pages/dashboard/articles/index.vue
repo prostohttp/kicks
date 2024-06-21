@@ -145,7 +145,10 @@ onMounted(async () => {
           <span>
             {{ eng.breadcrumbs.articles }}
           </span>
-          <DashboardArticleMenuAction v-model:activePage="activePage" />
+          <DashboardArticleMenuAction
+            v-model:activePage="activePage"
+            v-if="isAdmin"
+          />
         </caption>
       </template>
       <template #image-data="{ row }">

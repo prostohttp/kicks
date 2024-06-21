@@ -19,13 +19,9 @@ export enum ModelNamesForSearchEngine {
   ALL = "all",
 }
 
-export enum OptionTypes {
-  SELECT = "select",
-  CHECKBOX = "checkbox",
-  RADIO = "radio",
-  IMAGE = "image",
-  SLIDER = "slider",
-  COLOR = "color",
+export enum ProductOptionPriceAction {
+  DEC = "decrease",
+  INC = "increase",
 }
 
 export interface MultiPartData {

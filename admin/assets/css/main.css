@@ -9,6 +9,7 @@ a {
 
 input[type="text"],
 input[type="password"],
+input[type="number"],
 textarea {
   @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray;
 }
@@ -18,7 +19,7 @@ textarea {
 }
 
 button[type="submit"] {
-  @apply bg-dark-gray rounded-[8px] uppercase font-[Rubik] font-[500] hover:bg-yellow transition-colors;
+  @apply bg-dark-gray rounded-[8px] uppercase font-[Rubik] font-[500] transition-colors;
 }
 
 button.inverse {
@@ -121,6 +122,10 @@ a:hover {
 
 .select-wrapper button {
   @apply h-[52px] dark:text-[#6b7280] text-[16px] shadow-none ring-dark-gray
+}
+
+.big-button {
+  @apply py-[16px] px-[42px] uppercase font-[Rubik] font-[500]
 }
 
 .checkbox input[type="checkbox"] {

@@ -177,7 +177,15 @@ onUnmounted(() => {
             :placeholder="placeholder"
             v-model="state[name as keyof typeof state]"
             inputClass="no-left-icon"
-            v-if="!type"
+            v-if="type === 'text'"
+          />
+          <UInput
+            :placeholder="placeholder"
+            v-model="state[name as keyof typeof state]"
+            inputClass="no-left-icon"
+            v-if="type === 'number'"
+            type="number"
+            min="1"
           />
           <USelectMenu
             multiple

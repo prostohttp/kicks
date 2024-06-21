@@ -1,4 +1,4 @@
-import { OptionDto } from "./option.dto";
+import { OptionDto } from "../../option/dto/option.dto";
 
 export interface ProductDto {
   _id?: string;
