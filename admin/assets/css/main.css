@@ -11,7 +11,7 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 textarea {
-  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray;
+  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray shadow-none;
 }
 
 .textarea textarea {
@@ -121,7 +121,11 @@ a:hover {
 }
 
 .select-wrapper button {
-  @apply h-[52px] dark:text-[#6b7280] text-[16px] shadow-none ring-dark-gray
+  @apply h-[52px] dark:text-[#6b7280] text-[#232321] pl-[16px] text-[16px] shadow-none border-none rounded-[8px]
+}
+
+.select-wrapper-with-icon button {
+  @apply h-[52px] dark:text-[#6b7280] text-[#232321] pl-[35px] text-[16px] shadow-none border-none rounded-[8px]
 }
 
 .big-button {
@@ -191,4 +195,12 @@ a:hover {
 
 .tiptap.ProseMirror-focused .tiptap-placeholder {
   @apply hidden;
+}
+
+.icon-button {
+  @apply bg-transparent dark:bg-transparent text-dark-gray dark:text-fa-white hover:bg-transparent dark:hover:bg-transparent shadow-none
+}
+
+input.clean-field {
+  @apply ring-0 shadow-none border-none border-[#d1d5db] rounded-none pl-0 dark:bg-transparent text-[15px]
 }

@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <header class="mb-[24px]">
+  <header class="mb-[24px] sm:text-left text-center">
     <h1 class="page-title capitalize">{{ title }}</h1>
     <UBreadcrumb
       :links="links"

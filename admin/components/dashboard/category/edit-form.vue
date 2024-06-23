@@ -101,7 +101,8 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
           },
         }"
         :ui="{
-          wrapper: 'select-wrapper',
+          wrapper:
+            'select-wrapper-with-icon ring-1 ring-dark-gray rounded-[8px]',
         }"
       />
       <UTextarea

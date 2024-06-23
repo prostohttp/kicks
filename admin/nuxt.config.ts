@@ -80,6 +80,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxtjs/google-fonts",
     "nuxt-tiptap-editor",
+    "@nuxt/image"
   ],
   tiptap: {
     prefix: "Tiptap",

@@ -12,11 +12,12 @@ export const useOptionDataStore = defineStore("optionData", () => {
   const option: Ref<OptionDto | undefined> = ref();
   const options: Ref<OptionsPayload | undefined> = ref();
   const selected: Ref<IOption[]> = ref([]);
-  const state = reactive<{ [key: string]: any }>({
-    title: "",
-    type: "",
-    sort: "",
-  });
+  const state = reactive<{ [key: string]: any }>({ values: {} });
+  const optionImages: Ref<{
+    [id: string]: {
+      image: string;
+    };
+  }> = ref({});
 
   // handlers
   const addToState = (key: string, value: string) => {
@@ -52,6 +53,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
   return {
     option,
+    optionImages,
     state,
     options,
     selected,

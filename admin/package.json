@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxt/content": "^2.13.0",
+    "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.17.0",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@pinia/nuxt": "^0.5.1",
@@ -27,8 +28,9 @@
     "pinia": "^2.1.7",
     "prettier": "^3.3.2",
     "resend": "^3.3.0",
-    "vue": "^3.4.29",
-    "vue-router": "^4.3.3",
+    "valibot": "^0.33.3",
+    "vue": "^3.4.30",
+    "vue-router": "^4.4.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

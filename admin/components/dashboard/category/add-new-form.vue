@@ -92,7 +92,7 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
           },
         }"
         :ui="{
-          wrapper: 'select-wrapper',
+          wrapper: 'select-wrapper-with-icon',
         }"
       />
       <UTextarea
