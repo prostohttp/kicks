@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { DashboardArticleDeleteModal } from "#components";
+import { DashboardOptionDeleteModal } from "#components";
 import { eng } from "~/lang/eng";
-import type { IArticle } from "~/pages/dashboard/articles/index.vue";
+import type { IOption } from "~/pages/dashboard/options/index.vue";
 import { useUploadDeleteDataStore } from "~/stores/upload-delete-data.js";
 
 // define
@@ -11,25 +11,26 @@ const activePage = defineModel("activePage");
 const modal = useModal();
 
 // store
-const articleDataStore = useArticleDataStore();
+const optionDataStore = useOptionDataStore();
 const uploadDeleteDataStore = useUploadDeleteDataStore();
-const { selected } = storeToRefs(articleDataStore);
+const { selected } = storeToRefs(optionDataStore);
 
 // handlers
-const openDeleteArticleModal = (articles: IArticle[]) => {
-  modal.open(DashboardArticleDeleteModal, {
-    articles,
+const openDeleteOptionModal = (options: IOption[]) => {
+  modal.open(DashboardOptionDeleteModal, {
+    options,
     onClose() {
       modal.close();
     },
     async onDelete() {
-      for (const item of selected.value) {
-        if (item.image) {
-          await uploadDeleteDataStore.deleteHandler(item.image);
+      for (const option of options) {
+        if (option.images.length) {
+          for (const image of option.images) {
+            await uploadDeleteDataStore.deleteHandler(image!);
+          }
         }
       }
-      articleDataStore.getAllArticlesForAdminMenu();
-      articleDataStore.getAllArticles(1);
+      optionDataStore.getAllOptions(1);
       activePage.value = 1;
       selected.value = [];
       modal.close();
@@ -58,10 +59,10 @@ const openDeleteArticleModal = (articles: IArticle[]) => {
     <template #panel>
       <ul class="p-4 flex flex-col gap-[10px]">
         <NuxtLink
-          @click="openDeleteArticleModal(selected)"
+          @click="openDeleteOptionModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ eng.deleteArticle }}
+          {{ eng.deleteOption }}
         </NuxtLink>
       </ul>
     </template>

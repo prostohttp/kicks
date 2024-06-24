@@ -33,7 +33,7 @@ const onClickHandler = () => {
         class="lg:w-[40px] w-[40px]"
       />
     </div>
-    <div v-else class="w-full p-[5px] rounded-[8px] relative">
+    <div v-else class="w-full rounded-[8px] relative">
       <img
         :src="`/${model?.image}`"
         class="lg:w-[40px] w-[40px] rounded-[8px] group-hover:opacity-70 transition-opacity"
@@ -45,11 +45,13 @@ const onClickHandler = () => {
           class="icon-button float-right"
           icon="i-heroicons-inbox-arrow-down-solid h-[20px] w-[20px]"
           @click="onClickHandler"
+          v-if="!model?.image"
         />
         <UButton
           class="icon-button float-right"
           icon="i-heroicons-archive-box-x-mark-solid h-[20px] w-[20px]"
           @click="$emit('delete', id)"
+          v-else
         />
       </div>
     </template>

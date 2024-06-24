@@ -204,3 +204,10 @@ a:hover {
 input.clean-field {
   @apply ring-0 shadow-none border-none border-[#d1d5db] rounded-none pl-0 dark:bg-transparent text-[15px]
 }
+
+tr th:last-child,
+tr td:last-child,
+tr th:nth-last-child(2):not(:last-child),
+tr td:nth-last-child(2):not(:last-child) {
+  @apply text-right
+}

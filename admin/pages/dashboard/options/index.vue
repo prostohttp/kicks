@@ -7,6 +7,9 @@ import { useOptionDataStore } from "~/stores/option-data";
 export interface IOption {
   id: string;
   title: string;
+  type: string;
+  sort: number;
+  images: (string | undefined)[];
 }
 
 // meta
@@ -28,8 +31,12 @@ const route = useRoute();
 const page = Number(useRoute().query.page);
 const columns = [
   {
-    key: "option",
+    key: "title",
     label: "Option",
+  },
+  {
+    key: "type",
+    label: "Type",
   },
   {
     key: "sort",
@@ -50,9 +57,15 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 // handlers
 const options = computed((): Array<IOption> | undefined => {
   return data.value?.options.map((option) => {
+    const images =
+      option.values?.filter((item) => item.image).map((item) => item.image) ||
+      [];
     return {
       id: option._id,
       title: option.title,
+      type: option.type,
+      sort: option.sort,
+      images: images,
     };
   });
 });
@@ -97,7 +110,7 @@ onMounted(async () => {
     class="p-[24px] bg-white flex flex-col rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >
     <UTable
-      :loading="!options"
+      :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
         label: eng.loadingText,
@@ -136,27 +149,22 @@ onMounted(async () => {
           />
         </caption>
       </template>
-      <!-- <template #image-data="{ row }">
-        <NuxtLink :to="`/dashboard/options/${row.id}`">
-          <img
-            src="~/public/no-image.svg"
-            :alt="eng.noImage"
-            class="w-[40px] dark:brightness-0 dark:invert-[0.5]"
-            v-if="!row.image"
-          />
-          <img
-            :src="`/${row.image}`"
-            :alt="eng.noImage"
-            class="w-[40px] dark:brightness-0 dark:invert-[0.5]"
-            v-else
-          />
-        </NuxtLink>
-      </template>
       <template #title-data="{ row }">
-        <NuxtLink :to="`/dashboard/articles/${row.id}`">
-          {{ row.title }}
-        </NuxtLink>
-      </template> -->
+        {{ row.title }}
+      </template>
+      <template #type-data="{ row }">
+        {{ row.type }}
+      </template>
+      <template #sort-data="{ row }">
+        {{ row.sort }}
+      </template>
+      <template #action-data="{ row }">
+        <UButton
+          class="icon-button float-right"
+          icon="i-heroicons-pencil-square-solid h-[20px] w-[20px]"
+          :to="`/dashboard/options/${row.id}`"
+        />
+      </template>
     </UTable>
   </main>
   <UiPagination

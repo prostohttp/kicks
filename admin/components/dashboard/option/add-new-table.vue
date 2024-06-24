@@ -8,8 +8,7 @@ const options: ModelRef<{ [key: string]: any }[] | undefined> = defineModel();
 
 // store
 const optionDataStore = useOptionDataStore();
-const { state } = storeToRefs(optionDataStore);
-const { optionImages } = storeToRefs(optionDataStore);
+const { state, optionImages } = storeToRefs(optionDataStore);
 
 // vars
 const toast = useToast();
@@ -50,7 +49,7 @@ const uploadImage = async (image: File) => {
       toast.add({ title: eng.notImage, color: "red" });
     }
     optionImages.value[activeId.value] = { image: uploadedImage };
-    state.value.values[activeId.value].image = uploadedImage;
+    state.value.values![activeId.value]!.image = uploadedImage;
     toast.add({ title: eng.imageUploaded, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
@@ -67,10 +66,9 @@ const deleteImageHandler = async (id: string) => {
     });
     inputRef.value!.value = "";
     delete optionImages.value[id];
-    state.value.values[id].image = "";
+    state.value!.values[id]!.image = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
-    // toast.add({ title: eng.somethingWentWrong, color: "red" });
     toast.add({ title: error.message, color: "red" });
   }
 };
@@ -83,8 +81,9 @@ const inputHandler = (e: Event) => {
 const addNewValue = () => {
   const id = Math.floor(Math.random() * 100000);
   state.value.values[id] = {
+    id: id.toString(),
     value: "",
-    sort: "",
+    sort: undefined,
     image: "",
   };
   options.value?.push({
@@ -149,7 +148,7 @@ onUnmounted(() => {
         <UInput
           :placeholder="eng.value"
           inputClass="clean-field"
-          v-model="state.values[row.id]['value']"
+          v-model="state.values![row.id]!['value']"
         />
       </UFormGroup>
     </template>
@@ -168,7 +167,7 @@ onUnmounted(() => {
         <UInput
           :placeholder="eng.sort"
           inputClass="clean-field"
-          v-model="state.values[row.id]['sort']"
+          v-model="state.values![row.id]!['sort']"
           type="number"
           min="1"
         />
@@ -187,5 +186,4 @@ onUnmounted(() => {
     icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
     @click="addNewValue"
   />
-  <pre>{{ state }}</pre>
 </template>

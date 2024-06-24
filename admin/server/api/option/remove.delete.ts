@@ -1,14 +1,13 @@
 import { Option } from "#imports";
 
 export default defineEventHandler(async (event) => {
+  const { ids } = await readBody(event);
   try {
-    const { id } = await readBody(event);
-    const option = await Option.findByIdAndDelete(id);
-    if (!option) {
-      throw createError({
-        statusMessage: "Option not found",
-      });
+    const options = await Option.deleteMany({ _id: { $in: ids } });
+    if (!options) {
+      throw createError({ statusMessage: "Option not found" });
     }
+
     return {
       statusMessage: "Option deleted",
     };

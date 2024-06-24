@@ -37,7 +37,7 @@ const state = reactive({
 });
 
 // Handlers
-const reloadState = () => {
+const clearState = () => {
   state.title = "";
   state.shortDescription = "";
   state.description = "";
@@ -107,7 +107,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       color: "green",
     });
     articleDateStore.getAllArticlesForAdminMenu();
-    reloadState();
+    clearState();
   } catch (error: any) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }

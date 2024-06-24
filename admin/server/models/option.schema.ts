@@ -7,7 +7,6 @@ export const Option = defineMongooseModel({
       min: 3,
       type: String,
       required: true,
-      unique: true,
     },
     type: {
       type: String,
@@ -17,21 +16,22 @@ export const Option = defineMongooseModel({
       type: Number,
       required: true,
     },
+    // TODO: Валидация полей на фронте value, sort
     values: [
       {
-        valueId: {
+        id: {
           type: String,
           required: true,
         },
-        valueTitle: {
+        value: {
           type: String,
-          required: true,
+          required: false,
         },
-        valueSort: {
+        sort: {
           type: Number,
-          required: true,
+          required: false,
         },
-        valueimage: {
+        image: {
           type: String,
           required: false,
         },

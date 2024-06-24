@@ -8,11 +8,32 @@ export const useOptionDataStore = defineStore("optionData", () => {
     allItems: number;
     activePage?: number;
   }
+
+  interface IState {
+    title: string;
+    type: string;
+    sort: number | undefined;
+    values: {
+      [key: string]:
+        | {
+            id: string;
+            value: string;
+            image: string;
+            sort: number | undefined;
+          }
+        | undefined;
+    };
+  }
   // vars
   const option: Ref<OptionDto | undefined> = ref();
   const options: Ref<OptionsPayload | undefined> = ref();
   const selected: Ref<IOption[]> = ref([]);
-  const state = reactive<{ [key: string]: any }>({ values: {} });
+  const state = reactive<IState>({
+    title: "",
+    type: "",
+    sort: undefined,
+    values: {},
+  });
   const optionImages: Ref<{
     [id: string]: {
       image: string;
@@ -20,10 +41,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
   }> = ref({});
 
   // handlers
-  const addToState = (key: string, value: string) => {
-    state[key] = value;
-  };
-
   const getAllOptions = async (page: number) => {
     try {
       options.value = await $fetch("/api/option/all", {
@@ -57,7 +74,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
     state,
     options,
     selected,
-    addToState,
     getOption,
     getAllOptions,
   };

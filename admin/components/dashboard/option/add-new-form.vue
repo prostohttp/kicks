@@ -14,12 +14,12 @@ const isSubmit = defineModel();
 
 // Store
 const optionDataStore = useOptionDataStore();
-const { state } = storeToRefs(optionDataStore);
+const { state, optionImages } = storeToRefs(optionDataStore);
 
 // Vars
+const toast = useToast();
 const options: Ref<{ [key: string]: any }[]> = ref([]);
 const types: string[] = Object.keys(optionTypes).map((label) => label);
-
 const isVisibleTable = computed(
   () =>
     state.value.type === eng.optionTypes.list ||
@@ -27,11 +27,43 @@ const isVisibleTable = computed(
     state.value.type === eng.optionTypes.checkbox,
 );
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
+const isLoading = ref(false);
 
 // Handlers
-const submit = async (event: FormSubmitEvent<Schema>) => {
-  console.log(event.data);
+const clearState = () => {
+  state.value.title = "";
+  state.value.type = "";
+  state.value.sort = undefined;
+  state.value.values = {};
+  optionImages.value = {};
+  options.value = [];
 };
+
+const submitHandler = async (event: FormSubmitEvent<Schema>) => {
+  try {
+    const values = isVisibleTable.value
+      ? Object.values(state.value.values)
+      : null;
+    await $fetch("/api/option/add", {
+      method: "POST",
+      body: {
+        title: event.data.title,
+        type: event.data.type,
+        sort: event.data.sort,
+        values: values,
+      },
+    });
+    clearState();
+    toast.add({
+      title: "Option added",
+      color: "green",
+    });
+  } catch (error: any) {
+    toast.add({ title: error.message, color: "red" });
+  }
+};
+
+const submit = useThrottleFn(submitHandler, 2000);
 
 // hooks
 watch(isSubmit, () => {
