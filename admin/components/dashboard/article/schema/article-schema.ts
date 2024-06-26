@@ -1,20 +1,24 @@
-import { z } from "zod";
+import * as v from "valibot";
 
-export const schema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters"),
-  description: z.string().optional(),
-  shortDescription: z
-    .string()
-    .min(10, "Short description must be at least 10 characters"),
-  // description: z.custom(
-  //   (val: string) => val.replace(/<\/?[^>]+(>|$)/g, "").length >= 10,
-  //   "Description must be over 10 symbols",
-  // ),
-  isEnabled: z.boolean(),
-  adminMenu: z.boolean(),
-  siteMenu: z.boolean(),
-  featuredProducts: z.array(z.string()),
-  sort: z.number().min(1, "Must be a number and greater then 1"),
+export const schema = v.object({
+  title: v.pipe(
+    v.string("Required"),
+    v.trim(),
+    v.minLength(3, "Title must be at least 3 characters"),
+  ),
+  description: v.string(),
+  shortDescription: v.pipe(
+    v.string("Required"),
+    v.minLength(10, "Short description must be at least 10 characters"),
+  ),
+  isEnabled: v.boolean(),
+  adminMenu: v.boolean(),
+  siteMenu: v.boolean(),
+  featuredProducts: v.array(v.string()),
+  sort: v.pipe(
+    v.number("Must be a number"),
+    v.minValue(1, "Must be a number and greater then 1"),
+  ),
 });
 
-export type Schema = z.output<typeof schema>;
+export type Schema = v.InferOutput<typeof schema>;

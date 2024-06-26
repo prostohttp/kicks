@@ -1,7 +1,7 @@
-import { z } from "zod";
+import * as v from "valibot";
 
-export const schema = z.object({
-  email: z.string().email("Invalid email"),
+export const schema = v.object({
+  email: v.pipe(v.string(), v.email("Invalid email")),
 });
 
-export type Schema = z.output<typeof schema>;
+export type Schema = v.InferOutput<typeof schema>;

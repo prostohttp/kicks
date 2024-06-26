@@ -27,14 +27,13 @@
     "nuxt-tiptap-editor": "^1.1.2",
     "pinia": "^2.1.7",
     "prettier": "^3.3.2",
-    "resend": "^3.3.0",
-    "valibot": "^0.34.0",
+    "resend": "^3.4.0",
+    "valibot": "^0.35.0",
     "vue": "^3.4.30",
-    "vue-router": "^4.4.0",
-    "zod": "^3.23.8"
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
-    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@tiptap/extension-placeholder": "^2.4.0",
     "@types/bcrypt": "^5.0.2"
   }

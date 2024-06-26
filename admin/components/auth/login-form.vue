@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/login.schema";
 import { eng } from "~/lang/eng";
+import * as v from "valibot";
 
 // Emits
 defineEmits(["submit"]);
@@ -14,7 +15,7 @@ const { email, password } = storeToRefs(user);
   <UForm
     class="flex flex-col gap-[24px]"
     @submit="$emit('submit', { email, password })"
-    :schema="schema"
+    :schema="v.safeParser(schema)"
     :state="{
       email,
       password,

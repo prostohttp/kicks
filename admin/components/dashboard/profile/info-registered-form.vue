@@ -5,6 +5,7 @@ import { eng } from "~/lang/eng";
 import { useUserDataStore } from "~/stores/user-data";
 import type { UserData } from "~/types/ui/ui.types";
 import { Constants } from "~/constants";
+import * as v from "valibot";
 
 // define
 defineProps<{ userData: UserData[] }>();
@@ -142,7 +143,7 @@ onUnmounted(() => {
 
 <template>
   <UForm
-    :schema="schema"
+    :schema="v.safeParser(schema)"
     :state="state"
     @submit="onSubmit"
     class="w-full flex flex-col gap-[50px]"

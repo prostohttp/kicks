@@ -3,18 +3,20 @@ import { eng } from "~/lang/eng";
 import type { InputData } from "~/types/ui/ui.types";
 import { optionTypes } from "~/types/ui/ui.types";
 import { schema, type Schema } from "./schema/option-schema";
-import type { FormSubmitEvent } from "#ui/types";
 import * as v from "valibot";
+import type { FormSubmitEvent } from "#ui/types";
 
 // define
-const { optionData } = defineProps<{
+const { optionData, id } = defineProps<{
   optionData: InputData[];
+  id: string;
 }>();
 const isSubmit = defineModel();
 
 // Store
 const optionDataStore = useOptionDataStore();
-const { state, optionImages } = storeToRefs(optionDataStore);
+const { state, optionImages, option } = storeToRefs(optionDataStore);
+await optionDataStore.getOption(id);
 
 // Vars
 const toast = useToast();
@@ -130,5 +132,6 @@ onUnmounted(() => {
         <DashboardOptionAddNewTable v-if="isVisibleTable" v-model="options" />
       </UForm>
     </div>
+    <pre>{{ option }}</pre>
   </div>
 </template>

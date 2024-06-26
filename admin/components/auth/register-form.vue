@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/register.schema";
 import { eng } from "~/lang/eng";
+import * as v from "valibot";
 
 // Emits
 defineEmits(["submit"]);
@@ -25,7 +26,7 @@ const isOpen = ref(false);
         keepLogged,
       })
     "
-    :schema="schema"
+    :schema="v.safeParser(schema)"
     :state="{
       name,
       email,

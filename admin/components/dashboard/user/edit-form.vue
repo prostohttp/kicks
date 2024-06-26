@@ -5,6 +5,7 @@ import type { UserData } from "~/types/ui/ui.types";
 import { eng } from "~/lang/eng";
 import { Roles } from "~/types/server/server.types";
 import { Constants } from "~/constants";
+import * as v from "valibot";
 
 // define
 const { userId, data } = defineProps<{
@@ -148,7 +149,7 @@ onUnmounted(() => {
 
 <template>
   <UForm
-    :schema="schema"
+    :schema="v.safeParser(schema)"
     :state="state"
     @submit="onSubmit"
     class="w-full flex flex-col gap-[20px]"

@@ -4,6 +4,7 @@ import { schema, type Schema } from "./schema/add-new-brand.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { usePersistDataStore } from "~/stores/persist-data";
 import { Constants } from "~/constants";
+import * as v from "valibot";
 
 // define
 const emit = defineEmits(["close"]);
@@ -115,7 +116,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm
+    :schema="v.safeParser(schema)"
+    :state="state"
+    class="space-y-4"
+    @submit="onSubmit"
+  >
     <div
       class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group mb-[40px]"
       v-if="isAdmin"

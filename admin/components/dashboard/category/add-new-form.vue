@@ -4,6 +4,7 @@ import { schema, type Schema } from "./schema/add-new-category.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { useCategoryDataStore } from "~/stores/category-data";
 import type { InputData } from "~/types/ui/ui.types";
+import * as v from "valibot";
 
 // define
 const emit = defineEmits(["close"]);
@@ -58,7 +59,12 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm
+    :schema="v.safeParser(schema)"
+    :state="state"
+    class="space-y-4"
+    @submit="onSubmit"
+  >
     <UFormGroup
       v-for="{ name, label, placeholder, icon, type } in inputData"
       :label="type === 'checkbox' ? '' : label"

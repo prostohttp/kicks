@@ -1,24 +1,8 @@
-import { z } from "zod";
+import * as v from "valibot";
 
-export const schema = z.object({
-  email: z.string().email("Invalid email"),
-  // TODO: раскомментировать после тестирования
-  // password: z
-  // 	.string()
-  // 	.min(8, "Password must be at least 8 characters long")
-  // 	.refine((value) => /[A-Z]/.test(value), {
-  // 		message: "Password must contain at least one uppercase letter",
-  // 	})
-  // 	.refine((value) => /[a-z]/.test(value), {
-  // 		message: "Password must contain at least one lowercase letter",
-  // 	})
-  // 	.refine((value) => /\d/.test(value), {
-  // 		message: "Password must contain at least one number",
-  // 	})
-  // 	.refine((value) => /[!@#$%^&*(),.?":{}|<>]/.test(value), {
-  // 		message: "Password must contain at least one special character",
-  // 	}),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
+export const schema = v.object({
+  email: v.pipe(v.string(), v.email("Invalid email")),
+  password: v.pipe(v.string(), v.minLength(6, "Must be at least 6 symbols")),
 });
 
-export type Schema = z.output<typeof schema>;
+export type Schema = v.InferOutput<typeof schema>;

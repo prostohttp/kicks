@@ -1,8 +1,12 @@
-import { z } from "zod";
+import * as v from "valibot";
 
-export const schema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters"),
-  description: z.string().optional(),
+export const schema = v.object({
+  title: v.pipe(
+    v.string("Required"),
+    v.trim(),
+    v.minLength(3, "Title must be at least 3 characters"),
+  ),
+  description: v.string(),
 });
 
-export type Schema = z.output<typeof schema>;
+export type Schema = v.InferOutput<typeof schema>;

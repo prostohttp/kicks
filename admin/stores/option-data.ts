@@ -68,6 +68,8 @@ export const useOptionDataStore = defineStore("optionData", () => {
     }
   };
 
+  const setStateFromOption = (id: string) => {};
+
   return {
     option,
     optionImages,
@@ -76,5 +78,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
     selected,
     getOption,
     getAllOptions,
+    setStateFromOption,
   };
 });

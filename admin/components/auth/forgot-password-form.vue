@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/forgot.schema";
 import { eng } from "~/lang/eng";
+import * as v from "valibot";
 
 // Emits
 defineEmits(["submit"]);
@@ -17,7 +18,7 @@ const isOpen = ref(false);
   <UForm
     class="flex flex-col gap-[24px]"
     @submit="$emit('submit', { email })"
-    :schema="schema"
+    :schema="v.safeParser(schema)"
     :state="{
       email,
     }"

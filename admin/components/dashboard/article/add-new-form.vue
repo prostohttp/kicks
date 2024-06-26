@@ -6,6 +6,7 @@ import { useProductDataStore } from "~/stores/product-data";
 import { usePersistDataStore } from "~/stores/persist-data.js";
 import type { InputData } from "~/types/ui/ui.types";
 import { Constants } from "~/constants";
+import * as v from "valibot";
 
 // define
 const { articleData } = defineProps<{ articleData: InputData[] }>();
@@ -155,7 +156,7 @@ onUnmounted(() => {
 
 <template>
   <UForm
-    :schema="schema"
+    :schema="v.safeParser(schema)"
     :state="state"
     @submit="onSubmit"
     class="w-full flex flex-col gap-[50px]"
