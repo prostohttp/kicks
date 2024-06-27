@@ -32,7 +32,5 @@ export default (
       statusMessage: error.message,
     });
   }
-  console.log("files", files);
-
   return files;
 };

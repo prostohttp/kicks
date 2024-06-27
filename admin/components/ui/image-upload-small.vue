@@ -4,8 +4,7 @@ interface IImageModel {
 }
 
 // define
-const { addNew, id } = defineProps<{
-  addNew?: boolean;
+const { id } = defineProps<{
   id: number;
 }>();
 const model: Ref<IImageModel | undefined> = defineModel("image");
@@ -26,7 +25,7 @@ const onClickHandler = () => {
 <template>
   <input type="file" ref="inputRef" class="hidden" v-if="isAdmin" />
   <UPopover :popper="{ placement: 'bottom-start' }">
-    <div v-if="addNew ? !model : !model?.image" class="cursor-pointer">
+    <div v-if="!model?.image" class="cursor-pointer">
       <img
         src="~/public/no-image.svg"
         alt="No Image"
@@ -40,7 +39,7 @@ const onClickHandler = () => {
       />
     </div>
     <template #panel>
-      <div class="flex gap-[5px] items-center py-[1px] px-[5px]">
+      <div class="flex gap-[5px] items-center py-[1px] px-[5px]" v-if="isAdmin">
         <UButton
           class="icon-button float-right"
           icon="i-heroicons-inbox-arrow-down-solid h-[20px] w-[20px]"

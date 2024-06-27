@@ -13,7 +13,7 @@ const isSubmit = defineModel();
 
 // Store
 const optionDataStore = useOptionDataStore();
-const { state, optionImages } = storeToRefs(optionDataStore);
+const { state } = storeToRefs(optionDataStore);
 
 // Vars
 const toast = useToast();
@@ -27,13 +27,11 @@ const clearState = () => {
   state.value.type = "";
   state.value.sort = undefined;
   state.value.values = {};
-  optionImages.value = {};
   options.value = [];
 };
 
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    // TODO: Удалить картинки если выбран тип, в котором нет добавления опции
     const values = optionDataStore.isVisibleTable
       ? Object.values(state.value.values)
       : null;
@@ -46,6 +44,18 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
         values: values,
       },
     });
+    if (!optionDataStore.isVisibleTable && state.value.values) {
+      for (const item of Object.values(state.value.values)) {
+        if (item?.image) {
+          await $fetch("/api/image/remove", {
+            method: "DELETE",
+            body: {
+              image: item.image,
+            },
+          });
+        }
+      }
+    }
     clearState();
     toast.add({
       title: "Option added",

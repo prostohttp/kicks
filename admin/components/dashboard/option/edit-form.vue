@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
 import type { InputData } from "~/types/ui/ui.types";
 import { optionTypes } from "~/types/ui/ui.types";
 import { schema, type Schema } from "./schema/option-schema";
@@ -26,31 +25,37 @@ const types: string[] = Object.keys(optionTypes).map((label) => label);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
 // Handlers
-const clearState = () => {
-  state.value.title = "";
-  state.value.type = "";
-  state.value.sort = undefined;
-  state.value.values = {};
-  options.value = [];
-};
-
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
     const values = optionDataStore.isVisibleTable
       ? Object.values(state.value.values)
       : null;
-    await $fetch("/api/option/add", {
-      method: "POST",
+    await $fetch("/api/option/edit", {
+      method: "PUT",
       body: {
+        _id: id,
         title: event.data.title,
         type: event.data.type,
         sort: event.data.sort,
         values: values,
       },
     });
-    clearState();
+    if (!optionDataStore.isVisibleTable && state.value.values) {
+      state.value.values = {};
+      options.value = [];
+      for (const item of Object.values(state.value.values)) {
+        if (item?.image) {
+          await $fetch("/api/image/remove", {
+            method: "DELETE",
+            body: {
+              image: item.image,
+            },
+          });
+        }
+      }
+    }
     toast.add({
-      title: "Option added",
+      title: "Option updated",
       color: "green",
     });
   } catch (error: any) {
@@ -66,10 +71,6 @@ watch(isSubmit, () => {
     submitRef.value?.submit();
     isSubmit.value = false;
   }
-});
-
-onUnmounted(() => {
-  clearState();
 });
 </script>
 
@@ -130,6 +131,5 @@ onUnmounted(() => {
         />
       </UForm>
     </div>
-    <!-- <pre>{{ state }}</pre> -->
   </div>
 </template>

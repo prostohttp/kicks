@@ -17,7 +17,7 @@ const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(fullPath, option.value?.title, fullPath),
 );
-
+const isAdmin = useIsAdmin();
 const isSubmit = ref(false);
 
 // handlers
@@ -53,7 +53,7 @@ watch(option, () => {
       icon="i-heroicons-clipboard-document-20-solid"
       @click="submitHandler"
       :label="eng.save"
-      v-if="option"
+      v-if="option && isAdmin"
     />
   </div>
   <main
@@ -64,7 +64,7 @@ watch(option, () => {
       <DashboardOptionEditForm
         :optionData="optionData"
         :id="id"
-        v-model="isSubmit"
+        v-model:submit="isSubmit"
         v-else
       />
     </div>

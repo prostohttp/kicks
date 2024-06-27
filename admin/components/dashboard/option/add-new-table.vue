@@ -8,7 +8,7 @@ const options: ModelRef<{ [key: string]: any }[] | undefined> = defineModel();
 
 // store
 const optionDataStore = useOptionDataStore();
-const { state, optionImages } = storeToRefs(optionDataStore);
+const { state } = storeToRefs(optionDataStore);
 
 // vars
 const toast = useToast();
@@ -48,7 +48,6 @@ const uploadImage = async (image: File) => {
     if (!uploadedImage) {
       toast.add({ title: eng.notImage, color: "red" });
     }
-    optionImages.value[activeId.value] = { image: uploadedImage };
     state.value.values![activeId.value]!.image = uploadedImage;
     toast.add({ title: eng.imageUploaded, color: "green" });
   } catch (error: any) {
@@ -61,11 +60,10 @@ const deleteImageHandler = async (id: string) => {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: optionImages.value[id].image,
+        image: state.value.values[id]!.image,
       },
     });
     inputRef.value!.value = "";
-    delete optionImages.value[id];
     state.value!.values[id]!.image = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
@@ -98,7 +96,7 @@ const addNewValue = () => {
 const deleteValue = (id: string) => {
   options.value = options.value?.filter((option) => option.id !== id);
   delete state.value.values[id];
-  if (optionImages.value[id]) {
+  if (state.value.values[id]?.image) {
     deleteImageHandler(id);
   }
 };
@@ -154,10 +152,9 @@ onUnmounted(() => {
     </template>
     <template #image-data="{ row }">
       <UiImageUploadSmall
-        :add-new="true"
         :id="row.id"
         v-model:active-id="activeId"
-        v-model:image="optionImages[row.id]"
+        v-model:image="state.values[row.id]"
         v-model:input-ref="inputRef"
         @delete="deleteImageHandler"
       />

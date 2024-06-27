@@ -81,7 +81,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
         },
       });
       if (option.value) {
-        console.log(option.value.type);
         setStateFromOption(option.value);
       }
     } catch (error: any) {
