@@ -11,9 +11,7 @@ const { option } = storeToRefs(optionDataStore);
 const router = useRouter();
 const id = useRoute().params.option.toString();
 
-try {
-  await optionDataStore.getOption(id);
-} catch (error) {}
+await useAsyncData("options", () => optionDataStore.getOption(id));
 
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(

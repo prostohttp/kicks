@@ -4,8 +4,9 @@ export interface OptionDto {
   type: string;
   sort: number;
   values?: {
-    title: string;
-    sort: string;
-    image?: string;
+    id: number;
+    value: string;
+    sort: number;
+    image: string;
   }[];
 }

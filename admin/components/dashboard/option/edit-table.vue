@@ -2,13 +2,18 @@
 import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
+import type { OptionDto } from "~/server/api/option/dto/option.dto";
 
 // emits
-const options: ModelRef<{ [key: string]: any }[] | undefined> = defineModel();
+const options: ModelRef<{ [key: string]: any }[] | undefined> =
+  defineModel("options");
+const { optionId } = defineProps<{
+  optionId: string;
+}>();
 
 // store
 const optionDataStore = useOptionDataStore();
-const { state, optionImages } = storeToRefs(optionDataStore);
+const { state, option } = storeToRefs(optionDataStore);
 
 // vars
 const toast = useToast();
@@ -33,6 +38,22 @@ const columns = [
 const activeId = ref();
 
 // handlers
+const setOptionImageHandler = (
+  option: OptionDto,
+  id: number,
+  image: string,
+) => {
+  return Object.values(state.value.values).map((option) => {
+    if (option?.id === id) {
+      return {
+        ...option,
+        image,
+      };
+    } else {
+      return option;
+    }
+  });
+};
 const uploadImage = async (image: File) => {
   try {
     const formData = new FormData();
@@ -48,24 +69,41 @@ const uploadImage = async (image: File) => {
     if (!uploadedImage) {
       toast.add({ title: eng.notImage, color: "red" });
     }
-    optionImages.value[activeId.value] = { image: uploadedImage };
-    state.value.values![activeId.value]!.image = uploadedImage;
+    state.value.values[activeId.value]!.image = uploadedImage;
+
+    await $fetch("/api/option/edit", {
+      method: "PUT",
+      body: {
+        _id: optionId,
+        values: setOptionImageHandler(
+          option.value!,
+          activeId.value,
+          uploadedImage,
+        ),
+      },
+    });
     toast.add({ title: eng.imageUploaded, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
   }
 };
 
-const deleteImageHandler = async (id: string) => {
+const deleteImageHandler = async (id: number) => {
   try {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: optionImages.value[id].image,
+        image: state.value.values[id]!.image,
+      },
+    });
+    await $fetch("/api/option/edit", {
+      method: "PUT",
+      body: {
+        _id: optionId,
+        values: setOptionImageHandler(option.value!, id, ""),
       },
     });
     inputRef.value!.value = "";
-    delete optionImages.value[id];
     state.value!.values[id]!.image = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
@@ -95,10 +133,10 @@ const addNewValue = () => {
   });
 };
 
-const deleteValue = (id: string) => {
+const deleteValue = (id: number) => {
   options.value = options.value?.filter((option) => option.id !== id);
   delete state.value.values[id];
-  if (optionImages.value[id]) {
+  if (state.value.values[id]?.image) {
     deleteImageHandler(id);
   }
 };
@@ -154,10 +192,9 @@ onUnmounted(() => {
     </template>
     <template #image-data="{ row }">
       <UiImageUploadSmall
-        :add-new="true"
         :id="row.id"
         v-model:active-id="activeId"
-        v-model:image="optionImages[row.id]"
+        v-model:image="state.values[row.id]"
         v-model:input-ref="inputRef"
         @delete="deleteImageHandler"
       />

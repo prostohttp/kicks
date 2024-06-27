@@ -1,3 +1,4 @@
+import { eng } from "~/lang/eng";
 import type { IOption } from "~/pages/dashboard/options/index.vue";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
 
@@ -16,7 +17,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     values: {
       [key: string]:
         | {
-            id: string;
+            id: number;
             value: string;
             image: string;
             sort: number | undefined;
@@ -55,6 +56,22 @@ export const useOptionDataStore = defineStore("optionData", () => {
     return true;
   };
 
+  const setStateFromOption = (option: OptionDto) => {
+    state.title = option.title;
+    state.type = option.type;
+    state.sort = option.sort;
+    if (option.values?.length) {
+      for (const opt of option.values) {
+        state.values[opt.id] = {
+          id: opt.id,
+          value: opt.value,
+          sort: opt.sort,
+          image: opt.image || "",
+        };
+      }
+    }
+  };
+
   const getOption = async (id: string) => {
     try {
       option.value = await $fetch("/api/option/one", {
@@ -63,14 +80,25 @@ export const useOptionDataStore = defineStore("optionData", () => {
           id,
         },
       });
+      if (option.value) {
+        console.log(option.value.type);
+        setStateFromOption(option.value);
+      }
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
+    return true;
   };
 
-  const setStateFromOption = (id: string) => {};
+  const isVisibleTable = computed(
+    () =>
+      state.type === eng.optionTypes.list ||
+      state.type === eng.optionTypes.select ||
+      state.type === eng.optionTypes.checkbox,
+  );
 
   return {
+    isVisibleTable,
     option,
     optionImages,
     state,
@@ -78,6 +106,5 @@ export const useOptionDataStore = defineStore("optionData", () => {
     selected,
     getOption,
     getAllOptions,
-    setStateFromOption,
   };
 });

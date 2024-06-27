@@ -7,7 +7,7 @@ export const schema = v.object({
     v.trim(),
     v.minLength(3, "Title must be at least 3 characters"),
   ),
-  type: v.string("Required"),
+  type: v.pipe(v.string(), v.minLength(1, "Required field")),
   sort: v.pipe(v.number("Required"), v.minValue(1, "Min 1")),
 });
 

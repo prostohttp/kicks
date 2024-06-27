@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
 import type { InputData } from "~/types/ui/ui.types";
 import { optionTypes } from "~/types/ui/ui.types";
 import { schema, type Schema } from "./schema/option-schema";
@@ -20,12 +19,6 @@ const { state, optionImages } = storeToRefs(optionDataStore);
 const toast = useToast();
 const options: Ref<{ [key: string]: any }[]> = ref([]);
 const types: string[] = Object.keys(optionTypes).map((label) => label);
-const isVisibleTable = computed(
-  () =>
-    state.value.type === eng.optionTypes.list ||
-    state.value.type === eng.optionTypes.select ||
-    state.value.type === eng.optionTypes.checkbox,
-);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
 // Handlers
@@ -40,7 +33,8 @@ const clearState = () => {
 
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const values = isVisibleTable.value
+    // TODO: Удалить картинки если выбран тип, в котором нет добавления опции
+    const values = optionDataStore.isVisibleTable
       ? Object.values(state.value.values)
       : null;
     await $fetch("/api/option/add", {
@@ -127,7 +121,10 @@ onUnmounted(() => {
             min="1"
           />
         </UFormGroup>
-        <DashboardOptionAddNewTable v-if="isVisibleTable" v-model="options" />
+        <DashboardOptionAddNewTable
+          v-if="optionDataStore.isVisibleTable"
+          v-model="options"
+        />
       </UForm>
     </div>
   </div>

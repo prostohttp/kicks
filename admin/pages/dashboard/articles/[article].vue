@@ -11,9 +11,7 @@ const { article } = storeToRefs(articleDataStore);
 const router = useRouter();
 const id = useRoute().params.article.toString();
 
-try {
-  await articleDataStore.getArticle(id);
-} catch (error) {}
+await useAsyncData("articles", () => articleDataStore.getArticle(id));
 
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(

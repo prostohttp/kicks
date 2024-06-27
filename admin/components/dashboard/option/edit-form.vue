@@ -3,31 +3,26 @@ import { eng } from "~/lang/eng";
 import type { InputData } from "~/types/ui/ui.types";
 import { optionTypes } from "~/types/ui/ui.types";
 import { schema, type Schema } from "./schema/option-schema";
-import * as v from "valibot";
 import type { FormSubmitEvent } from "#ui/types";
+import * as v from "valibot";
 
 // define
 const { optionData, id } = defineProps<{
   optionData: InputData[];
   id: string;
 }>();
-const isSubmit = defineModel();
+const isSubmit = defineModel("submit");
 
 // Store
 const optionDataStore = useOptionDataStore();
-const { state, optionImages, option } = storeToRefs(optionDataStore);
-await optionDataStore.getOption(id);
+const { state, option } = storeToRefs(optionDataStore);
 
 // Vars
 const toast = useToast();
-const options: Ref<{ [key: string]: any }[]> = ref([]);
-const types: string[] = Object.keys(optionTypes).map((label) => label);
-const isVisibleTable = computed(
-  () =>
-    state.value.type === eng.optionTypes.list ||
-    state.value.type === eng.optionTypes.select ||
-    state.value.type === eng.optionTypes.checkbox,
+const options: Ref<{ [key: string]: any }[]> = ref(
+  Object.values(option.value?.values! || []),
 );
+const types: string[] = Object.keys(optionTypes).map((label) => label);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
 // Handlers
@@ -36,13 +31,12 @@ const clearState = () => {
   state.value.type = "";
   state.value.sort = undefined;
   state.value.values = {};
-  optionImages.value = {};
   options.value = [];
 };
 
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const values = isVisibleTable.value
+    const values = optionDataStore.isVisibleTable
       ? Object.values(state.value.values)
       : null;
     await $fetch("/api/option/add", {
@@ -129,9 +123,13 @@ onUnmounted(() => {
             min="1"
           />
         </UFormGroup>
-        <DashboardOptionAddNewTable v-if="isVisibleTable" v-model="options" />
+        <DashboardOptionEditTable
+          v-if="optionDataStore.isVisibleTable"
+          v-model:options="options"
+          :optionId="id"
+        />
       </UForm>
     </div>
-    <pre>{{ option }}</pre>
+    <!-- <pre>{{ state }}</pre> -->
   </div>
 </template>
