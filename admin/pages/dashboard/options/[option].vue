@@ -38,6 +38,10 @@ watch(option, () => {
     fullPath,
   );
 });
+
+onUnmounted(() => {
+  optionDataStore.clearState();
+});
 </script>
 
 <template>

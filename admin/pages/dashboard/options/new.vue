@@ -3,8 +3,6 @@ import { eng } from "~/lang/eng";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 import { optionData } from "./data";
 
-// store
-
 // vars
 const router = useRouter();
 const fullPath = router.currentRoute.value.fullPath;

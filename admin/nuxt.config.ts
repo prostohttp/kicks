@@ -31,15 +31,12 @@ export default defineNuxtConfig({
         base: "./public",
       },
     },
-    // experimental: {
-    //   websocket: true,
-    // },
+    experimental: {
+      websocket: true,
+    },
   },
   css: ["~/assets/css/main.css"],
   devtools: { enabled: false },
-  experimental: {
-    // componentIslands: true,
-  },
   auth: {
     isEnabled: true,
     provider: {
@@ -80,7 +77,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxtjs/google-fonts",
     "nuxt-tiptap-editor",
-    "@nuxt/image"
+    "@nuxt/image",
   ],
   tiptap: {
     prefix: "Tiptap",

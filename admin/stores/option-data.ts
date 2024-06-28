@@ -96,6 +96,13 @@ export const useOptionDataStore = defineStore("optionData", () => {
       state.type === eng.optionTypes.checkbox,
   );
 
+  const clearState = () => {
+    state.title = "";
+    state.type = "";
+    state.sort = undefined;
+    state.values = {};
+  };
+
   return {
     isVisibleTable,
     option,
@@ -105,5 +112,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
     selected,
     getOption,
     getAllOptions,
+    clearState,
   };
 });
