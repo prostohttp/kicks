@@ -40,7 +40,7 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
     return true;
   };
 
-  const getCategoryById = async (id: string): Promise<void> => {
+  const getCategoryById = async (id: string) => {
     try {
       category.value = await $fetch("/api/category/one", {
         method: "GET",
@@ -51,6 +51,7 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
+    return true;
   };
 
   const getAllTitles = async () => {

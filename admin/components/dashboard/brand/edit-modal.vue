@@ -6,14 +6,6 @@ const { brandId } = defineProps<{
   brandId: string;
 }>();
 const emit = defineEmits(["close"]);
-
-// vars
-const { data: brand } = await useFetch("/api/brand/one", {
-  method: "GET",
-  query: {
-    id: brandId,
-  },
-});
 </script>
 
 <template>
@@ -40,15 +32,7 @@ const { data: brand } = await useFetch("/api/brand/one", {
           />
         </div>
       </template>
-
-      <DashboardBrandEditForm
-        @close="$emit('close')"
-        :brandId="brandId"
-        v-if="brand"
-      />
-      <div class="dark:text-fa-white" v-else>
-        <h2>{{ eng.empty }}</h2>
-      </div>
+      <DashboardBrandEditForm @close="$emit('close')" :brandId="brandId" />
     </UCard>
   </UModal>
 </template>

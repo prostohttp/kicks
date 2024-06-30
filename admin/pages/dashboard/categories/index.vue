@@ -97,9 +97,10 @@ watch(
 );
 
 onMounted(async () => {
-  if (activePage.value) {
-    categoryDataStore.getAllCategories(activePage.value);
-  }
+  // TODO: Что это такое?
+  // if (activePage.value) {
+  //   categoryDataStore.getAllCategories(activePage.value);
+  // }
   if (route.query.categoryNew) {
     openAddNewCategoryModal();
   }

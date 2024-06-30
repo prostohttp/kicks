@@ -11,32 +11,32 @@ const menuItems = [
     icon: "i-heroicons-squares-plus",
   },
   {
-    to: "/dashboard/products",
+    to: "/dashboard/products?page=1",
     title: eng.allProducts,
     icon: "i-heroicons-list-bullet",
   },
   {
-    to: "/dashboard/orders",
+    to: "/dashboard/orders?page=1",
     title: eng.allOrders,
     icon: "i-heroicons-clipboard-document-list",
   },
   {
-    to: "/dashboard/brands",
+    to: "/dashboard/brands?page=1",
     title: eng.allBrands,
     icon: "i-heroicons-user-group",
   },
   {
-    to: "/dashboard/articles",
+    to: "/dashboard/articles?page=1",
     title: eng.allArticles,
     icon: "i-heroicons-newspaper",
   },
   {
-    to: "/dashboard/options",
+    to: "/dashboard/options?page=1",
     title: eng.allOptions,
     icon: "i-heroicons-chart-bar",
   },
   {
-    to: "/dashboard/users",
+    to: "/dashboard/users?page=1",
     title: eng.allUsers,
     icon: "i-heroicons-finger-print",
     protected: !isAdmin,

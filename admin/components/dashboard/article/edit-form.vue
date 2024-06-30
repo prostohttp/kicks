@@ -6,22 +6,22 @@ import { useProductDataStore } from "~/stores/product-data";
 import type { InputData } from "~/types/ui/ui.types";
 import { Constants } from "~/constants";
 import * as v from "valibot";
+import type { ArticleDto } from "~/server/api/article/dto/article.dto";
 
 // define
 const { articleData, id } = defineProps<{
   articleData: InputData[];
   id: string;
 }>();
+const article: Ref<ArticleDto | undefined> = defineModel("article");
 
 // Store
 const articleDataStore = useArticleDataStore();
-await articleDataStore.getArticle(id);
-const { article } = storeToRefs(articleDataStore);
 const productDataStore = useProductDataStore();
 const { titles: data } = storeToRefs(productDataStore);
-const titles = ref(data.value.map((el) => el.title));
 
 // Vars
+const titles = ref(data.value.map((el) => el.title));
 const isAdmin = useIsAdmin();
 await productDataStore.getTitles();
 const isLoading = ref(false);

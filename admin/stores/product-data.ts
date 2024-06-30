@@ -19,17 +19,24 @@ export const useProductDataStore = defineStore("productData", () => {
   > = ref([]);
 
   // handlers
-  const getAllProducts = async (page: number) => {
+  const getAllProducts = async (
+    page: number,
+    category?: string,
+    perPage?: number,
+  ) => {
     try {
       products.value = await $fetch("/api/product/all", {
         method: "GET",
         query: {
           page,
+          category,
+          perPage,
         },
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
+    return true;
   };
 
   const getTitles = async () => {

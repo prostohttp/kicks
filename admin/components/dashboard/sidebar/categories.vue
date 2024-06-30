@@ -1,15 +1,18 @@
 <script lang="ts" setup>
+import type { AccordionItem } from "~/types/ui/ui.types";
+import { eng } from "~/lang/eng";
+
 // store
 const categoryStore = useCategoryDataStore();
 const { parentTitles } = storeToRefs(categoryStore);
 
 // vars
-import { eng } from "~/lang/eng";
+const route = useRoute();
 await categoryStore.getAllTitles();
-import type { AccordionItem } from "~/types/ui/ui.types";
+const isActive = (id: string): boolean =>
+  (route.query.category && route.query.category === id) as boolean;
 
 // handlers
-
 const { data: products } = await useFetch<
   Array<{ _id: string; category: string[] }>
 >("/api/product/all", {
@@ -53,6 +56,7 @@ const items: AccordionItem[] | undefined = [
             :key="category._id"
             :_id="category._id"
             :title="category.title"
+            :is-active="isActive(category._id)"
             :count="
               computedProducts[category._id]
                 ? computedProducts[category._id]
@@ -63,7 +67,7 @@ const items: AccordionItem[] | undefined = [
             class="h-[35px] flex justify-between items-center mb-[16px] border-t border-grey dark:border-[#70706e] pt-[15px]"
           >
             <NuxtLink
-              to="/dashboard/categories"
+              to="/dashboard/categories?page=1"
               class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
             >
               {{ eng.allCategories }}

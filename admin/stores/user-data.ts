@@ -41,7 +41,7 @@ export const useUserDataStore = defineStore("userData", () => {
     return true;
   };
 
-  const getAllUsers = async (page: number): Promise<void> => {
+  const getAllUsers = async (page: number) => {
     try {
       allUsers.value = await $fetch<UsersPayload>("/api/user/all", {
         method: "GET",
@@ -54,9 +54,10 @@ export const useUserDataStore = defineStore("userData", () => {
         statusMessage: error.message,
       });
     }
+    return true;
   };
 
-  const getUserById = async (id: string): Promise<void> => {
+  const getUserById = async (id: string) => {
     try {
       userById.value = await $fetch("/api/user/one", {
         method: "GET",

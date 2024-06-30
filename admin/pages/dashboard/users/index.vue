@@ -5,21 +5,20 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const userDataStore = useUserDataStore();
+await useAsyncData("users", () =>
+  userDataStore.getAllUsers(Number(useRoute().query.page)),
+);
 const { allUsers: data } = storeToRefs(userDataStore);
 
 // vars
 const toast = useToast();
 const router = useRouter();
 const route = useRoute();
-const page = Number(useRoute().query.page);
 const path = router.currentRoute.value.path;
-
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
-
-// handlers
-await userDataStore.getAllUsers(page);
 const activePage = ref(data.value?.activePage || 1);
 
+// handlers
 const deletePerson = async (id: string) => {
   try {
     await $fetch("/api/user/remove", {
@@ -60,9 +59,10 @@ watch(activePage, async (newValue) => {
 });
 
 onMounted(() => {
-  if (activePage.value) {
-    userDataStore.getAllUsers(activePage.value);
-  }
+  // TODO: Что это такое?
+  //   if (activePage.value) {
+  //     userDataStore.getAllUsers(activePage.value);
+  //   }
 });
 </script>
 

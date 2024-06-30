@@ -26,7 +26,7 @@ export const useBrandDataStore = defineStore("brandData", () => {
     }
   };
 
-  const getBrandById = async (id: string): Promise<void> => {
+  const getBrandById = async (id: string) => {
     try {
       brand.value = await $fetch("/api/brand/one", {
         method: "GET",
@@ -37,6 +37,7 @@ export const useBrandDataStore = defineStore("brandData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
+    return true;
   };
   return {
     brand,

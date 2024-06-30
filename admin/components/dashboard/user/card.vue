@@ -4,16 +4,15 @@ import { eng } from "~/lang/eng";
 import { DashboardUserEditModal, DashboardUserDeleteModal } from "#components";
 
 // define
+const emit = defineEmits(["delete-person"]);
 const { user } = defineProps<{
   user: UserDto;
 }>();
 
-const emit = defineEmits(["delete-person"]);
-
 // vars
+const route = useRoute();
 const toast = useToast();
 const modal = useModal();
-const route = useRoute();
 
 // handlers
 const openEditUserModal = (userId: string) => {

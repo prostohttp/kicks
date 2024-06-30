@@ -12,18 +12,13 @@ const { brandId } = defineProps<{
 const emit = defineEmits(["close"]);
 
 // store
-const brandStore = useBrandDataStore();
-await brandStore.getBrandById(brandId);
-const { brand } = storeToRefs(brandStore);
+const brandDataStore = useBrandDataStore();
+await useAsyncData("brand", () => brandDataStore.getBrandById(brandId));
+const { brand } = storeToRefs(brandDataStore);
 
 // vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
-const state = reactive({
-  image: brand.value?.image,
-  title: brand.value?.title,
-  description: brand.value?.description,
-});
 const isLoading = ref(false);
 const isOpenDeleteModal = ref(false);
 const page = Number(useRoute().query.page);
@@ -53,8 +48,8 @@ const uploadImage = async (image: File) => {
         image: uploadedImage,
       },
     });
-    brandStore.getBrandById(brandId);
-    brandStore.getAllBrands(page);
+    brandDataStore.getBrandById(brandId);
+    brandDataStore.getAllBrands(page);
     toast.add({ title: eng.imageUploaded, color: "green" });
     isLoading.value = false;
   } catch (_error) {
@@ -86,8 +81,8 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
         image: brand.value?.image || "",
       },
     });
-    brandStore.getBrandById(brandId);
-    brandStore.getAllBrands(page);
+    brandDataStore.getBrandById(brandId);
+    brandDataStore.getAllBrands(page);
     emit("close");
     toast.add({ title: eng.successEdit });
   } catch (_error) {
@@ -112,8 +107,8 @@ const deleteImageHandler = async () => {
         image: "",
       },
     });
-    brandStore.getBrandById(brandId);
-    brandStore.getAllBrands(page);
+    brandDataStore.getBrandById(brandId);
+    brandDataStore.getAllBrands(page);
 
     inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
@@ -138,7 +133,7 @@ const deleteBrandHandler = async () => {
         id: brand.value?._id,
       },
     });
-    brandStore.getAllBrands(page);
+    brandDataStore.getAllBrands(page);
     emit("close");
     toast.add({ title: eng.successDeleteMessage, color: "red" });
   } catch (_error) {
@@ -161,11 +156,13 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <UiEmpty v-if="!brand" />
   <UForm
     :schema="v.safeParser(schema)"
-    :state="state"
+    :state="brand"
     class="space-y-4"
     @submit="onSubmit"
+    v-else
   >
     <div
       class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group mb-[40px]"
@@ -203,7 +200,7 @@ onUnmounted(() => {
     >
       <UInput
         :placeholder="eng.title"
-        v-model="state.title"
+        v-model="brand.title"
         inputClass="input-label"
         icon="i-heroicons-queue-list"
       />
@@ -219,7 +216,7 @@ onUnmounted(() => {
       }"
     >
       <UTextarea
-        v-model="state.description"
+        v-model="brand.description"
         :placeholder="eng.description"
         class="textarea"
       />

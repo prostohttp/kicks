@@ -15,9 +15,10 @@ const { inputData, categoryId } = defineProps<{
 
 // store
 const categoryStore = useCategoryDataStore();
-await categoryStore.getAllTitles();
-await categoryStore.getCategoryById(categoryId);
 const { titles: data, category, selected } = storeToRefs(categoryStore);
+
+await useAsyncData("titles", () => categoryStore.getAllTitles());
+await useAsyncData("category", () => categoryStore.getCategoryById(categoryId));
 const titles = ref(
   data.value
     .filter((el) => el.title !== category.value?.title)
@@ -68,11 +69,13 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 </script>
 
 <template>
+  <UiEmpty v-if="!category" />
   <UForm
     :schema="v.safeParser(schema)"
     :state="state"
     class="space-y-4"
     @submit="onSubmit"
+    v-else
   >
     <UFormGroup
       v-for="{ name, label, placeholder, icon, type } in inputData"

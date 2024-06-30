@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
-import type { UserDto } from "~/server/dto/user.dto";
 
 // define
 const { userId } = defineProps<{
   userId: string;
 }>();
-
 defineEmits(["close"]);
+
+// store
 
 // vars
 const formFieldsData = [
@@ -31,21 +31,11 @@ const formFieldsData = [
     type: "select",
   },
 ];
-
-// handlers
-const { data: user, pending } = await useFetch<UserDto>("/api/user/one", {
-  method: "GET",
-  query: {
-    id: userId,
-  },
-});
 </script>
 
 <template>
   <UModal prevent-close>
-    <UiSpinner v-if="pending" />
     <UCard
-      v-else
       :ui="{
         ring: '',
         divide: 'divide-y divide-gray-100 dark:divide-gray-800',
@@ -67,16 +57,11 @@ const { data: user, pending } = await useFetch<UserDto>("/api/user/one", {
           />
         </div>
       </template>
-      <div class="dark:text-fa-white text-dark-gray" v-if="user">
-        <DashboardUserEditForm
-          :userId="user._id"
-          :data="formFieldsData"
-          @close="$emit('close')"
-        />
-      </div>
-      <div v-else class="dark:text-fa-white">
-        <h2>{{ eng.empty }}</h2>
-      </div>
+      <DashboardUserEditForm
+        :userId="userId"
+        :data="formFieldsData"
+        @close="$emit('close')"
+      />
     </UCard>
   </UModal>
 </template>

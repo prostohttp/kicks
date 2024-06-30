@@ -8,17 +8,16 @@ import { Constants } from "~/constants";
 import * as v from "valibot";
 
 // define
-const { userId, data } = defineProps<{
-  userId: string;
+const { data, userId } = defineProps<{
   data: UserData[];
+  userId: string;
 }>();
-
 const emit = defineEmits(["close"]);
 
 // store
-const userStore = useUserDataStore();
-await userStore.getUserById(userId);
-const { userById: user } = storeToRefs(userStore);
+const userDataStore = useUserDataStore();
+await useAsyncData("userById", () => userDataStore.getUserById(userId));
+const { userById: user } = storeToRefs(userDataStore);
 
 // vars
 const state = reactive({
@@ -34,7 +33,7 @@ const dropZoneRef = ref<HTMLDivElement | undefined>();
 const roles = Object.values(Roles).filter((role) => role !== Roles.ADMIN);
 
 // handlers
-const uploadImage = async (id: string, image: File) => {
+const uploadImage = async (image: File) => {
   isLoading.value = true;
   try {
     const formData = new FormData();
@@ -59,14 +58,13 @@ const uploadImage = async (id: string, image: File) => {
         image: uploadedImage,
       },
     });
-
-    await userStore.getAllUsers(page);
-    await userStore.getUserById(userId);
+    await userDataStore.getUserById(userId);
+    await userDataStore.getAllUsers(page);
     toast.add({ title: eng.imageUploaded, color: "green" });
-    isLoading.value = false;
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
+  isLoading.value = false;
 };
 
 const deleteImageHandler = async () => {
@@ -84,8 +82,8 @@ const deleteImageHandler = async () => {
         image: "",
       },
     });
-    await userStore.getAllUsers(page);
-    await userStore.getUserById(userId);
+    await userDataStore.getAllUsers(page);
+    await userDataStore.getUserById(userId);
     inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
@@ -95,7 +93,7 @@ const deleteImageHandler = async () => {
 
 const onDrop = (files: File[] | null) => {
   if (files && user.value) {
-    uploadImage(user.value?._id, files[0]);
+    uploadImage(files[0]);
   }
 };
 
@@ -104,7 +102,7 @@ useDropZone(dropZoneRef, { onDrop });
 const inputHandler = (e: Event) => {
   let fileInput = e.target as HTMLInputElement;
   if (user.value) {
-    uploadImage(user.value._id, fileInput.files![0]);
+    uploadImage(fileInput.files![0]);
   }
 };
 
@@ -120,8 +118,8 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       },
     });
 
-    await userStore.getAllUsers(page);
-
+    await userDataStore.getAllUsers(page);
+    await userDataStore.getUserById(userId);
     toast.add({
       title: "Profile updated",
       color: "green",
@@ -148,11 +146,13 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <UiEmpty v-if="!user" />
   <UForm
     :schema="v.safeParser(schema)"
-    :state="state"
+    :state="user"
     @submit="onSubmit"
     class="w-full flex flex-col gap-[20px]"
+    v-else
   >
     <div
       class="rounded-[8px] basis-[40%] p-[5px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
@@ -178,7 +178,7 @@ onUnmounted(() => {
     >
       <template v-if="type === 'select'">
         <USelectMenu
-          v-model="state[name as keyof typeof state]"
+          v-model="user[name as keyof typeof state]"
           :options="roles"
           :leadingIcon="icon"
           leading
@@ -189,7 +189,7 @@ onUnmounted(() => {
         <UInput
           :placeholder="placeholder"
           :icon="icon"
-          v-model="state[name as keyof typeof state]"
+          v-model="user[name as keyof typeof state]"
           inputClass="input-label"
           :type="type ? type : 'text'"
         />

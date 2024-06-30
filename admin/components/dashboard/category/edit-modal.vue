@@ -42,13 +42,6 @@ const inputData = [
     placeholder: eng.isEnabled,
   },
 ];
-
-const { data: category } = await useFetch("/api/category/one", {
-  method: "GET",
-  query: {
-    id: categoryId,
-  },
-});
 </script>
 
 <template>
@@ -75,15 +68,13 @@ const { data: category } = await useFetch("/api/category/one", {
           />
         </div>
       </template>
+      <UiEmpty v-if="!categoryId" />
       <DashboardCategoryEditForm
         @close="$emit('close')"
         :inputData="inputData"
         :categoryId="categoryId"
-        v-if="category"
+        v-else
       />
-      <div v-else class="dark:text-fa-white">
-        <h2>{{ eng.empty }}</h2>
-      </div>
     </UCard>
   </UModal>
 </template>

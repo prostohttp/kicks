@@ -32,12 +32,12 @@ export default defineEventHandler(async (event) => {
 
     const skip = page * perPage - perPage;
 
-    const articleInPage = await Article.find()
+    const articlesInPage = await Article.find()
       .select("title shortDescription isEnabled image createdAt")
       .skip(skip)
       .limit(perPage);
     return {
-      articles: articleInPage,
+      articles: articlesInPage,
       pagesInPagination,
       activePage: page,
       allItems: articlesLength,

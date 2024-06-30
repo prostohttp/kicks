@@ -46,6 +46,7 @@ watch(article, () => {
       <DashboardArticleEditForm
         :articleData="articleData"
         :id="article._id"
+        v-model:article="article"
         v-else
       />
     </div>
