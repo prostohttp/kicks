@@ -6,31 +6,6 @@ const { userId } = defineProps<{
   userId: string;
 }>();
 defineEmits(["close"]);
-
-// store
-
-// vars
-const formFieldsData = [
-  {
-    label: eng.userName,
-    name: "name",
-    placeholder: eng.userName,
-    icon: "i-heroicons-user-circle-16-solid",
-  },
-  {
-    label: eng.email,
-    name: "email",
-    placeholder: eng.email,
-    icon: "i-heroicons-envelope",
-  },
-  {
-    label: eng.role,
-    name: "role",
-    placeholder: eng.role,
-    icon: "i-heroicons-shield-exclamation-20-solid",
-    type: "select",
-  },
-];
 </script>
 
 <template>
@@ -57,11 +32,7 @@ const formFieldsData = [
           />
         </div>
       </template>
-      <DashboardUserEditForm
-        :userId="userId"
-        :data="formFieldsData"
-        @close="$emit('close')"
-      />
+      <DashboardUserEditForm :userId="userId" @close="$emit('close')" />
     </UCard>
   </UModal>
 </template>

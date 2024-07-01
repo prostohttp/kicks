@@ -10,8 +10,6 @@ export default (
   fieldName: string,
 ): string[] | false => {
   const files: string[] = [];
-  // TODO: удалить или сохранить!
-  // let isEmpty = data && !data.some((el) => el.name === fieldName);
   const imgPath = path.resolve(process.cwd(), "public/" + folderPath);
   try {
     if (data) {
@@ -34,7 +32,5 @@ export default (
       statusMessage: error.message,
     });
   }
-  // TODO: удалить или сохранить!
-  // return isEmpty ? false : files;
   return files;
 };

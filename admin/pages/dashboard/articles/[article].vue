@@ -5,13 +5,13 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const articleDataStore = useArticleDataStore();
+await useAsyncData("articles", () =>
+  articleDataStore.getArticle(useRoute().params.article.toString()),
+);
 const { article } = storeToRefs(articleDataStore);
 
 // vars
 const router = useRouter();
-const id = useRoute().params.article.toString();
-
-await useAsyncData("articles", () => articleDataStore.getArticle(id));
 
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(

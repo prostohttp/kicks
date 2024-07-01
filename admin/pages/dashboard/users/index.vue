@@ -57,13 +57,6 @@ watch(activePage, async (newValue) => {
   router.push({ query: { page: newValue } });
   await userDataStore.getAllUsers(newValue!);
 });
-
-onMounted(() => {
-  // TODO: Что это такое?
-  //   if (activePage.value) {
-  //     userDataStore.getAllUsers(activePage.value);
-  //   }
-});
 </script>
 
 <template>

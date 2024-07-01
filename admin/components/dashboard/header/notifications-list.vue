@@ -24,7 +24,7 @@ defineProps<{ data: NotificationDto[] | null; close: () => void }>();
           {{ eng.order }} {{ notification.order.orderId }}
         </NuxtLink>
         <span
-          class="text-[12px] bg-blue dark:bg-yellow text-fa-white dark:text-dark-gray inline-flex items-center justify-center rounded-[4px] h-[24px] px-[8px] capitalize font-[500]"
+          class="text-[12px] bg-blue dark:bg-yellow text-fa-white dark:text-dark-gray inline-flex items-center justify-center rounded-[4px] h-[24px] px-[8px] font-[500]"
         >
           {{ notification.order.status }}
         </span>

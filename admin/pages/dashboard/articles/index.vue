@@ -87,13 +87,6 @@ watch(
     }
   },
 );
-
-// TODO: Что это такое?
-// onMounted(async () => {
-//   if (activePage.value) {
-// articleDataStore.getAllArticles(activePage.value);
-//   }
-// });
 </script>
 
 <template>

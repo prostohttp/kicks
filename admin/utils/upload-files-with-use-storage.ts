@@ -16,7 +16,6 @@ export default (
           if (!isImage(el.type)) {
             throw createError({ statusMessage: "File must be an image" });
           }
-
           const renamedFile = renameFile(el.filename as string);
           const filePath = path.relative(
             process.cwd(),

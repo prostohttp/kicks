@@ -85,13 +85,6 @@ watch(
     }
   },
 );
-
-// TODO: Что это такое?
-// onMounted(async () => {
-//   if (activePage.value) {
-//     optionDataStore.getAllOptions(activePage.value);
-//   }
-// });
 </script>
 
 <template>

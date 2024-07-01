@@ -55,10 +55,6 @@ watch(activePage, async (newValue) => {
 });
 
 onMounted(() => {
-  // TODO: Что это такое?
-  // if (activePage.value) {
-  //   brandsDataStore.getAllBrands(activePage.value);
-  // }
   if (route.query.brandNew) {
     openAddNewBrandModal();
   }

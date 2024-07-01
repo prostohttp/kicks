@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
-import type { UserData } from "~/types/ui/ui.types";
 import { eng } from "~/lang/eng";
 import { Roles } from "~/types/server/server.types";
 import { Constants } from "~/constants";
 import * as v from "valibot";
 
 // define
-const { data, userId } = defineProps<{
-  data: UserData[];
+const { userId } = defineProps<{
   userId: string;
 }>();
 const emit = defineEmits(["close"]);
@@ -20,11 +18,6 @@ await useAsyncData("userById", () => userDataStore.getUserById(userId));
 const { userById: user } = storeToRefs(userDataStore);
 
 // vars
-const state = reactive({
-  name: user.value?.name,
-  email: user.value?.email,
-  role: user.value?.role,
-});
 const isLoading = ref(false);
 const page = Number(useRoute().query.page);
 const toast = useToast();
@@ -124,6 +117,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       title: "Profile updated",
       color: "green",
     });
+    emit("close");
   } catch (error: any) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
@@ -167,33 +161,53 @@ onUnmounted(() => {
       />
     </div>
     <UFormGroup
-      v-for="{ name, label, placeholder, icon, type } in data"
-      :label="label"
-      :name="name"
+      :label="eng.userName"
+      name="name"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
         },
       }"
     >
-      <template v-if="type === 'select'">
-        <USelectMenu
-          v-model="user[name as keyof typeof state]"
-          :options="roles"
-          :leadingIcon="icon"
-          leading
-          selectClass="select-label"
-        />
-      </template>
-      <template v-else>
-        <UInput
-          :placeholder="placeholder"
-          :icon="icon"
-          v-model="user[name as keyof typeof state]"
-          inputClass="input-label"
-          :type="type ? type : 'text'"
-        />
-      </template>
+      <UInput
+        :placeholder="eng.userName"
+        icon="i-heroicons-user-circle-16-solid"
+        v-model="user.name"
+        inputClass="input-label"
+      />
+    </UFormGroup>
+    <UFormGroup
+      :label="eng.email"
+      name="email"
+      :ui="{
+        label: {
+          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+        },
+      }"
+    >
+      <UInput
+        :placeholder="eng.email"
+        icon="i-heroicons-envelope"
+        v-model="user.email"
+        inputClass="input-label"
+      />
+    </UFormGroup>
+    <UFormGroup
+      :label="eng.email"
+      name="role"
+      :ui="{
+        label: {
+          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+        },
+      }"
+    >
+      <USelectMenu
+        v-model="user.role"
+        :options="roles"
+        leadingIcon="i-heroicons-shield-exclamation-20-solid"
+        leading
+        selectClass="select-label"
+      />
     </UFormGroup>
     <UButton type="submit" class="dark-button mt-[20px]">
       {{ eng.update }}
