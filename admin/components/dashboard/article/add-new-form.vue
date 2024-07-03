@@ -19,6 +19,7 @@ const { titles: data } = storeToRefs(productDataStore);
 const { articleImage } = storeToRefs(persistDataStore);
 
 // Vars
+const isAdmin = useIsAdmin();
 await productDataStore.getTitles();
 const titles = ref(data.value.map((el) => el.title));
 const isLoading = ref(false);
@@ -152,13 +153,15 @@ onUnmounted(() => {
     inputRef.value.removeEventListener("change", inputHandler);
   }
 });
+
+const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
   <UForm
     :schema="v.safeParser(schema)"
     :state="state"
-    @submit="onSubmit"
+    @submit="protectedSubmitHandler"
     class="w-full flex flex-col gap-[50px]"
   >
     <UiSpinner v-if="isLoading" />

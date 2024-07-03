@@ -19,7 +19,7 @@ const article: Ref<ArticleDto | undefined> = defineModel("article");
 const articleDataStore = useArticleDataStore();
 const productDataStore = useProductDataStore();
 const { titles: data } = storeToRefs(productDataStore);
-await useAsyncData("productTitles", () => productDataStore.getTitles());
+await productDataStore.getTitles();
 
 // Vars
 const titles = ref(data.value.map((el) => el.title));
@@ -154,13 +154,14 @@ onUnmounted(() => {
     inputRef.value.removeEventListener("change", inputHandler);
   }
 });
+const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
   <UForm
     :schema="v.safeParser(schema)"
     :state="state"
-    @submit="onSubmit"
+    @submit="protectedSubmitHandler"
     class="w-full flex flex-col gap-[50px]"
   >
     <div class="flex gap-[30px] lg:flex-row flex-col-reverse">

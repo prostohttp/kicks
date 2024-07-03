@@ -29,7 +29,7 @@ const isAdmin = useIsAdmin();
   <input type="file" ref="inputRef" class="hidden" v-if="isAdmin" />
   <div
     v-if="addNew ? !model : !model?.image"
-    class="w-full flex items-center justify-center flex-col text-center gap-[20px] p-[5px] pb-[30px] rounded-[8px] bg-fa-white dark:bg-[#2c2c2c] dark:text-fa-white"
+    class="w-full flex items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-fa-white dark:bg-[#2c2c2c] dark:text-fa-white"
     ref="dropZoneRef"
   >
     <img
@@ -54,7 +54,7 @@ const isAdmin = useIsAdmin();
       <button
         type="button"
         @click="inputRef?.click()"
-        class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] dark:hover:bg-gray-main"
+        class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] mb-[30px] dark:hover:bg-gray-main"
       >
         {{ eng.clickToUpload }}
       </button>

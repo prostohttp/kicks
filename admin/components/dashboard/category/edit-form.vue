@@ -66,6 +66,8 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
 };
 
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
+
+const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
@@ -74,7 +76,7 @@ const onSubmit = useThrottleFn(onSubmitHandler, 3000);
     :schema="v.safeParser(schema)"
     :state="state"
     class="space-y-4"
-    @submit="onSubmit"
+    @submit="protectedSubmitHandler"
     v-else
   >
     <UFormGroup

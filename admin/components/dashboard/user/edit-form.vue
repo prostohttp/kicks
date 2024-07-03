@@ -18,6 +18,7 @@ await useAsyncData("userById", () => userDataStore.getUserById(userId));
 const { userById: user } = storeToRefs(userDataStore);
 
 // vars
+const isAdmin = useIsAdmin();
 const isLoading = ref(false);
 const page = Number(useRoute().query.page);
 const toast = useToast();
@@ -137,6 +138,8 @@ onUnmounted(() => {
     inputRef.value.removeEventListener("change", inputHandler);
   }
 });
+
+const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
@@ -144,7 +147,7 @@ onUnmounted(() => {
   <UForm
     :schema="v.safeParser(schema)"
     :state="user"
-    @submit="onSubmit"
+    @submit="protectedSubmitHandler"
     class="w-full flex flex-col gap-[20px]"
     v-else
   >

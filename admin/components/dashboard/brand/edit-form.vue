@@ -153,6 +153,8 @@ onUnmounted(() => {
     inputRef.value.removeEventListener("change", inputHandler);
   }
 });
+
+const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
@@ -161,7 +163,7 @@ onUnmounted(() => {
     :schema="v.safeParser(schema)"
     :state="brand"
     class="space-y-4"
-    @submit="onSubmit"
+    @submit="protectedSubmitHandler"
     v-else
   >
     <div

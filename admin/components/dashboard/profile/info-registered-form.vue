@@ -17,6 +17,7 @@ const { savedUser: user } = storeToRefs(userStore);
 const isLoading = ref(false);
 
 // Vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 const inputRef = ref<HTMLInputElement>();
 const dropZoneRef = ref<HTMLDivElement | null>();
@@ -139,13 +140,15 @@ onUnmounted(() => {
     inputRef.value.removeEventListener("change", inputHandler);
   }
 });
+
+const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
   <UForm
     :schema="v.safeParser(schema)"
     :state="state"
-    @submit="onSubmit"
+    @submit="protectedSubmitHandler"
     class="w-full flex flex-col gap-[50px]"
   >
     <div class="flex gap-[30px] lg:flex-row flex-col-reverse">

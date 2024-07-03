@@ -17,6 +17,7 @@ const optionDataStore = useOptionDataStore();
 const { state, option } = storeToRefs(optionDataStore);
 
 // Vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 const options: Ref<{ [key: string]: any }[]> = ref(
   Object.values(option.value?.values! || []),
@@ -63,7 +64,7 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   }
 };
 
-const submit = useThrottleFn(submitHandler, 2000);
+const onSubmit = useThrottleFn(submitHandler, 2000);
 
 // hooks
 watch(isSubmit, () => {
@@ -72,6 +73,8 @@ watch(isSubmit, () => {
     isSubmit.value = false;
   }
 });
+
+const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
@@ -81,7 +84,7 @@ watch(isSubmit, () => {
         :schema="v.safeParser(schema)"
         :state="state"
         class="space-y-4 w-full"
-        @submit="submit"
+        @submit="protectedSubmitHandler"
         ref="submitRef"
       >
         <UFormGroup
