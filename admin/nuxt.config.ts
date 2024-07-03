@@ -4,11 +4,13 @@ export default defineNuxtConfig({
     "/server/api/**": { cors: true },
     "/api/**": { cors: true },
   },
+
   app: {
     head: {
       link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
     },
   },
+
   runtimeConfig: {
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
     YANDEX_CLIENT_SECRET: process.env.YANDEX_CLIENT_SECRET,
@@ -21,6 +23,7 @@ export default defineNuxtConfig({
       DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     },
   },
+
   nitro: {
     imports: {
       dirs: ["./types", "./server/models"],
@@ -35,8 +38,10 @@ export default defineNuxtConfig({
       websocket: true,
     },
   },
+
   css: ["~/assets/css/main.css"],
   devtools: { enabled: false },
+
   auth: {
     isEnabled: true,
     provider: {
@@ -46,17 +51,21 @@ export default defineNuxtConfig({
       isEnabled: true,
     },
   },
+
   mongoose: {
     uri: process.env.MONGODB_URI,
     devtools: true,
   },
+
   pinia: {
     storesDirs: ["./stores/**"],
   },
+
   vueEmail: {
     // baseUrl: Constants.SITE_URL,
     autoImport: true,
   },
+
   googleFonts: {
     families: {
       Inter: [400, 500],
@@ -65,6 +74,7 @@ export default defineNuxtConfig({
       Rubik: [400, 500, 600, 700, 900],
     },
   },
+
   modules: [
     "@vueuse/nuxt",
     "nuxt-mongoose",
@@ -79,7 +89,10 @@ export default defineNuxtConfig({
     "nuxt-tiptap-editor",
     "@nuxt/image",
   ],
+
   tiptap: {
     prefix: "Tiptap",
   },
+
+  compatibilityDate: "2024-07-03",
 });

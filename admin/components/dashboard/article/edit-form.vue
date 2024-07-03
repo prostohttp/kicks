@@ -19,11 +19,11 @@ const article: Ref<ArticleDto | undefined> = defineModel("article");
 const articleDataStore = useArticleDataStore();
 const productDataStore = useProductDataStore();
 const { titles: data } = storeToRefs(productDataStore);
+await useAsyncData("productTitles", () => productDataStore.getTitles());
 
 // Vars
 const titles = ref(data.value.map((el) => el.title));
 const isAdmin = useIsAdmin();
-await productDataStore.getTitles();
 const isLoading = ref(false);
 const toast = useToast();
 const inputRef = ref<HTMLInputElement>();
