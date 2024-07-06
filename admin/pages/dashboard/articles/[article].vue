@@ -54,7 +54,5 @@ watch(article, () => {
         v-else
       />
     </div>
-
-    {{ article?.title }}
   </main>
 </template>

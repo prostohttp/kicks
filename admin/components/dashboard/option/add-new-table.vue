@@ -63,8 +63,15 @@ const deleteImageHandler = async (id: number) => {
         image: option.value.values![id].image,
       },
     });
-    inputRef.value!.value = "";
-    option.value.values![id].image = "";
+    if (
+      inputRef.value &&
+      inputRef.value.value &&
+      option.value.values &&
+      option.value.values[id]
+    ) {
+      inputRef.value!.value = "";
+      option.value.values![id].image = "";
+    }
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
@@ -99,10 +106,10 @@ const addNewValue = () => {
 
 const deleteValue = (id: number) => {
   options.value = options.value?.filter((option) => option.id !== id);
-  delete option.value.values![id];
   if (option.value.values![id].image) {
     deleteImageHandler(id);
   }
+  delete option.value.values![id];
 };
 
 // hooks

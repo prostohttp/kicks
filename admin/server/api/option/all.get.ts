@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     let query = getQuery(event);
     const page = Number(query.page) || 1;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_OPTION;
-    const options = await Option.find();
+    const options = await Option.find().sort({ sort: 1 });
     const optionsLength = options.length;
     const pagesInPagination = pageCount(optionsLength, perPage);
 
@@ -24,7 +24,10 @@ export default defineEventHandler(async (event) => {
 
     const skip = page * perPage - perPage;
 
-    const optioneInPage = await Option.find().skip(skip).limit(perPage);
+    const optioneInPage = await Option.find()
+      .sort({ sort: 1 })
+      .skip(skip)
+      .limit(perPage);
     return {
       options: optioneInPage,
       pagesInPagination,

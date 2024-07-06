@@ -72,6 +72,5 @@ onUnmounted(() => {
         v-else
       />
     </div>
-    <pre>{{ option }}</pre>
   </main>
 </template>

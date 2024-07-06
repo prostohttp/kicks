@@ -20,7 +20,7 @@ const { option } = storeToRefs(optionDataStore);
 const isAdmin = useIsAdmin();
 const toast = useToast();
 const options: Ref<{ [key: string]: any }[]> = ref(
-  Object.values(option.value?.values! || []),
+  sortElements(Object.values(option.value?.values! || [])),
 );
 const types: string[] = Object.keys(optionTypes).map((label) => label);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
@@ -30,11 +30,8 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
     let values;
     if (option.value.values) {
-      values = optionDataStore.isVisibleTable
-        ? Object.values(option.value.values)
-        : null;
+      values = optionDataStore.isVisibleTable ? options.value : null;
     }
-
     await $fetch("/api/option/edit", {
       method: "PUT",
       body: {
@@ -75,6 +72,9 @@ watch(isSubmit, () => {
   if (isSubmit.value) {
     submitRef.value?.submit();
     isSubmit.value = false;
+    if (options.value) {
+      options.value = sortElements(Object.values(option.value?.values! || []));
+    }
   }
 });
 

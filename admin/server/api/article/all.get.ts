@@ -9,9 +9,9 @@ export default defineEventHandler(async (event) => {
     const perPage = Number(query.perPage) || Constants.PER_PAGE_ARTICLE;
     const sortedTitles = query.sortedTitles;
     const adminMenu = query.adminMenu;
-    const articles = await Article.find().select(
-      "title shortDescription isEnabled image createdAt",
-    );
+    const articles = await Article.find()
+      .sort({ sort: 1 })
+      .select("title shortDescription isEnabled image createdAt");
     const articlesLength = articles.length;
     const pagesInPagination = pageCount(articlesLength, perPage);
 
@@ -33,6 +33,7 @@ export default defineEventHandler(async (event) => {
     const skip = page * perPage - perPage;
 
     const articlesInPage = await Article.find()
+      .sort({ sort: 1 })
       .select("title shortDescription isEnabled image createdAt")
       .skip(skip)
       .limit(perPage);

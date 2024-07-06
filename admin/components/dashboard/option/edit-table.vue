@@ -47,7 +47,7 @@ const setOptionImageHandler = (
     if (option.id === id) {
       return {
         ...option,
-        image,
+        image: image,
       };
     } else {
       return option;
@@ -94,7 +94,7 @@ const deleteImageHandler = async (id: number) => {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: "",
+        image: option.value.values![id].image,
       },
     });
 
@@ -105,8 +105,15 @@ const deleteImageHandler = async (id: number) => {
         values: setOptionImageHandler(option.value, id, ""),
       },
     });
-    inputRef.value!.value = "";
-    option.value.values![id].image = "";
+    if (
+      inputRef.value &&
+      inputRef.value.value &&
+      option.value.values &&
+      option.value.values[id]
+    ) {
+      inputRef.value!.value = "";
+      option.value.values![id].image = "";
+    }
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
@@ -188,7 +195,8 @@ onUnmounted(() => {
       </caption>
     </template>
     <template #value-data="{ row }">
-      <UFormGroup :name="row.value" v-if="row.value">
+      <!-- TODO: Схема валидации :name="`value${row.id}`"-->
+      <UFormGroup>
         <UInput
           :placeholder="eng.value"
           inputClass="clean-field"
@@ -206,13 +214,12 @@ onUnmounted(() => {
       />
     </template>
     <template #sort-data="{ row }">
-      <UFormGroup :name="row.sort" v-if="row.sort">
+      <!-- TODO: Схема валидации :name="`sort${row.id}`" -->
+      <UFormGroup>
         <UInput
           :placeholder="eng.sort"
           inputClass="clean-field"
           v-model="option.values![row.id].sort"
-          type="number"
-          min="1"
         />
       </UFormGroup>
     </template>
@@ -229,5 +236,4 @@ onUnmounted(() => {
     icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
     @click="addNewValue"
   />
-  {{ options }}
 </template>
