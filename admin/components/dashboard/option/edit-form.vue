@@ -14,7 +14,7 @@ const isSubmit = defineModel("submit");
 
 // Store
 const optionDataStore = useOptionDataStore();
-const { state, option } = storeToRefs(optionDataStore);
+const { option } = storeToRefs(optionDataStore);
 
 // Vars
 const isAdmin = useIsAdmin();
@@ -28,9 +28,13 @@ const submitRef: Ref<HTMLFormElement | null> = ref(null);
 // Handlers
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const values = optionDataStore.isVisibleTable
-      ? Object.values(state.value.values)
-      : null;
+    let values;
+    if (option.value.values) {
+      values = optionDataStore.isVisibleTable
+        ? Object.values(option.value.values)
+        : null;
+    }
+
     await $fetch("/api/option/edit", {
       method: "PUT",
       body: {
@@ -38,13 +42,11 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
         title: event.data.title,
         type: event.data.type,
         sort: event.data.sort,
-        values: values,
+        values,
       },
     });
-    if (!optionDataStore.isVisibleTable && state.value.values) {
-      state.value.values = {};
-      options.value = [];
-      for (const item of Object.values(state.value.values)) {
+    if (!optionDataStore.isVisibleTable && option.value.values) {
+      for (const item of Object.values(option.value.values)) {
         if (item?.image) {
           await $fetch("/api/image/remove", {
             method: "DELETE",
@@ -54,6 +56,8 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
           });
         }
       }
+      option.value.values = undefined;
+      options.value = [];
     }
     toast.add({
       title: "Option updated",
@@ -82,7 +86,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     <div class="flex flex-col w-full gap-[24px]">
       <UForm
         :schema="v.safeParser(schema)"
-        :state="state"
+        :state="option"
         class="space-y-4 w-full"
         @submit="protectedSubmitHandler"
         ref="submitRef"
@@ -100,13 +104,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           <UInput
             :placeholder="placeholder"
             inputClass="no-left-icon"
-            v-model="state.title"
+            v-model="option.title"
             v-if="name === 'title'"
           />
           <USelectMenu
             :options="types"
             :placeholder="placeholder"
-            v-model="state.type"
+            v-model="option.type"
             :uiMenu="{
               option: {
                 color: 'dark:text-[#6b7280]',
@@ -119,7 +123,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           />
           <UInput
             :placeholder="placeholder"
-            v-model="state.sort"
+            v-model="option.sort"
             inputClass="no-left-icon"
             v-if="name === 'sort'"
             required

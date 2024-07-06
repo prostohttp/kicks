@@ -18,9 +18,13 @@ const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(fullPath, article.value?.title, fullPath),
 );
 
+const title = computed(() =>
+  article.value ? article.value?.title : eng.empty,
+);
+
 // meta
-useHead({
-  title: article.value ? article.value?.title : eng.empty,
+useHeadSafe({
+  title,
 });
 
 // hooks
@@ -50,5 +54,7 @@ watch(article, () => {
         v-else
       />
     </div>
+
+    {{ article?.title }}
   </main>
 </template>

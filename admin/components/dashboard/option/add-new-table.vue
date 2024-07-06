@@ -8,7 +8,7 @@ const options: ModelRef<{ [key: string]: any }[] | undefined> = defineModel();
 
 // store
 const optionDataStore = useOptionDataStore();
-const { state } = storeToRefs(optionDataStore);
+const { option } = storeToRefs(optionDataStore);
 
 // vars
 const toast = useToast();
@@ -48,23 +48,23 @@ const uploadImage = async (image: File) => {
     if (!uploadedImage) {
       toast.add({ title: eng.notImage, color: "red" });
     }
-    state.value.values![activeId.value]!.image = uploadedImage;
+    option.value.values![activeId.value]!.image = uploadedImage;
     toast.add({ title: eng.imageUploaded, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
   }
 };
 
-const deleteImageHandler = async (id: string) => {
+const deleteImageHandler = async (id: number) => {
   try {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: state.value.values[id]!.image,
+        image: option.value.values![id].image,
       },
     });
     inputRef.value!.value = "";
-    state.value!.values[id]!.image = "";
+    option.value.values![id].image = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
@@ -78,12 +78,16 @@ const inputHandler = (e: Event) => {
 
 const addNewValue = () => {
   const id = Math.floor(Math.random() * 100000);
-  state.value.values[id] = {
-    id: id,
+  if (!option.value.values) {
+    option.value.values = {};
+  }
+  option.value.values![id] = {
+    id,
     value: "",
     sort: undefined,
     image: "",
   };
+
   options.value?.push({
     id,
     value: "value" + id,
@@ -93,10 +97,10 @@ const addNewValue = () => {
   });
 };
 
-const deleteValue = (id: string) => {
+const deleteValue = (id: number) => {
   options.value = options.value?.filter((option) => option.id !== id);
-  delete state.value.values[id];
-  if (state.value.values[id]?.image) {
+  delete option.value.values![id];
+  if (option.value.values![id].image) {
     deleteImageHandler(id);
   }
 };
@@ -146,7 +150,7 @@ onUnmounted(() => {
         <UInput
           :placeholder="eng.value"
           inputClass="clean-field"
-          v-model="state.values![row.id]!['value']"
+          v-model="option.values![row.id].value"
         />
       </UFormGroup>
     </template>
@@ -154,7 +158,7 @@ onUnmounted(() => {
       <UiImageUploadSmall
         :id="row.id"
         v-model:active-id="activeId"
-        v-model:image="state.values[row.id]"
+        v-model:image="option.values![row.id]"
         v-model:input-ref="inputRef"
         @delete="deleteImageHandler"
       />
@@ -164,7 +168,7 @@ onUnmounted(() => {
         <UInput
           :placeholder="eng.sort"
           inputClass="clean-field"
-          v-model="state.values![row.id]!['sort']"
+          v-model="option.values![row.id].sort"
           type="number"
           min="1"
         />

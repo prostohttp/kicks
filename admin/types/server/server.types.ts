@@ -31,19 +31,35 @@ export interface MultiPartData {
   type?: string;
 }
 
-export interface OptionValue {
-  valueId: string;
-  productCount: string;
+export interface ValueOption {
+  [key: number]: {
+    id: number;
+    value: string;
+    sort: number | undefined;
+    image: string;
+  };
+}
+export interface UiOptionDto {
+  _id: string;
+  title: string;
+  type: string;
+  sort: number | undefined;
+  values: ValueOption | undefined;
 }
 
-export interface Option {
-  optionId: string;
-  values: OptionValue[];
-}
+// export interface OptionValue {
+//   valueId: string;
+//   productCount: string;
+// }
 
-export interface Options {
-  options: Option[];
-}
+// export interface Option {
+//   optionId: string;
+//   values: OptionValue[];
+// }
+
+// export interface Options {
+//   options: Option[];
+// }
 
 export interface RegisterFormDto {
   name: string;

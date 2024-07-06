@@ -1,6 +1,7 @@
 import { eng } from "~/lang/eng";
 import type { IOption } from "~/pages/dashboard/options/index.vue";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
+import type { UiOptionDto } from "~/types/server/server.types";
 
 export const useOptionDataStore = defineStore("optionData", () => {
   interface OptionsPayload {
@@ -10,31 +11,19 @@ export const useOptionDataStore = defineStore("optionData", () => {
     activePage?: number;
   }
 
-  interface IState {
-    title: string;
-    type: string;
-    sort: number | undefined;
-    values: {
-      [key: string]:
-        | {
-            id: number;
-            value: string;
-            image: string;
-            sort: number | undefined;
-          }
-        | undefined;
-    };
-  }
   // vars
-  const option: Ref<OptionDto | undefined> = ref();
-  const options: Ref<OptionsPayload | undefined> = ref();
-  const selected: Ref<IOption[]> = ref([]);
-  const state = reactive<IState>({
+  let option: UiOptionDto = reactive({
+    _id: "",
     title: "",
     type: "",
     sort: undefined,
-    values: {},
+    values: undefined,
   });
+
+  const options: Ref<OptionsPayload | undefined> = ref();
+
+  const selected: Ref<IOption[]> = ref([]);
+
   const optionImages: Ref<{
     [id: string]: {
       image: string;
@@ -56,33 +45,19 @@ export const useOptionDataStore = defineStore("optionData", () => {
     return true;
   };
 
-  const setStateFromOption = (option: OptionDto) => {
-    state.title = option.title;
-    state.type = option.type;
-    state.sort = option.sort;
-    if (option.values?.length) {
-      for (const opt of option.values) {
-        state.values[opt.id] = {
-          id: opt.id,
-          value: opt.value,
-          sort: opt.sort,
-          image: opt.image || "",
-        };
-      }
-    }
-  };
-
   const getOption = async (id: string) => {
     try {
-      option.value = await $fetch("/api/option/one", {
+      const rawOption = await $fetch<OptionDto>("/api/option/one", {
         method: "GET",
         query: {
           id,
         },
       });
-      if (option.value) {
-        setStateFromOption(option.value);
-      }
+      option._id = rawOption._id;
+      option.title = rawOption.title;
+      option.type = rawOption.type;
+      option.sort = rawOption.sort;
+      option.values = getUiOption(rawOption);
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
@@ -91,23 +66,24 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
   const isVisibleTable = computed(
     () =>
-      state.type === eng.optionTypes.list ||
-      state.type === eng.optionTypes.select ||
-      state.type === eng.optionTypes.checkbox,
+      option?.type === eng.optionTypes.list ||
+      option?.type === eng.optionTypes.select ||
+      option?.type === eng.optionTypes.checkbox,
   );
 
   const clearState = () => {
-    state.title = "";
-    state.type = "";
-    state.sort = undefined;
-    state.values = {};
+    if (option) {
+      option.title = "";
+      option.type = "";
+      option.sort = undefined;
+      option.values = undefined;
+    }
   };
 
   return {
     isVisibleTable,
     option,
     optionImages,
-    state,
     options,
     selected,
     getOption,

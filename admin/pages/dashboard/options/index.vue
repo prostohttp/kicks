@@ -8,7 +8,7 @@ export interface IOption {
   id: string;
   title: string;
   type: string;
-  sort: number;
+  sort: number | undefined;
   images: (string | undefined)[];
 }
 
