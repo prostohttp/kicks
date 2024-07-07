@@ -55,6 +55,14 @@ const uploadImage = async (image: File) => {
   }
 };
 
+const isValidString = (value: string) => {
+  return formFieldValidator(value, isStringValidator, 3);
+};
+
+const isValidNumber = (value: number | undefined) => {
+  return formFieldValidator(value, isNumberValidator, 1);
+};
+
 const deleteImageHandler = async (id: number) => {
   try {
     await $fetch("/api/image/remove", {
@@ -153,10 +161,14 @@ onUnmounted(() => {
       </caption>
     </template>
     <template #value-data="{ row }">
-      <UFormGroup :name="row.value" v-if="row.value">
+      <UFormGroup>
         <UInput
-          :placeholder="eng.value"
-          inputClass="clean-field"
+          :placeholder="eng.error.stringMin"
+          :inputClass="
+            isValidString(option.values![row.id].value)
+              ? 'clean-field'
+              : 'clean-field field-error'
+          "
           v-model="option.values![row.id].value"
         />
       </UFormGroup>
@@ -171,10 +183,14 @@ onUnmounted(() => {
       />
     </template>
     <template #sort-data="{ row }">
-      <UFormGroup :name="row.sort" v-if="row.sort">
+      <UFormGroup>
         <UInput
-          :placeholder="eng.sort"
-          inputClass="clean-field"
+          :placeholder="eng.error.numberMin"
+          :inputClass="
+            isValidNumber(option.values![row.id].sort)
+              ? 'clean-field'
+              : 'field-error clean-field'
+          "
           v-model="option.values![row.id].sort"
           type="number"
           min="1"

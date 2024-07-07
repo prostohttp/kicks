@@ -25,12 +25,12 @@ export const Option = defineMongooseModel({
         },
         value: {
           type: String,
-          required: false,
+          required: true,
         },
         // TODO: Если ставить Number будет ошибка типов в edit-table.vue
         sort: {
-          type: String,
-          required: false,
+          type: Number,
+          required: true,
         },
         image: {
           type: String,

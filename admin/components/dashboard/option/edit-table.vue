@@ -55,6 +55,14 @@ const setOptionImageHandler = (
   });
 };
 
+const isValidString = (value: string) => {
+  return formFieldValidator(value, isStringValidator, 3);
+};
+
+const isValidNumber = (value: number | undefined) => {
+  return formFieldValidator(value, isNumberValidator, 1);
+};
+
 const uploadImage = async (image: File) => {
   try {
     const formData = new FormData();
@@ -195,11 +203,14 @@ onUnmounted(() => {
       </caption>
     </template>
     <template #value-data="{ row }">
-      <!-- TODO: Схема валидации :name="`value${row.id}`"-->
       <UFormGroup>
         <UInput
-          :placeholder="eng.value"
-          inputClass="clean-field"
+          :placeholder="eng.error.stringMin"
+          :inputClass="
+            isValidString(option.values![row.id].value)
+              ? 'clean-field'
+              : 'clean-field field-error'
+          "
           v-model="option.values![row.id].value"
         />
       </UFormGroup>
@@ -214,12 +225,17 @@ onUnmounted(() => {
       />
     </template>
     <template #sort-data="{ row }">
-      <!-- TODO: Схема валидации :name="`sort${row.id}`" -->
       <UFormGroup>
         <UInput
-          :placeholder="eng.sort"
-          inputClass="clean-field"
+          :placeholder="eng.error.numberMin"
+          :inputClass="
+            isValidNumber(option.values![row.id].sort)
+              ? 'clean-field'
+              : 'field-error clean-field'
+          "
           v-model="option.values![row.id].sort"
+          type="number"
+          min="1"
         />
       </UFormGroup>
     </template>
@@ -232,6 +248,7 @@ onUnmounted(() => {
     </template>
   </UTable>
   <UButton
+    type="button"
     class="icon-button float-right mr-[15px]"
     icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
     @click="addNewValue"

@@ -28,20 +28,27 @@ const submitRef: Ref<HTMLFormElement | null> = ref(null);
 // Handlers
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    let values;
-    if (option.value.values) {
-      values = optionDataStore.isVisibleTable ? options.value : null;
+    const values = optionDataStore.isVisibleTable ? options.value : null;
+    const isValid = isValidOptionValues(options.value);
+    if (!isValid && optionDataStore.isVisibleTable && options.value.length) {
+      toast.add({
+        title: "Check form fields",
+        color: "red",
+      });
+      return;
+    } else {
+      await $fetch("/api/option/edit", {
+        method: "PUT",
+        body: {
+          _id: id,
+          title: event.data.title,
+          type: event.data.type,
+          sort: event.data.sort,
+          values,
+        },
+      });
     }
-    await $fetch("/api/option/edit", {
-      method: "PUT",
-      body: {
-        _id: id,
-        title: event.data.title,
-        type: event.data.type,
-        sort: event.data.sort,
-        values,
-      },
-    });
+
     if (!optionDataStore.isVisibleTable && option.value.values) {
       for (const item of Object.values(option.value.values)) {
         if (item?.image) {

@@ -107,6 +107,12 @@ export const eng = {
   adminMenu: "Add to admin dashboard",
   featuredProducts: "Add featured products to Article page",
   selectElement: "Select one or many element",
+  error: {
+    string: "Required and must be a string",
+    number: "Required and must be a number",
+    stringMin: "Min 3 symbols",
+    numberMin: "Min 1",
+  },
   optionTypes: {
     list: "List",
     select: "Select",

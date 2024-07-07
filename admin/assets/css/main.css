@@ -202,7 +202,7 @@ a:hover {
 }
 
 input.clean-field {
-  @apply ring-0 shadow-none border-none border-[#d1d5db] rounded-none pl-0 dark:bg-transparent text-[15px]
+  @apply ring-0 shadow-none border-none border-[#d1d5db] pl-[10px] dark:bg-transparent text-[15px] rounded-[4px] py-[10px]
 }
 
 tr th:last-child,
@@ -210,4 +210,12 @@ tr td:last-child,
 tr th:nth-last-child(2):not(:last-child),
 tr td:nth-last-child(2):not(:last-child) {
   @apply text-right
+}
+
+.clean-field.field-error {
+  @apply bg-red-50 dark:bg-red-400 dark:bg-opacity-10
+}
+
+.clean-field.field-error::placeholder {
+  @apply text-dark-gray dark:text-fa-white
 }
