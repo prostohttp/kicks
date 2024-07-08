@@ -56,11 +56,19 @@ const uploadImage = async (image: File) => {
 };
 
 const isValidString = (value: string) => {
-  return formFieldValidator(value, isStringValidator, 3);
+  return formFieldValidator(
+    value,
+    isStringValidator,
+    Constants.STRING_MIN_LENGTH,
+  );
 };
 
 const isValidNumber = (value: number | undefined) => {
-  return formFieldValidator(value, isNumberValidator, 1);
+  return formFieldValidator(
+    value,
+    isNumberValidator,
+    Constants.NUMBER_MIN_VALUE,
+  );
 };
 
 const deleteImageHandler = async (id: number) => {

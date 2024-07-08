@@ -16,7 +16,6 @@ export const Option = defineMongooseModel({
       type: Number,
       required: true,
     },
-    // TODO: Валидация полей на фронте value, sort
     values: [
       {
         id: {
@@ -27,7 +26,6 @@ export const Option = defineMongooseModel({
           type: String,
           required: true,
         },
-        // TODO: Если ставить Number будет ошибка типов в edit-table.vue
         sort: {
           type: Number,
           required: true,

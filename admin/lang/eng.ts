@@ -110,7 +110,7 @@ export const eng = {
   error: {
     string: "Required and must be a string",
     number: "Required and must be a number",
-    stringMin: "Min 3 symbols",
+    stringMin: "Min 2 symbols",
     numberMin: "Min 1",
   },
   optionTypes: {

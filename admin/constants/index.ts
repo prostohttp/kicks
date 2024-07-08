@@ -22,4 +22,6 @@ export const Constants = {
   fileTypes: {
     image: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
   },
+  STRING_MIN_LENGTH: 2,
+  NUMBER_MIN_VALUE: 1,
 };

@@ -6,7 +6,6 @@ export const makeImagePreview = (
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      // TODO: Плохой вариант изменять входящий параметр
       state.image = file.name;
       const preview = imageRef;
       if (preview) {

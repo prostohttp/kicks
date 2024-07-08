@@ -16,6 +16,7 @@ const optionDataStore = useOptionDataStore();
 const { option } = storeToRefs(optionDataStore);
 
 // vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 const inputRef: Ref<HTMLInputElement | undefined> = ref();
 const columns = [
@@ -56,11 +57,19 @@ const setOptionImageHandler = (
 };
 
 const isValidString = (value: string) => {
-  return formFieldValidator(value, isStringValidator, 3);
+  return formFieldValidator(
+    value,
+    isStringValidator,
+    Constants.STRING_MIN_LENGTH,
+  );
 };
 
 const isValidNumber = (value: number | undefined) => {
-  return formFieldValidator(value, isNumberValidator, 1);
+  return formFieldValidator(
+    value,
+    isNumberValidator,
+    Constants.NUMBER_MIN_VALUE,
+  );
 };
 
 const uploadImage = async (image: File) => {
@@ -243,7 +252,7 @@ onUnmounted(() => {
       <UButton
         class="icon-button float-right"
         icon="i-heroicons-minus-circle-16-solid h-[20px] w-[20px]"
-        @click="deleteValue(row.id)"
+        @click="isAdmin && deleteValue(row.id)"
       />
     </template>
   </UTable>

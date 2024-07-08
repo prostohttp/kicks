@@ -12,15 +12,15 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    GITHUB_CLIENT_SECRET: process.env.NUXT_PUBLIC_GITHUB_CLIENT_SECRET,
-    YANDEX_CLIENT_SECRET: process.env.NUXT_PUBLIC_YANDEX_CLIENT_SECRET,
-    DISCORD_CLIENT_SECRET: process.env.NUXT_PUBLIC_DISCORD_CLIENT_SECRET,
-    AUTH_SECRET: process.env.NUXT_PUBLIC_AUTH_SECRET,
-    RESEND_API_KEY: process.env.NUXT_PUBLIC_RESEND_API_KEY,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    YANDEX_CLIENT_SECRET: process.env.YANDEX_CLIENT_SECRET,
+    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
     public: {
-      GITHUB_CLIENT_ID: process.env.NUXT_GITHUB_CLIENT_ID,
-      YANDEX_CLIENT_ID: process.env.NUXT_YANDEX_CLIENT_ID,
-      DISCORD_CLIENT_ID: process.env.NUXT_DISCORD_CLIENT_ID,
+      GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+      YANDEX_CLIENT_ID: process.env.YANDEX_CLIENT_ID,
+      DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     },
   },
 
@@ -34,9 +34,9 @@ export default defineNuxtConfig({
         base: "./public",
       },
     },
-    // experimental: {
-    //   websocket: true,
-    // },
+    experimental: {
+      websocket: true,
+    },
   },
 
   css: ["~/assets/css/main.css"],
@@ -83,7 +83,6 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@sidebase/nuxt-auth",
     "@vue-email/nuxt",
-    "nuxt-aos",
     "@nuxt/ui",
     "@nuxtjs/google-fonts",
     "nuxt-tiptap-editor",
