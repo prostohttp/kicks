@@ -74,7 +74,7 @@ const articles = computed((): Array<IArticle> | undefined => {
 
 // hooks
 watch(activePage, (newValue) => {
-  router.push({ query: { page: newValue } });
+  router.push({ query: { ...route.query, page: newValue || 1 } });
   selected.value = [];
   articleDataStore.getAllArticles(newValue!);
 });
@@ -150,13 +150,13 @@ watch(
           <img
             src="~/public/no-image.svg"
             :alt="eng.noImage"
-            class="w-[40px] dark:brightness-0 dark:invert-[0.5]"
+            class="w-[40px] dark:opacity-35 rounded-[8px]"
             v-if="!row.image"
           />
           <img
             :src="`/${row.image}`"
             :alt="eng.noImage"
-            class="w-[40px] dark:brightness-0 dark:invert-[0.5]"
+            class="w-[40px] dark:opacity-35 rounded-[8px]"
             v-else
           />
         </NuxtLink>

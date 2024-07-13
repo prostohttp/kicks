@@ -11,7 +11,7 @@ export const Product = defineMongooseModel({
     },
     description: {
       type: String,
-      required: false,
+      required: true,
     },
     category: [
       {
@@ -54,7 +54,7 @@ export const Product = defineMongooseModel({
     },
     quantity: {
       type: Number,
-      required: false,
+      required: true,
     },
     regularPrice: {
       type: Number,

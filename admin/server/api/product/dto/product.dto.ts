@@ -8,7 +8,7 @@ export interface ProductDto {
   brand?: string;
   sku?: string;
   quantity?: number;
-  regularPrice?: number;
+  regularPrice: number;
   salePrice?: number;
   tags?: string;
   image?: string;

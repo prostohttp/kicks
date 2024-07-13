@@ -54,7 +54,7 @@ watch(
 );
 
 watch(activePage, async (newValue) => {
-  router.push({ query: { page: newValue } });
+  router.push({ query: { ...route.query, page: newValue || 1 } });
   await userDataStore.getAllUsers(newValue!);
 });
 </script>
@@ -81,4 +81,5 @@ watch(activePage, async (newValue) => {
     :element-in-page="Constants.PER_PAGE_USERS"
     :allItems="data?.allItems"
   />
+  {{ data?.pagesInPagination }}
 </template>

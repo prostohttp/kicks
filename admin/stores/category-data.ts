@@ -40,14 +40,18 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
     return true;
   };
 
-  const getCategoryById = async (id: string) => {
+  const getCategoryById = async (id: string | undefined) => {
     try {
-      category.value = await $fetch("/api/category/one", {
-        method: "GET",
-        query: {
-          id,
-        },
-      });
+      if (!id) {
+        category.value = undefined;
+      } else {
+        category.value = await $fetch("/api/category/one", {
+          method: "GET",
+          query: {
+            id,
+          },
+        });
+      }
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }

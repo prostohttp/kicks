@@ -72,7 +72,7 @@ const options = computed((): Array<IOption> | undefined => {
 
 // hooks
 watch(activePage, (newValue) => {
-  router.push({ query: { page: newValue } });
+  router.push({ query: { ...route.query, page: newValue || 1 } });
   selected.value = [];
   optionDataStore.getAllOptions(newValue!);
 });

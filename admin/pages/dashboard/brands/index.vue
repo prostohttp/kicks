@@ -50,7 +50,7 @@ watch(
 );
 
 watch(activePage, async (newValue) => {
-  router.push({ query: { page: newValue } });
+  router.push({ query: { ...route.query, page: newValue || 1 } });
   await brandsDataStore.getAllBrands(newValue!);
 });
 
@@ -87,12 +87,10 @@ onMounted(() => {
       />
     </div>
   </main>
-  <!-- <ClientOnly> -->
   <UiPagination
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_BRAND"
     :allItems="data?.allItems"
   />
-  <!-- </ClientOnly> -->
 </template>

@@ -19,7 +19,7 @@ const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
       :activeClass="isActive ? 'active-text' : 'clear'"
       class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
       @click="isOpenMobileSidebar = false"
-      :to="`/dashboard/products?category=${_id}`"
+      :to="`/dashboard/products?category=${_id}&page=1`"
     >
       {{ title }}
     </NuxtLink>
@@ -27,7 +27,7 @@ const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
       :activeClass="isActive ? 'active' : 'clearBg'"
       class="flex items-center justify-center bg-[#e7e7e3] font-[600] rounded-[4px] w-[41px] h-[35px] hover:bg-blue hover:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:text-dark-gray"
       @click="isOpenMobileSidebar = false"
-      :to="`/dashboard/products?category=${_id}`"
+      :to="`/dashboard/products?category=${_id}&page=1`"
     >
       {{ count }}
     </NuxtLink>

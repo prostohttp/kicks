@@ -82,7 +82,7 @@ const categories = computed((): Array<ITable> | undefined => {
 
 // hooks
 watch(activePage, (newValue) => {
-  router.push({ query: { page: newValue } });
+  router.push({ query: { ...route.query, page: newValue || 1 } });
   selected.value = [];
   categoryDataStore.getAllCategories(newValue!);
 });

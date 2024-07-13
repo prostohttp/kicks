@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
 
       return {
         products,
-        pagesInPagination,
+        pagesInPagination: pagesInPagination > 1 ? pagesInPagination : 0,
         activePage: page,
         allItems: productsInCategoryLength,
       };
