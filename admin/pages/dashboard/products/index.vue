@@ -1,16 +1,22 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
+import { useStatsDataStore } from "~/stores/stats-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const productDataStore = useProductDataStore();
 const categoryDataStore = useCategoryDataStore();
+const statsDataStore = useStatsDataStore();
 const { products: data } = storeToRefs(productDataStore);
+
+await useAsyncData("saleProducts", () => statsDataStore.getSaleProducts());
+const { saleProducts } = storeToRefs(statsDataStore);
 
 // vars
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 const routeCategory = route.query.category;
 const path = router.currentRoute.value.path;
 const category = ref(routeCategory?.toString());
@@ -39,21 +45,44 @@ await useAsyncData("products", () =>
 const activePage = ref(data.value?.activePage || 1);
 
 // handlers
+const getSales = (id: string) => {
+  if (saleProducts.value && id in saleProducts.value) {
+    return saleProducts.value[id];
+  } else {
+    return 0;
+  }
+};
+const pageTitle = computed(() =>
+  categoryDataStore.category?.title
+    ? `${categoryDataStore.category?.title} | ${eng.breadcrumbs.products}`
+    : eng.breadcrumbs.products,
+);
+
+const deleteProduct = async (id: string) => {
+  try {
+    await $fetch("/api/product/remove", {
+      method: "DELETE",
+      body: {
+        id,
+      },
+    });
+    await productDataStore.getProductCount();
+    await productDataStore.getAllProducts(activePage.value, category.value);
+    toast.add({ title: eng.deleteProductSuccess });
+  } catch (error: any) {
+    toast.add({ title: error.message });
+  }
+};
 
 // meta
 definePageMeta({
   name: "all-products",
 });
 useHead({
-  title: eng.allProducts,
+  title: pageTitle,
 });
 
 // hooks
-onMounted(() => {
-  if (route.query.page) {
-  }
-});
-
 watch(
   () => route.query,
   async (newValue) => {
@@ -105,9 +134,11 @@ watch(activePage, async (newValue) => {
     >
       <DashboardProductCard
         v-for="product in data?.products"
+        @delete-product="deleteProduct"
         :product="product"
-        :remaining="1269"
-        :sales="1269"
+        :categories="unwrapAfterPopulate(product.category)"
+        :sales="getSales(product._id)"
+        :key="product._id"
       />
     </div>
   </main>
@@ -115,6 +146,6 @@ watch(activePage, async (newValue) => {
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_PRODUCT"
-    :allItems="data?.allItems"
+    :all-items="data?.allItems"
   />
 </template>

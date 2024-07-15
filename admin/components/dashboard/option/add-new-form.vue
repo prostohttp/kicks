@@ -112,6 +112,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           v-for="{ name, label, placeholder } in optionData"
           :name="name"
           :label="label"
+          :key="name"
           :ui="{
             label: {
               base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',

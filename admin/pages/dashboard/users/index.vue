@@ -79,7 +79,6 @@ watch(activePage, async (newValue) => {
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_USERS"
-    :allItems="data?.allItems"
+    :all-items="data?.allItems"
   />
-  {{ data?.pagesInPagination }}
 </template>

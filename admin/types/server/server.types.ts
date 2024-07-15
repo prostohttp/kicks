@@ -47,19 +47,10 @@ export interface UiOptionDto {
   values: ValueOption | undefined;
 }
 
-// export interface OptionValue {
-//   valueId: string;
-//   productCount: string;
-// }
-
-// export interface Option {
-//   optionId: string;
-//   values: OptionValue[];
-// }
-
-// export interface Options {
-//   options: Option[];
-// }
+export interface TitleObjectAfterPopulate {
+  _id: string;
+  title: string;
+}
 
 export interface RegisterFormDto {
   name: string;

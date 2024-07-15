@@ -49,6 +49,7 @@ const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
   <ul class="flex flex-col gap-[10px]">
     <DashboardSidebarMenuItem
       v-for="item in menuItems"
+      :key="item.to"
       :to="item.to"
       :title="item.title"
       :icon="item.icon"

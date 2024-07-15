@@ -60,7 +60,7 @@ const isAdmin = useIsAdmin();
       </button>
     </div>
   </div>
-  <div v-else class="w-full p-[5px] rounded-[8px] relative">
+  <div class="w-full p-[5px] rounded-[8px] relative" v-else>
     <UiSpinner v-if="isLoading" />
     <template v-else>
       <img

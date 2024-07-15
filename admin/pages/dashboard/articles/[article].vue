@@ -24,7 +24,7 @@ const title = computed(() =>
 
 // meta
 useHeadSafe({
-  title,
+  title: title,
 });
 
 // hooks

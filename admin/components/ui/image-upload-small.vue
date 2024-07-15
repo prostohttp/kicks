@@ -32,7 +32,7 @@ const onClickHandler = () => {
         class="lg:w-[40px] w-[40px]"
       />
     </div>
-    <div v-else class="w-full rounded-[8px] relative">
+    <div class="w-full rounded-[8px] relative" v-else>
       <img
         :src="`/${model?.image}`"
         class="lg:w-[40px] w-[40px] rounded-[8px] group-hover:opacity-70 transition-opacity"

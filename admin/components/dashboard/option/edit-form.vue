@@ -101,6 +101,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         <UFormGroup
           v-for="{ name, label, placeholder } in optionData"
           :name="name"
+          :key="name"
           :label="label"
           :ui="{
             label: {

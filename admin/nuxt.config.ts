@@ -69,7 +69,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Inter: [400, 500],
-      "Open Sans": [400, 500, 600],
+      "Open Sans": [200, 400, 500, 600],
       Poppins: [400],
       Rubik: [400, 500, 600, 700, 900],
     },

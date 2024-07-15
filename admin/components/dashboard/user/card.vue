@@ -51,7 +51,7 @@ onMounted(() => {
     class="bg-white rounded-[16px] p-[16px] dark:bg-dark-bg dark:text-fa-white flex items-center sm:items-start sm:flex-row flex-col gap-[18px] open-sans text-dark-gray relative"
   >
     <div
-      class="sm:min-w-[90px] sm:max-w-[90px] w-[60%] rounded-[8px] overflow-hidden p-[5px] bg-fa-white dark:bg-dark-gray flex items-center justify-center h-full"
+      class="sm:min-w-[90px] sm:max-w-[90px] w-[60%] rounded-[8px] overflow-hidden p-[15px] bg-fa-white dark:bg-dark-gray flex items-center justify-center aspect-square"
     >
       <template v-if="user.image">
         <img :src="`/${user.image}`" :alt="user.name" class="rounded-[8px]" />
@@ -60,12 +60,12 @@ onMounted(() => {
         <img src="~/public/no-image.svg" :alt="eng.noImage" />
       </template>
     </div>
-    <div class="flex flex-col items-center sm:items-start whitespace-pre-wrap">
-      <h3 class="text-[16px] leading-[20px] sm:gap-0 gap-[10px]">
+    <div class="flex flex-col items-center sm:items-start break-all">
+      <h3 class="text-[16px] leading-[20px] sm:gap-0 gap-[10px] mb-[5px]">
         {{ user.name }}
       </h3>
       <span
-        class="text-opacity-60 text-[14px] text-black dark:text-fa-white dark:opacity-40"
+        class="text-opacity-60 text-[14px] text-black dark:text-fa-white dark:opacity-40 mb-[10px]"
       >
         {{ user.email }}
       </span>
@@ -86,7 +86,7 @@ onMounted(() => {
       >
         <UButton
           trailing-icon="i-heroicons-ellipsis-horizontal-solid"
-          class="bg-[#efefef] dark:bg-[#efefef] text-dark-gray hover:bg-dark-gray dark:hover:bg-dark-gray dark:hover:text-fa-white hover:text-fa-white py-1"
+          class="bg-[#efefef] dark:bg-[#efefef] text-dark-gray hover:bg-dark-gray dark:hover:bg-dark-gray dark:hover:text-fa-white hover:text-fa-white py-[2.5px]"
         />
 
         <template #panel>

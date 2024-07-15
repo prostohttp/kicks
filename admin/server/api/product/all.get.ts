@@ -10,24 +10,40 @@ export default defineEventHandler(async (event) => {
     const titles = query.titles;
     const forCategoryCount = Boolean(query.forCategoryCount);
     const categoryId = query.category;
-    const products = await Product.find();
+    const products = await Product.find().populate({
+      path: "category",
+      select: "title",
+    });
     const productsLength = products.length;
     const pagesInPagination = pageCount(productsLength, perPage);
 
     if (categoryId) {
       const productsInCategory = await Product.find({
         category: { $in: [categoryId] },
+      }).populate({
+        path: "category",
+        select: "title",
       });
       const productsInCategoryLength = productsInCategory.length;
       const pagesInPagination = pageCount(productsInCategoryLength, perPage);
       const skip = page * perPage - perPage;
-      const products = await Product.find({ category: { $in: [categoryId] } })
+      const productsPerPage = await Product.find({
+        category: { $in: [categoryId] },
+      })
+        .populate({
+          path: "category",
+          select: "title",
+        })
         .skip(skip)
         .limit(perPage);
 
       return {
-        products,
-        pagesInPagination: pagesInPagination > 1 ? pagesInPagination : 0,
+        products:
+          page <= pagesInPagination ? productsPerPage : productsInCategory,
+        pagesInPagination:
+          pagesInPagination > 1 && page <= pagesInPagination
+            ? pagesInPagination
+            : 0,
         activePage: page,
         allItems: productsInCategoryLength,
       };
@@ -52,7 +68,13 @@ export default defineEventHandler(async (event) => {
     }
 
     const skip = page * perPage - perPage;
-    const productsInPage = await Product.find().skip(skip).limit(perPage);
+    const productsInPage = await Product.find()
+      .populate({
+        path: "category",
+        select: "title",
+      })
+      .skip(skip)
+      .limit(perPage);
     return {
       products: productsInPage,
       pagesInPagination,

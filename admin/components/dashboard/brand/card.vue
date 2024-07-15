@@ -47,8 +47,8 @@ onMounted(() => {
       <img
         src="~/public/no-image.svg"
         :alt="brand.title"
-        v-else
         class="rounded-[8px] w-[50%] md:w-[80px]"
+        v-else
       />
     </div>
     <h3 class="text-dark-gray mt-auto">

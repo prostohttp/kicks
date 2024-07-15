@@ -83,6 +83,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       v-for="{ name, label, placeholder, icon, type } in inputData"
       :label="type === 'checkbox' ? '' : label"
       :name="name"
+      :key="name"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -100,7 +101,6 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
       <USelectMenu
         :icon="icon"
-        v-else-if="type === 'select'"
         multiple
         v-model="state.children"
         :options="titles"
@@ -115,20 +115,21 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           wrapper:
             'select-wrapper-with-icon ring-1 ring-dark-gray rounded-[8px]',
         }"
+        v-else-if="type === 'select'"
       />
       <UTextarea
-        v-else-if="type === 'textarea'"
         v-model="state.description"
         :placeholder="placeholder"
         class="textarea"
+        v-else-if="type === 'textarea'"
       />
       <UInput
-        v-else
         :placeholder="placeholder"
         v-model="state[name as keyof typeof state]"
         inputClass="input-label"
         :icon="icon"
         class="mb-[25px]"
+        v-else
       />
     </UFormGroup>
     <div

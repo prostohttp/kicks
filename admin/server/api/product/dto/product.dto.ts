@@ -1,10 +1,10 @@
-import { OptionDto } from "../../option/dto/option.dto";
-
+import { OptionDto } from "~/server/api/option/dto/option.dto";
+import { TitleObjectAfterPopulate } from "~/types/server/server.types";
 export interface ProductDto {
-  _id?: string;
+  _id: string;
   title: string;
   description?: string;
-  category?: string;
+  category?: TitleObjectAfterPopulate[];
   brand?: string;
   sku?: string;
   quantity?: number;

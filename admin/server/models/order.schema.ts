@@ -57,13 +57,4 @@ export const Order = defineMongooseModel({
       required: false,
     },
   },
-  hooks(schema) {
-    schema.pre("validate", function (this, next) {
-      if (!this.products.length) {
-        next(new Error("Products array must not be empty"));
-      } else {
-        next();
-      }
-    });
-  },
 });

@@ -165,7 +165,7 @@ onMounted(async () => {
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_CATEGORY"
-    :allItems="data?.allItems"
+    :all-items="data?.allItems"
   />
 </template>
 

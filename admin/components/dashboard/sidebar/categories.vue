@@ -3,27 +3,31 @@ import type { AccordionItem } from "~/types/ui/ui.types";
 import { eng } from "~/lang/eng";
 
 // store
-const categoryStore = useCategoryDataStore();
-const { parentTitles } = storeToRefs(categoryStore);
+const categoryDataStore = useCategoryDataStore();
+const productDataStore = useProductDataStore();
+const { parentTitles } = storeToRefs(categoryDataStore);
 
 // vars
 const route = useRoute();
-await categoryStore.getAllTitles();
+await categoryDataStore.getAllTitles();
 const isActive = (id: string): boolean =>
   (route.query.category && route.query.category === id) as boolean;
 
 // handlers
-const { data: products } = await useFetch<
-  Array<{ _id: string; category: string[] }>
->("/api/product/all", {
-  method: "GET",
-  query: {
-    forCategoryCount: true,
-  },
-});
+// const { data: products } = await useFetch<
+//   Array<{ _id: string; category: string[] }>
+// >("/api/product/all", {
+//   method: "GET",
+//   query: {
+//     forCategoryCount: true,
+//   },
+// });
+await useAsyncData("products", () => productDataStore.getProductCount());
+
+const { productsForCount } = storeToRefs(productDataStore);
 
 const computedProducts = computed(() => {
-  return elementCountForId(products.value);
+  return elementCountForId(productsForCount.value);
 });
 
 const items: AccordionItem[] | undefined = [

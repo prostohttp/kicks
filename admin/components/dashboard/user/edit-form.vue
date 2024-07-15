@@ -196,7 +196,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
     </UFormGroup>
     <UFormGroup
-      :label="eng.email"
+      :label="eng.role"
       name="role"
       :ui="{
         label: {

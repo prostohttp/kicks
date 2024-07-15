@@ -79,7 +79,7 @@ onMounted(async () => {
       class="flex lg:pt-[40px] pb-[40px] pt-[40px] lg:px-0 px-[30px] justify-center items-center"
     >
       <LazyUiSpinner v-if="isLoading" />
-      <div v-else class="max-w-[480px] flex flex-col w-full gap-[24px]">
+      <div class="max-w-[480px] flex flex-col w-full gap-[24px]" v-else>
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
             Reset password

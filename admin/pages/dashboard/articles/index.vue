@@ -150,13 +150,13 @@ watch(
           <img
             src="~/public/no-image.svg"
             :alt="eng.noImage"
-            class="w-[40px] dark:opacity-35 rounded-[8px]"
+            class="w-[40px] dark:opacity-90 rounded-[8px]"
             v-if="!row.image"
           />
           <img
             :src="`/${row.image}`"
             :alt="eng.noImage"
-            class="w-[40px] dark:opacity-35 rounded-[8px]"
+            class="w-[40px] dark:opacity-90 rounded-[8px]"
             v-else
           />
         </NuxtLink>
@@ -172,7 +172,7 @@ watch(
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_ARTICLE"
-    :allItems="data?.allItems"
+    :all-items="data?.allItems"
   />
 </template>
 

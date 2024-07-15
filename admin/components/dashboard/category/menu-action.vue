@@ -81,9 +81,9 @@ onMounted(async () => {
           {{ eng.editCategory }}
         </NuxtLink>
         <NuxtLink
-          v-else
           active-class="active"
           class="text-[16px] font-[400] opacity-20 hover:text-dark-gray dark:hover:text-fa-white"
+          v-else
         >
           {{ eng.editCategory }}
         </NuxtLink>

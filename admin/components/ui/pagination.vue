@@ -9,7 +9,8 @@ const { allItems, elementInPage } = defineProps<{
 
 // vars
 const activePage = defineModel();
-let lastPage = computed(() => pageCount(allItems!, elementInPage!));
+
+// hooks
 </script>
 
 <template>
@@ -33,7 +34,9 @@ let lastPage = computed(() => pageCount(allItems!, elementInPage!));
         label: eng.next,
         trailing: true,
         inactiveClass:
-          activePage !== lastPage ? 'pagination-prev-next' : 'hidden',
+          activePage !== pageCount(allItems!, elementInPage!)
+            ? 'pagination-prev-next'
+            : 'hidden',
       }"
       v-model="activePage"
       :page-count="elementInPage"

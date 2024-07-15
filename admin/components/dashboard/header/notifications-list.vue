@@ -32,15 +32,15 @@ defineProps<{ data: NotificationDto[] | null; close: () => void }>();
       <ul class="flex flex-col">
         <li
           v-for="product in notification.order.products"
-          :key="product.productId._id"
+          :key="product.productId?._id"
           class="lowercase text-[14px] font-[500]"
         >
           <NuxtLink
             activeClass="active"
-            :to="`/dashboard/products/${product.productId._id}`"
+            :to="`/dashboard/products/${product.productId?._id}`"
             @click="close"
           >
-            {{ product.productId.title }}
+            {{ product.productId?.title }}
           </NuxtLink>
         </li>
       </ul>

@@ -6,7 +6,7 @@ export default (count: number, currency: Currency, locale: Locales) => {
     currency: currency,
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
-    notation: "compact",
+    notation: "standard",
   });
   return formatter.format(count);
 };

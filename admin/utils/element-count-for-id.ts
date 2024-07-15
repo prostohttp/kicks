@@ -8,7 +8,7 @@ interface ElementCount {
 }
 
 export const elementCountForId = (
-  array: ElementCountForId[] | null,
+  array: ElementCountForId[] | null | undefined,
 ): ElementCount => {
   if (!array) return {};
   const categoryCount: ElementCount = {};

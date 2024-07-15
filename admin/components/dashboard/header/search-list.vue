@@ -16,8 +16,8 @@ const model = defineModel();
       <span>{{ eng.empty }}</span>
     </div>
     <ul
-      v-else
       class="flex flex-col gap-[16px] sm:w-[420px] w-full md:max-h-[400px] max-h-[200px] overflow-y-auto"
+      v-else
     >
       <li v-for="el in data" :key="el._id" class="flex gap-[15px]">
         <NuxtLink
@@ -33,10 +33,10 @@ const model = defineModel();
             class="image"
           />
           <img
-            v-else
             src="~/public/no-image.svg"
             :alt="el.title"
             class="image"
+            v-else
           />
         </NuxtLink>
         <div class="flex flex-col w-[80%]">
@@ -59,7 +59,7 @@ const model = defineModel();
               {{ currencyFormat(el.regularPrice, Currency.USD, Locales.EN) }}
             </span>
           </div>
-          <div v-else class="font-[600]">
+          <div class="font-[600]" v-else>
             {{ currencyFormat(el.regularPrice, Currency.USD, Locales.EN) }}
           </div>
         </div>
