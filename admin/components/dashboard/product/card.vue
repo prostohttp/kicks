@@ -133,7 +133,10 @@ const openDeleteProductModal = () => {
       </div>
       <div class="flex justify-between pt-[8px]">
         <span>{{ eng.remainingProducts }}</span>
-        <UiPercentBar :percent="75" :value="1269" />
+        <UiPercentBar
+          :percent="percentForStats(product.quantity)"
+          :value="product.quantity"
+        />
       </div>
     </div>
   </div>

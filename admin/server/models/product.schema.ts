@@ -88,9 +88,6 @@ export const Product = defineMongooseModel({
   hooks(schema) {
     schema.pre("save", function (this, next) {
       this.title = this.title.toString().trim() as any;
-      if (Number(this.quantity) === 0 && !this.isEnabled) {
-        this.isEnabled = false as any;
-      }
       next();
     });
   },

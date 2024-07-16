@@ -24,7 +24,8 @@ await useAsyncData(
   "foundedCategory",
   () => categoryDataStore.getCategoryById(category.value),
   {
-    watch: [category],
+    // TODO: await categoryDataStore.getCategoryById(category.value); убрать из watch и докрутить тут
+    // watch: [category],
   },
 );
 const fullPath = computed(() =>

@@ -7,7 +7,7 @@ export interface ProductDto {
   category?: TitleObjectAfterPopulate[];
   brand?: string;
   sku?: string;
-  quantity?: number;
+  quantity: number;
   regularPrice: number;
   salePrice?: number;
   tags?: string;
