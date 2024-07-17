@@ -3,7 +3,7 @@ import { eng } from "./lang/eng";
 
 // meta
 useSeoMeta({
-  ogImage: "/public/kicks-marketplace.svg",
+  ogImage: "/kicks-marketplace.svg",
 });
 useHead({
   titleTemplate: `%s - ${eng.siteHeading}`,

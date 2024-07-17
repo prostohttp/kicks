@@ -32,12 +32,7 @@ const model = defineModel();
             :alt="el.title"
             class="image"
           />
-          <img
-            src="~/public/no-image.svg"
-            :alt="el.title"
-            class="image"
-            v-else
-          />
+          <img src="/no-image.svg" :alt="el.title" class="image" v-else />
         </NuxtLink>
         <div class="flex flex-col w-[80%]">
           <NuxtLink

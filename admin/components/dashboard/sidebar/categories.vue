@@ -68,7 +68,7 @@ const items: AccordionItem[] | undefined = [
             "
           />
           <li
-            class="h-[35px] flex justify-between items-center mb-[16px] border-t border-grey dark:border-[#70706e] pt-[15px]"
+            class="h-[35px] mt-[30px] flex justify-between items-center mb-[16px] border-t border-grey dark:border-[#70706e] pt-[25px]"
           >
             <NuxtLink
               to="/dashboard/categories?page=1"

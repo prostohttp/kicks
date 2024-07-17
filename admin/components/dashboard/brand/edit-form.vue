@@ -167,7 +167,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     v-else
   >
     <div
-      class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-opacity-90 flex items-center justify-center relative group mb-[40px]"
+      class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white flex items-center justify-center relative group mb-[40px]"
       v-if="isAdmin"
     >
       <UiImageUpload

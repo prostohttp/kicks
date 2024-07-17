@@ -48,7 +48,7 @@ const tempUser = [
     class="rounded-[8px] basis-[40%] p-[8px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center"
   >
     <img
-      src="~/public/no-image.svg"
+      src="/no-image.svg"
       alt="No Image"
       v-if="!user?.image"
       class="w-[100px]"

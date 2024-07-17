@@ -50,11 +50,7 @@ const openDeleteProductModal = () => {
           />
         </template>
         <template v-else>
-          <img
-            src="~/public/no-image.svg"
-            :alt="eng.noImage"
-            class="max-w-[200px]"
-          />
+          <img src="/no-image.svg" :alt="eng.noImage" class="max-w-[200px]" />
         </template>
       </div>
       <div class="flex flex-col items-center sm:items-start break-all">

@@ -45,7 +45,7 @@ onMounted(() => {
         class="rounded-[8px] w-[50%] md:w-full"
       />
       <img
-        src="~/public/no-image.svg"
+        src="/no-image.svg"
         :alt="brand.title"
         class="rounded-[8px] w-[50%] md:w-[80px]"
         v-else

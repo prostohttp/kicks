@@ -26,11 +26,7 @@ const onClickHandler = () => {
   <input type="file" ref="inputRef" class="hidden" v-if="isAdmin" />
   <UPopover :popper="{ placement: 'bottom-start' }">
     <div v-if="!model?.image" class="cursor-pointer">
-      <img
-        src="~/public/no-image.svg"
-        alt="No Image"
-        class="lg:w-[40px] w-[40px]"
-      />
+      <img src="/no-image.svg" alt="No Image" class="lg:w-[40px] w-[40px]" />
     </div>
     <div class="w-full rounded-[8px] relative" v-else>
       <img

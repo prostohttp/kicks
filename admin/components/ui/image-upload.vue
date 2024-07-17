@@ -33,7 +33,7 @@ const isAdmin = useIsAdmin();
     ref="dropZoneRef"
   >
     <img
-      src="~/public/no-image.svg"
+      src="/no-image.svg"
       alt="No Image"
       class="lg:w-[100px] w-[40px] my-[30px]"
     />

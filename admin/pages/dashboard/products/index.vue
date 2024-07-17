@@ -129,10 +129,7 @@ watch(activePage, async (newValue) => {
   </div>
   <main class="flex flex-col">
     <UiEmpty v-if="!data?.allItems" />
-    <div
-      class="grid 2xl:grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-[14px]"
-      v-else
-    >
+    <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
       <DashboardProductCard
         v-for="product in data?.products"
         @delete-product="deleteProduct"

@@ -6,7 +6,7 @@ const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
 
 <template>
   <div
-    class="bg-fa-white h-dvh overflow-auto min-w-[260px] w-[260px] border-r border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray md:pt-[32px] pt-[10px] px-[24px]"
+    class="bg-fa-white h-dvh md:h-auto overflow-auto min-w-[260px] w-[260px] border-r border-[#cfcfcf] dark:border-gray-main dark:bg-dark-gray md:pt-[32px] pt-[10px] px-[24px]"
   >
     <NuxtLink
       to="/"

@@ -40,6 +40,6 @@ export const useStatsDataStore = defineStore(
     };
   },
   {
-    persist: true,
+    // persist: true,
   },
 );

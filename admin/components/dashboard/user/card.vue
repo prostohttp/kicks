@@ -57,7 +57,7 @@ onMounted(() => {
         <img :src="`/${user.image}`" :alt="user.name" class="rounded-[8px]" />
       </template>
       <template v-else>
-        <img src="~/public/no-image.svg" :alt="eng.noImage" />
+        <img src="/no-image.svg" :alt="eng.noImage" />
       </template>
     </div>
     <div class="flex flex-col items-center sm:items-start break-all">

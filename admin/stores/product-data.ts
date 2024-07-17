@@ -10,6 +10,7 @@ export const useProductDataStore = defineStore("productData", () => {
   }
   // vars
   const products: Ref<ProductsPayload | undefined> = ref();
+  const product: Ref<ProductDto | undefined> = ref();
   const productsForCount: Ref<
     { _id: string; category: string[] }[] | undefined
   > = ref();
@@ -22,6 +23,20 @@ export const useProductDataStore = defineStore("productData", () => {
   > = ref([]);
 
   // handlers
+  const getProductById = async (id: string) => {
+    try {
+      product.value = await $fetch("/api/product/one", {
+        method: "GET",
+        query: {
+          id: id,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+    return true;
+  };
+
   const getAllProducts = async (
     page: number,
     category?: string,
@@ -69,10 +84,12 @@ export const useProductDataStore = defineStore("productData", () => {
     }
   };
   return {
+    product,
     products,
     productsForCount,
     titles,
     selected,
+    getProductById,
     getTitles,
     getAllProducts,
     getProductCount,

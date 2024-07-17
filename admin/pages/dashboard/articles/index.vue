@@ -148,7 +148,7 @@ watch(
       <template #image-data="{ row }">
         <NuxtLink :to="`/dashboard/articles/${row.id}`">
           <img
-            src="~/public/no-image.svg"
+            src="/no-image.svg"
             :alt="eng.noImage"
             class="w-[40px] dark:opacity-90 rounded-[8px]"
             v-if="!row.image"

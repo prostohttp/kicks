@@ -6,7 +6,7 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
 </script>
 
 <template>
-  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans lg:h-dvh">
+  <div class="dark:text-fa-white dark:bg-dark-gray flex open-sans min-h-dvh">
     <DashboardSidebar class="hidden md:block" />
     <USlideover
       v-model="isOpen"
