@@ -18,7 +18,6 @@ const { option } = storeToRefs(optionDataStore);
 // Vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
-const options: Ref<{ [key: string]: any }[]> = ref([]);
 const types: string[] = Object.keys(optionTypes).map((label) => label);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
@@ -27,8 +26,7 @@ const clearState = () => {
   option.value.title = "";
   option.value.type = "";
   option.value.sort = undefined;
-  option.value.values = {};
-  options.value = [];
+  option.value.values = [];
 };
 
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
@@ -42,7 +40,7 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
     const isValid = isValidOptionValues(
       Object.values(option.value.values || {}),
     );
-    if (!isValid && optionDataStore.isVisibleTable && options.value.length) {
+    if (!isValid && optionDataStore.isVisibleTable) {
       toast.add({
         title: "Check form fields",
         color: "red",
@@ -149,10 +147,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
             min="1"
           />
         </UFormGroup>
-        <DashboardOptionAddNewTable
-          v-if="optionDataStore.isVisibleTable"
-          v-model="options"
-        />
+        <DashboardOptionAddNewTable v-if="optionDataStore.isVisibleTable" />
       </UForm>
     </div>
   </div>

@@ -56,21 +56,21 @@ const setOptionImageHandler = (
   });
 };
 
-const isValidString = (value: string) => {
-  return formFieldValidator(
-    value,
-    isStringValidator,
-    Constants.STRING_MIN_LENGTH,
-  );
-};
+// const isValidString = (value: string) => {
+//   return formFieldValidator(
+//     value,
+//     isStringValidator,
+//     Constants.STRING_MIN_LENGTH,
+//   );
+// };
 
-const isValidNumber = (value: number | undefined) => {
-  return formFieldValidator(
-    value,
-    isNumberValidator,
-    Constants.NUMBER_MIN_VALUE,
-  );
-};
+// const isValidNumber = (value: number | undefined) => {
+//   return formFieldValidator(
+//     value,
+//     isNumberValidator,
+//     Constants.NUMBER_MIN_VALUE,
+//   );
+// };
 
 const uploadImage = async (image: File) => {
   try {
@@ -144,9 +144,6 @@ const inputHandler = (e: Event) => {
 
 const addNewValue = () => {
   const id = Math.floor(Math.random() * 100000);
-  if (!option.value.values) {
-    option.value.values = {};
-  }
   option.value.values![id] = {
     id,
     value: "",
@@ -213,13 +210,18 @@ onUnmounted(() => {
     </template>
     <template #value-data="{ row }">
       <UFormGroup>
-        <UInput
+        <!-- <UInput
           :placeholder="eng.error.stringMin"
           :inputClass="
             isValidString(option.values![row.id].value)
               ? 'clean-field'
               : 'clean-field field-error'
           "
+          v-model="option.values![row.id].value"
+        /> -->
+        <UInput
+          :placeholder="eng.error.stringMin"
+          inputClass="clean-field"
           v-model="option.values![row.id].value"
         />
       </UFormGroup>
@@ -235,13 +237,20 @@ onUnmounted(() => {
     </template>
     <template #sort-data="{ row }">
       <UFormGroup>
-        <UInput
+        <!-- <UInput
           :placeholder="eng.error.numberMin"
           :inputClass="
             isValidNumber(option.values![row.id].sort)
               ? 'clean-field'
               : 'field-error clean-field'
           "
+          v-model="option.values![row.id].sort"
+          type="number"
+          min="1"
+        /> -->
+        <UInput
+          :placeholder="eng.error.numberMin"
+          inputClass="clean-field"
           v-model="option.values![row.id].sort"
           type="number"
           min="1"
@@ -262,4 +271,5 @@ onUnmounted(() => {
     icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
     @click="addNewValue"
   />
+  <pre>{{ options }}</pre>
 </template>

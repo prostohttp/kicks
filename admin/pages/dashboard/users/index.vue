@@ -62,7 +62,7 @@ watch(activePage, async (newValue) => {
 <template>
   <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.users" />
   <main class="flex flex-col">
-    <UiEmpty v-if="!data?.allItems" />
+    <LazyUiEmpty v-if="!data?.allItems" />
     <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
       <DashboardUserCard
         v-for="user in data?.users"
@@ -72,7 +72,7 @@ watch(activePage, async (newValue) => {
       />
     </div>
   </main>
-  <UiPagination
+  <LazyUiPagination
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_USERS"

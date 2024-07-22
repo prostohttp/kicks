@@ -5,19 +5,19 @@ import type { UiOptionDto } from "~/types/server/server.types";
 
 export const useOptionDataStore = defineStore("optionData", () => {
   interface OptionsPayload {
-    options: OptionDto[];
+    options: OptionDto;
     pagesInPagination?: number;
     allItems: number;
     activePage?: number;
   }
 
   // vars
-  let option: UiOptionDto = reactive({
+  const option: UiOptionDto = reactive({
     _id: "",
     title: "",
     type: "",
     sort: undefined,
-    values: undefined,
+    values: {},
   });
 
   const options: Ref<OptionsPayload | undefined> = ref();
@@ -36,7 +36,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
       options.value = await $fetch("/api/option/all", {
         method: "GET",
         query: {
-          page,
+          page: page || 1,
         },
       });
     } catch (error: any) {
@@ -76,7 +76,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
       option.title = "";
       option.type = "";
       option.sort = undefined;
-      option.values = undefined;
+      option.values = {};
     }
   };
 

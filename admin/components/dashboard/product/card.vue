@@ -15,6 +15,7 @@ const emit = defineEmits(["delete-product"]);
 // store
 
 // vars
+const isAdmin = useIsAdmin();
 const modal = useModal();
 
 // handlers
@@ -106,7 +107,11 @@ const openDeleteProductModal = () => {
               >
                 {{ eng.editProduct }}
               </NuxtLink>
-              <NuxtLink @click="openDeleteProductModal" class="cursor-pointer">
+              <NuxtLink
+                @click="openDeleteProductModal"
+                class="cursor-pointer"
+                v-if="isAdmin"
+              >
                 {{ eng.deleteProduct }}
               </NuxtLink>
             </ul>
@@ -117,7 +122,7 @@ const openDeleteProductModal = () => {
     <div class="flex flex-col gap-[5px]">
       <strong class="text-[16px]">{{ eng.summary }}</strong>
       <span
-        class="text-[14px] font-[200] sm:truncate sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
+        class="text-[14px] sm:truncate sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
       >
         {{ product.description }}
       </span>

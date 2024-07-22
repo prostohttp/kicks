@@ -85,7 +85,7 @@ onMounted(async () => {
             Reset password
           </h1>
         </div>
-        <ResetPasswordForm @submit="resetPasswordHandler" v-if="isValid" />
+        <LazyResetPasswordForm @submit="resetPasswordHandler" v-if="isValid" />
         <template v-else>
           <p>Sorry, but the password reset link is no longer valid.</p>
           <p>

@@ -18,7 +18,7 @@ export const useBrandDataStore = defineStore("brandData", () => {
       brands.value = await $fetch("/api/brand/all", {
         method: "GET",
         query: {
-          page,
+          page: page || 1,
         },
       });
     } catch (error: any) {

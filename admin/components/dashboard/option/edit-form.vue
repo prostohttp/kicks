@@ -60,7 +60,7 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
           });
         }
       }
-      option.value.values = undefined;
+      option.value.values = {};
       options.value = [];
     }
     toast.add({

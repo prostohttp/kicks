@@ -20,13 +20,8 @@ const toast = useToast();
 const routeCategory = route.query.category;
 const path = router.currentRoute.value.path;
 const category = ref(routeCategory?.toString());
-await useAsyncData(
-  "foundedCategory",
-  () => categoryDataStore.getCategoryById(category.value),
-  {
-    // TODO: await categoryDataStore.getCategoryById(category.value); убрать из watch и докрутить тут
-    // watch: [category],
-  },
+await useAsyncData("foundedCategory", () =>
+  categoryDataStore.getCategoryById(category.value),
 );
 const fullPath = computed(() =>
   !categoryDataStore.category ? path : `${path}/${category.value}`,
@@ -40,7 +35,7 @@ const links: Ref<BreadcrumbItem[]> = ref(
         `${path}?category=${category.value}`,
       ),
 );
-await useAsyncData("products", () =>
+await useAsyncData<ProductsPayload>("products", () =>
   productDataStore.getAllProducts(Number(route.query.page), category.value),
 );
 const activePage = ref(data.value?.activePage || 1);
@@ -86,20 +81,28 @@ useHead({
 // hooks
 watch(
   () => route.query,
-  async (newValue) => {
-    category.value = newValue.category ? newValue.category.toString() : "";
-    await categoryDataStore.getCategoryById(category.value);
+  async (newValue, oldValue) => {
+    if (!newValue.category || newValue.category !== oldValue.category) {
+      category.value = newValue.category ? newValue.category.toString() : "";
+      await categoryDataStore.getCategoryById(category.value);
+    }
     links.value = breadcrumbsArrayFactory(
       fullPath.value,
       categoryDataStore.category?.title,
       `${path}?category=${category.value}`,
     );
-
-    activePage.value = Number(newValue.page);
+    // if (
+    //   (oldValue.category && !newValue.category) ||
+    //   newValue.category !== oldValue.category ||
+    //   newValue.page !== oldValue.page
+    // ) {
     productDataStore.getAllProducts(
       Number(newValue.page),
       newValue.category?.toString(),
     );
+    // }
+
+    activePage.value = Number(newValue.page);
   },
 );
 
@@ -140,7 +143,7 @@ watch(activePage, async (newValue) => {
       />
     </div>
   </main>
-  <UiPagination
+  <LazyUiPagination
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_PRODUCT"

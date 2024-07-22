@@ -164,7 +164,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     @submit="protectedSubmitHandler"
     class="w-full flex flex-col gap-[50px]"
   >
-    <UiSpinner v-if="isLoading" />
+    <LazyUiSpinner v-if="isLoading" />
     <div class="flex gap-[30px] lg:flex-row flex-col-reverse" v-else>
       <div class="width-[60%] basis-[60%] flex flex-col gap-[24px]">
         <UFormGroup

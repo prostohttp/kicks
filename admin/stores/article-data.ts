@@ -25,7 +25,7 @@ export const useArticleDataStore = defineStore("articleData", () => {
       articles.value = await $fetch("/api/article/all", {
         method: "GET",
         query: {
-          page,
+          page: page || 1,
         },
       });
     } catch (error: any) {

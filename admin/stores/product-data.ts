@@ -1,13 +1,14 @@
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
 import type { ProductDto } from "~/server/api/product/dto/product.dto";
 
+export interface ProductsPayload {
+  products: ProductDto[];
+  pagesInPagination?: number;
+  allItems: number;
+  activePage?: number;
+}
+
 export const useProductDataStore = defineStore("productData", () => {
-  interface ProductsPayload {
-    products: ProductDto[];
-    pagesInPagination?: number;
-    allItems: number;
-    activePage?: number;
-  }
   // vars
   const products: Ref<ProductsPayload | undefined> = ref();
   const product: Ref<ProductDto | undefined> = ref();
@@ -43,10 +44,10 @@ export const useProductDataStore = defineStore("productData", () => {
     perPage?: number,
   ) => {
     try {
-      products.value = await $fetch("/api/product/all", {
+      products.value = await $fetch<ProductsPayload>("/api/product/all", {
         method: "GET",
         query: {
-          page,
+          page: page || 1,
           category,
           perPage,
         },
@@ -54,7 +55,7 @@ export const useProductDataStore = defineStore("productData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
-    return true;
+    return products.value;
   };
 
   const getProductCount = async () => {

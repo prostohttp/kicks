@@ -68,8 +68,8 @@ const inputData = [
           />
         </div>
       </template>
-      <UiEmpty v-if="!categoryId" />
-      <DashboardCategoryEditForm
+      <LazyUiEmpty v-if="!categoryId" />
+      <LazyDashboardCategoryEditForm
         @close="$emit('close')"
         :inputData="inputData"
         :categoryId="categoryId"

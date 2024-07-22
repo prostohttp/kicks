@@ -158,7 +158,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
-  <UiEmpty v-if="!brand" />
+  <LazyUiEmpty v-if="!brand" />
   <UForm
     :schema="v.safeParser(schema)"
     :state="brand"

@@ -73,12 +73,11 @@ const markAllAsRead = async () => {
             <template v-if="isEmpty">
               <span>{{ eng.empty }}</span>
             </template>
-            <template v-else>
-              <DashboardHeaderNotificationsList
-                :data="notifications"
-                :close="close"
-              />
-            </template>
+            <LazyDashboardHeaderNotificationsList
+              :data="notifications"
+              :close="close"
+              v-else
+            />
           </div>
           <div
             v-if="!isEmpty"

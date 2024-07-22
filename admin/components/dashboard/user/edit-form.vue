@@ -20,7 +20,8 @@ const { userById: user } = storeToRefs(userDataStore);
 // vars
 const isAdmin = useIsAdmin();
 const isLoading = ref(false);
-const page = Number(useRoute().query.page);
+const route = useRoute();
+const page = Number(route.query.page);
 const toast = useToast();
 const inputRef = ref<HTMLInputElement | undefined>();
 const dropZoneRef = ref<HTMLDivElement | undefined>();
@@ -143,7 +144,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
-  <UiEmpty v-if="!user" />
+  <LazyUiEmpty v-if="!user" />
   <UForm
     :schema="v.safeParser(schema)"
     :state="user"

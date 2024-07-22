@@ -28,8 +28,8 @@ useHead({
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >
     <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
-      <DashboardProfileInfoRegistered v-if="tempUser?.isRegistered" />
-      <DashboardProfileInfoUnregistered v-else />
+      <LazyDashboardProfileInfoRegistered v-if="tempUser?.isRegistered" />
+      <LazyDashboardProfileInfoUnregistered v-else />
     </div>
   </main>
 </template>

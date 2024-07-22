@@ -71,7 +71,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
-  <UiEmpty v-if="!category" />
+  <LazyUiEmpty v-if="!category" />
   <UForm
     :schema="v.safeParser(schema)"
     :state="state"

@@ -46,7 +46,7 @@ export const useUserDataStore = defineStore("userData", () => {
       allUsers.value = await $fetch<UsersPayload>("/api/user/all", {
         method: "GET",
         query: {
-          page,
+          page: page || 1,
         },
       });
     } catch (error: any) {

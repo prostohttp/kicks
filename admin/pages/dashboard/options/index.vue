@@ -161,7 +161,7 @@ watch(
       </template>
     </UTable>
   </main>
-  <UiPagination
+  <LazyUiPagination
     v-if="data?.pagesInPagination"
     v-model="activePage"
     :element-in-page="Constants.PER_PAGE_OPTION"

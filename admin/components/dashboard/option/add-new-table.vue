@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
 
 // emits
-const options: ModelRef<{ [key: string]: any }[] | undefined> = defineModel();
 
 // store
 const optionDataStore = useOptionDataStore();
@@ -31,6 +29,7 @@ const columns = [
   },
 ];
 const activeId = ref();
+const computedOptions = computed(() => Object.values(option.value.values));
 
 // handlers
 const uploadImage = async (image: File) => {
@@ -53,22 +52,6 @@ const uploadImage = async (image: File) => {
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
   }
-};
-
-const isValidString = (value: string) => {
-  return formFieldValidator(
-    value,
-    isStringValidator,
-    Constants.STRING_MIN_LENGTH,
-  );
-};
-
-const isValidNumber = (value: number | undefined) => {
-  return formFieldValidator(
-    value,
-    isNumberValidator,
-    Constants.NUMBER_MIN_VALUE,
-  );
 };
 
 const deleteImageHandler = async (id: number) => {
@@ -101,27 +84,16 @@ const inputHandler = (e: Event) => {
 
 const addNewValue = () => {
   const id = Math.floor(Math.random() * 100000);
-  if (!option.value.values) {
-    option.value.values = {};
-  }
   option.value.values![id] = {
     id,
     value: "",
     sort: undefined,
     image: "",
   };
-
-  options.value?.push({
-    id,
-    value: "value" + id,
-    image: "image" + id,
-    sort: "sort" + id,
-    action: "delete",
-  });
 };
 
 const deleteValue = (id: number) => {
-  options.value = options.value?.filter((option) => option.id !== id);
+  delete option.value.values[id];
   if (option.value.values![id].image) {
     deleteImageHandler(id);
   }
@@ -144,7 +116,7 @@ onUnmounted(() => {
 
 <template>
   <UTable
-    :rows="options"
+    :rows="computedOptions"
     :columns="columns"
     :empty-state="{
       icon: '',
@@ -172,12 +144,8 @@ onUnmounted(() => {
       <UFormGroup>
         <UInput
           :placeholder="eng.error.stringMin"
-          :inputClass="
-            isValidString(option.values![row.id].value)
-              ? 'clean-field'
-              : 'clean-field field-error'
-          "
-          v-model="option.values![row.id].value"
+          inputClass="clean-field"
+          v-model="option.values[row.id].value"
         />
       </UFormGroup>
     </template>
@@ -185,7 +153,7 @@ onUnmounted(() => {
       <UiImageUploadSmall
         :id="row.id"
         v-model:active-id="activeId"
-        v-model:image="option.values![row.id]"
+        v-model:image="option.values[row.id]"
         v-model:input-ref="inputRef"
         @delete="deleteImageHandler"
       />
@@ -194,12 +162,8 @@ onUnmounted(() => {
       <UFormGroup>
         <UInput
           :placeholder="eng.error.numberMin"
-          :inputClass="
-            isValidNumber(option.values![row.id].sort)
-              ? 'clean-field'
-              : 'field-error clean-field'
-          "
-          v-model="option.values![row.id].sort"
+          inputClass="clean-field"
+          v-model="option.values[row.id].sort"
           type="number"
           min="1"
         />
@@ -216,6 +180,8 @@ onUnmounted(() => {
   <UButton
     class="icon-button float-right mr-[15px]"
     icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
+    type="button"
     @click="addNewValue"
   />
+  <pre>{{ option.values }}</pre>
 </template>

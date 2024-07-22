@@ -31,7 +31,7 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
       categories.value = await $fetch("/api/category/all", {
         method: "GET",
         query: {
-          page,
+          page: page || 1,
         },
       });
     } catch (error: any) {

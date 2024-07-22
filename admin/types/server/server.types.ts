@@ -44,7 +44,7 @@ export interface UiOptionDto {
   title: string;
   type: string;
   sort: number | undefined;
-  values: ValueOption | undefined;
+  values: ValueOption;
 }
 
 export interface TitleObjectAfterPopulate {

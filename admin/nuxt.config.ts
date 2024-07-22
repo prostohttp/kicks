@@ -1,8 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // ssr: false,
   routeRules: {
     "/server/api/**": { cors: true },
     "/api/**": { cors: true },
+    "/auth/**": {
+      prerender: true,
+    },
   },
 
   app: {
@@ -26,7 +30,7 @@ export default defineNuxtConfig({
 
   nitro: {
     imports: {
-      dirs: ["./types", "./server/models"],
+      dirs: ["types/**", "server/models"],
     },
     storage: {
       fs: {
@@ -69,7 +73,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Inter: [400, 500],
-      "Open Sans": [200, 400, 500, 600],
+      "Open Sans": [400, 500, 600],
       Poppins: [400],
       Rubik: [400, 500, 600, 700, 900],
     },
