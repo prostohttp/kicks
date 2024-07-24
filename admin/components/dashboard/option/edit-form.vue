@@ -19,37 +19,31 @@ const { option } = storeToRefs(optionDataStore);
 // Vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
-const options: Ref<{ [key: string]: any }[]> = ref(
-  sortElements(Object.values(option.value?.values! || [])),
-);
 const types: string[] = Object.keys(optionTypes).map((label) => label);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
 // Handlers
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const values = optionDataStore.isVisibleTable ? options.value : null;
-    const isValid = isValidOptionValues(options.value);
-    if (!isValid && optionDataStore.isVisibleTable && options.value.length) {
-      toast.add({
-        title: "Check form fields",
-        color: "red",
-      });
-      return;
-    } else {
-      await $fetch("/api/option/edit", {
-        method: "PUT",
-        body: {
-          _id: id,
-          title: event.data.title,
-          type: event.data.type,
-          sort: event.data.sort,
-          values,
-        },
-      });
-    }
+    const values = optionDataStore.isVisibleTable
+      ? Object.values(option.value.values)
+      : null;
 
-    if (!optionDataStore.isVisibleTable && option.value.values) {
+    await $fetch("/api/option/edit", {
+      method: "PUT",
+      body: {
+        _id: id,
+        title: event.data.title,
+        type: event.data.type,
+        sort: event.data.sort,
+        values,
+      },
+    });
+
+    if (
+      !optionDataStore.isVisibleTable &&
+      Object.values(option.value.values).length
+    ) {
       for (const item of Object.values(option.value.values)) {
         if (item?.image) {
           await $fetch("/api/image/remove", {
@@ -61,7 +55,6 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
         }
       }
       option.value.values = {};
-      options.value = [];
     }
     toast.add({
       title: "Option updated",
@@ -79,9 +72,11 @@ watch(isSubmit, () => {
   if (isSubmit.value) {
     submitRef.value?.submit();
     isSubmit.value = false;
-    if (options.value) {
-      options.value = sortElements(Object.values(option.value?.values! || []));
-    }
+    // if (Object.values(option.value.values).length) {
+    //   option.value.values = sortElements(
+    //     Object.values(option.value.values || []),
+    //   );
+    // }
   }
 });
 
@@ -141,7 +136,6 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         </UFormGroup>
         <DashboardOptionEditTable
           v-if="optionDataStore.isVisibleTable"
-          v-model:options="options"
           :optionId="id"
         />
       </UForm>

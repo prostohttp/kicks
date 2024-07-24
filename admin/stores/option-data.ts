@@ -64,6 +64,16 @@ export const useOptionDataStore = defineStore("optionData", () => {
     return true;
   };
 
+  const addNewValue = () => {
+    const id = Math.floor(Math.random() * 100000);
+    option.values![id] = {
+      id,
+      value: "",
+      sort: undefined,
+      image: "",
+    };
+  };
+
   const isVisibleTable = computed(
     () =>
       option?.type === eng.optionTypes.list ||
@@ -89,5 +99,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
     getOption,
     getAllOptions,
     clearState,
+    addNewValue,
   };
 });

@@ -1,16 +1,8 @@
 <script lang="ts" setup>
-interface IImageModel {
-  image: string;
-}
-
 // define
-const { id } = defineProps<{
-  id: number;
-}>();
-const model: Ref<IImageModel | undefined> = defineModel("image");
-const activeId: Ref<string | undefined> = defineModel("activeId");
-const inputRef: Ref<HTMLInputElement | undefined> = defineModel("inputRef");
-const emit = defineEmits(["delete"]);
+const model: Ref<string | undefined> = defineModel();
+const inputRef: Ref<HTMLInputElement | null> = ref(null);
+const emit = defineEmits(["delete", "change"]);
 
 // vars
 const isAdmin = useIsAdmin();
@@ -18,19 +10,29 @@ const isAdmin = useIsAdmin();
 // handlers
 const onClickHandler = () => {
   inputRef.value?.click();
-  activeId.value = id.toString();
+};
+
+const deleteImageHandler = () => {
+  inputRef.value!.value = "";
+  emit("delete");
 };
 </script>
 
 <template>
-  <input type="file" ref="inputRef" class="hidden" v-if="isAdmin" />
+  <input
+    type="file"
+    @change="$emit('change', $event)"
+    ref="inputRef"
+    class="hidden"
+    v-if="isAdmin"
+  />
   <UPopover :popper="{ placement: 'bottom-start' }">
-    <div v-if="!model?.image" class="cursor-pointer">
+    <div v-if="!model" class="cursor-pointer">
       <img src="/no-image.svg" alt="No Image" class="lg:w-[40px] w-[40px]" />
     </div>
     <div class="w-full rounded-[8px] relative" v-else>
       <img
-        :src="`/${model?.image}`"
+        :src="`/${model}`"
         class="lg:w-[40px] w-[40px] rounded-[8px] group-hover:opacity-70 transition-opacity"
       />
     </div>
@@ -39,13 +41,13 @@ const onClickHandler = () => {
         <UButton
           class="icon-button float-right"
           icon="i-heroicons-inbox-arrow-down-solid h-[20px] w-[20px]"
-          @click="onClickHandler"
-          v-if="!model?.image"
+          @click="onClickHandler()"
+          v-if="!model"
         />
         <UButton
           class="icon-button float-right"
           icon="i-heroicons-archive-box-x-mark-solid h-[20px] w-[20px]"
-          @click="$emit('delete', id)"
+          @click="deleteImageHandler()"
           v-else
         />
       </div>

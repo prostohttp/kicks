@@ -1,12 +1,9 @@
 <script lang="ts" setup>
-import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
 import type { UiOptionDto } from "~/types/server/server.types";
 
 // emits
-const options: ModelRef<{ [key: string]: any }[] | undefined> =
-  defineModel("options");
 const { optionId } = defineProps<{
   optionId: string;
 }>();
@@ -18,7 +15,6 @@ const { option } = storeToRefs(optionDataStore);
 // vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
-const inputRef: Ref<HTMLInputElement | undefined> = ref();
 const columns = [
   {
     key: "value",
@@ -36,7 +32,6 @@ const columns = [
     key: "action",
   },
 ];
-const activeId = ref();
 
 // handlers
 const setOptionImageHandler = (
@@ -56,28 +51,13 @@ const setOptionImageHandler = (
   });
 };
 
-// const isValidString = (value: string) => {
-//   return formFieldValidator(
-//     value,
-//     isStringValidator,
-//     Constants.STRING_MIN_LENGTH,
-//   );
-// };
-
-// const isValidNumber = (value: number | undefined) => {
-//   return formFieldValidator(
-//     value,
-//     isNumberValidator,
-//     Constants.NUMBER_MIN_VALUE,
-//   );
-// };
-
-const uploadImage = async (image: File) => {
+const uploadImage = async (e: Event, id: number) => {
   try {
+    let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
     formData.append("folderName", Constants.IMG_OPTIONS);
-    if (image) {
-      formData.append("image", image);
+    if (fileInput.files![0]) {
+      formData.append("image", fileInput.files![0]);
     }
     const uploadedImage = await $fetch("/api/image/add", {
       method: "POST",
@@ -87,17 +67,13 @@ const uploadImage = async (image: File) => {
     if (!uploadedImage) {
       toast.add({ title: eng.notImage, color: "red" });
     }
-    option.value.values![activeId.value].image = uploadedImage;
+    option.value.values[id].image = uploadedImage;
 
     await $fetch("/api/option/edit", {
       method: "PUT",
       body: {
         _id: optionId,
-        values: setOptionImageHandler(
-          option.value!,
-          activeId.value,
-          uploadedImage,
-        ),
+        values: setOptionImageHandler(option.value!, id, uploadedImage),
       },
     });
     toast.add({ title: eng.imageUploaded, color: "green" });
@@ -122,69 +98,24 @@ const deleteImageHandler = async (id: number) => {
         values: setOptionImageHandler(option.value, id, ""),
       },
     });
-    if (
-      inputRef.value &&
-      inputRef.value.value &&
-      option.value.values &&
-      option.value.values[id]
-    ) {
-      inputRef.value!.value = "";
-      option.value.values![id].image = "";
-    }
+    option.value.values[id].image = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
   }
 };
 
-const inputHandler = (e: Event) => {
-  let fileInput = e.target as HTMLInputElement;
-  uploadImage(fileInput.files![0]);
-};
-
-const addNewValue = () => {
-  const id = Math.floor(Math.random() * 100000);
-  option.value.values![id] = {
-    id,
-    value: "",
-    sort: undefined,
-    image: "",
-  };
-
-  options.value?.push({
-    id,
-    value: "value" + id,
-    image: "image" + id,
-    sort: "sort" + id,
-    action: "delete",
-  });
-};
-
 const deleteValue = (id: number) => {
-  options.value = options.value?.filter((option) => option.id !== id);
-  if (option.value.values![id].image) {
+  delete option.value.values![id];
+  if (option.value.values[id].image) {
     deleteImageHandler(id);
   }
-  delete option.value.values![id];
 };
-
-// hooks
-watch(inputRef, () => {
-  if (inputRef.value) {
-    inputRef.value.addEventListener("change", inputHandler);
-  }
-});
-
-onUnmounted(() => {
-  if (inputRef.value) {
-    inputRef.value.removeEventListener("change", inputHandler);
-  }
-});
 </script>
 
 <template>
   <UTable
-    :rows="options"
+    :rows="Object.values(option.values)"
     :columns="columns"
     :empty-state="{
       icon: '',
@@ -210,48 +141,26 @@ onUnmounted(() => {
     </template>
     <template #value-data="{ row }">
       <UFormGroup>
-        <!-- <UInput
-          :placeholder="eng.error.stringMin"
-          :inputClass="
-            isValidString(option.values![row.id].value)
-              ? 'clean-field'
-              : 'clean-field field-error'
-          "
-          v-model="option.values![row.id].value"
-        /> -->
         <UInput
           :placeholder="eng.error.stringMin"
           inputClass="clean-field"
-          v-model="option.values![row.id].value"
+          v-model="row.value"
         />
       </UFormGroup>
     </template>
     <template #image-data="{ row }">
       <UiImageUploadSmall
-        :id="row.id"
-        v-model:active-id="activeId"
-        v-model:image="option.values![row.id]"
-        v-model:input-ref="inputRef"
-        @delete="deleteImageHandler"
+        v-model="row.image"
+        @change="uploadImage($event, row.id)"
+        @delete="deleteImageHandler(row.id)"
       />
     </template>
     <template #sort-data="{ row }">
       <UFormGroup>
-        <!-- <UInput
-          :placeholder="eng.error.numberMin"
-          :inputClass="
-            isValidNumber(option.values![row.id].sort)
-              ? 'clean-field'
-              : 'field-error clean-field'
-          "
-          v-model="option.values![row.id].sort"
-          type="number"
-          min="1"
-        /> -->
         <UInput
           :placeholder="eng.error.numberMin"
           inputClass="clean-field"
-          v-model="option.values![row.id].sort"
+          v-model="row.sort"
           type="number"
           min="1"
         />
@@ -269,7 +178,6 @@ onUnmounted(() => {
     type="button"
     class="icon-button float-right mr-[15px]"
     icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
-    @click="addNewValue"
+    @click="optionDataStore.addNewValue"
   />
-  <pre>{{ options }}</pre>
 </template>

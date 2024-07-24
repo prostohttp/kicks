@@ -20,6 +20,7 @@ const isAdmin = useIsAdmin();
 const toast = useToast();
 const types: string[] = Object.keys(optionTypes).map((label) => label);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
+const values: Ref<{ [key: string]: any }> = ref({});
 
 // Handlers
 const clearState = () => {
@@ -37,10 +38,10 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
         ? Object.values(option.value.values)
         : null;
     }
-    const isValid = isValidOptionValues(
-      Object.values(option.value.values || {}),
-    );
-    if (!isValid && optionDataStore.isVisibleTable) {
+    // const isValid = isValidOptionValues(
+    //   Object.values(option.value.values || {}),
+    // );
+    if (optionDataStore.isVisibleTable) {
       toast.add({
         title: "Check form fields",
         color: "red",
