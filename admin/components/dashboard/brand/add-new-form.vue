@@ -21,49 +21,55 @@ const state = reactive({
   title: "",
   description: "",
 });
-const isLoading = ref(false);
 const page = Number(useRoute().query.page);
-const inputRef: Ref<HTMLInputElement | undefined> = ref();
-const dropZoneRef = ref<HTMLDivElement | undefined>();
+const dropZoneRef = ref<HTMLInputElement | undefined>();
 
 // handlers
-const uploadImage = async (image: File) => {
-  isLoading.value = true;
+const uploadImageHandler = async (formData: FormData) => {
+  const uploadedImage = await $fetch("/api/image/add", {
+    method: "POST",
+    body: formData,
+  });
+  if (!uploadedImage) {
+    toast.add({ title: eng.noImage, color: "red" });
+  }
+  return uploadedImage;
+};
+
+const uploadImage = async (e: Event) => {
   try {
+    let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
-    formData.append("folderName", Constants.IMG_BRANDS);
-    if (image) {
-      formData.append("image", image);
+    if (fileInput.files![0]) {
+      formData.append("folderName", Constants.IMG_BRANDS);
+      formData.append("image", fileInput.files![0]);
     }
-    const uploadedImage = await $fetch("/api/image/add", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!uploadedImage) {
-      toast.add({ title: eng.noImage, color: "red" });
-    }
-
+    const uploadedImage = await uploadImageHandler(formData);
     brandImage.value = uploadedImage;
     toast.add({ title: eng.imageUploaded, color: "green" });
-    isLoading.value = false;
   } catch (_error: any) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
-const onDrop = (files: File[] | null) => {
-  if (files) {
-    uploadImage(files[0]);
+const onDrop = async (files: File[] | null) => {
+  try {
+    if (files) {
+      const formData = new FormData();
+      if (files![0]) {
+        formData.append("image", files[0]);
+        formData.append("folderName", Constants.IMG_BRANDS);
+      }
+      const uploadedImage = await uploadImageHandler(formData);
+      brandImage.value = uploadedImage;
+      toast.add({ title: eng.imageUploaded, color: "green" });
+    }
+  } catch (error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
 useDropZone(dropZoneRef, { onDrop });
-
-const inputHandler = (e: Event) => {
-  let fileInput = e.target as HTMLInputElement;
-  uploadImage(fileInput.files![0]);
-};
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
@@ -94,25 +100,11 @@ const deleteImageHandler = async () => {
       },
     });
     brandImage.value = "";
-    inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
-
-// hooks
-onMounted(() => {
-  if (inputRef.value) {
-    inputRef.value.addEventListener("change", inputHandler);
-  }
-});
-
-onUnmounted(() => {
-  if (inputRef.value) {
-    inputRef.value.removeEventListener("change", inputHandler);
-  }
-});
 
 const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
@@ -130,12 +122,11 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     >
       <UiImageUpload
         v-model:image="brandImage"
-        v-model:isLoading="isLoading"
         alt="Brand Image"
         :add-new="true"
-        v-model:input-ref="inputRef"
         v-model:drop-zone-ref="dropZoneRef"
         @delete="deleteImageHandler"
+        @change="uploadImage($event)"
       />
     </div>
     <UFormGroup
@@ -170,7 +161,6 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         class="textarea"
       />
     </UFormGroup>
-    {{ brandImage }}
     <div
       class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
       v-if="isAdmin"

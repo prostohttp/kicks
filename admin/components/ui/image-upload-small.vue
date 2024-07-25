@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 // define
 const model: Ref<string | undefined> = defineModel();
-const inputRef: Ref<HTMLInputElement | null> = ref(null);
 const emit = defineEmits(["delete", "change"]);
 
 // vars
+const inputRef: Ref<HTMLInputElement | null> = ref(null);
 const isAdmin = useIsAdmin();
 
 // handlers

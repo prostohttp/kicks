@@ -12,15 +12,13 @@ defineProps<{ userData: UserData[] }>();
 
 // Store
 const userStore = useUserDataStore();
-await userStore.getUser();
+await useAsyncData("savedUser", () => userStore.getUser());
 const { savedUser: user } = storeToRefs(userStore);
-const isLoading = ref(false);
 
 // Vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
-const inputRef = ref<HTMLInputElement>();
-const dropZoneRef = ref<HTMLDivElement | null>();
+const dropZoneRef = ref<HTMLInputElement | undefined>();
 
 const state = reactive({
   name: user.value?.name,
@@ -31,34 +29,34 @@ const state = reactive({
 });
 
 // Handlers
-const uploadImage = async (id: string, image: File) => {
-  isLoading.value = true;
+const uploadImageHandler = async (formData: FormData) => {
+  const uploadedImage = await $fetch("/api/image/add", {
+    method: "POST",
+    body: formData,
+  });
+  if (!uploadedImage) {
+    toast.add({ title: eng.noImage, color: "red" });
+  }
+  await $fetch("/api/user/edit", {
+    method: "PUT",
+    body: {
+      id: user.value?._id,
+      image: uploadedImage,
+    },
+  });
+};
+
+const uploadImage = async (e: Event) => {
   try {
+    let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
-    formData.append("folderName", Constants.IMG_USERS);
-
-    if (image) {
-      formData.append("image", image);
+    if (fileInput.files![0]) {
+      formData.append("folderName", Constants.IMG_USERS);
+      formData.append("image", fileInput.files![0]);
     }
-    const uploadedImage = await $fetch("/api/image/add", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!uploadedImage) {
-      toast.add({ title: eng.notImage, color: "red" });
-    }
-
-    await $fetch("/api/user/edit", {
-      method: "PUT",
-      body: {
-        id: user.value?._id,
-        image: uploadedImage,
-      },
-    });
+    await uploadImageHandler(formData);
     await userStore.getUser();
     toast.add({ title: eng.imageUploaded, color: "green" });
-    isLoading.value = false;
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
@@ -66,7 +64,18 @@ const uploadImage = async (id: string, image: File) => {
 
 const onDrop = async (files: File[] | null) => {
   if (user.value && files) {
-    uploadImage(user.value._id, files[0]);
+    try {
+      const formData = new FormData();
+      if (files![0]) {
+        formData.append("image", files![0]);
+        formData.append("folderName", Constants.IMG_USERS);
+      }
+      await uploadImageHandler(formData);
+      await userStore.getUser();
+      toast.add({ title: eng.imageUploaded, color: "green" });
+    } catch (error) {
+      toast.add({ title: eng.somethingWentWrong, color: "red" });
+    }
   }
 };
 
@@ -114,32 +123,11 @@ const deleteImageHandler = async () => {
       },
     });
     await userStore.getUser();
-    inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
-
-const inputHandler = async (e: Event) => {
-  let fileInput = e.target as HTMLInputElement;
-  if (fileInput && user.value) {
-    uploadImage(user.value._id, fileInput.files![0]);
-  }
-};
-
-// hooks
-onMounted(() => {
-  if (inputRef.value) {
-    inputRef.value.addEventListener("change", inputHandler);
-  }
-});
-
-onUnmounted(() => {
-  if (inputRef.value) {
-    inputRef.value.removeEventListener("change", inputHandler);
-  }
-});
 
 const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
@@ -177,11 +165,10 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       <div class="rounded-[8px] basis-[40%] flex flex-col relative group">
         <UiImageUpload
           v-model:image="user"
-          v-model:isLoading="isLoading"
           :alt="user?.name"
-          v-model:input-ref="inputRef"
           v-model:drop-zone-ref="dropZoneRef"
           @delete="deleteImageHandler"
+          @change="uploadImage($event)"
         />
       </div>
     </div>

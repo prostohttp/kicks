@@ -19,13 +19,12 @@ const { titles: data } = storeToRefs(productDataStore);
 const { articleImage } = storeToRefs(persistDataStore);
 
 // Vars
+const isLoading = ref(false);
 const isAdmin = useIsAdmin();
 await productDataStore.getTitles();
 const titles = ref(data.value.map((el) => el.title));
-const isLoading = ref(false);
 const toast = useToast();
-const inputRef = ref<HTMLInputElement>();
-const dropZoneRef = ref<HTMLDivElement | null>();
+const dropZoneRef = ref<HTMLInputElement | undefined>();
 
 const state = reactive({
   title: "",
@@ -50,34 +49,47 @@ const clearState = () => {
   state.sort = "";
 };
 
-const uploadImage = async (image: File) => {
-  isLoading.value = true;
+const uploadImageHandler = async (formData: FormData) => {
+  const uploadedImage = await $fetch("/api/image/add", {
+    method: "POST",
+    body: formData,
+  });
+  if (!uploadedImage) {
+    toast.add({ title: eng.noImage, color: "red" });
+  }
+  return uploadedImage;
+};
+
+const uploadImage = async (e: Event) => {
   try {
+    let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
-    formData.append("folderName", Constants.IMG_ARTICLES);
-    if (image) {
-      formData.append("image", image);
+    if (fileInput.files![0]) {
+      formData.append("folderName", Constants.IMG_ARTICLES);
+      formData.append("image", fileInput.files![0]);
     }
-    const uploadedImage = await $fetch("/api/image/add", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!uploadedImage) {
-      toast.add({ title: eng.notImage, color: "red" });
-    }
-
+    const uploadedImage = await uploadImageHandler(formData);
     articleImage.value = uploadedImage;
     toast.add({ title: eng.imageUploaded, color: "green" });
-    isLoading.value = false;
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
 const onDrop = async (files: File[] | null) => {
-  if (files) {
-    uploadImage(files[0]);
+  try {
+    if (files) {
+      const formData = new FormData();
+      if (files![0]) {
+        formData.append("image", files[0]);
+        formData.append("folderName", Constants.IMG_ARTICLES);
+      }
+      const uploadedImage = await uploadImageHandler(formData);
+      articleImage.value = uploadedImage;
+      toast.add({ title: eng.imageUploaded, color: "green" });
+    }
+  } catch (error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
@@ -105,7 +117,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
     articleImage.value = "";
     toast.add({
-      title: "Article added",
+      title: eng.addNewArticle,
       color: "green",
     });
     articleDateStore.getAllArticlesForAdminMenu();
@@ -129,30 +141,11 @@ const deleteImageHandler = async () => {
       },
     });
     articleImage.value = "";
-    inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
-
-const inputHandler = (e: Event) => {
-  let fileInput = e.target as HTMLInputElement;
-  uploadImage(fileInput.files![0]);
-};
-
-// hooks
-onMounted(() => {
-  if (inputRef.value) {
-    inputRef.value.addEventListener("change", inputHandler);
-  }
-});
-
-onUnmounted(() => {
-  if (inputRef.value) {
-    inputRef.value.removeEventListener("change", inputHandler);
-  }
-});
 
 const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
@@ -180,18 +173,55 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         >
           <UInput
             :placeholder="placeholder"
-            v-model="state[name as keyof typeof state]"
+            v-model="state.title"
             inputClass="no-left-icon"
-            v-if="type === 'text'"
+            v-if="name === 'title'"
+          />
+          <UTextarea
+            v-model="state.shortDescription"
+            :placeholder="eng.shortDescription"
+            class="textarea"
+            v-else-if="name === 'shortDescription'"
+          />
+          <TiptapEditor
+            :placeholder="placeholder"
+            v-model="state.description"
+            v-else-if="name === 'description'"
           />
           <UInput
             :placeholder="placeholder"
-            v-model="state[name as keyof typeof state]"
+            v-model="state.sort"
             inputClass="no-left-icon"
-            v-if="type === 'number'"
+            v-if="name === 'sort'"
             type="number"
             min="1"
           />
+          <div
+            class="flex gap-[10px] items-center mb-[10px]"
+            v-else-if="name === 'siteMenu'"
+          >
+            <UToggle
+              size="md"
+              v-model="state.siteMenu"
+              :ui="{
+                active: 'bg-blue dark:bg-yellow',
+              }"
+            />
+            <span>{{ label }}</span>
+          </div>
+          <div
+            class="flex gap-[10px] items-center mb-[10px]"
+            v-else-if="name === 'adminMenu'"
+          >
+            <UToggle
+              size="md"
+              v-model="state.adminMenu"
+              :ui="{
+                active: 'bg-blue dark:bg-yellow',
+              }"
+            />
+            <span>{{ label }}</span>
+          </div>
           <USelectMenu
             multiple
             v-model="state.featuredProducts"
@@ -207,30 +237,19 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
             }"
             v-else-if="type === 'select'"
           />
-          <UTextarea
-            v-model="state.shortDescription"
-            :placeholder="eng.shortDescription"
-            class="textarea"
-            v-else-if="type === 'textarea'"
-          />
           <div
             class="flex gap-[10px] items-center mb-[10px]"
-            v-else-if="type === 'toggle'"
+            v-else-if="name === 'isEnabled'"
           >
             <UToggle
               size="md"
-              v-model="state[name as keyof typeof state]"
+              v-model="state.isEnabled"
               :ui="{
                 active: 'bg-blue dark:bg-yellow',
               }"
             />
             <span>{{ label }}</span>
           </div>
-          <TiptapEditor
-            :placeholder="placeholder"
-            v-model="state.description"
-            v-else-if="type === 'tiptap'"
-          />
         </UFormGroup>
       </div>
       <div
@@ -239,11 +258,10 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         <UiImageUpload
           :add-new="true"
           v-model:image="articleImage"
-          v-model:isLoading="isLoading"
           alt="New Article"
-          v-model:input-ref="inputRef"
           v-model:drop-zone-ref="dropZoneRef"
           @delete="deleteImageHandler"
+          @change="uploadImage($event)"
         />
       </div>
     </div>

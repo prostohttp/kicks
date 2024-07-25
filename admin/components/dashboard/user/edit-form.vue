@@ -19,47 +19,45 @@ const { userById: user } = storeToRefs(userDataStore);
 
 // vars
 const isAdmin = useIsAdmin();
-const isLoading = ref(false);
 const route = useRoute();
 const page = Number(route.query.page);
 const toast = useToast();
-const inputRef = ref<HTMLInputElement | undefined>();
-const dropZoneRef = ref<HTMLDivElement | undefined>();
+const dropZoneRef = ref<HTMLInputElement | undefined>();
 const roles = Object.values(Roles).filter((role) => role !== Roles.ADMIN);
 
 // handlers
-const uploadImage = async (image: File) => {
-  isLoading.value = true;
+const uploadImageHandler = async (formData: FormData) => {
+  const uploadedImage = await $fetch("/api/image/add", {
+    method: "POST",
+    body: formData,
+  });
+  if (!uploadedImage) {
+    toast.add({ title: eng.noImage, color: "red" });
+  }
+  await $fetch("/api/user/edit", {
+    method: "PUT",
+    body: {
+      id: userId,
+      image: uploadedImage,
+    },
+  });
+};
+
+const uploadImage = async (e: Event) => {
   try {
+    let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
-    formData.append("folderName", Constants.IMG_USERS);
-
-    if (image) {
-      formData.append("image", image);
+    if (fileInput.files![0]) {
+      formData.append("folderName", Constants.IMG_USERS);
+      formData.append("image", fileInput.files![0]);
     }
-    const uploadedImage = await $fetch("/api/image/add", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!uploadedImage) {
-      toast.add({ title: eng.notImage, color: "red" });
-    }
-
-    await $fetch("/api/user/edit", {
-      method: "PUT",
-      body: {
-        id: user.value?._id,
-        image: uploadedImage,
-      },
-    });
+    await uploadImageHandler(formData);
     await userDataStore.getUserById(userId);
     await userDataStore.getAllUsers(page);
     toast.add({ title: eng.imageUploaded, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
-  isLoading.value = false;
 };
 
 const deleteImageHandler = async () => {
@@ -79,27 +77,31 @@ const deleteImageHandler = async () => {
     });
     await userDataStore.getAllUsers(page);
     await userDataStore.getUserById(userId);
-    inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
-const onDrop = (files: File[] | null) => {
-  if (files && user.value) {
-    uploadImage(files[0]);
+const onDrop = async (files: File[] | null) => {
+  try {
+    if (files) {
+      const formData = new FormData();
+      if (files![0]) {
+        formData.append("folderName", Constants.IMG_USERS);
+        formData.append("image", files![0]);
+      }
+      await uploadImageHandler(formData);
+      await userDataStore.getAllUsers(page);
+      await userDataStore.getUserById(userId);
+      toast.add({ title: eng.imageDeleted, color: "green" });
+    }
+  } catch (error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
 useDropZone(dropZoneRef, { onDrop });
-
-const inputHandler = (e: Event) => {
-  let fileInput = e.target as HTMLInputElement;
-  if (user.value) {
-    uploadImage(fileInput.files![0]);
-  }
-};
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
@@ -127,19 +129,6 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
 
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 
-// hooks
-onMounted(() => {
-  if (inputRef.value) {
-    inputRef.value.addEventListener("change", inputHandler);
-  }
-});
-
-onUnmounted(() => {
-  if (inputRef.value) {
-    inputRef.value.removeEventListener("change", inputHandler);
-  }
-});
-
 const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
@@ -157,11 +146,10 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     >
       <UiImageUpload
         v-model:image="user"
-        v-model:isLoading="isLoading"
         :alt="user?.name"
-        v-model:input-ref="inputRef"
         v-model:drop-zone-ref="dropZoneRef"
         @delete="deleteImageHandler"
+        @change="uploadImage($event)"
       />
     </div>
     <UFormGroup

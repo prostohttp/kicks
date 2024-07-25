@@ -20,6 +20,8 @@ export const useOptionDataStore = defineStore("optionData", () => {
     values: {},
   });
 
+  const id = ref(1000);
+
   const options: Ref<OptionsPayload | undefined> = ref();
 
   const selected: Ref<IOption[]> = ref([]);
@@ -65,9 +67,8 @@ export const useOptionDataStore = defineStore("optionData", () => {
   };
 
   const addNewValue = () => {
-    const id = Math.floor(Math.random() * 100000);
-    option.values![id] = {
-      id,
+    option.values![id.value] = {
+      id: id.value--,
       value: "",
       sort: undefined,
       image: "",

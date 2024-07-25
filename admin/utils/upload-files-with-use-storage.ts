@@ -5,7 +5,7 @@ import { isImage } from "~/utils/is-image";
 
 export default (
   data: MultiPartData[] | undefined,
-  folderPath: string,
+  folderName: string,
   fieldName: string,
 ): string[] => {
   const files: string[] = [];
@@ -19,9 +19,9 @@ export default (
           const renamedFile = renameFile(el.filename as string);
           const filePath = path.relative(
             process.cwd(),
-            folderPath + renamedFile,
+            folderName + renamedFile,
           );
-          useStorage("fs").setItemRaw(folderPath + renamedFile, el.data);
+          useStorage("fs").setItemRaw(folderName + renamedFile, el.data);
           files!.push(filePath);
         }
       }

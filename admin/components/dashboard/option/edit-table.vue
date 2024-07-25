@@ -106,10 +106,10 @@ const deleteImageHandler = async (id: number) => {
 };
 
 const deleteValue = (id: number) => {
-  delete option.value.values![id];
   if (option.value.values[id].image) {
     deleteImageHandler(id);
   }
+  delete option.value.values![id];
 };
 </script>
 

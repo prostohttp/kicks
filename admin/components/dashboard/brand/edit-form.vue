@@ -19,56 +19,64 @@ const { brand } = storeToRefs(brandDataStore);
 // vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
-const isLoading = ref(false);
 const isOpenDeleteModal = ref(false);
 const page = Number(useRoute().query.page);
-const inputRef: Ref<HTMLInputElement | undefined> = ref();
-const dropZoneRef = ref<HTMLDivElement | undefined>();
+const dropZoneRef = ref<HTMLInputElement | undefined>();
 
 // handlers
-const uploadImage = async (image: File) => {
-  isLoading.value = true;
+const uploadImageHandler = async (formData: FormData) => {
+  const uploadedImage = await $fetch("/api/image/add", {
+    method: "POST",
+    body: formData,
+  });
+  if (!uploadedImage) {
+    toast.add({ title: eng.noImage, color: "red" });
+  }
+  await $fetch("/api/brand/edit", {
+    method: "PUT",
+    body: {
+      _id: brandId,
+      image: uploadedImage,
+    },
+  });
+};
+
+const uploadImage = async (e: Event) => {
   try {
+    let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
-    formData.append("folderName", Constants.IMG_BRANDS);
-    if (image) {
-      formData.append("image", image);
+    if (fileInput.files![0]) {
+      formData.append("folderName", Constants.IMG_BRANDS);
+      formData.append("image", fileInput.files![0]);
     }
-    const uploadedImage = await $fetch("/api/image/add", {
-      method: "POST",
-      body: formData,
-    });
-    if (!uploadedImage) {
-      toast.add({ title: eng.noImage, color: "red" });
-    }
-    await $fetch("/api/brand/edit", {
-      method: "PUT",
-      body: {
-        _id: brand.value?._id,
-        image: uploadedImage,
-      },
-    });
+    await uploadImageHandler(formData);
     brandDataStore.getBrandById(brandId);
     brandDataStore.getAllBrands(page);
     toast.add({ title: eng.imageUploaded, color: "green" });
-    isLoading.value = false;
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
-const onDrop = (files: File[] | null) => {
-  if (files) {
-    uploadImage(files[0]);
+const onDrop = async (files: File[] | null) => {
+  try {
+    if (files) {
+      const formData = new FormData();
+      if (files![0]) {
+        formData.append("folderName", Constants.IMG_BRANDS);
+        formData.append("image", files![0]);
+      }
+      await uploadImageHandler(formData);
+      brandDataStore.getBrandById(brandId);
+      brandDataStore.getAllBrands(page);
+      toast.add({ title: eng.imageUploaded, color: "green" });
+    }
+  } catch (error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
 };
 
 useDropZone(dropZoneRef, { onDrop });
-
-const inputHandler = (e: Event) => {
-  let fileInput = e.target as HTMLInputElement;
-  uploadImage(fileInput.files![0]);
-};
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
@@ -109,8 +117,6 @@ const deleteImageHandler = async () => {
     });
     brandDataStore.getBrandById(brandId);
     brandDataStore.getAllBrands(page);
-
-    inputRef.value!.value = "";
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
@@ -141,19 +147,6 @@ const deleteBrandHandler = async () => {
   }
 };
 
-// hooks
-onMounted(() => {
-  if (inputRef.value) {
-    inputRef.value.addEventListener("change", inputHandler);
-  }
-});
-
-onUnmounted(() => {
-  if (inputRef.value) {
-    inputRef.value.removeEventListener("change", inputHandler);
-  }
-});
-
 const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
@@ -172,11 +165,10 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     >
       <UiImageUpload
         v-model:image="brand"
-        v-model:isLoading="isLoading"
-        :alt="brand?.title"
-        v-model:input-ref="inputRef"
         v-model:drop-zone-ref="dropZoneRef"
+        :alt="brand?.title"
         @delete="deleteImageHandler"
+        @change="uploadImage($event)"
       />
     </div>
     <div
