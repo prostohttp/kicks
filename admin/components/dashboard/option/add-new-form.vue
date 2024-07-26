@@ -38,43 +38,33 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
         ? Object.values(option.value.values)
         : null;
     }
-    // const isValid = isValidOptionValues(
-    //   Object.values(option.value.values || {}),
-    // );
-    if (optionDataStore.isVisibleTable) {
-      toast.add({
-        title: "Check form fields",
-        color: "red",
-      });
-      return;
-    } else {
-      await $fetch("/api/option/add", {
-        method: "POST",
-        body: {
-          title: event.data.title,
-          type: event.data.type,
-          sort: event.data.sort,
-          values,
-        },
-      });
-      if (!optionDataStore.isVisibleTable && option.value.values) {
-        for (const item of Object.values(option.value.values)) {
-          if (item?.image) {
-            await $fetch("/api/image/remove", {
-              method: "DELETE",
-              body: {
-                image: item.image,
-              },
-            });
-          }
+
+    await $fetch("/api/option/add", {
+      method: "POST",
+      body: {
+        title: event.data.title,
+        type: event.data.type,
+        sort: event.data.sort,
+        values,
+      },
+    });
+    if (!optionDataStore.isVisibleTable && option.value.values) {
+      for (const item of Object.values(option.value.values)) {
+        if (item?.image) {
+          await $fetch("/api/image/remove", {
+            method: "DELETE",
+            body: {
+              image: item.image,
+            },
+          });
         }
       }
-      clearState();
-      toast.add({
-        title: "Option added",
-        color: "green",
-      });
     }
+    clearState();
+    toast.add({
+      title: "Option added",
+      color: "green",
+    });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
   }

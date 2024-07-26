@@ -25,9 +25,7 @@ const submitRef: Ref<HTMLFormElement | null> = ref(null);
 // Handlers
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const values = optionDataStore.isVisibleTable
-      ? Object.values(option.value.values)
-      : null;
+    const values = optionDataStore.isVisibleTable ? option.value.values : [];
 
     await $fetch("/api/option/edit", {
       method: "PUT",
@@ -40,21 +38,8 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
       },
     });
 
-    if (
-      !optionDataStore.isVisibleTable &&
-      Object.values(option.value.values).length
-    ) {
-      for (const item of Object.values(option.value.values)) {
-        if (item?.image) {
-          await $fetch("/api/image/remove", {
-            method: "DELETE",
-            body: {
-              image: item.image,
-            },
-          });
-        }
-      }
-      option.value.values = {};
+    if (!optionDataStore.isVisibleTable && option.value.values.length) {
+      option.value.values = [];
     }
     toast.add({
       title: "Option updated",
@@ -72,11 +57,6 @@ watch(isSubmit, () => {
   if (isSubmit.value) {
     submitRef.value?.submit();
     isSubmit.value = false;
-    // if (Object.values(option.value.values).length) {
-    //   option.value.values = sortElements(
-    //     Object.values(option.value.values || []),
-    //   );
-    // }
   }
 });
 

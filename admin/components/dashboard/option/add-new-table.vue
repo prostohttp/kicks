@@ -40,10 +40,11 @@ const uploadImage = async (e: Event, id: number) => {
       body: formData,
     });
 
+    changeValueFromArray(id, option.value.values, "image", uploadedImage);
+
     if (!uploadedImage) {
       toast.add({ title: eng.notImage, color: "red" });
     }
-    option.value.values[id].image = uploadedImage;
     toast.add({ title: eng.imageUploaded, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
@@ -55,11 +56,10 @@ const deleteImageHandler = async (id: number) => {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: option.value.values![id].image,
+        image: option.value.values.filter((value) => value.id === id)[0].image,
       },
     });
-    option.value.values[id].image = "";
-
+    changeValueFromArray(id, option.value.values, "image", "");
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
@@ -67,16 +67,13 @@ const deleteImageHandler = async (id: number) => {
 };
 
 const deleteValue = (id: number) => {
-  if (option.value.values![id].image) {
-    deleteImageHandler(id);
-  }
-  delete option.value.values![id];
+  deleteValueFromArray(id, option.value.values);
 };
 </script>
 
 <template>
   <UTable
-    :rows="Object.values(option.values)"
+    :rows="option.values"
     :columns="columns"
     :empty-state="{
       icon: '',
@@ -130,14 +127,14 @@ const deleteValue = (id: number) => {
     <template #action-data="{ row }">
       <UButton
         class="icon-button float-right"
-        icon="i-heroicons-minus-circle-16-solid h-[20px] w-[20px]"
+        icon="i-heroicons-minus-circle-16-solid"
         @click="deleteValue(row.id)"
       />
     </template>
   </UTable>
   <UButton
     class="icon-button float-right mr-[15px]"
-    icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
+    icon="i-heroicons-plus-circle-16-solid"
     type="button"
     @click="optionDataStore.addNewValue"
   />

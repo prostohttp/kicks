@@ -5,7 +5,7 @@ import type { UiOptionDto } from "~/types/server/server.types";
 
 export const useOptionDataStore = defineStore("optionData", () => {
   interface OptionsPayload {
-    options: OptionDto;
+    options: OptionDto[];
     pagesInPagination?: number;
     allItems: number;
     activePage?: number;
@@ -17,10 +17,8 @@ export const useOptionDataStore = defineStore("optionData", () => {
     title: "",
     type: "",
     sort: undefined,
-    values: {},
+    values: [],
   });
-
-  const id = ref(1000);
 
   const options: Ref<OptionsPayload | undefined> = ref();
 
@@ -49,7 +47,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
   const getOption = async (id: string) => {
     try {
-      const rawOption = await $fetch<OptionDto>("/api/option/one", {
+      const rawOption = await $fetch("/api/option/one", {
         method: "GET",
         query: {
           id,
@@ -59,7 +57,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
       option.title = rawOption.title;
       option.type = rawOption.type;
       option.sort = rawOption.sort;
-      option.values = getUiOption(rawOption);
+      option.values = rawOption.values;
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
@@ -67,12 +65,13 @@ export const useOptionDataStore = defineStore("optionData", () => {
   };
 
   const addNewValue = () => {
-    option.values![id.value] = {
-      id: id.value--,
+    const id = Date.now();
+    option.values.unshift({
+      id: id,
       value: "",
       sort: undefined,
       image: "",
-    };
+    });
   };
 
   const isVisibleTable = computed(
@@ -87,7 +86,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
       option.title = "";
       option.type = "";
       option.sort = undefined;
-      option.values = {};
+      option.values = [];
     }
   };
 

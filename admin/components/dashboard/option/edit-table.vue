@@ -39,7 +39,7 @@ const setOptionImageHandler = (
   id: number,
   image: string,
 ) => {
-  return Object.values(option.values!).map((option) => {
+  return option.values.map((option) => {
     if (option.id === id) {
       return {
         ...option,
@@ -55,8 +55,8 @@ const uploadImage = async (e: Event, id: number) => {
   try {
     let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
-    formData.append("folderName", Constants.IMG_OPTIONS);
     if (fileInput.files![0]) {
+      formData.append("folderName", Constants.IMG_OPTIONS);
       formData.append("image", fileInput.files![0]);
     }
     const uploadedImage = await $fetch("/api/image/add", {
@@ -67,7 +67,7 @@ const uploadImage = async (e: Event, id: number) => {
     if (!uploadedImage) {
       toast.add({ title: eng.notImage, color: "red" });
     }
-    option.value.values[id].image = uploadedImage;
+    changeValueFromArray(id, option.value.values, "image", uploadedImage);
 
     await $fetch("/api/option/edit", {
       method: "PUT",
@@ -87,7 +87,7 @@ const deleteImageHandler = async (id: number) => {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: option.value.values![id].image,
+        image: option.value.values.filter((value) => value.id === id)[0].image,
       },
     });
 
@@ -98,7 +98,7 @@ const deleteImageHandler = async (id: number) => {
         values: setOptionImageHandler(option.value, id, ""),
       },
     });
-    option.value.values[id].image = "";
+    changeValueFromArray(id, option.value.values, "image", "");
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
@@ -106,16 +106,13 @@ const deleteImageHandler = async (id: number) => {
 };
 
 const deleteValue = (id: number) => {
-  if (option.value.values[id].image) {
-    deleteImageHandler(id);
-  }
-  delete option.value.values![id];
+  deleteValueFromArray(id, option.value.values);
 };
 </script>
 
 <template>
   <UTable
-    :rows="Object.values(option.values)"
+    :rows="option.values"
     :columns="columns"
     :empty-state="{
       icon: '',
@@ -169,7 +166,7 @@ const deleteValue = (id: number) => {
     <template #action-data="{ row }">
       <UButton
         class="icon-button float-right"
-        icon="i-heroicons-minus-circle-16-solid h-[20px] w-[20px]"
+        icon="i-heroicons-minus-circle-16-solid"
         @click="isAdmin && deleteValue(row.id)"
       />
     </template>
@@ -177,7 +174,7 @@ const deleteValue = (id: number) => {
   <UButton
     type="button"
     class="icon-button float-right mr-[15px]"
-    icon="i-heroicons-plus-circle-16-solid h-[20px] w-[20px]"
+    icon="i-heroicons-plus-circle-16-solid"
     @click="optionDataStore.addNewValue"
   />
 </template>

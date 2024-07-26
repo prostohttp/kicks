@@ -155,7 +155,7 @@ watch(
       <template #action-data="{ row }">
         <UButton
           class="icon-button float-right"
-          icon="i-heroicons-pencil-square-solid h-[20px] w-[20px]"
+          icon="i-heroicons-pencil-square-solid"
           :to="`/dashboard/options/${row.id}`"
         />
       </template>

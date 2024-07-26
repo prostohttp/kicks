@@ -32,19 +32,17 @@ export interface MultiPartData {
 }
 
 export interface ValueOption {
-  [key: number]: {
-    id: number;
-    value: string;
-    sort: number | undefined;
-    image: string;
-  };
+  id: number;
+  value: string;
+  sort: number | undefined;
+  image: string;
 }
 export interface UiOptionDto {
   _id: string;
   title: string;
   type: string;
   sort: number | undefined;
-  values: ValueOption;
+  values: ValueOption[];
 }
 
 export interface TitleObjectAfterPopulate {

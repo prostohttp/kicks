@@ -40,13 +40,13 @@ const deleteImageHandler = () => {
       <div class="flex gap-[5px] items-center py-[1px] px-[5px]" v-if="isAdmin">
         <UButton
           class="icon-button float-right"
-          icon="i-heroicons-inbox-arrow-down-solid h-[20px] w-[20px]"
+          icon="i-heroicons-inbox-arrow-down-solid"
           @click="onClickHandler()"
           v-if="!model"
         />
         <UButton
           class="icon-button float-right"
-          icon="i-heroicons-archive-box-x-mark-solid h-[20px] w-[20px]"
+          icon="i-heroicons-archive-box-x-mark-solid"
           @click="deleteImageHandler()"
           v-else
         />
