@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { InputData } from "~/types/ui/ui.types";
 import { optionTypes } from "~/types/ui/ui.types";
-import { schema, type Schema } from "./schema/option-schema";
+import { type Schema } from "./schema/option-schema";
 import type { FormSubmitEvent } from "#ui/types";
-import * as v from "valibot";
+import { validate } from "./validator";
 
 // define
 const { optionData } = defineProps<{
@@ -20,7 +20,6 @@ const isAdmin = useIsAdmin();
 const toast = useToast();
 const types: string[] = Object.keys(optionTypes).map((label) => label);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
-const values: Ref<{ [key: string]: any }> = ref({});
 
 // Handlers
 const clearState = () => {
@@ -91,7 +90,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
   <div class="flex flex-col gap-[20px] w-full pb-[20px]">
     <div class="flex flex-col w-full gap-[24px]">
       <UForm
-        :schema="v.safeParser(schema)"
+        :validate="validate"
         :state="option"
         class="space-y-4 w-full"
         @submit="protectedSubmitHandler"

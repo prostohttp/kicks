@@ -219,3 +219,11 @@ tr td:nth-last-child(2):not(:last-child) {
 .clean-field.field-error::placeholder {
   @apply text-dark-gray dark:text-fa-white
 }
+
+.for-absolute {
+  @apply relative
+}
+
+.for-absolute p {
+  @apply absolute bottom-0
+}

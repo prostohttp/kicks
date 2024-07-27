@@ -81,7 +81,7 @@ const deleteValue = (id: number) => {
     }"
     :ui="{
       td: {
-        base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal',
+        base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal for-absolute',
       },
       emptyState: {
         wrapper: 'hidden',
@@ -98,9 +98,9 @@ const deleteValue = (id: number) => {
       </caption>
     </template>
     <template #value-data="{ row }">
-      <UFormGroup>
+      <UFormGroup :name="`value${row.id}`">
         <UInput
-          :placeholder="eng.error.stringMin"
+          :placeholder="eng.addValue"
           inputClass="clean-field"
           v-model="row.value"
         />
@@ -114,9 +114,9 @@ const deleteValue = (id: number) => {
       />
     </template>
     <template #sort-data="{ row }">
-      <UFormGroup>
+      <UFormGroup :name="`sort${row.id}`">
         <UInput
-          :placeholder="eng.error.numberMin"
+          :placeholder="eng.sort"
           inputClass="clean-field"
           v-model="row.sort"
           type="number"
