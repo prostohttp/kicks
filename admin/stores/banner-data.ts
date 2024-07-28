@@ -1,3 +1,4 @@
+import { eng } from "~/lang/eng";
 import type { BannerDto } from "~/server/api/banner/dto/banner.dto";
 
 interface BannerPayload {
@@ -8,18 +9,25 @@ interface BannerPayload {
 }
 export const useBannerDataStore = defineStore("bannerData", () => {
   // vars
-  const banner: Ref<BannerDto | undefined> = ref();
+  const banner: BannerDto = reactive({
+    id: "",
+    title: "",
+    banners: [],
+  });
   const banners: Ref<BannerPayload | undefined> = ref();
 
   // handlers
   const getBannerById = async (id: string) => {
     try {
-      banner.value = await $fetch("/api/banner/one", {
+      const rawBanner = await $fetch<BannerDto>("/api/banner/one", {
         method: "GET",
         query: {
           id,
         },
       });
+      banner.id = rawBanner.id;
+      banner.title = rawBanner.title;
+      banner.banners = rawBanner.banners;
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
@@ -40,7 +48,7 @@ export const useBannerDataStore = defineStore("bannerData", () => {
     return true;
   };
 
-  const addNewBanner = async (data: BannerDto) => {};
+  const addNewBanner = () => {};
 
   const deleteBanner = async (id: string) => {};
 

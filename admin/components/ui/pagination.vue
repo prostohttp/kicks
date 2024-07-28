@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { ModelRef } from "vue";
 import { eng } from "~/lang/eng";
 
 // define
@@ -8,7 +9,7 @@ const { allItems, elementInPage } = defineProps<{
 }>();
 
 // vars
-const activePage = defineModel();
+const activePage: ModelRef<number | undefined> = defineModel();
 
 // hooks
 </script>
@@ -38,7 +39,7 @@ const activePage = defineModel();
             ? 'pagination-prev-next'
             : 'hidden',
       }"
-      v-model="activePage"
+      v-model="activePage!"
       :page-count="elementInPage"
       :total="allItems!"
       :max="elementInPage"

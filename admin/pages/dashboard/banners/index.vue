@@ -37,9 +37,8 @@ const columns = [
 ];
 
 await useAsyncData("banners", () => bannerDataStore.getAllBanners(page));
-
-const activePage = ref(data.value?.activePage || 1);
 const path = router.currentRoute.value.path;
+const activePage = ref(data.value?.activePage || 1);
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 
 // handlers
@@ -47,6 +46,7 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 // hooks
 watch(activePage, (newValue) => {
   router.push({ query: { ...route.query, page: newValue || 1 } });
+  bannerDataStore.getAllBanners(newValue);
 });
 
 watch(

@@ -40,7 +40,7 @@ input[type="checkbox"]:checked:focus {
   @apply bg-dark-gray;
 }
 
-button[type="submit"].dark-button {
+.dark-button {
   @apply py-[16px] px-[42px] flex items-center justify-center bg-dark-gray hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow
 }
 

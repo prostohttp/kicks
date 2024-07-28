@@ -26,6 +26,10 @@ export const Banner = defineMongooseModel({
           type: String,
           required: false,
         },
+        sort: {
+          type: Number,
+          required: true,
+        },
       },
     ],
   },

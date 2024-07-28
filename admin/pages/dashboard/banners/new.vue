@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
-// import { articleData } from "./data/index.js";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // vars
@@ -25,7 +24,7 @@ useHead({
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >
     <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
-      <!-- <DashboardArticleAddNewForm :articleData="articleData" /> -->
+      <DashboardBannerAddNewForm />
     </div>
   </main>
 </template>

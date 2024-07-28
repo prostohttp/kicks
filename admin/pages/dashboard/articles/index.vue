@@ -76,7 +76,7 @@ const articles = computed((): Array<IArticle> | undefined => {
 watch(activePage, (newValue) => {
   router.push({ query: { ...route.query, page: newValue || 1 } });
   selected.value = [];
-  articleDataStore.getAllArticles(newValue!);
+  articleDataStore.getAllArticles(newValue);
 });
 
 watch(
