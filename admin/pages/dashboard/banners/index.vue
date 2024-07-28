@@ -1,28 +1,20 @@
 <script lang="ts" setup>
 import { eng } from "~/lang/eng";
 import { Constants } from "~/constants";
-import { Locales, type BreadcrumbItem } from "~/types/ui/ui.types";
-
-export interface IArticle {
-  id: string;
-  image?: string;
-  title: string;
-  description: string;
-  enabled: string;
-  createdAt: string;
-}
+import { type BreadcrumbItem } from "~/types/ui/ui.types";
+import { useBannerDataStore } from "~/stores/banner-data";
 
 // meta
 definePageMeta({
-  name: "all-articles",
+  name: "all-banners",
 });
 useHead({
-  title: eng.allArticles,
+  title: eng.allBanners,
 });
 
 // store
-const articleDataStore = useArticleDataStore();
-const { articles: data, selected } = storeToRefs(articleDataStore);
+const bannerDataStore = useBannerDataStore();
+const { banners: data } = storeToRefs(bannerDataStore);
 
 // vars
 const isAdmin = useIsAdmin();
@@ -31,52 +23,30 @@ const route = useRoute();
 const page = Number(useRoute().query.page);
 const columns = [
   {
-    key: "image",
-    label: "Image",
-  },
-  {
     key: "title",
     label: "Title",
   },
   {
-    key: "description",
-    label: "Description",
+    key: "images",
+    label: "Banner",
   },
   {
-    key: "enabled",
-    label: "Enabled",
-  },
-  {
-    key: "createdAt",
-    label: "Created at",
+    key: "action",
+    label: "Action",
   },
 ];
 
-await useAsyncData("articles", () => articleDataStore.getAllArticles(page));
+await useAsyncData("banners", () => bannerDataStore.getAllBanners(page));
 
 const activePage = ref(data.value?.activePage || 1);
 const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 
 // handlers
-const articles = computed((): Array<IArticle> | undefined => {
-  return data.value?.articles.map((article) => {
-    return {
-      id: article._id,
-      image: article.image,
-      title: article.title,
-      description: article.shortDescription,
-      enabled: article.isEnabled ? eng.yesText : eng.noText,
-      createdAt: dateTimeFormat(article.createdAt, Locales.RU),
-    };
-  });
-});
 
 // hooks
 watch(activePage, (newValue) => {
   router.push({ query: { ...route.query, page: newValue || 1 } });
-  selected.value = [];
-  articleDataStore.getAllArticles(newValue!);
 });
 
 watch(
@@ -93,12 +63,12 @@ watch(
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.articles" />
+    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.banners" />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="eng.addNewArticle"
-      to="/dashboard/articles/new"
+      :label="eng.addNewBanner"
+      to="/dashboard/banners/new"
       v-if="isAdmin"
     />
   </div>
@@ -106,14 +76,13 @@ watch(
     class="p-[24px] bg-white flex flex-col rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >
     <UTable
-      :loading="!articles"
+      :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
         label: eng.loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
-      v-model="selected"
-      :rows="articles"
+      :rows="data?.banners"
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
@@ -123,6 +92,9 @@ watch(
         td: {
           base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal',
           color: 'text-dark-gray dark:text-fa-white',
+        },
+        tr: {
+          base: 'banners-table',
         },
         default: {
           checkbox: {
@@ -137,40 +109,39 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ eng.breadcrumbs.articles }}
+            {{ eng.breadcrumbs.banners }}
           </span>
-          <DashboardArticleMenuAction
-            v-model:activePage="activePage"
-            v-if="isAdmin"
-          />
         </caption>
       </template>
-      <template #image-data="{ row }">
-        <NuxtLink :to="`/dashboard/articles/${row.id}`">
-          <img
-            src="/no-image.svg"
-            :alt="eng.noImage"
-            class="w-[40px] dark:opacity-90 rounded-[8px]"
-            v-if="!row.image"
-          />
-          <img
-            :src="`/${row.image}`"
-            class="w-[40px] dark:opacity-90 rounded-[8px]"
-            v-else
-          />
-        </NuxtLink>
-      </template>
       <template #title-data="{ row }">
-        <NuxtLink :to="`/dashboard/articles/${row.id}`">
-          {{ row.title }}
-        </NuxtLink>
+        {{ row.title }}
+      </template>
+      <template #images-data="{ row }">
+        <img
+          src="/no-image.svg"
+          :alt="eng.noImage"
+          class="w-[40px] dark:opacity-90 rounded-[8px]"
+          v-if="!row.banners[0].image"
+        />
+        <img
+          :src="`/${row.banners[0].image}`"
+          class="w-[40px] dark:opacity-90 rounded-[8px]"
+          v-else
+        />
+      </template>
+      <template #action-data="{ row }">
+        <UButton
+          class="icon-button float-right"
+          icon="i-heroicons-pencil-square-solid"
+          :to="`/dashboard/banners/${row._id}`"
+        />
       </template>
     </UTable>
   </main>
   <LazyUiPagination
     v-if="data?.pagesInPagination"
     v-model="activePage"
-    :element-in-page="Constants.PER_PAGE_ARTICLE"
+    :element-in-page="Constants.PER_PAGE_BANNERS"
     :all-items="data?.allItems"
   />
 </template>

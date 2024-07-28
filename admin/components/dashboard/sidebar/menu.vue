@@ -41,6 +41,11 @@ const menuItems = [
     icon: "i-heroicons-finger-print",
     protected: !isAdmin,
   },
+  {
+    to: "/dashboard/banners?page=1",
+    title: eng.allBanners,
+    icon: "i-material-symbols-add-photo-alternate-outline",
+  },
 ];
 const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
 </script>

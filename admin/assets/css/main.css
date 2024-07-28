@@ -227,3 +227,12 @@ tr td:nth-last-child(2):not(:last-child) {
 .for-absolute p {
   @apply absolute bottom-0
 }
+
+.banners-table th:first-of-type,
+.banners-table td:first-of-type {
+  @apply flex justify-start
+}
+
+.banners-table th:nth-last-child(2):not(:last-child) {
+  @apply text-left
+}
