@@ -8,7 +8,6 @@ export interface IBanner {
 }
 
 export interface BannerDto {
-  id: string;
   title: string;
   banners: IBanner[];
 }

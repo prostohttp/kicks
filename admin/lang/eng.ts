@@ -120,10 +120,12 @@ export const eng = {
   backToHome: "Go back home",
   pageNotFound: "Page not found",
   error: {
+    required: "Required field",
     string: "Required and must be a string",
     number: "Required and must be a number",
     stringMin: "Min 2 symbols",
     numberMin: "Min 1",
+    checkRequiredFields: "Check required fileds on all tabs",
   },
   optionTypes: {
     list: "List",

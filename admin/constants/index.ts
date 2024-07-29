@@ -4,6 +4,7 @@ export const Constants = {
   IMG_CATEGORIES: "img/categories/",
   IMG_PRODUCTS: "img/products/",
   IMG_BRANDS: "img/brands/",
+  IMG_BANNERS: "img/banners/",
   IMG_OPTIONS: "img/options/",
   IMG_ARTICLES: "img/articles/",
   IMG_USERS: "img/users/",

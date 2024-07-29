@@ -1,4 +1,3 @@
-import { eng } from "~/lang/eng";
 import type { BannerDto } from "~/server/api/banner/dto/banner.dto";
 
 interface BannerPayload {
@@ -10,7 +9,6 @@ interface BannerPayload {
 export const useBannerDataStore = defineStore("bannerData", () => {
   // vars
   const banner: BannerDto = reactive({
-    id: "",
     title: "",
     banners: [],
   });
@@ -25,7 +23,6 @@ export const useBannerDataStore = defineStore("bannerData", () => {
           id,
         },
       });
-      banner.id = rawBanner.id;
       banner.title = rawBanner.title;
       banner.banners = rawBanner.banners;
     } catch (error: any) {
@@ -52,6 +49,11 @@ export const useBannerDataStore = defineStore("bannerData", () => {
 
   const deleteBanner = async (id: string) => {};
 
+  const clearBanner = () => {
+    banner.title = "";
+    banner.banners = [];
+  };
+
   return {
     banner,
     banners,
@@ -59,5 +61,6 @@ export const useBannerDataStore = defineStore("bannerData", () => {
     getAllBanners,
     addNewBanner,
     deleteBanner,
+    clearBanner,
   };
 });

@@ -1,12 +1,16 @@
 <script lang="ts" setup>
+import type { ModelRef } from "vue";
+import { Constants } from "~/constants";
 import { eng } from "~/lang/eng";
 
 // define
-const { index } = defineProps<{
+const { index, id } = defineProps<{
   index: number;
+  id: number;
 }>();
-
+const activeTab: ModelRef<number | undefined> = defineModel("activeTab");
 // vars
+const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
 
 // store
@@ -14,24 +18,83 @@ const bannerDataStore = useBannerDataStore();
 const { banner } = storeToRefs(bannerDataStore);
 
 // handlers
+const uploadImageHandler = async (formData: FormData) => {
+  const uploadedImage = await $fetch("/api/image/add", {
+    method: "POST",
+    body: formData,
+  });
+  if (!uploadedImage) {
+    toast.add({ title: eng.noImage, color: "red" });
+  }
+  return uploadedImage;
+};
 
-const deleteImageHandler = () => {};
+const uploadImage = async (e: Event) => {
+  try {
+    let fileInput = e.target as HTMLInputElement;
+    const formData = new FormData();
+    if (fileInput.files![0]) {
+      formData.append("folderName", Constants.IMG_BANNERS);
+      formData.append("image", fileInput.files![0]);
+    }
+    const uploadedImage = await uploadImageHandler(formData);
+    banner.value.banners[activeTab.value!].image = uploadedImage;
+    toast.add({ title: eng.imageUploaded, color: "green" });
+  } catch (_error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
+  }
+};
 
-const uploadImage = (e: Event) => {};
+const onDrop = async (files: File[] | null) => {
+  try {
+    if (files) {
+      const formData = new FormData();
+      if (files![0]) {
+        formData.append("image", files[0]);
+        formData.append("folderName", Constants.IMG_BANNERS);
+      }
+      const uploadedImage = await uploadImageHandler(formData);
+      banner.value.banners[activeTab.value!].image = uploadedImage;
+      toast.add({ title: eng.imageUploaded, color: "green" });
+    }
+  } catch (error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
+  }
+};
+
+useDropZone(dropZoneRef, { onDrop });
+
+const deleteImageHandler = async () => {
+  try {
+    await $fetch("/api/image/remove", {
+      method: "DELETE",
+      body: {
+        image: banner.value.banners[index].image,
+      },
+    });
+    banner.value.banners[activeTab.value!].image = "";
+    toast.add({ title: eng.imageDeleted, color: "green" });
+  } catch (_error) {
+    toast.add({ title: eng.somethingWentWrong, color: "red" });
+  }
+};
+
+// hooks
 </script>
 
 <template>
   <div class="flex flex-col gap-[30px]">
-    <UiImageUpload
-      :add-new="true"
-      v-model:image="banner.banners[index].image"
-      alt="New Article"
-      v-model:drop-zone-ref="dropZoneRef"
-      @delete="deleteImageHandler"
-      @change="uploadImage($event)"
-    />
+    <UFormGroup :name="`image${id}`">
+      <UiImageUpload
+        v-model:image="banner.banners[activeTab!]"
+        :alt="eng.newBanner"
+        v-model:drop-zone-ref="dropZoneRef"
+        @delete="deleteImageHandler"
+        @change="uploadImage($event)"
+      />
+    </UFormGroup>
     <UFormGroup
-      name="heading"
+      :name="`heading${id}`"
       :label="eng.heading"
       :ui="{
         label: {
@@ -46,7 +109,7 @@ const uploadImage = (e: Event) => {};
       />
     </UFormGroup>
     <UFormGroup
-      name="description"
+      :name="`description${id}`"
       :label="eng.description"
       :ui="{
         label: {
@@ -62,7 +125,7 @@ const uploadImage = (e: Event) => {};
       />
     </UFormGroup>
     <UFormGroup
-      name="url"
+      :name="`url${id}`"
       :label="eng.url"
       :ui="{
         label: {
@@ -77,7 +140,7 @@ const uploadImage = (e: Event) => {};
       />
     </UFormGroup>
     <UFormGroup
-      name="sort"
+      :name="`sort${id}`"
       :label="eng.sort"
       :ui="{
         label: {
@@ -93,5 +156,6 @@ const uploadImage = (e: Event) => {};
         min="1"
       />
     </UFormGroup>
+    <!-- <pre>{{ banner.banners }}</pre> -->
   </div>
 </template>

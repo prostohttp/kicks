@@ -68,7 +68,7 @@ const deleteImageHandler = () => {
       </button>
     </div>
   </div>
-  <div class="w-full p-[5px] rounded-[8px] relative" v-else>
+  <div class="w-full p-[5px] rounded-[8px] relative group" v-else>
     <img
       :src="`/${addNew ? model : model?.image}`"
       class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
