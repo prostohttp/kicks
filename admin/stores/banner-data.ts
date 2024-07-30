@@ -23,6 +23,7 @@ export const useBannerDataStore = defineStore("bannerData", () => {
           id,
         },
       });
+      banner._id = rawBanner._id;
       banner.title = rawBanner.title;
       banner.banners = rawBanner.banners;
     } catch (error: any) {
@@ -47,7 +48,18 @@ export const useBannerDataStore = defineStore("bannerData", () => {
 
   const addNewBanner = () => {};
 
-  const deleteBanner = async (id: string) => {};
+  const deleteBanner = async (id: string) => {
+    try {
+      banners.value = await $fetch("/api/banner/remove", {
+        method: "DELETE",
+        body: {
+          id,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
 
   const clearBanner = () => {
     banner.title = "";

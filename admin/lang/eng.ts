@@ -64,6 +64,7 @@ export const eng = {
   editArticle: "Edit Article",
   editOption: "Edit Option",
   editProduct: "Edit Product",
+  editBanner: "Edit Banner",
   deletePerson: "Delete Person",
   deleteCategory: "Delete Category",
   deleteBrand: "Delete Brand",
@@ -126,6 +127,7 @@ export const eng = {
     stringMin: "Min 2 symbols",
     numberMin: "Min 1",
     checkRequiredFields: "Check required fileds on all tabs",
+    needOneMoreItem: "Add one more item",
   },
   optionTypes: {
     list: "List",

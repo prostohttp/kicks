@@ -5,18 +5,16 @@ import { eng } from "~/lang/eng";
 import { useProductDataStore } from "~/stores/product-data";
 import type { InputData } from "~/types/ui/ui.types";
 import { Constants } from "~/constants";
-import type { ArticleDto } from "~/server/api/article/dto/article.dto";
 import * as v from "valibot";
 
 // define
-const { articleData, id } = defineProps<{
+const { articleData } = defineProps<{
   articleData: InputData[];
-  id: string;
 }>();
-const article: Ref<ArticleDto | undefined> = defineModel("article");
 
 // Store
 const articleDataStore = useArticleDataStore();
+const { article } = storeToRefs(articleDataStore);
 const productDataStore = useProductDataStore();
 const { titles: data } = storeToRefs(productDataStore);
 await productDataStore.getTitles();
@@ -50,7 +48,7 @@ const uploadImageHandler = async (formData: FormData) => {
   await $fetch("/api/article/edit", {
     method: "PUT",
     body: {
-      _id: id,
+      _id: article.value?._id,
       image: uploadedImage,
     },
   });
@@ -65,7 +63,7 @@ const uploadImage = async (e: Event) => {
       formData.append("image", fileInput.files![0]);
     }
     await uploadImageHandler(formData);
-    articleDataStore.getArticle(id);
+    articleDataStore.getArticle(article.value?._id!);
     toast.add({ title: eng.imageUploaded, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
@@ -81,7 +79,7 @@ const onDrop = async (files: File[] | null) => {
         formData.append("image", files![0]);
       }
       await uploadImageHandler(formData);
-      articleDataStore.getArticle(id);
+      articleDataStore.getArticle(article.value?._id!);
       toast.add({ title: eng.imageUploaded, color: "green" });
     }
   } catch (error) {
@@ -96,7 +94,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     await $fetch("/api/article/edit", {
       method: "PUT",
       body: {
-        _id: id,
+        _id: article.value?._id,
         title: event.data.title,
         shortDescription: event.data.shortDescription,
         description: event.data.description,
@@ -114,7 +112,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       color: "green",
     });
     articleDataStore.getAllArticlesForAdminMenu();
-    articleDataStore.getArticle(id);
+    articleDataStore.getArticle(article.value?._id!);
   } catch (error: any) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });
   }
@@ -133,11 +131,11 @@ const deleteImageHandler = async () => {
     await $fetch("/api/article/edit", {
       method: "PUT",
       body: {
-        _id: id,
+        _id: article.value?._id,
         image: "",
       },
     });
-    articleDataStore.getArticle(id);
+    articleDataStore.getArticle(article.value?._id!);
     toast.add({ title: eng.imageDeleted, color: "green" });
   } catch (_error) {
     toast.add({ title: eng.somethingWentWrong, color: "red" });

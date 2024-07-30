@@ -9,7 +9,6 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 
 // meta
 definePageMeta({
-  middleware: ["only-admin-access"],
   name: eng.addNewBanner,
 });
 

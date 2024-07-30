@@ -1,4 +1,5 @@
 export interface IBanner {
+  _id?: string;
   id: number;
   heading?: string;
   description?: string;
@@ -8,6 +9,7 @@ export interface IBanner {
 }
 
 export interface BannerDto {
+  _id?: string;
   title: string;
   banners: IBanner[];
 }

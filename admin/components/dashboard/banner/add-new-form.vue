@@ -12,6 +12,7 @@ interface BannerTab {
 
 // store
 const bannerDataSrore = useBannerDataStore();
+bannerDataSrore.clearBanner();
 const { banner } = storeToRefs(bannerDataSrore);
 
 // vars
@@ -156,18 +157,21 @@ async function onError(event: FormErrorEvent) {
           </div>
         </div>
         <div class="lg:w-[70%] w-full">
-          <UFormGroup name="banners">
-            <DashboardBannerFormItem
-              v-for="(item, index) in banner.banners"
-              :index="index"
-              :id="item.id"
-              v-model:active-tab="activeTab"
-              v-show="index === activeTab"
-            />
-          </UFormGroup>
+          <Transition>
+            <UFormGroup name="banners">
+              <DashboardBannerAddNewFormItem
+                v-for="(item, index) in banner.banners"
+                :index="index"
+                :id="item.id"
+                v-model:active-tab="activeTab"
+                v-show="index === activeTab"
+                :key="item.id"
+              />
+            </UFormGroup>
+          </Transition>
         </div>
       </div>
-      <UButton type="submit" class="dark-button float-end">
+      <UButton type="submit" class="dark-button float-end" v-if="isAdmin">
         {{ eng.save }}
       </UButton>
     </UForm>
@@ -181,5 +185,15 @@ async function onError(event: FormErrorEvent) {
 
 .active-tab .icon-button {
   @apply text-fa-white;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

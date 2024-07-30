@@ -8,7 +8,7 @@ export const validate = (state: BannerDto): FormError[] => {
   if (!state.title) errors.push({ path: "title", message: eng.error.string });
 
   if (!state.banners.length)
-    errors.push({ path: "banners", message: eng.addNewBanner });
+    errors.push({ path: "banners", message: eng.error.needOneMoreItem });
 
   if (state.title.length < Constants.STRING_MIN_LENGTH) {
     errors.push({ path: "title", message: eng.error.stringMin });

@@ -47,12 +47,7 @@ watch(article, () => {
   >
     <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
       <UiEmpty v-if="!article" />
-      <DashboardArticleEditForm
-        :articleData="articleData"
-        :id="article._id"
-        v-model:article="article"
-        v-else
-      />
+      <DashboardArticleEditForm :articleData="articleData" v-else />
     </div>
   </main>
 </template>

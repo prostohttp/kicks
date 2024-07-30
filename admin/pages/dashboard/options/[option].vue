@@ -67,7 +67,6 @@ onUnmounted(() => {
       <UiEmpty v-if="!option._id" />
       <DashboardOptionEditForm
         :optionData="optionData"
-        :id="id"
         v-model:submit="isSubmit"
         v-else
       />

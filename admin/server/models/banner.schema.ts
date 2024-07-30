@@ -10,6 +10,10 @@ export const Banner = defineMongooseModel({
     },
     banners: [
       {
+        id: {
+          type: Number,
+          requred: true,
+        },
         heading: {
           type: String,
           required: false,

@@ -6,9 +6,8 @@ import type { FormSubmitEvent } from "#ui/types";
 import { validate } from "./validator";
 
 // define
-const { optionData, id } = defineProps<{
+const { optionData } = defineProps<{
   optionData: InputData[];
-  id: string;
 }>();
 const isSubmit = defineModel("submit");
 
@@ -30,7 +29,7 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
     await $fetch("/api/option/edit", {
       method: "PUT",
       body: {
-        _id: id,
+        _id: option.value._id,
         title: event.data.title,
         type: event.data.type,
         sort: event.data.sort,
@@ -116,7 +115,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         </UFormGroup>
         <DashboardOptionEditTable
           v-if="optionDataStore.isVisibleTable"
-          :optionId="id"
+          :optionId="option._id"
         />
       </UForm>
     </div>
