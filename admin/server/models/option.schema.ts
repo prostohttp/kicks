@@ -37,10 +37,4 @@ export const Option = defineMongooseModel({
       },
     ],
   },
-  hooks(schema) {
-    schema.pre("save", function (this, next) {
-      this.title = this.title.toString().toLowerCase().trim() as any;
-      next();
-    });
-  },
 });

@@ -35,7 +35,7 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
     if (option.value.values) {
       values = optionDataStore.isVisibleTable
         ? Object.values(option.value.values)
-        : null;
+        : [];
     }
 
     await $fetch("/api/option/add", {
