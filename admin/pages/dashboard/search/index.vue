@@ -1,5 +1,119 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { type BreadcrumbItem } from "~/types/ui/ui.types";
+import { eng } from "~/lang/eng";
+import { Constants } from "~/constants";
+
+// store
+const statsDataStore = useStatsDataStore();
+const productDataStore = useProductDataStore();
+await useAsyncData("saleProducts", () => statsDataStore.getSaleProducts());
+const { saleProducts } = storeToRefs(statsDataStore);
+
+// vars
+const toast = useToast();
+const router = useRouter();
+const route = useRoute();
+const page = Number(useRoute().query.page);
+const searchPhrase = ref(route.query.searchPhrase);
+const path = router.currentRoute.value.path;
+const links: Ref<BreadcrumbItem[]> = ref(
+  breadcrumbsArrayFactory(path, eng.searchResult, path),
+);
+
+const { foundedProducts } = storeToRefs(productDataStore);
+const activePage = ref(page || foundedProducts.value?.activePage || 1);
+await useAsyncData("asyncFoundedProducts", () =>
+  productDataStore.searchProduct(
+    searchPhrase.value!.toString(),
+    Constants.PER_PAGE_SEARCH,
+    activePage.value,
+  ),
+);
+
+// handlers
+const title = computed(() =>
+  searchPhrase.value ? `${eng.search} | ${searchPhrase.value}` : eng.search,
+);
+
+const getSales = (id: string) => {
+  if (saleProducts.value && id in saleProducts.value) {
+    return saleProducts.value[id];
+  } else {
+    return 0;
+  }
+};
+
+const deleteProduct = async (id: string) => {
+  try {
+    await $fetch("/api/product/remove", {
+      method: "DELETE",
+      body: {
+        id,
+      },
+    });
+    await productDataStore.searchProduct(
+      searchPhrase.value!.toString(),
+      Constants.PER_PAGE_SEARCH,
+      activePage.value,
+    );
+    toast.add({ title: eng.deleteProductSuccess });
+  } catch (error: any) {
+    toast.add({ title: error.message });
+  }
+};
+
+// meta
+useHead({ title });
+
+// hooks
+watch(
+  () => route.query,
+  async (newValue, oldValue) => {
+    if (!newValue.searchPhrase) {
+      productDataStore.clearFoundedProducts();
+      searchPhrase.value = "";
+    } else if (newValue.searchPhrase !== oldValue.searchPhrase) {
+      searchPhrase.value = newValue.searchPhrase;
+    } else {
+      await productDataStore.searchProduct(
+        searchPhrase.value!.toString(),
+        Constants.PER_PAGE_SEARCH,
+        activePage.value,
+      );
+    }
+
+    activePage.value = Number(newValue.page);
+  },
+);
+
+watch(activePage, async (newValue) => {
+  router.push({ query: { ...route.query, page: newValue || 1 } });
+});
+</script>
 
 <template>
-  <div>Search</div>
+  <div
+    class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
+  >
+    <DashboardBreadcrumbs :links="links" :title="eng.search" />
+  </div>
+  <main class="flex flex-col">
+    <UiEmpty v-if="!foundedProducts?.allItems" />
+    <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
+      <DashboardProductCard
+        v-for="product in foundedProducts?.products"
+        @delete-product="deleteProduct"
+        :product="product"
+        :categories="unwrapAfterPopulate(product.category)"
+        :sales="getSales(product._id)"
+        :key="product._id"
+      />
+    </div>
+  </main>
+  <LazyUiPagination
+    v-if="foundedProducts?.pagesInPagination"
+    v-model="activePage"
+    :element-in-page="Constants.PER_PAGE_SEARCH"
+    :all-items="foundedProducts?.allItems"
+  />
 </template>

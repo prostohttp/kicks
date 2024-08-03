@@ -10,6 +10,7 @@ export const Constants = {
   IMG_USERS: "img/users/",
   PER_PAGE_USERS: 6,
   PER_PAGE_PRODUCT: 6,
+  PER_PAGE_SEARCH: 6,
   PER_PAGE_ORDER: 6,
   PER_PAGE_BRAND: 18,
   PER_PAGE_ARTICLE: 6,

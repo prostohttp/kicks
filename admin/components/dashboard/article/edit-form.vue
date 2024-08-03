@@ -227,7 +227,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
               },
             }"
             :ui="{
-              wrapper: 'select-wrapper',
+              wrapper: 'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
             }"
             v-else-if="type === 'select'"
           />

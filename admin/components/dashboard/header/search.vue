@@ -110,7 +110,7 @@ watch(query, (oldValue, newValue) => {
           <DashboardHeaderSearchList :data="founded" v-model="isOpen" />
           <NuxtLink
             v-if="founded && founded.length"
-            to="/dashboard/search"
+            :to="`/dashboard/search?searchPhrase=${query}`"
             @click="hideSearchInputHandler"
             class="text-[16px] font-[600] text-blue dark:text-yellow hover:text-dark-gray dark:hover:text-fa-white"
           >

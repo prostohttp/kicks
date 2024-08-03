@@ -14,6 +14,7 @@ export enum OrderStatus {
 export enum ModelNamesForSearchEngine {
   CATEGORY = "categories",
   PRODUCT = "products",
+  PRODUCT_WITH_PAGINATION = "productsWithPagination",
   ARTICLES = "articles",
   BRAND = "brands",
   ALL = "all",

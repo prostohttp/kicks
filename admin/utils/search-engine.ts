@@ -16,6 +16,21 @@ const foundedProducts = async (searchPhrase: string, limit: number) => {
   };
 };
 
+const foundedProductsWithPagination = async (
+  searchPhrase: string,
+  limit: number,
+  page?: number,
+) => {
+  return await $fetch("/api/product/all", {
+    method: "GET",
+    query: {
+      searchPhrase,
+      perPage: limit,
+      page,
+    },
+  });
+};
+
 const foundedArticles = async (searchPhrase: string, limit: number) => {
   const articles = await Article.find({
     title: { $regex: new RegExp(searchPhrase, "i") },
@@ -57,6 +72,7 @@ export default async (
   model: ModelNamesForSearchEngine,
   searchPhrase: string,
   limit: number,
+  page?: number,
 ) => {
   let founded: any;
   try {
@@ -65,6 +81,14 @@ export default async (
         founded = {
           result: { products: await foundedProducts(searchPhrase, limit) },
         };
+        break;
+
+      case ModelNamesForSearchEngine.PRODUCT_WITH_PAGINATION:
+        founded = await foundedProductsWithPagination(
+          searchPhrase,
+          limit,
+          page,
+        );
         break;
 
       case ModelNamesForSearchEngine.ARTICLES:
@@ -89,6 +113,11 @@ export default async (
         founded = {
           result: {
             products: await foundedProducts(searchPhrase, limit),
+            productsWithPagination: await foundedProductsWithPagination(
+              searchPhrase,
+              limit,
+              page,
+            ),
             articles: await foundedArticles(searchPhrase, limit),
             categories: await foundedCategories(searchPhrase, limit),
             brands: await foundedBrands(searchPhrase, limit),

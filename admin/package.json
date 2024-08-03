@@ -27,8 +27,8 @@
     "prettier": "^3.3.3",
     "resend": "^3.5.0",
     "valibot": "^0.37.0",
-    "vue": "^3.4.34",
-    "vue-router": "^4.4.0"
+    "vue": "^3.4.35",
+    "vue-router": "^4.4.2"
   },
   "devDependencies": {
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",

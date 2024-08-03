@@ -1,5 +1,6 @@
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
 import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
 export interface ProductsPayload {
   products: ProductDto[];
@@ -11,6 +12,7 @@ export interface ProductsPayload {
 export const useProductDataStore = defineStore("productData", () => {
   // vars
   const products: Ref<ProductsPayload | undefined> = ref();
+  const foundedProducts: Ref<ProductsPayload | undefined> = ref();
   const product: Ref<ProductDto | undefined> = ref();
   const productsForCount: Ref<
     { _id: string; category: string[] }[] | undefined
@@ -58,6 +60,28 @@ export const useProductDataStore = defineStore("productData", () => {
     return products.value;
   };
 
+  const searchProduct = async (search: string, limit: number, page: number) => {
+    foundedProducts.value = await $fetch("/api/search/all", {
+      method: "GET",
+      query: {
+        searchModel: ModelNamesForSearchEngine.PRODUCT_WITH_PAGINATION,
+        searchPhrase: search,
+        limit,
+        page,
+      },
+    });
+    return true;
+  };
+
+  const clearFoundedProducts = () => {
+    foundedProducts.value = {
+      products: [],
+      allItems: 0,
+      activePage: undefined,
+      pagesInPagination: undefined,
+    };
+  };
+
   const getProductCount = async () => {
     try {
       productsForCount.value = await $fetch("/api/product/all", {
@@ -86,6 +110,7 @@ export const useProductDataStore = defineStore("productData", () => {
   };
   return {
     product,
+    foundedProducts,
     products,
     productsForCount,
     titles,
@@ -94,5 +119,7 @@ export const useProductDataStore = defineStore("productData", () => {
     getTitles,
     getAllProducts,
     getProductCount,
+    searchProduct,
+    clearFoundedProducts,
   };
 });

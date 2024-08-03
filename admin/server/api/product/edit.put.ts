@@ -21,7 +21,9 @@ export default defineEventHandler(async (event) => {
 
   try {
     const updatedFields = fromMultipartFormData(data) as unknown as ProductDto;
-    const product: ProductDto | null = await Product.findById(updatedFields.id);
+    const product: ProductDto | null = await Product.findById(
+      updatedFields._id,
+    );
 
     if (!product) {
       throw createError({ statusMessage: "Category not found" });
@@ -48,7 +50,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const updatedProduct = await Product.findByIdAndUpdate(
-      updatedFields.id,
+      updatedFields._id,
       {
         ...updatedFields,
         options: JSON.parse(updatedFields.options.toString()),

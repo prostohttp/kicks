@@ -37,19 +37,19 @@ const { signOut } = useAuth();
           <NuxtLink
             activeClass="active"
             to="/dashboard/profile"
-            class="text-[20px] font-[600] hover:text-dark-gray dark:hover:text-fa-white"
+            class="text-[20px] font-[600] hover:text-blue dark:hover:text-yellow"
             @click="close"
           >
             {{ user?.name }}
           </NuxtLink>
           <NuxtLink
             activeClass="active"
-            to="/dashboard/profile"
+            to="/dashboard/settings"
             class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
             v-if="user?.isRegistered"
             @click="close"
           >
-            <span>{{ eng.changePassword }}</span>
+            <span>{{ eng.settings }}</span>
             <UIcon
               name="i-heroicons-chevron-right-20-solid"
               class="scale-[1.6]"

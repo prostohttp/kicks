@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
     const page = Number(query.page) || 1;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_PRODUCT;
+    const searchPhrase = query.searchPhrase?.toString();
     const titles = query.titles;
     const forCategoryCount = Boolean(query.forCategoryCount);
     const categoryId = query.category;
@@ -14,6 +15,18 @@ export default defineEventHandler(async (event) => {
       path: "category",
       select: "title",
     });
+
+    const foundedProducts = await Product.find({
+      $or: [
+        { title: { $regex: new RegExp(searchPhrase!, "i") } },
+        { description: { $regex: new RegExp(searchPhrase!, "i") } },
+      ],
+    }).populate({
+      path: "category",
+      select: "title",
+    });
+
+    const foundedProductsLength = foundedProducts.length;
     const productsLength = products.length;
     const pagesInPagination = pageCount(productsLength, perPage);
 
@@ -64,6 +77,44 @@ export default defineEventHandler(async (event) => {
         products,
         pagesInPagination: 0,
         allItems: productsLength,
+      };
+    }
+
+    if (searchPhrase) {
+      const skip = page * perPage - perPage;
+
+      const productsInPage = await Product.find({
+        $or: [
+          { title: { $regex: new RegExp(searchPhrase.toString(), "i") } },
+          { description: { $regex: new RegExp(searchPhrase.toString(), "i") } },
+        ],
+      })
+        .populate({
+          path: "category",
+          select: "title",
+        })
+        .skip(skip)
+        .limit(perPage);
+
+      if (
+        isValidPaginationPage(
+          page,
+          pagesInPagination,
+          foundedProductsLength,
+          perPage,
+        )
+      ) {
+        return {
+          products: foundedProducts,
+          pagesInPagination: 0,
+          allItems: foundedProductsLength,
+        };
+      }
+      return {
+        products: productsInPage,
+        pagesInPagination,
+        activePage: page,
+        allItems: foundedProductsLength,
       };
     }
 

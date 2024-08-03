@@ -88,6 +88,7 @@ export const eng = {
   newBanner: "Banner",
   heading: "Heading",
   url: "Link",
+  settings: "Settings",
   addNewCategory: "Add new Category",
   somethingWentWrong: "Something went wrong",
   description: "Description",
@@ -119,6 +120,9 @@ export const eng = {
   sales: "Sales",
   remainingProducts: "Remaining Products",
   backToHome: "Go back home",
+  general: "General",
+  english: "English",
+  russian: "Russian",
   pageNotFound: "Page not found",
   error: {
     required: "Required field",

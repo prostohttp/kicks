@@ -91,17 +91,10 @@ watch(
       categoryDataStore.category?.title,
       `${path}?category=${category.value}`,
     );
-    // if (
-    //   (oldValue.category && !newValue.category) ||
-    //   newValue.category !== oldValue.category ||
-    //   newValue.page !== oldValue.page
-    // ) {
     productDataStore.getAllProducts(
       Number(newValue.page),
       newValue.category?.toString(),
     );
-    // }
-
     activePage.value = Number(newValue.page);
   },
 );
