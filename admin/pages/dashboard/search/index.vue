@@ -15,9 +15,15 @@ const router = useRouter();
 const route = useRoute();
 const page = Number(useRoute().query.page);
 const searchPhrase = ref(route.query.searchPhrase);
-const path = router.currentRoute.value.fullPath;
+const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(
-  breadcrumbsArrayFactory(path, eng.searchResult, path),
+  !searchPhrase.value
+    ? breadcrumbsArrayFactory(path, eng.searchResult, path)
+    : breadcrumbsArrayFactory(
+        path,
+        searchPhrase.value.toString(),
+        `${path}?searchPhrase=${searchPhrase.value}`,
+      ),
 );
 
 const { foundedProducts } = storeToRefs(productDataStore);
@@ -69,10 +75,15 @@ useHead({ title });
 watch(
   () => route.query,
   async (newValue, oldValue) => {
-    if (!newValue.searchPhrase) {
-      productDataStore.clearFoundedProducts();
-      searchPhrase.value = "";
-    } else if (newValue.searchPhrase !== oldValue.searchPhrase) {
+    if (
+      newValue.searchPhrase !== oldValue.searchPhrase &&
+      newValue.searchPhrase
+    ) {
+      links.value = breadcrumbsArrayFactory(
+        path,
+        newValue.searchPhrase.toString(),
+        `${path}?searchPhrase=${newValue.searchPhrase}`,
+      );
       searchPhrase.value = newValue.searchPhrase;
     } else {
       await productDataStore.searchProduct(

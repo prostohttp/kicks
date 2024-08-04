@@ -11,6 +11,7 @@ const target: Ref<HTMLInputElement | null> = ref(null);
 const isActive = ref(false);
 const isOpen = ref(false);
 const founded: Ref<SearchProductDto[] | undefined> = ref();
+const metaPressed = ref(false);
 
 // handlers
 onClickOutside(target, () => (isOpen.value = false));
@@ -62,6 +63,16 @@ const hideSearchInputHandler = () => {
   isActive.value = false;
 };
 
+const searchHandlerWithShortcut = (event: KeyboardEvent) => {
+  if (event.code === "ControlLeft") {
+    metaPressed.value = true;
+  }
+  if (metaPressed.value && event.code === "Enter" && query.value) {
+    navigateTo(`/dashboard/search?searchPhrase=${query.value}`);
+    metaPressed.value = false;
+    hideSearchInputHandler();
+  }
+};
 // hooks
 watch(query, (oldValue, newValue) => {
   showSearchResultHandler();
@@ -87,6 +98,7 @@ watch(query, (oldValue, newValue) => {
       input-class=" border-dark-gray dark:border-fa-white h-[40px] pl-[44px] text-dark-gray sm:w-[200px] w-[calc(100%-30px)] z-[100] sm:relative sm:left-0 sm:top-0 fixed left-[20px] top-[32px]"
       v-model="query"
       name="query"
+      @keydown="searchHandlerWithShortcut"
       @keyup="prettySearchHandler"
       :placeholder="`${eng.search}...`"
       autocomplete="off"

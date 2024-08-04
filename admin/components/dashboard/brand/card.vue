@@ -41,6 +41,8 @@ onMounted(() => {
       <NuxtImg
         :src="`/${brand.image}`"
         width="200"
+        placeholder
+        fit="inside"
         :alt="brand.title"
         v-if="brand.image"
         class="rounded-[8px] w-[50%] md:w-full"
@@ -48,6 +50,8 @@ onMounted(() => {
       <NuxtImg
         src="/no-image.svg"
         width="100"
+        placeholder
+        fit="inside"
         :alt="brand.title"
         class="rounded-[8px] w-[50%] md:w-[80px]"
         v-else

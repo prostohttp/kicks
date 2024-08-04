@@ -150,12 +150,16 @@ watch(
           <NuxtImg
             src="/no-image.svg"
             :alt="eng.noImage"
+            placeholder
+            fit="inside"
             width="40"
             class="dark:opacity-90 rounded-[8px]"
             v-if="!row.image"
           />
           <NuxtImg
             :src="`/${row.image}`"
+            placeholder
+            fit="inside"
             width="40"
             class="dark:opacity-90 rounded-[8px]"
             v-else

@@ -56,6 +56,8 @@ onMounted(() => {
       <template v-if="user.image">
         <NuxtImg
           :src="`/${user.image}`"
+          placeholder
+          fit="inside"
           width="80"
           :alt="user.name"
           class="rounded-[8px]"

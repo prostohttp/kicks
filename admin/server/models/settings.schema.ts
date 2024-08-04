@@ -28,7 +28,7 @@ export const Settings = defineMongooseModel({
         type: String,
         required: true,
       },
-      logo: {
+      phone: {
         type: String,
         required: true,
       },
@@ -52,7 +52,10 @@ export const Settings = defineMongooseModel({
         type: String,
         required: true,
       },
-
+      phone: {
+        type: String,
+        required: true,
+      },
       description: {
         min: 10,
         type: String,

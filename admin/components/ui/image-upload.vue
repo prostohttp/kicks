@@ -72,7 +72,9 @@ const deleteImageHandler = () => {
   <div class="w-full p-[5px] rounded-[8px] relative group" v-else>
     <NuxtImg
       :src="`/${addNew ? model : model?.image}`"
-      width="400"
+      placeholder
+      fit="inside"
+      width="800"
       class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
       :alt="alt"
     />

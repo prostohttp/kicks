@@ -6,12 +6,14 @@ export interface SettingsDto {
   currency: string;
   en: {
     title: string;
+    phone: string;
     description: string;
     email: string;
     address: string;
   };
   ru: {
     title: string;
+    phone: string;
     description: string;
     email: string;
     address: string;
