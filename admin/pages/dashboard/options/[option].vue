@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 import { optionData } from "./data";
 
@@ -21,7 +21,7 @@ const links: Ref<BreadcrumbItem[]> = ref(
 );
 const isAdmin = useIsAdmin();
 const isSubmit = ref(false);
-const title = ref(option.value.title || eng.empty);
+const title = ref(option.value.title || locale["en"].empty);
 
 // handlers
 const submitHandler = async () => {
@@ -51,12 +51,15 @@ onUnmounted(() => {
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="staticTitle || eng.empty" />
+    <DashboardBreadcrumbs
+      :links="links"
+      :title="staticTitle || locale['en'].empty"
+    />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-clipboard-document-20-solid"
       @click="submitHandler"
-      :label="eng.save"
+      :label="locale['en'].save"
       v-if="option && isAdmin"
     />
   </div>

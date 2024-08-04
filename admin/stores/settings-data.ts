@@ -14,6 +14,7 @@ export const useSettingsDataStore = defineStore("settingsData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
+    return true;
   };
 
   const setSettings = async (data: SettingsDto) => {
@@ -28,6 +29,7 @@ export const useSettingsDataStore = defineStore("settingsData", () => {
       throw createError({ statusMessage: error.message });
     }
   };
+
   return {
     settings,
     getSettings,

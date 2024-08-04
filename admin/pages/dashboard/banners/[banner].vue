@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
@@ -17,7 +17,9 @@ const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(fullPath, banner.value?.title, fullPath),
 );
 
-const title = computed(() => (banner.value ? banner.value?.title : eng.empty));
+const title = computed(() =>
+  banner.value ? banner.value?.title : locale["en"].empty,
+);
 
 // meta
 useHeadSafe({
@@ -40,7 +42,7 @@ watch(
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="banner.title ? banner.title : eng.empty"
+    :title="banner.title ? banner.title : locale['en'].empty"
   />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"

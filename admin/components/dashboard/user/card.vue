@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { UserDto } from "~/server/dto/user.dto";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { DashboardUserEditModal, DashboardUserDeleteModal } from "#components";
 
 // define
@@ -33,7 +33,7 @@ const openDeleteUserModal = () => {
     onDelete() {
       emit("delete-person", user._id);
       modal.close();
-      toast.add({ title: eng.deletePersonSuccess });
+      toast.add({ title: locale["en"].deletePersonSuccess });
     },
   });
 };
@@ -64,7 +64,7 @@ onMounted(() => {
         />
       </template>
       <template v-else>
-        <NuxtImg src="/no-image.svg" width="40" :alt="eng.noImage" />
+        <NuxtImg src="/no-image.svg" width="40" :alt="locale['en'].noImage" />
       </template>
     </div>
     <div class="flex flex-col items-center sm:items-start break-all">
@@ -104,11 +104,11 @@ onMounted(() => {
               @click="openEditUserModal(user._id)"
               class="cursor-pointer"
             >
-              {{ eng.editProfile }}
+              {{ locale["en"].editProfile }}
             </NuxtLink>
 
             <NuxtLink @click="openDeleteUserModal" class="cursor-pointer">
-              {{ eng.deletePerson }}
+              {{ locale["en"].deletePerson }}
             </NuxtLink>
           </ul>
         </template>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // store
 const optionDataStore = useOptionDataStore();
@@ -43,9 +43,9 @@ const uploadImage = async (e: Event, id: number) => {
     changeValueFromArray(id, option.value.values, "image", uploadedImage);
 
     if (!uploadedImage) {
-      toast.add({ title: eng.notImage, color: "red" });
+      toast.add({ title: locale["en"].notImage, color: "red" });
     }
-    toast.add({ title: eng.imageUploaded, color: "green" });
+    toast.add({ title: locale["en"].imageUploaded, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
   }
@@ -60,7 +60,7 @@ const deleteImageHandler = async (id: number) => {
       },
     });
     changeValueFromArray(id, option.value.values, "image", "");
-    toast.add({ title: eng.imageDeleted, color: "green" });
+    toast.add({ title: locale["en"].imageDeleted, color: "green" });
   } catch (error: any) {
     toast.add({ title: error.message, color: "red" });
   }
@@ -93,14 +93,14 @@ const deleteValue = (id: number) => {
         class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative mt-[20px]"
       >
         <span>
-          {{ eng.addValue }}
+          {{ locale["en"].addValue }}
         </span>
       </caption>
     </template>
     <template #value-data="{ row }">
       <UFormGroup :name="`value${row.id}`">
         <UInput
-          :placeholder="eng.addValue"
+          :placeholder="locale['en'].addValue"
           inputClass="clean-field"
           v-model="row.value"
         />
@@ -116,7 +116,7 @@ const deleteValue = (id: number) => {
     <template #sort-data="{ row }">
       <UFormGroup :name="`sort${row.id}`">
         <UInput
-          :placeholder="eng.sort"
+          :placeholder="locale['en'].sort"
           inputClass="clean-field"
           v-model="row.sort"
           type="number"

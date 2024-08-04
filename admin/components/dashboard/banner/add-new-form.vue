@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { validate } from "./validator";
 import type { FormErrorEvent } from "#ui/types";
 
@@ -23,7 +23,7 @@ const activeTab = ref(0);
 const bannerTabs: Ref<BannerTab[]> = ref(
   banner.value.banners.map((banner) => ({
     id: banner.id,
-    title: `${eng.newBanner} ${banner.sort}`,
+    title: `${locale["en"].newBanner} ${banner.sort}`,
   })),
 );
 const isValidForm = ref(true);
@@ -75,7 +75,7 @@ const addNewBanner = () => {
   });
   bannerTabs.value.push({
     id,
-    title: eng.newBanner,
+    title: locale["en"].newBanner,
   });
 };
 
@@ -102,7 +102,7 @@ async function onError(event: FormErrorEvent) {
       v-if="!isValidForm"
       class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
     >
-      {{ eng.error.checkRequiredFields }}
+      {{ locale["en"].error.checkRequiredFields }}
     </div>
     <UForm
       :validate="validate"
@@ -113,7 +113,7 @@ async function onError(event: FormErrorEvent) {
     >
       <UFormGroup
         name="title"
-        :label="eng.title"
+        :label="locale['en'].title"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -121,7 +121,7 @@ async function onError(event: FormErrorEvent) {
         }"
       >
         <UInput
-          :placeholder="eng.title"
+          :placeholder="locale['en'].title"
           inputClass="no-left-icon"
           v-model="banner.title"
         />
@@ -136,7 +136,7 @@ async function onError(event: FormErrorEvent) {
             type="button"
             @click="addNewBanner"
           >
-            {{ eng.addNewBanner }}
+            {{ locale["en"].addNewBanner }}
           </UButton>
           <div
             v-for="(tab, index) in bannerTabs"
@@ -146,7 +146,7 @@ async function onError(event: FormErrorEvent) {
             @click="activeTab = index"
           >
             <span>{{
-              `${eng.newBanner} ${banner.banners[index].sort || ""}`
+              `${locale["en"].newBanner} ${banner.banners[index].sort || ""}`
             }}</span>
             <UButton
               class="icon-button"
@@ -172,7 +172,7 @@ async function onError(event: FormErrorEvent) {
         </div>
       </div>
       <UButton type="submit" class="dark-button float-end" v-if="isAdmin">
-        {{ eng.save }}
+        {{ locale["en"].save }}
       </UButton>
     </UForm>
   </div>

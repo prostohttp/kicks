@@ -1,4 +1,4 @@
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
 const foundedProducts = async (searchPhrase: string, limit: number) => {
@@ -11,7 +11,7 @@ const foundedProducts = async (searchPhrase: string, limit: number) => {
     .limit(limit)
     .select("title regularPrice description salePrice image");
   return {
-    title: eng.allProducts,
+    title: locale["en"].allProducts,
     data: products,
   };
 };
@@ -38,7 +38,7 @@ const foundedArticles = async (searchPhrase: string, limit: number) => {
     .limit(limit)
     .select("title image description");
   return {
-    title: eng.allArticles,
+    title: locale["en"].allArticles,
     data: articles,
   };
 };
@@ -51,7 +51,7 @@ const foundedCategories = async (searchPhrase: string, limit: number) => {
     .select("title productCount image");
 
   return {
-    title: eng.allCategories,
+    title: locale["en"].allCategories,
     data: categories,
   };
 };
@@ -63,7 +63,7 @@ const foundedBrands = async (searchPhrase: string, limit: number) => {
     .limit(limit)
     .select("title image");
   return {
-    title: eng.allBrands,
+    title: locale["en"].allBrands,
     data: brands,
   };
 };

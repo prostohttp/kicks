@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
 
 // define
@@ -24,10 +24,10 @@ const deleteArticle = async () => {
         ids: articles ? getIdsHelper(articles) : [],
       },
     });
-    toast.add({ title: eng.successDeleteMessage, color: "green" });
+    toast.add({ title: locale["en"].successDeleteMessage, color: "green" });
     emit("delete");
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 </script>
@@ -45,7 +45,7 @@ const deleteArticle = async () => {
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ eng.deleteArticle }}
+            {{ locale["en"].deleteArticle }}
           </h3>
           <UButton
             color="gray"
@@ -57,19 +57,19 @@ const deleteArticle = async () => {
         </div>
       </template>
       <div class="flex flex-col gap-[20px]">
-        <p class="dark:text-fa-white">{{ eng.deleteArticleText }}</p>
+        <p class="dark:text-fa-white">{{ locale["en"].deleteArticleText }}</p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
             @click="$emit('close')"
           >
-            {{ eng.cancel }}
+            {{ locale["en"].cancel }}
           </UButton>
           <UButton
             @click="deleteArticle"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ eng.deleteArticle }}
+            {{ locale["en"].deleteArticle }}
           </UButton>
         </div>
       </div>

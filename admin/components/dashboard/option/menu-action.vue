@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { DashboardOptionDeleteModal } from "#components";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { IOption } from "~/pages/dashboard/options/index.vue";
 import { useUploadDeleteDataStore } from "~/stores/upload-delete-data.js";
 
@@ -62,7 +62,7 @@ const openDeleteOptionModal = (options: IOption[]) => {
           @click="openDeleteOptionModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ eng.deleteOption }}
+          {{ locale["en"].deleteOption }}
         </NuxtLink>
       </ul>
     </template>

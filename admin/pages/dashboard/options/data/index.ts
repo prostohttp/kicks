@@ -1,23 +1,23 @@
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { InputData } from "~/types/ui/ui.types";
 
 export const optionData: InputData[] = [
   {
-    label: eng.title,
+    label: locale["en"].title,
     name: "title",
     type: "text",
-    placeholder: eng.title,
+    placeholder: locale["en"].title,
   },
   {
-    label: eng.type,
+    label: locale["en"].type,
     name: "type",
     type: "select",
-    placeholder: eng.typeText,
+    placeholder: locale["en"].typeText,
   },
   {
-    label: eng.sort,
+    label: locale["en"].sort,
     name: "sort",
     type: "number",
-    placeholder: eng.sort,
+    placeholder: locale["en"].sort,
   },
 ];

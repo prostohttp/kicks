@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { UserDto } from "~/server/dto/user.dto";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // vars
@@ -14,7 +14,7 @@ const tempUser = data.value?.user as UserDto;
 
 // meta
 definePageMeta({
-  name: eng.breadcrumbs.profile,
+  name: locale["en"].breadcrumbs.profile,
 });
 
 useHead({
@@ -23,7 +23,10 @@ useHead({
 </script>
 
 <template>
-  <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.profile" />
+  <DashboardBreadcrumbs
+    :links="links"
+    :title="locale['en'].breadcrumbs.profile"
+  />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >

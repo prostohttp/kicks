@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import { Locales, type BreadcrumbItem } from "~/types/ui/ui.types";
 
@@ -17,7 +17,7 @@ definePageMeta({
   name: "all-articles",
 });
 useHead({
-  title: eng.allArticles,
+  title: locale["en"].allArticles,
 });
 
 // store
@@ -66,7 +66,7 @@ const articles = computed((): Array<IArticle> | undefined => {
       image: article.image,
       title: article.title,
       description: article.shortDescription,
-      enabled: article.isEnabled ? eng.yesText : eng.noText,
+      enabled: article.isEnabled ? locale["en"].yesText : locale["en"].noText,
       createdAt: dateTimeFormat(article.createdAt, Locales.RU),
     };
   });
@@ -93,11 +93,14 @@ watch(
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.articles" />
+    <DashboardBreadcrumbs
+      :links="links"
+      :title="locale['en'].breadcrumbs.articles"
+    />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="eng.addNewArticle"
+      :label="locale['en'].addNewArticle"
       to="/dashboard/articles/new"
       v-if="isAdmin"
     />
@@ -109,7 +112,7 @@ watch(
       :loading="!articles"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: eng.loadingText,
+        label: locale['en'].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -117,7 +120,7 @@ watch(
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: eng.empty,
+        label: locale['en'].empty,
       }"
       :ui="{
         td: {
@@ -137,7 +140,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ eng.breadcrumbs.articles }}
+            {{ locale["en"].breadcrumbs.articles }}
           </span>
           <DashboardArticleMenuAction
             v-model:activePage="activePage"
@@ -149,7 +152,7 @@ watch(
         <NuxtLink :to="`/dashboard/articles/${row.id}`">
           <NuxtImg
             src="/no-image.svg"
-            :alt="eng.noImage"
+            :alt="locale['en'].noImage"
             placeholder
             fit="inside"
             width="40"

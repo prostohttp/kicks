@@ -1,49 +1,49 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // vars
 const isAdmin = useIsAdmin();
 const menuItems = [
   {
     to: "/dashboard",
-    title: eng.dashboard,
+    title: locale["en"].dashboard,
     icon: "i-heroicons-squares-plus",
   },
   {
     to: "/dashboard/products?page=1",
-    title: eng.allProducts,
+    title: locale["en"].allProducts,
     icon: "i-heroicons-list-bullet",
   },
   {
     to: "/dashboard/orders?page=1",
-    title: eng.allOrders,
+    title: locale["en"].allOrders,
     icon: "i-heroicons-clipboard-document-list",
   },
   {
     to: "/dashboard/brands?page=1",
-    title: eng.allBrands,
+    title: locale["en"].allBrands,
     icon: "i-heroicons-user-group",
   },
   {
     to: "/dashboard/articles?page=1",
-    title: eng.allArticles,
+    title: locale["en"].allArticles,
     icon: "i-heroicons-newspaper",
   },
   {
     to: "/dashboard/options?page=1",
-    title: eng.allOptions,
+    title: locale["en"].allOptions,
     icon: "i-heroicons-chart-bar",
   },
   {
     to: "/dashboard/users?page=1",
-    title: eng.allUsers,
+    title: locale["en"].allUsers,
     icon: "i-heroicons-finger-print",
     protected: !isAdmin,
   },
   {
     to: "/dashboard/banners?page=1",
-    title: eng.allBanners,
+    title: locale["en"].allBanners,
     icon: "i-material-symbols-add-photo-alternate-outline",
   },
 ];

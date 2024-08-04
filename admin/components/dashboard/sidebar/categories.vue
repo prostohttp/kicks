@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { AccordionItem } from "~/types/ui/ui.types";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // store
 const categoryDataStore = useCategoryDataStore();
@@ -74,7 +74,7 @@ const items: AccordionItem[] | undefined = [
               to="/dashboard/categories?page=1"
               class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
             >
-              {{ eng.allCategories }}
+              {{ locale["en"].allCategories }}
             </NuxtLink>
           </li>
         </ul>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ModelRef } from "vue";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // define
 const { allItems, elementInPage } = defineProps<{
@@ -27,12 +27,12 @@ const activePage: ModelRef<number | undefined> = defineModel();
       }"
       :prev-button="{
         icon: 'i-heroicons-chevron-left-20-solid',
-        label: eng.prev,
+        label: locale['en'].prev,
         inactiveClass: activePage !== 1 ? 'pagination-prev-next' : 'hidden',
       }"
       :next-button="{
         icon: 'i-heroicons-chevron-right-20-solid',
-        label: eng.next,
+        label: locale['en'].next,
         trailing: true,
         inactiveClass:
           activePage !== pageCount(allItems!, elementInPage!)

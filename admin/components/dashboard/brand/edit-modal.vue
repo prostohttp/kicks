@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // define
 const { brandId } = defineProps<{
@@ -21,7 +21,7 @@ const emit = defineEmits(["close"]);
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ eng.editBrand }}
+            {{ locale["en"].editBrand }}
           </h3>
           <UButton
             color="gray"

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 </script>
 
 <template>
   <div>
-    <p>&copy; {{ new Date().getFullYear() }} {{ eng.copy }}</p>
+    <p>&copy; {{ new Date().getFullYear() }} {{ locale["en"].copy }}</p>
   </div>
 </template>

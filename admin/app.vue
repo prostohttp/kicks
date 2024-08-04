@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { eng } from "./lang/eng";
+import { locale } from "./lang/locale";
 
 // meta
 useSeoMeta({
   ogImage: "/kicks-marketplace.svg",
 });
 useHead({
-  titleTemplate: `%s - ${eng.siteHeading}`,
+  titleTemplate: `%s - ${locale["en"].siteHeading}`,
 });
 </script>
 

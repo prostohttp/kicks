@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { articleData } from "./data/index.js";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
@@ -19,7 +19,7 @@ const links: Ref<BreadcrumbItem[]> = ref(
 );
 
 const title = computed(() =>
-  article.value ? article.value?.title : eng.empty,
+  article.value ? article.value?.title : locale["en"].empty,
 );
 
 // meta
@@ -40,7 +40,7 @@ watch(article, () => {
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="article ? article.title : eng.empty"
+    :title="article ? article.title : locale['en'].empty"
   />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/register.schema";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import * as v from "valibot";
 
 // Emits
@@ -36,7 +36,9 @@ const isOpen = ref(false);
     }"
   >
     <div class="flex flex-col gap-[20px]">
-      <h1 class="font-[Rubik] font-[600] text-[24px]">{{ eng.yourName }}</h1>
+      <h1 class="font-[Rubik] font-[600] text-[24px]">
+        {{ locale["en"].yourName }}
+      </h1>
       <UFormGroup name="name">
         <UInput
           variant="outline"
@@ -48,7 +50,7 @@ const isOpen = ref(false);
     </div>
     <div class="flex flex-col gap-[20px]">
       <h1 class="font-[Rubik] font-[600] text-[24px]">
-        {{ eng.loginDetails }}
+        {{ locale["en"].loginDetails }}
       </h1>
       <UFormGroup name="email">
         <UInput
@@ -75,12 +77,12 @@ const isOpen = ref(false);
         <UCheckbox v-model="terms">
           <template #label>
             <span class="open-sans text-[16px] font-[600]">
-              {{ eng.agreeText }}
+              {{ locale["en"].agreeText }}
               <small
                 @click.prevent="isOpen = true"
                 class="text-[16px] underline decoration-gray-main hover: cursor-pointer"
               >
-                {{ eng.terms }}
+                {{ locale["en"].terms }}
               </small></span
             >
           </template>
@@ -90,7 +92,7 @@ const isOpen = ref(false);
         <UCheckbox v-model="keepLogged">
           <template #label>
             <span class="open-sans text-[16px] font-[600]">
-              {{ eng.keepLogin }}
+              {{ locale["en"].keepLogin }}
             </span>
           </template>
         </UCheckbox>
@@ -100,7 +102,7 @@ const isOpen = ref(false);
         class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow"
         trailing
       >
-        <span>{{ eng.register }}</span>
+        <span>{{ locale["en"].register }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
       <UButton
@@ -108,7 +110,7 @@ const isOpen = ref(false);
         class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow uppercase font-[Rubik] bg-yellow hover:text-fa-white hover:bg-dark-gray"
         trailing
       >
-        <span>{{ eng.loginPage }}</span>
+        <span>{{ locale["en"].loginPage }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
     </div>

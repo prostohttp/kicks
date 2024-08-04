@@ -1,4 +1,4 @@
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { IOption } from "~/pages/dashboard/options/index.vue";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
 import type { UiOptionDto } from "~/types/server/server.types";
@@ -76,9 +76,9 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
   const isVisibleTable = computed(
     () =>
-      option?.type === eng.optionTypes.list ||
-      option?.type === eng.optionTypes.select ||
-      option?.type === eng.optionTypes.checkbox,
+      option?.type === locale["en"].optionTypes.list ||
+      option?.type === locale["en"].optionTypes.select ||
+      option?.type === locale["en"].optionTypes.checkbox,
   );
 
   const clearState = () => {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // define
 const { userId } = defineProps<{
@@ -21,7 +21,7 @@ defineEmits(["close"]);
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ eng.editProfile }}
+            {{ locale["en"].editProfile }}
           </h3>
           <UButton
             color="gray"

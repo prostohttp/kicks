@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { DashboardCategoryAddNewModal } from "#components";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import { useCategoryDataStore } from "~/stores/category-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
@@ -18,7 +18,7 @@ definePageMeta({
   name: "all-categories",
 });
 useHead({
-  title: eng.allCategories,
+  title: locale["en"].allCategories,
 });
 
 // store
@@ -74,8 +74,8 @@ const categories = computed((): Array<ITable> | undefined => {
       id: category._id,
       title: category.title,
       children: category.children.map((cat) => cat.title).join(", "),
-      parent: category.isParent ? eng.yesText : eng.noText,
-      enabled: category.isEnabled ? eng.yesText : eng.noText,
+      parent: category.isParent ? locale["en"].yesText : locale["en"].noText,
+      enabled: category.isEnabled ? locale["en"].yesText : locale["en"].noText,
     };
   });
 });
@@ -107,11 +107,14 @@ onMounted(async () => {
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.categories" />
+    <DashboardBreadcrumbs
+      :links="links"
+      :title="locale['en'].breadcrumbs.categories"
+    />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="eng.addNewCategory"
+      :label="locale['en'].addNewCategory"
       :to="addQuery('categoryNew', 'yes')"
       @click="openAddNewCategoryModal()"
     />
@@ -123,7 +126,7 @@ onMounted(async () => {
       :loading="!categories"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: eng.loadingText,
+        label: locale['en'].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -131,7 +134,7 @@ onMounted(async () => {
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: eng.empty,
+        label: locale['en'].empty,
       }"
       :ui="{
         td: {
@@ -151,7 +154,7 @@ onMounted(async () => {
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ eng.breadcrumbs.categories }}
+            {{ locale["en"].breadcrumbs.categories }}
           </span>
           <DashboardCategoryMenuAction
             v-model:activePage="activePage"

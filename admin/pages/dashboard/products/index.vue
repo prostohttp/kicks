@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { useStatsDataStore } from "~/stores/stats-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
@@ -50,8 +50,8 @@ const getSales = (id: string) => {
 };
 const pageTitle = computed(() =>
   categoryDataStore.category?.title
-    ? `${categoryDataStore.category?.title} | ${eng.breadcrumbs.products}`
-    : eng.breadcrumbs.products,
+    ? `${categoryDataStore.category?.title} | ${locale["en"].breadcrumbs.products}`
+    : locale["en"].breadcrumbs.products,
 );
 
 const deleteProduct = async (id: string) => {
@@ -64,7 +64,7 @@ const deleteProduct = async (id: string) => {
     });
     await productDataStore.getProductCount();
     await productDataStore.getAllProducts(activePage.value, category.value);
-    toast.add({ title: eng.deleteProductSuccess });
+    toast.add({ title: locale["en"].deleteProductSuccess });
   } catch (error: any) {
     toast.add({ title: error.message });
   }
@@ -113,13 +113,13 @@ watch(activePage, async (newValue) => {
       :title="
         categoryDataStore.category?.title
           ? categoryDataStore.category.title
-          : eng.breadcrumbs.products
+          : locale['en'].breadcrumbs.products
       "
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="eng.addNewProduct"
+      :label="locale['en'].addNewProduct"
       to="/dashboard/products/new"
     />
   </div>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { schema, type Schema } from "./schema/article-schema";
 import type { FormSubmitEvent } from "#ui/types";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { useProductDataStore } from "~/stores/product-data";
 import type { InputData } from "~/types/ui/ui.types";
 import { Constants } from "~/constants";
@@ -43,7 +43,7 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: eng.noImage, color: "red" });
+    toast.add({ title: locale["en"].noImage, color: "red" });
   }
   await $fetch("/api/article/edit", {
     method: "PUT",
@@ -64,9 +64,9 @@ const uploadImage = async (e: Event) => {
     }
     await uploadImageHandler(formData);
     articleDataStore.getArticle(article.value?._id!);
-    toast.add({ title: eng.imageUploaded, color: "green" });
+    toast.add({ title: locale["en"].imageUploaded, color: "green" });
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -80,10 +80,10 @@ const onDrop = async (files: File[] | null) => {
       }
       await uploadImageHandler(formData);
       articleDataStore.getArticle(article.value?._id!);
-      toast.add({ title: eng.imageUploaded, color: "green" });
+      toast.add({ title: locale["en"].imageUploaded, color: "green" });
     }
   } catch (error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -114,7 +114,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     articleDataStore.getAllArticlesForAdminMenu();
     articleDataStore.getArticle(article.value?._id!);
   } catch (error: any) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -136,9 +136,9 @@ const deleteImageHandler = async () => {
       },
     });
     articleDataStore.getArticle(article.value?._id!);
-    toast.add({ title: eng.imageDeleted, color: "green" });
+    toast.add({ title: locale["en"].imageDeleted, color: "green" });
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -173,7 +173,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           />
           <UTextarea
             v-model="state.shortDescription"
-            :placeholder="eng.shortDescription"
+            :placeholder="locale['en'].shortDescription"
             class="textarea"
             v-else-if="name === 'shortDescription'"
           />
@@ -260,7 +260,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </div>
     <div class="flex justify-end" v-if="isAdmin">
       <UButton type="submit" class="dark-button">
-        {{ eng.save }}
+        {{ locale["en"].save }}
       </UButton>
     </div>
   </UForm>

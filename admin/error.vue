@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from "#app";
-import { eng } from "./lang/eng";
+import { locale } from "./lang/locale";
 
 // props
 const { error } = defineProps({
@@ -14,9 +14,9 @@ const errorHandle = () => {
 
 const computedErrorMessage = computed(() => {
   if (error?.statusCode === 404) {
-    return eng.pageNotFound;
+    return locale["en"].pageNotFound;
   } else {
-    return error?.message || eng.somethingWentWrong;
+    return error?.message || locale["en"].somethingWentWrong;
   }
 });
 
@@ -38,7 +38,7 @@ useHead({
     <h1 class="text-[4em] font-[Rubik]">{{ error!.statusCode }}</h1>
     <p>{{ computedErrorMessage }}</p>
     <UButton color="black" variant="solid" size="xl" @click="errorHandle">
-      {{ eng.backToHome }}
+      {{ locale["en"].backToHome }}
     </UButton>
   </div>
 </template>

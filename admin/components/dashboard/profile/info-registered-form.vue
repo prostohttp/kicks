@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { useUserDataStore } from "~/stores/user-data";
 import type { UserData } from "~/types/ui/ui.types";
 import { Constants } from "~/constants";
@@ -35,7 +35,7 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: eng.noImage, color: "red" });
+    toast.add({ title: locale["en"].noImage, color: "red" });
   }
   await $fetch("/api/user/edit", {
     method: "PUT",
@@ -56,9 +56,9 @@ const uploadImage = async (e: Event) => {
     }
     await uploadImageHandler(formData);
     await userStore.getUser();
-    toast.add({ title: eng.imageUploaded, color: "green" });
+    toast.add({ title: locale["en"].imageUploaded, color: "green" });
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -72,9 +72,9 @@ const onDrop = async (files: File[] | null) => {
       }
       await uploadImageHandler(formData);
       await userStore.getUser();
-      toast.add({ title: eng.imageUploaded, color: "green" });
+      toast.add({ title: locale["en"].imageUploaded, color: "green" });
     } catch (error) {
-      toast.add({ title: eng.somethingWentWrong, color: "red" });
+      toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
     }
   }
 };
@@ -101,7 +101,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       color: "green",
     });
   } catch (error: any) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -123,9 +123,9 @@ const deleteImageHandler = async () => {
       },
     });
     await userStore.getUser();
-    toast.add({ title: eng.imageDeleted, color: "green" });
+    toast.add({ title: locale["en"].imageDeleted, color: "green" });
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -174,7 +174,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </div>
     <div class="flex justify-end">
       <UButton type="submit" class="dark-button">
-        {{ eng.update }}
+        {{ locale["en"].update }}
       </UButton>
     </div>
   </UForm>

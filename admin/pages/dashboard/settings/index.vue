@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { Locales, type BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
@@ -11,28 +11,36 @@ const { settings } = storeToRefs(settingsDataStore);
 const router = useRouter();
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
-  breadcrumbsArrayFactory(fullPath, eng.settings, fullPath),
+  breadcrumbsArrayFactory(fullPath, locale["en"].settings, fullPath),
 );
 const items = [
   {
     slot: "general",
     icon: "i-heroicons-adjustments-vertical-16-solid",
-    label: eng.general,
+    label: locale["en"].general,
   },
-  { slot: "english", icon: "i-material-symbols-language", label: eng.english },
-  { slot: "russian", icon: "i-material-symbols-language", label: eng.russian },
+  {
+    slot: "english",
+    icon: "i-material-symbols-language",
+    label: locale["en"].english,
+  },
+  {
+    slot: "russian",
+    icon: "i-material-symbols-language",
+    label: locale["en"].russian,
+  },
 ];
 
 // meta
 useHeadSafe({
-  title: eng.settings,
+  title: locale["en"].settings,
 });
 
 // hooks
 </script>
 
 <template>
-  <DashboardBreadcrumbs :links="links" :title="eng.settings" />
+  <DashboardBreadcrumbs :links="links" :title="locale['en'].settings" />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >
@@ -45,13 +53,12 @@ useHeadSafe({
           <DashboardSettingsForm />
         </template>
         <template #english="item">
-          <DashboardSettingsLocaleForm :locale="Locales.EN" />
+          <DashboardSettingsLocaleForm locale="en" />
         </template>
         <template #russian="item">
-          <DashboardSettingsLocaleForm :locale="Locales.RU" />
+          <DashboardSettingsLocaleForm locale="ru" />
         </template>
       </UTabs>
     </UForm>
-    <!-- <pre>{{ settings }}</pre> -->
   </main>
 </template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 interface IImageModel {
   image: string;
@@ -49,9 +49,9 @@ const deleteImageHandler = () => {
       class="flex flex-col gap-[10px] text-[14px] items-center"
       v-if="isAdmin"
     >
-      <h3>{{ eng.dragDropMessage }}</h3>
+      <h3>{{ locale["en"].dragDropMessage }}</h3>
       <UDivider
-        :label="eng.or"
+        :label="locale['en'].or"
         :ui="{
           border: {
             base: 'dark:border-[#70706e]',
@@ -64,7 +64,7 @@ const deleteImageHandler = () => {
         @click="inputRef?.click()"
         class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] mb-[30px] dark:hover:bg-gray-main"
       >
-        {{ eng.clickToUpload }}
+        {{ locale["en"].clickToUpload }}
       </button>
     </div>
   </div>

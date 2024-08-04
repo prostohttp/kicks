@@ -1,5 +1,5 @@
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 export default (
   data: string,
@@ -9,7 +9,8 @@ export default (
   const items: BreadcrumbItem[] = [];
   const arrayFromData = data.split("/");
   for (const item of arrayFromData) {
-    const label = eng.breadcrumbs[item as keyof typeof eng.breadcrumbs];
+    // TODO: Испавить ошибку интернационализации
+    const label = locale['en'].breadcrumbs[item as keyof typeof locale['en'].breadcrumbs];
     if (item !== "" && label) {
       items.push({
         label,

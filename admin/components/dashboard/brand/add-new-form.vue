@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { schema, type Schema } from "./schema/add-new-brand.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { usePersistDataStore } from "~/stores/persist-data";
@@ -31,7 +31,7 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: eng.noImage, color: "red" });
+    toast.add({ title: locale["en"].noImage, color: "red" });
   }
   return uploadedImage;
 };
@@ -46,9 +46,9 @@ const uploadImage = async (e: Event) => {
     }
     const uploadedImage = await uploadImageHandler(formData);
     brandImage.value = uploadedImage;
-    toast.add({ title: eng.imageUploaded, color: "green" });
+    toast.add({ title: locale["en"].imageUploaded, color: "green" });
   } catch (_error: any) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -62,10 +62,10 @@ const onDrop = async (files: File[] | null) => {
       }
       const uploadedImage = await uploadImageHandler(formData);
       brandImage.value = uploadedImage;
-      toast.add({ title: eng.imageUploaded, color: "green" });
+      toast.add({ title: locale["en"].imageUploaded, color: "green" });
     }
   } catch (error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -82,10 +82,10 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       },
     });
     brandStore.getAllBrands(page);
-    toast.add({ title: eng.successAddMessage });
+    toast.add({ title: locale["en"].successAddMessage });
     emit("close");
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong });
+    toast.add({ title: locale["en"].somethingWentWrong });
   }
 };
 
@@ -100,9 +100,9 @@ const deleteImageHandler = async () => {
       },
     });
     brandImage.value = "";
-    toast.add({ title: eng.imageDeleted, color: "green" });
+    toast.add({ title: locale["en"].imageDeleted, color: "green" });
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -130,7 +130,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
     </div>
     <UFormGroup
-      :label="eng.title"
+      :label="locale['en'].title"
       name="title"
       :ui="{
         label: {
@@ -139,7 +139,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       }"
     >
       <UInput
-        :placeholder="eng.title"
+        :placeholder="locale['en'].title"
         v-model="state.title"
         inputClass="input-label"
         icon="i-heroicons-queue-list"
@@ -147,7 +147,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </UFormGroup>
 
     <UFormGroup
-      :label="eng.description"
+      :label="locale['en'].description"
       name="description"
       :ui="{
         label: {
@@ -157,7 +157,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     >
       <UTextarea
         v-model="state.description"
-        :placeholder="eng.description"
+        :placeholder="locale['en'].description"
         class="textarea"
       />
     </UFormGroup>
@@ -169,13 +169,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
         @click="$emit('close')"
       >
-        {{ eng.cancel }}
+        {{ locale["en"].cancel }}
       </UButton>
       <UButton
         type="submit"
         class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
       >
-        {{ eng.save }}
+        {{ locale["en"].save }}
       </UButton>
     </div>
   </UForm>

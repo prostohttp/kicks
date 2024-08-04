@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { UserDto } from "~/server/dto/user.dto";
 
 // define
@@ -8,17 +8,17 @@ const user = data.value?.user as UserDto;
 // vars
 const tempUser = [
   {
-    label: eng.userName,
+    label: locale["en"].userName,
     placeholder: user.name,
     icon: "i-heroicons-user-circle-16-solid",
   },
   {
-    label: eng.email,
+    label: locale["en"].email,
     placeholder: user.email,
     icon: "i-heroicons-envelope",
   },
   {
-    label: eng.role,
+    label: locale["en"].role,
     placeholder: user.role,
     icon: "i-heroicons-shield-exclamation-20-solid",
   },

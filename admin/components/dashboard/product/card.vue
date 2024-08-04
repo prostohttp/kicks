@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { DashboardProductDeleteModal } from "#components";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { ProductDto } from "~/server/api/product/dto/product.dto";
 import { Currency, Locales } from "~/types/ui/ui.types";
 
@@ -55,7 +55,7 @@ const openDeleteProductModal = () => {
           <NuxtImg
             src="/no-image.svg"
             width="40"
-            :alt="eng.noImage"
+            :alt="locale['en'].noImage"
             class="max-w-[200px]"
           />
         </template>
@@ -111,14 +111,14 @@ const openDeleteProductModal = () => {
                 :to="`/dashboard/products/${product._id}`"
                 class="cursor-pointer"
               >
-                {{ eng.editProduct }}
+                {{ locale["en"].editProduct }}
               </NuxtLink>
               <NuxtLink
                 @click="openDeleteProductModal"
                 class="cursor-pointer"
                 v-if="isAdmin"
               >
-                {{ eng.deleteProduct }}
+                {{ locale["en"].deleteProduct }}
               </NuxtLink>
             </ul>
           </template>
@@ -126,7 +126,7 @@ const openDeleteProductModal = () => {
       </div>
     </div>
     <div class="flex flex-col gap-[5px]">
-      <strong class="text-[16px]">{{ eng.summary }}</strong>
+      <strong class="text-[16px]">{{ locale["en"].summary }}</strong>
       <span
         class="text-[14px] md:whitespace-nowrap whitespace-pre-wrap sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
       >
@@ -135,11 +135,11 @@ const openDeleteProductModal = () => {
     </div>
     <div class="border rounded-[8px] border-[#c1c1c1] p-[16px] text-[14px]">
       <div class="flex justify-between pb-[8px] border-b border-[#c1c1c1]">
-        <span>{{ eng.sales }}</span>
+        <span>{{ locale["en"].sales }}</span>
         <UiArrowStats :value="sales" />
       </div>
       <div class="flex justify-between pt-[8px]">
-        <span>{{ eng.remainingProducts }}</span>
+        <span>{{ locale["en"].remainingProducts }}</span>
         <UiPercentBar
           :percent="percentForStats(product.quantity)"
           :value="product.quantity"

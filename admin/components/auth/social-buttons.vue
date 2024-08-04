@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 const { signIn } = useAuth();
 </script>
 
 <template>
   <div class="flex justify-between gap-[5px] sm:gap-[24px]">
-    <UTooltip :text="eng.loginGithub" class="w-[31%]">
+    <UTooltip :text="locale['en'].loginGithub" class="w-[31%]">
       <AuthSocialButton
         @click="signIn('github')"
         link="https:github.com"
-        :title="eng.loginGithub"
+        :title="locale['en'].loginGithub"
         class="w-full"
       >
         <img
@@ -19,9 +19,9 @@ const { signIn } = useAuth();
         />
       </AuthSocialButton>
     </UTooltip>
-    <UTooltip :text="eng.loginYandex" class="w-[31%]">
+    <UTooltip :text="locale['en'].loginYandex" class="w-[31%]">
       <AuthSocialButton
-        :title="eng.loginYandex"
+        :title="locale['en'].loginYandex"
         @click="signIn('yandex')"
         class="w-full"
       >
@@ -31,9 +31,9 @@ const { signIn } = useAuth();
         />
       </AuthSocialButton>
     </UTooltip>
-    <UTooltip :text="eng.loginDiscord" class="w-[31%]">
+    <UTooltip :text="locale['en'].loginDiscord" class="w-[31%]">
       <AuthSocialButton
-        :title="eng.loginDiscord"
+        :title="locale['en'].loginDiscord"
         @click="signIn('discord')"
         class="w-full"
       >

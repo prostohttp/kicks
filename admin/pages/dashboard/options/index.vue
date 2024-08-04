@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import { type BreadcrumbItem } from "~/types/ui/ui.types";
 import { useOptionDataStore } from "~/stores/option-data";
@@ -17,7 +17,7 @@ definePageMeta({
   name: "all-options",
 });
 useHead({
-  title: eng.allOptions,
+  title: locale["en"].allOptions,
 });
 
 // store
@@ -91,11 +91,14 @@ watch(
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.options" />
+    <DashboardBreadcrumbs
+      :links="links"
+      :title="locale['en'].breadcrumbs.options"
+    />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="eng.addNewOption"
+      :label="locale['en'].addNewOption"
       to="/dashboard/options/new"
       v-if="isAdmin"
     />
@@ -107,7 +110,7 @@ watch(
       :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: eng.loadingText,
+        label: locale['en'].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -115,7 +118,7 @@ watch(
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: eng.empty,
+        label: locale['en'].empty,
       }"
       :ui="{
         td: {
@@ -135,7 +138,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ eng.breadcrumbs.options }}
+            {{ locale["en"].breadcrumbs.options }}
           </span>
           <DashboardOptionMenuAction
             v-model:activePage="activePage"

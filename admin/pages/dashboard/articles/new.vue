@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { articleData } from "./data/index.js";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
@@ -11,16 +11,16 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 // meta
 definePageMeta({
   middleware: ["only-admin-access"],
-  name: eng.addNewArticle,
+  name: locale["en"].addNewArticle,
 });
 
 useHead({
-  title: eng.addNewArticle,
+  title: locale["en"].addNewArticle,
 });
 </script>
 
 <template>
-  <DashboardBreadcrumbs :links="links" :title="eng.addNewArticle" />
+  <DashboardBreadcrumbs :links="links" :title="locale['en'].addNewArticle" />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >

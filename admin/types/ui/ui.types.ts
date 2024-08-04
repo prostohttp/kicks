@@ -1,4 +1,4 @@
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 export interface AccordionItem {
   label: string;
@@ -44,12 +44,12 @@ export interface InputData {
 }
 
 export const optionTypes = {
-  [eng.optionTypes.list]: "select",
-  [eng.optionTypes.select]: "select",
-  [eng.optionTypes.checkbox]: "select",
-  [eng.optionTypes.text]: "text",
-  [eng.optionTypes.textarea]: "textarea",
-  [eng.optionTypes.date]: "date",
-  [eng.optionTypes.time]: "time",
-  [eng.optionTypes.datetime]: "datetime",
+  [locale["en"].optionTypes.list]: "select",
+  [locale["en"].optionTypes.select]: "select",
+  [locale["en"].optionTypes.checkbox]: "select",
+  [locale["en"].optionTypes.text]: "text",
+  [locale["en"].optionTypes.textarea]: "textarea",
+  [locale["en"].optionTypes.date]: "date",
+  [locale["en"].optionTypes.time]: "time",
+  [locale["en"].optionTypes.datetime]: "datetime",
 };

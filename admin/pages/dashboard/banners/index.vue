@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import { type BreadcrumbItem } from "~/types/ui/ui.types";
 import { useBannerDataStore } from "~/stores/banner-data";
@@ -9,7 +9,7 @@ definePageMeta({
   name: "all-banners",
 });
 useHead({
-  title: eng.allBanners,
+  title: locale["en"].allBanners,
 });
 
 // store
@@ -63,11 +63,14 @@ watch(
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.banners" />
+    <DashboardBreadcrumbs
+      :links="links"
+      :title="locale['en'].breadcrumbs.banners"
+    />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="eng.addNewBanner"
+      :label="locale['en'].addNewBanner"
       to="/dashboard/banners/new"
       v-if="isAdmin"
     />
@@ -79,14 +82,14 @@ watch(
       :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: eng.loadingText,
+        label: locale['en'].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       :rows="data?.banners"
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: eng.empty,
+        label: locale['en'].empty,
       }"
       :ui="{
         td: {
@@ -109,7 +112,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ eng.breadcrumbs.banners }}
+            {{ locale["en"].breadcrumbs.banners }}
           </span>
         </caption>
       </template>
@@ -117,12 +120,13 @@ watch(
         <NuxtImg
           src="/no-image.svg"
           width="40"
-          :alt="eng.noImage"
+          :alt="locale['en'].noImage"
           class="dark:opacity-90 rounded-[8px]"
           v-if="!row.banners[0].image"
         />
         <NuxtImg
           width="200"
+          height="60"
           :src="`/${row.banners[0].image}`"
           class="dark:opacity-90 rounded-[8px]"
           v-else

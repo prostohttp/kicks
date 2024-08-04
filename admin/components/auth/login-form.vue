@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { schema } from "~/components/auth/schema/login.schema";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import * as v from "valibot";
 
 // Emits
@@ -46,7 +46,7 @@ const { email, password } = storeToRefs(user);
         class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow"
         trailing
       >
-        <span>{{ eng.login }}</span>
+        <span>{{ locale["en"].login }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
       <UButton
@@ -54,7 +54,7 @@ const { email, password } = storeToRefs(user);
         class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow uppercase font-[Rubik] bg-yellow hover:text-fa-white hover:bg-dark-gray"
         trailing
       >
-        <span>{{ eng.registerPage }}</span>
+        <span>{{ locale["en"].registerPage }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
     </div>

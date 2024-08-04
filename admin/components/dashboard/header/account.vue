@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import { useUserDataStore } from "~/stores/user-data";
 
@@ -49,7 +49,7 @@ const { signOut } = useAuth();
             v-if="user?.isRegistered"
             @click="close"
           >
-            <span>{{ eng.settings }}</span>
+            <span>{{ locale["en"].settings }}</span>
             <UIcon
               name="i-heroicons-chevron-right-20-solid"
               class="scale-[1.6]"
@@ -59,7 +59,7 @@ const { signOut } = useAuth();
             class="uppercase font-[Inter] flex justify-between w-full items-center cursor-pointer"
             @click="signOut({ callbackUrl: Constants.SITE_URL })"
           >
-            <span>{{ eng.logOut }}</span>
+            <span>{{ locale["en"].logOut }}</span>
             <UIcon
               name="i-heroicons-arrow-right-end-on-rectangle-20-solid"
               class="scale-[1.3]"

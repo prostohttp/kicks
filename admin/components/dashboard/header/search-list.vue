@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Currency, Locales } from "~/types/ui/ui.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 defineProps<{
   data: SearchProductDto[] | undefined;
@@ -13,7 +13,7 @@ const model = defineModel();
 <template>
   <div class="open-sans flex flex-col gap-[16px]">
     <div v-if="data && !data.length">
-      <span>{{ eng.empty }}</span>
+      <span>{{ locale["en"].empty }}</span>
     </div>
     <ul
       class="flex flex-col gap-[16px] sm:w-[420px] w-full md:max-h-[400px] max-h-[200px] overflow-y-auto"

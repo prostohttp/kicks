@@ -3,7 +3,7 @@ import {
   DashboardCategoryDeleteModal,
   DashboardCategoryEditModal,
 } from "#components";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { ITable } from "~/pages/dashboard/categories/index.vue";
 
 // define
@@ -78,21 +78,21 @@ onMounted(async () => {
           @click="openEditCategoryModal(selected[0].id)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ eng.editCategory }}
+          {{ locale["en"].editCategory }}
         </NuxtLink>
         <NuxtLink
           active-class="active"
           class="text-[16px] font-[400] opacity-20 hover:text-dark-gray dark:hover:text-fa-white"
           v-else
         >
-          {{ eng.editCategory }}
+          {{ locale["en"].editCategory }}
         </NuxtLink>
 
         <NuxtLink
           @click="openDeleteCategoryModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ eng.deleteCategory }}
+          {{ locale["en"].deleteCategory }}
         </NuxtLink>
       </ul>
     </template>

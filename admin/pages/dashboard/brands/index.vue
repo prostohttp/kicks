@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { DashboardBrandAddNewModal } from "#components";
 import { Constants } from "~/constants";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { useBrandDataStore } from "~/stores/brand-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
@@ -32,11 +32,11 @@ const openAddNewBrandModal = () => {
 
 // meta
 definePageMeta({
-  name: eng.breadcrumbs.brands,
+  name: locale["en"].breadcrumbs.brands,
 });
 
 useHead({
-  title: eng.allBrands,
+  title: locale["en"].allBrands,
 });
 
 // Hooks
@@ -65,11 +65,14 @@ onMounted(() => {
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.brands" />
+    <DashboardBreadcrumbs
+      :links="links"
+      :title="locale['en'].breadcrumbs.brands"
+    />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="eng.addNewBrand"
+      :label="locale['en'].addNewBrand"
       :to="addQuery('brandNew', 'yes')"
       @click="openAddNewBrandModal"
     />

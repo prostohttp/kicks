@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { schema, type Schema } from "./schema/add-new-category.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { useCategoryDataStore } from "~/stores/category-data";
@@ -58,10 +58,10 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     categoryStore.getAllCategories(page);
     categoryStore.getAllTitles();
     selected.value = [];
-    toast.add({ title: eng.successEdit });
+    toast.add({ title: locale["en"].successEdit });
     emit("close");
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong });
+    toast.add({ title: locale["en"].somethingWentWrong });
   }
 };
 
@@ -140,13 +140,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
         @click="$emit('close')"
       >
-        {{ eng.cancel }}
+        {{ locale["en"].cancel }}
       </UButton>
       <UButton
         type="submit"
         class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
       >
-        {{ eng.save }}
+        {{ locale["en"].save }}
       </UButton>
     </div>
   </UForm>

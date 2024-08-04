@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { schema, type Schema } from "./schema/article-schema";
 import type { FormSubmitEvent } from "#ui/types";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { useProductDataStore } from "~/stores/product-data";
 import { usePersistDataStore } from "~/stores/persist-data.js";
 import type { InputData } from "~/types/ui/ui.types";
@@ -55,7 +55,7 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: eng.noImage, color: "red" });
+    toast.add({ title: locale["en"].noImage, color: "red" });
   }
   return uploadedImage;
 };
@@ -70,9 +70,9 @@ const uploadImage = async (e: Event) => {
     }
     const uploadedImage = await uploadImageHandler(formData);
     articleImage.value = uploadedImage;
-    toast.add({ title: eng.imageUploaded, color: "green" });
+    toast.add({ title: locale["en"].imageUploaded, color: "green" });
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -86,10 +86,10 @@ const onDrop = async (files: File[] | null) => {
       }
       const uploadedImage = await uploadImageHandler(formData);
       articleImage.value = uploadedImage;
-      toast.add({ title: eng.imageUploaded, color: "green" });
+      toast.add({ title: locale["en"].imageUploaded, color: "green" });
     }
   } catch (error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -117,13 +117,13 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
     articleImage.value = "";
     toast.add({
-      title: eng.addNewArticle,
+      title: locale["en"].addNewArticle,
       color: "green",
     });
     articleDateStore.getAllArticlesForAdminMenu();
     clearState();
   } catch (error: any) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
   setTimeout(() => {
     isLoading.value = false;
@@ -141,9 +141,9 @@ const deleteImageHandler = async () => {
       },
     });
     articleImage.value = "";
-    toast.add({ title: eng.imageDeleted, color: "green" });
+    toast.add({ title: locale["en"].imageDeleted, color: "green" });
   } catch (_error) {
-    toast.add({ title: eng.somethingWentWrong, color: "red" });
+    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
   }
 };
 
@@ -179,7 +179,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           />
           <UTextarea
             v-model="state.shortDescription"
-            :placeholder="eng.shortDescription"
+            :placeholder="locale['en'].shortDescription"
             class="textarea"
             v-else-if="name === 'shortDescription'"
           />
@@ -267,7 +267,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </div>
     <div class="flex justify-end">
       <UButton type="submit" class="dark-button">
-        {{ eng.addNewArticle }}
+        {{ locale["en"].addNewArticle }}
       </UButton>
     </div>
   </UForm>

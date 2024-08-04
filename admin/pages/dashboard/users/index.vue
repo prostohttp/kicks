@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
@@ -36,11 +36,11 @@ const deletePerson = async (id: string) => {
 // meta
 definePageMeta({
   middleware: ["only-admin-access"],
-  name: eng.breadcrumbs.users,
+  name: locale["en"].breadcrumbs.users,
 });
 
 useHead({
-  title: eng.allUsers,
+  title: locale["en"].allUsers,
 });
 
 // Hooks
@@ -60,7 +60,10 @@ watch(activePage, async (newValue) => {
 </script>
 
 <template>
-  <DashboardBreadcrumbs :links="links" :title="eng.breadcrumbs.users" />
+  <DashboardBreadcrumbs
+    :links="links"
+    :title="locale['en'].breadcrumbs.users"
+  />
   <main class="flex flex-col">
     <LazyUiEmpty v-if="!data?.allItems" />
     <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>

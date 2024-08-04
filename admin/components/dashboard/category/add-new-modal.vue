@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // define
 const emit = defineEmits(["close"]);
@@ -7,36 +7,36 @@ const emit = defineEmits(["close"]);
 // vars
 const inputData = [
   {
-    label: eng.title,
+    label: locale["en"].title,
     name: "title",
-    placeholder: eng.title,
+    placeholder: locale["en"].title,
     icon: "i-heroicons-queue-list",
   },
   {
-    label: eng.description,
+    label: locale["en"].description,
     name: "description",
     type: "textarea",
-    placeholder: eng.description,
+    placeholder: locale["en"].description,
     icon: "i-heroicons-document-text-16-solid",
   },
   {
-    label: eng.childCategories,
+    label: locale["en"].childCategories,
     name: "children",
     type: "select",
-    placeholder: eng.selectChildrenItems,
+    placeholder: locale["en"].selectChildrenItems,
     icon: "i-heroicons-list-bullet",
   },
   {
-    label: eng.isParentTitle,
+    label: locale["en"].isParentTitle,
     name: "isParent",
     type: "checkbox",
-    placeholder: eng.isParent,
+    placeholder: locale["en"].isParent,
   },
   {
-    label: eng.isEnabled,
+    label: locale["en"].isEnabled,
     name: "isEnabled",
     type: "checkbox",
-    placeholder: eng.isEnabled,
+    placeholder: locale["en"].isEnabled,
   },
 ];
 </script>
@@ -54,7 +54,7 @@ const inputData = [
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ eng.addNewCategory }}
+            {{ locale["en"].addNewCategory }}
           </h3>
           <UButton
             color="gray"

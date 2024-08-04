@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onClickOutside } from "@vueuse/core";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
 import { Constants } from "~/constants";
@@ -100,7 +100,7 @@ watch(query, (oldValue, newValue) => {
       name="query"
       @keydown="searchHandlerWithShortcut"
       @keyup="prettySearchHandler"
-      :placeholder="`${eng.search}...`"
+      :placeholder="`${locale['en'].search}...`"
       autocomplete="off"
       ref="target"
       autofocus
@@ -117,7 +117,7 @@ watch(query, (oldValue, newValue) => {
           v-if="isOpen"
         >
           <h3 class="font-[Rubik] text-[20px] font-[600]">
-            {{ eng.searchResult }}
+            {{ locale["en"].searchResult }}
           </h3>
           <DashboardHeaderSearchList :data="founded" v-model="isOpen" />
           <NuxtLink
@@ -126,7 +126,7 @@ watch(query, (oldValue, newValue) => {
             @click="hideSearchInputHandler"
             class="text-[16px] font-[600] text-blue dark:text-yellow hover:text-dark-gray dark:hover:text-fa-white"
           >
-            {{ eng.seeAll }}
+            {{ locale["en"].seeAll }}
           </NuxtLink>
         </div>
       </Transition>

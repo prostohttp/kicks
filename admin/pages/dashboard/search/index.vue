@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type BreadcrumbItem } from "~/types/ui/ui.types";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 
 // store
@@ -18,7 +18,7 @@ const searchPhrase = ref(route.query.searchPhrase);
 const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(
   !searchPhrase.value
-    ? breadcrumbsArrayFactory(path, eng.searchResult, path)
+    ? breadcrumbsArrayFactory(path, locale["en"].searchResult, path)
     : breadcrumbsArrayFactory(
         path,
         searchPhrase.value.toString(),
@@ -38,7 +38,9 @@ await useAsyncData("asyncFoundedProducts", () =>
 
 // handlers
 const title = computed(() =>
-  searchPhrase.value ? `${eng.search} | ${searchPhrase.value}` : eng.search,
+  searchPhrase.value
+    ? `${locale["en"].search} | ${searchPhrase.value}`
+    : locale["en"].search,
 );
 
 const getSales = (id: string) => {
@@ -62,7 +64,7 @@ const deleteProduct = async (id: string) => {
       Constants.PER_PAGE_SEARCH,
       activePage.value,
     );
-    toast.add({ title: eng.deleteProductSuccess });
+    toast.add({ title: locale["en"].deleteProductSuccess });
   } catch (error: any) {
     toast.add({ title: error.message });
   }
@@ -106,7 +108,7 @@ watch(activePage, async (newValue) => {
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="eng.search" />
+    <DashboardBreadcrumbs :links="links" :title="locale['en'].search" />
   </div>
   <main class="flex flex-col">
     <UiEmpty v-if="!foundedProducts?.allItems" />

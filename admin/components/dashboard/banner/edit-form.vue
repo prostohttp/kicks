@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import { validate } from "./validator";
 import type { FormErrorEvent } from "#ui/types";
 
@@ -23,7 +23,7 @@ const bannerTabs: Ref<BannerTab[]> = ref(
   banner.value.banners
     .map((banner) => ({
       id: banner.id,
-      title: `${eng.newBanner} ${banner.sort}`,
+      title: `${locale["en"].newBanner} ${banner.sort}`,
       sort: banner.sort,
     }))
     .sort((a, b) => a.sort! - b.sort!),
@@ -44,7 +44,7 @@ const submitHandler = async () => {
     await bannerDataSrore.getBannerById(banner.value._id!);
     isValidForm.value = true;
     toast.add({
-      title: eng.successEdit,
+      title: locale["en"].successEdit,
       color: "green",
     });
   } catch (error: any) {
@@ -68,7 +68,7 @@ const addNewBanner = () => {
   });
   bannerTabs.value.push({
     id,
-    title: eng.newBanner,
+    title: locale["en"].newBanner,
     sort: undefined,
   });
 };
@@ -89,7 +89,7 @@ async function onError(event: FormErrorEvent) {
 const deleteBannerHandler = () => {
   try {
     bannerDataSrore.deleteBanner(banner.value._id!);
-    toast.add({ title: eng.successDeleteMessage });
+    toast.add({ title: locale["en"].successDeleteMessage });
     navigateTo("/dashboard/banners?page=1");
   } catch (error: any) {
     throw createError({ statusMessage: error.message });
@@ -106,7 +106,7 @@ const deleteBannerHandler = () => {
       v-if="!isValidForm"
       class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
     >
-      {{ eng.error.checkRequiredFields }}
+      {{ locale["en"].error.checkRequiredFields }}
     </div>
     <UForm
       :validate="validate"
@@ -117,7 +117,7 @@ const deleteBannerHandler = () => {
     >
       <UFormGroup
         name="title"
-        :label="eng.title"
+        :label="locale['en'].title"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -125,7 +125,7 @@ const deleteBannerHandler = () => {
         }"
       >
         <UInput
-          :placeholder="eng.title"
+          :placeholder="locale['en'].title"
           inputClass="no-left-icon"
           v-model="title"
         />
@@ -140,7 +140,7 @@ const deleteBannerHandler = () => {
             type="button"
             @click="addNewBanner"
           >
-            {{ eng.addNewBanner }}
+            {{ locale["en"].addNewBanner }}
           </UButton>
           <div
             v-for="(tab, index) in bannerTabs"
@@ -150,7 +150,9 @@ const deleteBannerHandler = () => {
             @click="activeTab = index"
           >
             <span>
-              {{ `${eng.newBanner} ${banner.banners[index].sort || ""}` }}
+              {{
+                `${locale["en"].newBanner} ${banner.banners[index].sort || ""}`
+              }}
             </span>
             <UButton
               class="icon-button"
@@ -180,10 +182,10 @@ const deleteBannerHandler = () => {
           class="bg-danger dark:bg-danger text-fa-white hover:bg-danger hover:dark:bg-danger big-button"
           @click="deleteBannerHandler"
         >
-          {{ eng.delete }}
+          {{ locale["en"].delete }}
         </UButton>
         <UButton type="submit" class="dark-button">
-          {{ eng.save }}
+          {{ locale["en"].save }}
         </UButton>
       </div>
     </UForm>

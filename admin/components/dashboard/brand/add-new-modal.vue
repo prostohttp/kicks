@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 // define
 const emit = defineEmits(["close"]);
@@ -20,7 +20,7 @@ const emit = defineEmits(["close"]);
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ eng.addNewBrand }}
+            {{ locale["en"].addNewBrand }}
           </h3>
           <UButton
             color="gray"

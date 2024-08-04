@@ -1,53 +1,53 @@
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { InputData } from "~/types/ui/ui.types";
 
 export const articleData: InputData[] = [
   {
-    label: eng.title,
+    label: locale["en"].title,
     type: "text",
     name: "title",
-    placeholder: eng.title,
+    placeholder: locale["en"].title,
   },
   {
-    label: eng.shortDescription,
+    label: locale["en"].shortDescription,
     name: "shortDescription",
     type: "textarea",
-    placeholder: eng.shortDescription,
+    placeholder: locale["en"].shortDescription,
   },
   {
-    label: eng.description,
+    label: locale["en"].description,
     name: "description",
     type: "tiptap",
-    placeholder: eng.description,
+    placeholder: locale["en"].description,
   },
   {
-    label: eng.sort,
+    label: locale["en"].sort,
     name: "sort",
     type: "number",
-    placeholder: eng.sort,
+    placeholder: locale["en"].sort,
   },
   {
-    label: eng.siteMenu,
+    label: locale["en"].siteMenu,
     name: "siteMenu",
     type: "toggle",
-    placeholder: eng.siteMenu,
+    placeholder: locale["en"].siteMenu,
   },
   {
-    label: eng.adminMenu,
+    label: locale["en"].adminMenu,
     name: "adminMenu",
     type: "toggle",
-    placeholder: eng.adminMenu,
+    placeholder: locale["en"].adminMenu,
   },
   {
-    label: eng.featuredProducts,
+    label: locale["en"].featuredProducts,
     name: "featuredProducts",
     type: "select",
-    placeholder: eng.selectElement,
+    placeholder: locale["en"].selectElement,
   },
   {
-    label: eng.isEnabled,
+    label: locale["en"].isEnabled,
     name: "isEnabled",
     type: "toggle",
-    placeholder: eng.isEnabled,
+    placeholder: locale["en"].isEnabled,
   },
 ];

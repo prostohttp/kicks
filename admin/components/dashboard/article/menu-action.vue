@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { DashboardArticleDeleteModal } from "#components";
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
 import { useUploadDeleteDataStore } from "~/stores/upload-delete-data.js";
 
@@ -61,7 +61,7 @@ const openDeleteArticleModal = (articles: IArticle[]) => {
           @click="openDeleteArticleModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ eng.deleteArticle }}
+          {{ locale["en"].deleteArticle }}
         </NuxtLink>
       </ul>
     </template>

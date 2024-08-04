@@ -1,12 +1,16 @@
 <script lang="ts" setup>
-import { Locales } from "~/types/ui/ui.types";
+// define
 const { locale } = defineProps<{
-  locale: Locales;
+  locale: "en" | "ru";
 }>();
+
+// store
+const settingsDataStore = useSettingsDataStore();
+const { settings } = storeToRefs(settingsDataStore);
 </script>
 
 <template>
   <div>
-    {{ locale === Locales.EN ? "ENGLISH" : "Русский" }}
+    <pre>{{ settings![locale] }}</pre>
   </div>
 </template>

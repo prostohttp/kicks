@@ -1,38 +1,38 @@
 <script lang="ts" setup>
-import { eng } from "~/lang/eng";
+import { locale } from "~/lang/locale";
 
 const userData = [
   {
-    label: eng.userName,
+    label: locale["en"].userName,
     name: "name",
-    placeholder: eng.userName,
+    placeholder: locale["en"].userName,
     icon: "i-heroicons-user-circle-16-solid",
   },
   {
-    label: eng.email,
+    label: locale["en"].email,
     name: "email",
-    placeholder: eng.email,
+    placeholder: locale["en"].email,
     icon: "i-heroicons-envelope",
   },
   {
-    label: eng.role,
+    label: locale["en"].role,
     name: "role",
-    placeholder: eng.role,
+    placeholder: locale["en"].role,
     icon: "i-heroicons-shield-exclamation-20-solid",
     disabled: true,
   },
   {
-    label: eng.password,
+    label: locale["en"].password,
     name: "oldPassword",
     type: "password",
-    placeholder: eng.password,
+    placeholder: locale["en"].password,
     icon: "i-heroicons-lock-closed",
   },
   {
-    label: eng.newPassword,
+    label: locale["en"].newPassword,
     name: "newPassword",
     type: "password",
-    placeholder: eng.newPassword,
+    placeholder: locale["en"].newPassword,
     icon: "i-heroicons-lock-closed",
   },
 ];
