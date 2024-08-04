@@ -38,14 +38,16 @@ onMounted(() => {
     <div
       class="p-[5px] rounded-[8px] overflow-hidden flex items-center justify-center basis-[80%]"
     >
-      <img
+      <NuxtImg
         :src="`/${brand.image}`"
+        width="200"
         :alt="brand.title"
         v-if="brand.image"
         class="rounded-[8px] w-[50%] md:w-full"
       />
-      <img
+      <NuxtImg
         src="/no-image.svg"
+        width="100"
         :alt="brand.title"
         class="rounded-[8px] w-[50%] md:w-[80px]"
         v-else

@@ -15,7 +15,7 @@ const router = useRouter();
 const route = useRoute();
 const page = Number(useRoute().query.page);
 const searchPhrase = ref(route.query.searchPhrase);
-const path = router.currentRoute.value.path;
+const path = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(path, eng.searchResult, path),
 );

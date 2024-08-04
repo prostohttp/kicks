@@ -176,8 +176,9 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       v-else-if="!isAdmin && brand?.image"
     >
       <div class="w-full">
-        <img
+        <NuxtImg
           :src="`/${brand.image}`"
+          width="200"
           class="w-full rounded-[8px] dark:brightness-0 dark:invert-[0.5]"
           alt="new brand"
         />

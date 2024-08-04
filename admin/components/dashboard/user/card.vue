@@ -54,10 +54,15 @@ onMounted(() => {
       class="sm:min-w-[90px] sm:max-w-[90px] w-[60%] rounded-[8px] overflow-hidden p-[15px] bg-fa-white dark:bg-dark-gray flex items-center justify-center aspect-square"
     >
       <template v-if="user.image">
-        <img :src="`/${user.image}`" :alt="user.name" class="rounded-[8px]" />
+        <NuxtImg
+          :src="`/${user.image}`"
+          width="80"
+          :alt="user.name"
+          class="rounded-[8px]"
+        />
       </template>
       <template v-else>
-        <img src="/no-image.svg" :alt="eng.noImage" />
+        <NuxtImg src="/no-image.svg" width="40" :alt="eng.noImage" />
       </template>
     </div>
     <div class="flex flex-col items-center sm:items-start break-all">

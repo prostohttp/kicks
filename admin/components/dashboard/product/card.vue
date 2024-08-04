@@ -44,14 +44,20 @@ const openDeleteProductModal = () => {
         class="sm:min-w-[90px] sm:max-w-[90px] sm:w-[60%] w-full rounded-[8px] p-[15px] bg-fa-white dark:bg-dark-gray flex items-center justify-center aspect-square overflow-hidden"
       >
         <template v-if="product.image">
-          <img
+          <NuxtImg
             :src="`/${product.image}`"
+            width="80"
             :alt="product.title"
             class="sm:max-w-[200px] max-w-[300px] w-full"
           />
         </template>
         <template v-else>
-          <img src="/no-image.svg" :alt="eng.noImage" class="max-w-[200px]" />
+          <NuxtImg
+            src="/no-image.svg"
+            width="40"
+            :alt="eng.noImage"
+            class="max-w-[200px]"
+          />
         </template>
       </div>
       <div class="flex flex-col items-center sm:items-start break-all">
@@ -122,7 +128,7 @@ const openDeleteProductModal = () => {
     <div class="flex flex-col gap-[5px]">
       <strong class="text-[16px]">{{ eng.summary }}</strong>
       <span
-        class="text-[14px] sm:truncate sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
+        class="text-[14px] md:whitespace-nowrap whitespace-pre-wrap sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
       >
         {{ product.description }}
       </span>

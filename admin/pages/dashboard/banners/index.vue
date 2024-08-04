@@ -23,12 +23,12 @@ const route = useRoute();
 const page = Number(useRoute().query.page);
 const columns = [
   {
-    key: "title",
-    label: "Title",
-  },
-  {
     key: "images",
     label: "Banner",
+  },
+  {
+    key: "title",
+    label: "Title",
   },
   {
     key: "action",
@@ -113,21 +113,23 @@ watch(
           </span>
         </caption>
       </template>
-      <template #title-data="{ row }">
-        {{ row.title }}
-      </template>
       <template #images-data="{ row }">
-        <img
+        <NuxtImg
           src="/no-image.svg"
+          width="40"
           :alt="eng.noImage"
-          class="w-[40px] dark:opacity-90 rounded-[8px]"
+          class="dark:opacity-90 rounded-[8px]"
           v-if="!row.banners[0].image"
         />
-        <img
+        <NuxtImg
+          width="200"
           :src="`/${row.banners[0].image}`"
-          class="w-[40px] dark:opacity-90 rounded-[8px]"
+          class="dark:opacity-90 rounded-[8px]"
           v-else
         />
+      </template>
+      <template #title-data="{ row }">
+        {{ row.title }}
       </template>
       <template #action-data="{ row }">
         <UButton

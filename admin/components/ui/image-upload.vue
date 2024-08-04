@@ -40,8 +40,9 @@ const deleteImageHandler = () => {
     class="w-full flex items-center justify-center flex-col text-center gap-[20px] p-[5px] rounded-[8px] bg-fa-white dark:bg-[#2c2c2c] dark:text-fa-white"
     ref="dropZoneRef"
   >
-    <img
+    <NuxtImg
       src="/no-image.svg"
+      width="200"
       alt="No Image"
       class="lg:w-[100px] w-[40px] my-[30px]"
     />
@@ -69,8 +70,9 @@ const deleteImageHandler = () => {
     </div>
   </div>
   <div class="w-full p-[5px] rounded-[8px] relative group" v-else>
-    <img
+    <NuxtImg
       :src="`/${addNew ? model : model?.image}`"
+      width="400"
       class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
       :alt="alt"
     />

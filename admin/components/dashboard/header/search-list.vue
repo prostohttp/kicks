@@ -26,13 +26,20 @@ const model = defineModel();
           class="w-[10%]"
           @click="model = false"
         >
-          <img
+          <NuxtImg
             v-if="el.image"
             :src="`/${el.image}`"
+            width="60"
             :alt="el.title"
             class="image"
           />
-          <img src="/no-image.svg" :alt="el.title" class="image" v-else />
+          <NuxtImg
+            src="/no-image.svg"
+            width="40"
+            :alt="el.title"
+            class="image"
+            v-else
+          />
         </NuxtLink>
         <div class="flex flex-col w-[80%]">
           <NuxtLink

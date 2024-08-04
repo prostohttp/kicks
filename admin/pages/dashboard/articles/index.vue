@@ -147,15 +147,17 @@ watch(
       </template>
       <template #image-data="{ row }">
         <NuxtLink :to="`/dashboard/articles/${row.id}`">
-          <img
+          <NuxtImg
             src="/no-image.svg"
             :alt="eng.noImage"
-            class="w-[40px] dark:opacity-90 rounded-[8px]"
+            width="40"
+            class="dark:opacity-90 rounded-[8px]"
             v-if="!row.image"
           />
-          <img
+          <NuxtImg
             :src="`/${row.image}`"
-            class="w-[40px] dark:opacity-90 rounded-[8px]"
+            width="40"
+            class="dark:opacity-90 rounded-[8px]"
             v-else
           />
         </NuxtLink>

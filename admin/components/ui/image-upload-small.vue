@@ -28,11 +28,17 @@ const deleteImageHandler = () => {
   />
   <UPopover :popper="{ placement: 'bottom-start' }">
     <div v-if="!model" class="cursor-pointer">
-      <img src="/no-image.svg" alt="No Image" class="lg:w-[40px] w-[40px]" />
+      <NuxtImg
+        src="/no-image.svg"
+        width="40"
+        alt="No Image"
+        class="lg:w-[40px] w-[40px]"
+      />
     </div>
     <div class="w-full rounded-[8px] relative" v-else>
-      <img
+      <NuxtImg
         :src="`/${model}`"
+        width="60"
         class="lg:w-[40px] w-[40px] rounded-[8px] group-hover:opacity-70 transition-opacity"
       />
     </div>
