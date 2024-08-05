@@ -1,5 +1,4 @@
 import { locale } from "~/lang/locale";
-
 export interface AccordionItem {
   label: string;
   slot?: string;

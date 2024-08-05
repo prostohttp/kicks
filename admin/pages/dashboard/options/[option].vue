@@ -59,7 +59,7 @@ onUnmounted(() => {
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-clipboard-document-20-solid"
       @click="submitHandler"
-      :label="locale['en'].save"
+      :label="locale[useSettingsDataStore().locale].save"
       v-if="option && isAdmin"
     />
   </div>

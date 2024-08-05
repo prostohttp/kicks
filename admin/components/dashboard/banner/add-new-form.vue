@@ -23,7 +23,7 @@ const activeTab = ref(0);
 const bannerTabs: Ref<BannerTab[]> = ref(
   banner.value.banners.map((banner) => ({
     id: banner.id,
-    title: `${locale["en"].newBanner} ${banner.sort}`,
+    title: `${locale[useSettingsDataStore().locale].newBanner} ${banner.sort}`,
   })),
 );
 const isValidForm = ref(true);
@@ -113,7 +113,7 @@ async function onError(event: FormErrorEvent) {
     >
       <UFormGroup
         name="title"
-        :label="locale['en'].title"
+        :label="locale[useSettingsDataStore().locale].title"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -121,7 +121,7 @@ async function onError(event: FormErrorEvent) {
         }"
       >
         <UInput
-          :placeholder="locale['en'].title"
+          :placeholder="locale[useSettingsDataStore().locale].title"
           inputClass="no-left-icon"
           v-model="banner.title"
         />
@@ -146,7 +146,7 @@ async function onError(event: FormErrorEvent) {
             @click="activeTab = index"
           >
             <span>{{
-              `${locale["en"].newBanner} ${banner.banners[index].sort || ""}`
+              `${locale[useSettingsDataStore().locale].newBanner} ${banner.banners[index].sort || ""}`
             }}</span>
             <UButton
               class="icon-button"

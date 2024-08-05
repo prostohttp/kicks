@@ -11,11 +11,10 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 // meta
 definePageMeta({
   middleware: ["only-admin-access"],
-  name: locale["en"].addNewArticle,
 });
 
 useHead({
-  title: locale["en"].addNewArticle,
+  title: locale[useSettingsDataStore().locale].addNewArticle,
 });
 </script>
 

@@ -55,7 +55,10 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: locale["en"].noImage, color: "red" });
+    toast.add({
+      title: locale["en"].noImage,
+      color: "red",
+    });
   }
   return uploadedImage;
 };
@@ -70,9 +73,15 @@ const uploadImage = async (e: Event) => {
     }
     const uploadedImage = await uploadImageHandler(formData);
     articleImage.value = uploadedImage;
-    toast.add({ title: locale["en"].imageUploaded, color: "green" });
+    toast.add({
+      title: locale["en"].imageUploaded,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -86,10 +95,16 @@ const onDrop = async (files: File[] | null) => {
       }
       const uploadedImage = await uploadImageHandler(formData);
       articleImage.value = uploadedImage;
-      toast.add({ title: locale["en"].imageUploaded, color: "green" });
+      toast.add({
+        title: locale["en"].imageUploaded,
+        color: "green",
+      });
     }
   } catch (error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -123,7 +138,10 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     articleDateStore.getAllArticlesForAdminMenu();
     clearState();
   } catch (error: any) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
   setTimeout(() => {
     isLoading.value = false;
@@ -141,9 +159,15 @@ const deleteImageHandler = async () => {
       },
     });
     articleImage.value = "";
-    toast.add({ title: locale["en"].imageDeleted, color: "green" });
+    toast.add({
+      title: locale["en"].imageDeleted,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -179,7 +203,9 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           />
           <UTextarea
             v-model="state.shortDescription"
-            :placeholder="locale['en'].shortDescription"
+            :placeholder="
+              locale[useSettingsDataStore().locale].shortDescription
+            "
             class="textarea"
             v-else-if="name === 'shortDescription'"
           />

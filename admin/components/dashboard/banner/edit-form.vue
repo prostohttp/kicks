@@ -23,7 +23,7 @@ const bannerTabs: Ref<BannerTab[]> = ref(
   banner.value.banners
     .map((banner) => ({
       id: banner.id,
-      title: `${locale["en"].newBanner} ${banner.sort}`,
+      title: `${locale[useSettingsDataStore().locale].newBanner} ${banner.sort}`,
       sort: banner.sort,
     }))
     .sort((a, b) => a.sort! - b.sort!),
@@ -89,7 +89,9 @@ async function onError(event: FormErrorEvent) {
 const deleteBannerHandler = () => {
   try {
     bannerDataSrore.deleteBanner(banner.value._id!);
-    toast.add({ title: locale["en"].successDeleteMessage });
+    toast.add({
+      title: locale["en"].successDeleteMessage,
+    });
     navigateTo("/dashboard/banners?page=1");
   } catch (error: any) {
     throw createError({ statusMessage: error.message });
@@ -117,7 +119,7 @@ const deleteBannerHandler = () => {
     >
       <UFormGroup
         name="title"
-        :label="locale['en'].title"
+        :label="locale[useSettingsDataStore().locale].title"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -125,7 +127,7 @@ const deleteBannerHandler = () => {
         }"
       >
         <UInput
-          :placeholder="locale['en'].title"
+          :placeholder="locale[useSettingsDataStore().locale].title"
           inputClass="no-left-icon"
           v-model="title"
         />
@@ -151,7 +153,7 @@ const deleteBannerHandler = () => {
           >
             <span>
               {{
-                `${locale["en"].newBanner} ${banner.banners[index].sort || ""}`
+                `${locale[useSettingsDataStore().locale].newBanner} ${banner.banners[index].sort || ""}`
               }}
             </span>
             <UButton

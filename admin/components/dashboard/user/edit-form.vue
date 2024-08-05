@@ -32,7 +32,10 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: locale["en"].noImage, color: "red" });
+    toast.add({
+      title: locale["en"].noImage,
+      color: "red",
+    });
   }
   await $fetch("/api/user/edit", {
     method: "PUT",
@@ -54,9 +57,15 @@ const uploadImage = async (e: Event) => {
     await uploadImageHandler(formData);
     await userDataStore.getUserById(userId);
     await userDataStore.getAllUsers(page);
-    toast.add({ title: locale["en"].imageUploaded, color: "green" });
+    toast.add({
+      title: locale["en"].imageUploaded,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -77,9 +86,15 @@ const deleteImageHandler = async () => {
     });
     await userDataStore.getAllUsers(page);
     await userDataStore.getUserById(userId);
-    toast.add({ title: locale["en"].imageDeleted, color: "green" });
+    toast.add({
+      title: locale["en"].imageDeleted,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -94,10 +109,16 @@ const onDrop = async (files: File[] | null) => {
       await uploadImageHandler(formData);
       await userDataStore.getAllUsers(page);
       await userDataStore.getUserById(userId);
-      toast.add({ title: locale["en"].imageDeleted, color: "green" });
+      toast.add({
+        title: locale["en"].imageDeleted,
+        color: "green",
+      });
     }
   } catch (error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -123,7 +144,10 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
     emit("close");
   } catch (error: any) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -153,7 +177,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
     </div>
     <UFormGroup
-      :label="locale['en'].userName"
+      :label="locale[useSettingsDataStore().locale].userName"
       name="name"
       :ui="{
         label: {
@@ -162,14 +186,14 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       }"
     >
       <UInput
-        :placeholder="locale['en'].userName"
+        :placeholder="locale[useSettingsDataStore().locale].userName"
         icon="i-heroicons-user-circle-16-solid"
         v-model="user.name"
         inputClass="input-label"
       />
     </UFormGroup>
     <UFormGroup
-      :label="locale['en'].email"
+      :label="locale[useSettingsDataStore().locale].email"
       name="email"
       :ui="{
         label: {
@@ -178,14 +202,14 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       }"
     >
       <UInput
-        :placeholder="locale['en'].email"
+        :placeholder="locale[useSettingsDataStore().locale].email"
         icon="i-heroicons-envelope"
         v-model="user.email"
         inputClass="input-label"
       />
     </UFormGroup>
     <UFormGroup
-      :label="locale['en'].role"
+      :label="locale[useSettingsDataStore().locale].role"
       name="role"
       :ui="{
         label: {

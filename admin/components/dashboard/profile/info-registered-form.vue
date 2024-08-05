@@ -35,7 +35,10 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: locale["en"].noImage, color: "red" });
+    toast.add({
+      title: locale["en"].noImage,
+      color: "red",
+    });
   }
   await $fetch("/api/user/edit", {
     method: "PUT",
@@ -56,9 +59,15 @@ const uploadImage = async (e: Event) => {
     }
     await uploadImageHandler(formData);
     await userStore.getUser();
-    toast.add({ title: locale["en"].imageUploaded, color: "green" });
+    toast.add({
+      title: locale["en"].imageUploaded,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -72,9 +81,15 @@ const onDrop = async (files: File[] | null) => {
       }
       await uploadImageHandler(formData);
       await userStore.getUser();
-      toast.add({ title: locale["en"].imageUploaded, color: "green" });
+      toast.add({
+        title: locale["en"].imageUploaded,
+        color: "green",
+      });
     } catch (error) {
-      toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+      toast.add({
+        title: locale["en"].somethingWentWrong,
+        color: "red",
+      });
     }
   }
 };
@@ -101,7 +116,10 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
       color: "green",
     });
   } catch (error: any) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -123,9 +141,15 @@ const deleteImageHandler = async () => {
       },
     });
     await userStore.getUser();
-    toast.add({ title: locale["en"].imageDeleted, color: "green" });
+    toast.add({
+      title: locale["en"].imageDeleted,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 

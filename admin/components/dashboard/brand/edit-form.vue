@@ -30,7 +30,10 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: locale["en"].noImage, color: "red" });
+    toast.add({
+      title: locale["en"].noImage,
+      color: "red",
+    });
   }
   await $fetch("/api/brand/edit", {
     method: "PUT",
@@ -52,9 +55,15 @@ const uploadImage = async (e: Event) => {
     await uploadImageHandler(formData);
     brandDataStore.getBrandById(brandId);
     brandDataStore.getAllBrands(page);
-    toast.add({ title: locale["en"].imageUploaded, color: "green" });
+    toast.add({
+      title: locale["en"].imageUploaded,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -69,10 +78,16 @@ const onDrop = async (files: File[] | null) => {
       await uploadImageHandler(formData);
       brandDataStore.getBrandById(brandId);
       brandDataStore.getAllBrands(page);
-      toast.add({ title: locale["en"].imageUploaded, color: "green" });
+      toast.add({
+        title: locale["en"].imageUploaded,
+        color: "green",
+      });
     }
   } catch (error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -94,7 +109,9 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     emit("close");
     toast.add({ title: locale["en"].successEdit });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+    });
   }
 };
 
@@ -117,9 +134,15 @@ const deleteImageHandler = async () => {
     });
     brandDataStore.getBrandById(brandId);
     brandDataStore.getAllBrands(page);
-    toast.add({ title: locale["en"].imageDeleted, color: "green" });
+    toast.add({
+      title: locale["en"].imageDeleted,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -141,9 +164,15 @@ const deleteBrandHandler = async () => {
     });
     brandDataStore.getAllBrands(page);
     emit("close");
-    toast.add({ title: locale["en"].successDeleteMessage, color: "red" });
+    toast.add({
+      title: locale["en"].successDeleteMessage,
+      color: "red",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -185,7 +214,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       </div>
     </div>
     <UFormGroup
-      :label="locale['en'].title"
+      :label="locale[useSettingsDataStore().locale].title"
       name="title"
       :ui="{
         label: {
@@ -194,7 +223,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       }"
     >
       <UInput
-        :placeholder="locale['en'].title"
+        :placeholder="locale[useSettingsDataStore().locale].title"
         v-model="brand.title"
         inputClass="input-label"
         icon="i-heroicons-queue-list"
@@ -202,7 +231,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </UFormGroup>
 
     <UFormGroup
-      :label="locale['en'].description"
+      :label="locale[useSettingsDataStore().locale].description"
       name="description"
       :ui="{
         label: {
@@ -212,7 +241,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     >
       <UTextarea
         v-model="brand.description"
-        :placeholder="locale['en'].description"
+        :placeholder="locale[useSettingsDataStore().locale].description"
         class="textarea"
       />
     </UFormGroup>
@@ -221,7 +250,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       v-if="isAdmin"
     >
       <UTooltip
-        :text="locale['en'].delete"
+        :text="locale[useSettingsDataStore().locale].delete"
         class="mr-auto"
         :popper="{ placement: 'top' }"
       >

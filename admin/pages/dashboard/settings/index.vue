@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import { Locales, type BreadcrumbItem } from "~/types/ui/ui.types";
+import { type BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const settingsDataStore = useSettingsDataStore();
@@ -40,7 +40,10 @@ useHeadSafe({
 </script>
 
 <template>
-  <DashboardBreadcrumbs :links="links" :title="locale['en'].settings" />
+  <DashboardBreadcrumbs
+    :links="links"
+    :title="locale[useSettingsDataStore().locale].settings"
+  />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >

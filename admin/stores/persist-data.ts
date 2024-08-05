@@ -5,6 +5,8 @@ export const usePersistDataStore = defineStore(
     const brandImage = ref("");
     const articleImage = ref("");
 
+    // handlers
+
     return {
       brandImage,
       articleImage,

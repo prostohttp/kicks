@@ -6,11 +6,14 @@ const { signIn } = useAuth();
 
 <template>
   <div class="flex justify-between gap-[5px] sm:gap-[24px]">
-    <UTooltip :text="locale['en'].loginGithub" class="w-[31%]">
+    <UTooltip
+      :text="locale[useSettingsDataStore().locale].loginGithub"
+      class="w-[31%]"
+    >
       <AuthSocialButton
         @click="signIn('github')"
         link="https:github.com"
-        :title="locale['en'].loginGithub"
+        :title="locale[useSettingsDataStore().locale].loginGithub"
         class="w-full"
       >
         <img
@@ -19,9 +22,12 @@ const { signIn } = useAuth();
         />
       </AuthSocialButton>
     </UTooltip>
-    <UTooltip :text="locale['en'].loginYandex" class="w-[31%]">
+    <UTooltip
+      :text="locale[useSettingsDataStore().locale].loginYandex"
+      class="w-[31%]"
+    >
       <AuthSocialButton
-        :title="locale['en'].loginYandex"
+        :title="locale[useSettingsDataStore().locale].loginYandex"
         @click="signIn('yandex')"
         class="w-full"
       >
@@ -31,9 +37,12 @@ const { signIn } = useAuth();
         />
       </AuthSocialButton>
     </UTooltip>
-    <UTooltip :text="locale['en'].loginDiscord" class="w-[31%]">
+    <UTooltip
+      :text="locale[useSettingsDataStore().locale].loginDiscord"
+      class="w-[31%]"
+    >
       <AuthSocialButton
-        :title="locale['en'].loginDiscord"
+        :title="locale[useSettingsDataStore().locale].loginDiscord"
         @click="signIn('discord')"
         class="w-full"
       >

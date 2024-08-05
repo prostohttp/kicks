@@ -61,7 +61,9 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     toast.add({ title: locale["en"].successEdit });
     emit("close");
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+    });
   }
 };
 

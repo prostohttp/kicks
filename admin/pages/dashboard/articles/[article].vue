@@ -40,7 +40,9 @@ watch(article, () => {
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="article ? article.title : locale['en'].empty"
+    :title="
+      article ? article.title : locale[useSettingsDataStore().locale].empty
+    "
   />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"

@@ -39,7 +39,7 @@ await useAsyncData("asyncFoundedProducts", () =>
 // handlers
 const title = computed(() =>
   searchPhrase.value
-    ? `${locale["en"].search} | ${searchPhrase.value}`
+    ? `${locale[useSettingsDataStore().locale].search} | ${searchPhrase.value}`
     : locale["en"].search,
 );
 
@@ -64,7 +64,9 @@ const deleteProduct = async (id: string) => {
       Constants.PER_PAGE_SEARCH,
       activePage.value,
     );
-    toast.add({ title: locale["en"].deleteProductSuccess });
+    toast.add({
+      title: locale["en"].deleteProductSuccess,
+    });
   } catch (error: any) {
     toast.add({ title: error.message });
   }
@@ -108,7 +110,10 @@ watch(activePage, async (newValue) => {
   <div
     class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
   >
-    <DashboardBreadcrumbs :links="links" :title="locale['en'].search" />
+    <DashboardBreadcrumbs
+      :links="links"
+      :title="locale[useSettingsDataStore().locale].search"
+    />
   </div>
   <main class="flex flex-col">
     <UiEmpty v-if="!foundedProducts?.allItems" />

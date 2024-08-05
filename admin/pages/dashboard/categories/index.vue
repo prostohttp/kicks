@@ -109,12 +109,12 @@ onMounted(async () => {
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale['en'].breadcrumbs.categories"
+      :title="locale[useSettingsDataStore().locale].breadcrumbs.categories"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale['en'].addNewCategory"
+      :label="locale[useSettingsDataStore().locale].addNewCategory"
       :to="addQuery('categoryNew', 'yes')"
       @click="openAddNewCategoryModal()"
     />
@@ -126,7 +126,7 @@ onMounted(async () => {
       :loading="!categories"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale['en'].loadingText,
+        label: locale[useSettingsDataStore().locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -134,7 +134,7 @@ onMounted(async () => {
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: locale['en'].empty,
+        label: locale[useSettingsDataStore().locale].empty,
       }"
       :ui="{
         td: {

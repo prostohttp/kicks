@@ -1,6 +1,19 @@
+import { SettingsDto } from "./dto/settings.dto";
+
 export default defineEventHandler(async (event) => {
   try {
-    return await Settings.findOne();
+    const query = getQuery(event);
+    const locale = query.locale;
+    const currency = query.currency;
+    const settings: SettingsDto | null = await Settings.findOne();
+
+    if (query && locale && settings) {
+      return settings.localeDashboard;
+    } else if (query && currency && settings) {
+      return settings.currency;
+    } else {
+      return settings;
+    }
   } catch (error: any) {
     throw createError({
       statusMessage: error.message,

@@ -55,7 +55,7 @@ const openDeleteProductModal = () => {
           <NuxtImg
             src="/no-image.svg"
             width="40"
-            :alt="locale['en'].noImage"
+            :alt="locale[useSettingsDataStore().locale].noImage"
             class="max-w-[200px]"
           />
         </template>

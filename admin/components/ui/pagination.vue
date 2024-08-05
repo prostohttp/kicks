@@ -27,7 +27,7 @@ const activePage: ModelRef<number | undefined> = defineModel();
       }"
       :prev-button="{
         icon: 'i-heroicons-chevron-left-20-solid',
-        label: locale['en'].prev,
+        label: locale[useSettingsDataStore().locale],
         inactiveClass: activePage !== 1 ? 'pagination-prev-next' : 'hidden',
       }"
       :next-button="{

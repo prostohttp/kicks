@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+await useAsyncData("settingsLocale", () => settingsDataStore.getLocale());
+
+// vars
 const isOpen = ref(false);
 provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
 </script>

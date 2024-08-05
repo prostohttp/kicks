@@ -6,7 +6,10 @@ import type { BannerDto } from "~/server/api/banner/dto/banner.dto";
 export const validate = (state: BannerDto): FormError[] => {
   const errors = [];
   if (!state.title)
-    errors.push({ path: "title", message: locale["en"].error.string });
+    errors.push({
+      path: "title",
+      message: locale["en"].error.string,
+    });
 
   if (!state.banners.length)
     errors.push({
@@ -15,7 +18,10 @@ export const validate = (state: BannerDto): FormError[] => {
     });
 
   if (state.title.length < Constants.STRING_MIN_LENGTH) {
-    errors.push({ path: "title", message: locale["en"].error.stringMin });
+    errors.push({
+      path: "title",
+      message: locale["en"].error.stringMin,
+    });
   }
 
   for (const item of state.banners) {

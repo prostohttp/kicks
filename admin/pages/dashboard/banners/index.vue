@@ -65,12 +65,12 @@ watch(
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale['en'].breadcrumbs.banners"
+      :title="locale[useSettingsDataStore().locale].breadcrumbs.banners"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale['en'].addNewBanner"
+      :label="locale[useSettingsDataStore().locale].addNewBanner"
       to="/dashboard/banners/new"
       v-if="isAdmin"
     />
@@ -82,14 +82,14 @@ watch(
       :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale['en'].loadingText,
+        label: locale[useSettingsDataStore().locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       :rows="data?.banners"
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: locale['en'].empty,
+        label: locale[useSettingsDataStore().locale].empty,
       }"
       :ui="{
         td: {
@@ -120,7 +120,7 @@ watch(
         <NuxtImg
           src="/no-image.svg"
           width="40"
-          :alt="locale['en'].noImage"
+          :alt="locale[useSettingsDataStore().locale].noImage"
           class="dark:opacity-90 rounded-[8px]"
           v-if="!row.banners[0].image"
         />

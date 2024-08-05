@@ -50,7 +50,7 @@ const getSales = (id: string) => {
 };
 const pageTitle = computed(() =>
   categoryDataStore.category?.title
-    ? `${categoryDataStore.category?.title} | ${locale["en"].breadcrumbs.products}`
+    ? `${categoryDataStore.category?.title} | ${locale[useSettingsDataStore().locale].breadcrumbs.products}`
     : locale["en"].breadcrumbs.products,
 );
 
@@ -64,7 +64,9 @@ const deleteProduct = async (id: string) => {
     });
     await productDataStore.getProductCount();
     await productDataStore.getAllProducts(activePage.value, category.value);
-    toast.add({ title: locale["en"].deleteProductSuccess });
+    toast.add({
+      title: locale["en"].deleteProductSuccess,
+    });
   } catch (error: any) {
     toast.add({ title: error.message });
   }
@@ -113,13 +115,13 @@ watch(activePage, async (newValue) => {
       :title="
         categoryDataStore.category?.title
           ? categoryDataStore.category.title
-          : locale['en'].breadcrumbs.products
+          : locale[useSettingsDataStore().locale].breadcrumbs.products
       "
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale['en'].addNewProduct"
+      :label="locale[useSettingsDataStore().locale].addNewProduct"
       to="/dashboard/products/new"
     />
   </div>

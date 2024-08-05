@@ -10,7 +10,8 @@ export default (
   const arrayFromData = data.split("/");
   for (const item of arrayFromData) {
     // TODO: Испавить ошибку интернационализации
-    const label = locale['en'].breadcrumbs[item as keyof typeof locale['en'].breadcrumbs];
+    const lang = locale[useSettingsDataStore().locale];
+    const label = lang.breadcrumbs[item as keyof typeof lang.breadcrumbs];
     if (item !== "" && label) {
       items.push({
         label,

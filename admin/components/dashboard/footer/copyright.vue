@@ -4,6 +4,9 @@ import { locale } from "~/lang/locale";
 
 <template>
   <div>
-    <p>&copy; {{ new Date().getFullYear() }} {{ locale["en"].copy }}</p>
+    <p>
+      &copy; {{ new Date().getFullYear() }}
+      {{ locale["en"].copy }}
+    </p>
   </div>
 </template>

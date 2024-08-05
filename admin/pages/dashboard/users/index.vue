@@ -62,7 +62,7 @@ watch(activePage, async (newValue) => {
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="locale['en'].breadcrumbs.users"
+    :title="locale[useSettingsDataStore().locale].breadcrumbs.users"
   />
   <main class="flex flex-col">
     <LazyUiEmpty v-if="!data?.allItems" />

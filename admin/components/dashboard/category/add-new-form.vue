@@ -48,10 +48,14 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     categoryStore.getAllCategories(page);
     categoryStore.getAllTitles();
     selected.value = [];
-    toast.add({ title: locale["en"].successAddMessage });
+    toast.add({
+      title: locale["en"].successAddMessage,
+    });
     emit("close");
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+    });
   }
 };
 

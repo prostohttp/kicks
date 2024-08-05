@@ -25,10 +25,16 @@ const deleteCategory = async () => {
         ids: categories ? getIdsHelper(categories) : [],
       },
     });
-    toast.add({ title: locale["en"].successDeleteMessage, color: "green" });
+    toast.add({
+      title: locale["en"].successDeleteMessage,
+      color: "green",
+    });
     emit("delete");
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 </script>
@@ -58,7 +64,9 @@ const deleteCategory = async () => {
         </div>
       </template>
       <div class="flex flex-col gap-[20px]" v-if="isAdmin">
-        <p class="dark:text-fa-white">{{ locale["en"].deleteCategoryText }}</p>
+        <p class="dark:text-fa-white">
+          {{ locale["en"].deleteCategoryText }}
+        </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"

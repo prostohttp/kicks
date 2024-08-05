@@ -51,7 +51,9 @@ const deleteBrand = () => {
         </div>
       </template>
       <div class="flex flex-col gap-[20px]">
-        <p class="dark:text-fa-white">{{ locale["en"].deleteBrandText }}</p>
+        <p class="dark:text-fa-white">
+          {{ locale["en"].deleteBrandText }}
+        </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"

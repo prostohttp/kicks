@@ -14,7 +14,7 @@ const errorHandle = () => {
 
 const computedErrorMessage = computed(() => {
   if (error?.statusCode === 404) {
-    return locale["en"].pageNotFound;
+    returnlocale["en"].pageNotFound;
   } else {
     return error?.message || locale["en"].somethingWentWrong;
   }

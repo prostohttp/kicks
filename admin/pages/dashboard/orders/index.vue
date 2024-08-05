@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+import { locale } from "~/lang/locale";
+
+// vars
+// meta
 definePageMeta({
   name: "all-orders",
 });

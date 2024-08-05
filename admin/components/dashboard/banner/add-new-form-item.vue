@@ -24,7 +24,10 @@ const uploadImageHandler = async (formData: FormData) => {
     body: formData,
   });
   if (!uploadedImage) {
-    toast.add({ title: locale["en"].noImage, color: "red" });
+    toast.add({
+      title: locale["en"].noImage,
+      color: "red",
+    });
   }
   return uploadedImage;
 };
@@ -39,9 +42,15 @@ const uploadImage = async (e: Event) => {
     }
     const uploadedImage = await uploadImageHandler(formData);
     banner.value.banners[activeTab.value!].image = uploadedImage;
-    toast.add({ title: locale["en"].imageUploaded, color: "green" });
+    toast.add({
+      title: locale["en"].imageUploaded,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -55,10 +64,16 @@ const onDrop = async (files: File[] | null) => {
       }
       const uploadedImage = await uploadImageHandler(formData);
       banner.value.banners[activeTab.value!].image = uploadedImage;
-      toast.add({ title: locale["en"].imageUploaded, color: "green" });
+      toast.add({
+        title: locale["en"].imageUploaded,
+        color: "green",
+      });
     }
   } catch (error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -73,9 +88,15 @@ const deleteImageHandler = async () => {
       },
     });
     banner.value.banners[activeTab.value!].image = "";
-    toast.add({ title: locale["en"].imageDeleted, color: "green" });
+    toast.add({
+      title: locale["en"].imageDeleted,
+      color: "green",
+    });
   } catch (_error) {
-    toast.add({ title: locale["en"].somethingWentWrong, color: "red" });
+    toast.add({
+      title: locale["en"].somethingWentWrong,
+      color: "red",
+    });
   }
 };
 
@@ -87,7 +108,7 @@ const deleteImageHandler = async () => {
     <UFormGroup :name="`image${id}`">
       <UiImageUpload
         v-model:image="banner.banners[activeTab!]"
-        :alt="locale['en'].newBanner"
+        :alt="locale[useSettingsDataStore().locale].newBanner"
         v-model:drop-zone-ref="dropZoneRef"
         @delete="deleteImageHandler"
         @change="uploadImage($event)"
@@ -95,7 +116,7 @@ const deleteImageHandler = async () => {
     </UFormGroup>
     <UFormGroup
       :name="`heading${id}`"
-      :label="locale['en'].heading"
+      :label="locale[useSettingsDataStore().locale].heading"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -103,14 +124,14 @@ const deleteImageHandler = async () => {
       }"
     >
       <UInput
-        :placeholder="locale['en'].heading"
+        :placeholder="locale[useSettingsDataStore().locale].heading"
         inputClass="no-left-icon"
         v-model="banner.banners[index].heading"
       />
     </UFormGroup>
     <UFormGroup
       :name="`description${id}`"
-      :label="locale['en'].description"
+      :label="locale[useSettingsDataStore().locale].description"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -118,7 +139,7 @@ const deleteImageHandler = async () => {
       }"
     >
       <UTextarea
-        :placeholder="locale['en'].description"
+        :placeholder="locale[useSettingsDataStore().locale].description"
         inputClass="no-left-icon"
         class="textarea"
         v-model="banner.banners[index].description"
@@ -126,7 +147,7 @@ const deleteImageHandler = async () => {
     </UFormGroup>
     <UFormGroup
       :name="`url${id}`"
-      :label="locale['en'].url"
+      :label="locale[useSettingsDataStore().locale].url"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -134,14 +155,14 @@ const deleteImageHandler = async () => {
       }"
     >
       <UInput
-        :placeholder="locale['en'].url"
+        :placeholder="locale[useSettingsDataStore().locale].url"
         inputClass="no-left-icon"
         v-model="banner.banners[index].url"
       />
     </UFormGroup>
     <UFormGroup
       :name="`sort${id}`"
-      :label="locale['en'].sort"
+      :label="locale[useSettingsDataStore().locale].sort"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -149,7 +170,7 @@ const deleteImageHandler = async () => {
       }"
     >
       <UInput
-        :placeholder="locale['en'].sort"
+        :placeholder="locale[useSettingsDataStore().locale].sort"
         inputClass="no-left-icon"
         v-model="banner.banners[index].sort"
         type="number"

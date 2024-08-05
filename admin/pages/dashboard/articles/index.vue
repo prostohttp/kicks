@@ -95,12 +95,12 @@ watch(
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale['en'].breadcrumbs.articles"
+      :title="locale[useSettingsDataStore().locale].breadcrumbs.articles"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale['en'].addNewArticle"
+      :label="locale[useSettingsDataStore().locale].addNewArticle"
       to="/dashboard/articles/new"
       v-if="isAdmin"
     />
@@ -112,7 +112,7 @@ watch(
       :loading="!articles"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale['en'].loadingText,
+        label: locale[useSettingsDataStore().locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -152,7 +152,7 @@ watch(
         <NuxtLink :to="`/dashboard/articles/${row.id}`">
           <NuxtImg
             src="/no-image.svg"
-            :alt="locale['en'].noImage"
+            :alt="locale[useSettingsDataStore().locale].noImage"
             placeholder
             fit="inside"
             width="40"

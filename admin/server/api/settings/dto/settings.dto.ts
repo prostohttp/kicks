@@ -1,11 +1,9 @@
 export interface SettingsLocale {
-  [key: string]: {
-    title: string;
-    phone: string;
-    description: string;
-    email: string;
-    address: string;
-  };
+  title: string;
+  phone: string;
+  description: string;
+  email: string;
+  address: string;
 }
 
 export interface SettingsDto {

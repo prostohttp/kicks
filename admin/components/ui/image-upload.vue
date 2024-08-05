@@ -52,7 +52,7 @@ const deleteImageHandler = () => {
     >
       <h3>{{ locale["en"].dragDropMessage }}</h3>
       <UDivider
-        :label="locale['en'].or"
+        :label="locale[useSettingsDataStore().locale].or"
         :ui="{
           border: {
             base: 'dark:border-[#70706e]',

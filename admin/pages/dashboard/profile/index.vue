@@ -25,7 +25,7 @@ useHead({
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="locale['en'].breadcrumbs.profile"
+    :title="locale[useSettingsDataStore().locale].breadcrumbs.profile"
   />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"

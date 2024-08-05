@@ -19,7 +19,10 @@ useHead({
 </script>
 
 <template>
-  <DashboardBreadcrumbs :links="links" :title="locale['en'].addNewProduct" />
+  <DashboardBreadcrumbs
+    :links="links"
+    :title="locale[useSettingsDataStore().locale].addNewProduct"
+  />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >

@@ -33,7 +33,9 @@ const openDeleteUserModal = () => {
     onDelete() {
       emit("delete-person", user._id);
       modal.close();
-      toast.add({ title: locale["en"].deletePersonSuccess });
+      toast.add({
+        title: locale["en"].deletePersonSuccess,
+      });
     },
   });
 };
@@ -64,7 +66,11 @@ onMounted(() => {
         />
       </template>
       <template v-else>
-        <NuxtImg src="/no-image.svg" width="40" :alt="locale['en'].noImage" />
+        <NuxtImg
+          src="/no-image.svg"
+          width="40"
+          :alt="locale[useSettingsDataStore().locale].noImage"
+        />
       </template>
     </div>
     <div class="flex flex-col items-center sm:items-start break-all">

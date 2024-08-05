@@ -93,12 +93,12 @@ watch(
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale['en'].breadcrumbs.options"
+      :title="locale[useSettingsDataStore().locale].breadcrumbs.options"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale['en'].addNewOption"
+      :label="locale[useSettingsDataStore().locale].addNewOption"
       to="/dashboard/options/new"
       v-if="isAdmin"
     />
@@ -110,7 +110,7 @@ watch(
       :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale['en'].loadingText,
+        label: locale[useSettingsDataStore().locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -118,7 +118,7 @@ watch(
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: locale['en'].empty,
+        label: locale[useSettingsDataStore().locale].empty,
       }"
       :ui="{
         td: {

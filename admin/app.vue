@@ -6,7 +6,7 @@ useSeoMeta({
   ogImage: "/kicks-marketplace.svg",
 });
 useHead({
-  titleTemplate: `%s - ${locale["en"].siteHeading}`,
+  titleTemplate: `%s - ${locale[useSettingsDataStore().locale].siteHeading}`,
 });
 </script>
 

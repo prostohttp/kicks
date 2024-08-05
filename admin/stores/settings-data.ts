@@ -4,6 +4,8 @@ import type { SettingsDto } from "~/server/api/settings/dto/settings.dto";
 export const useSettingsDataStore = defineStore("settingsData", () => {
   // vars
   const settings: Ref<SettingsDto | undefined> = ref();
+  const locale: Ref<"en" | "ru"> = ref("en");
+  const currency = ref("");
 
   // handlers
   const getSettings = async () => {
@@ -17,22 +19,52 @@ export const useSettingsDataStore = defineStore("settingsData", () => {
     return true;
   };
 
-  const setSettings = async (data: SettingsDto) => {
+  const setSettings = async (data: Omit<SettingsDto, "_id">) => {
     try {
       settings.value = await $fetch<SettingsDto>("/api/settings/edit", {
         method: "PUT",
-        body: {
-          body: data,
-        },
+        body: data,
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
   };
 
+  const getLocale = async () => {
+    try {
+      locale.value = await $fetch<"en" | "ru">("/api/settings/all", {
+        method: "GET",
+        query: {
+          locale: true,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+    return true;
+  };
+
+  const getCurrency = async () => {
+    try {
+      currency.value = await $fetch<"USD" | "RUB">("/api/settings/all", {
+        method: "GET",
+        query: {
+          currency: true,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+    return true;
+  };
+
   return {
     settings,
+    locale,
+    currency,
     getSettings,
     setSettings,
+    getLocale,
+    getCurrency,
   };
 });

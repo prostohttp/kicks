@@ -5,19 +5,34 @@ import { locale } from "~/lang/locale";
 export const validate = (state: UiOptionDto): FormError[] => {
   const errors = [];
   if (!state.title) {
-    errors.push({ path: "title", message: locale["en"].error.string });
+    errors.push({
+      path: "title",
+      message: locale["en"].error.string,
+    });
   }
   if (state.title.length < Constants.STRING_MIN_LENGTH) {
-    errors.push({ path: "title", message: locale["en"].error.stringMin });
+    errors.push({
+      path: "title",
+      message: locale["en"].error.stringMin,
+    });
   }
   if (!state.sort) {
-    errors.push({ path: "sort", message: locale["en"].error.number });
+    errors.push({
+      path: "sort",
+      message: locale["en"].error.number,
+    });
   }
   if (state.sort! < Constants.NUMBER_MIN_VALUE) {
-    errors.push({ path: "sort", message: locale["en"].error.numberMin });
+    errors.push({
+      path: "sort",
+      message: locale["en"].error.numberMin,
+    });
   }
   if (!state.type) {
-    errors.push({ path: "type", message: locale["en"].error.string });
+    errors.push({
+      path: "type",
+      message: locale["en"].error.string,
+    });
   }
   for (const item of state.values) {
     if (!item.value) {

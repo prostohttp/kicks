@@ -100,7 +100,7 @@ watch(query, (oldValue, newValue) => {
       name="query"
       @keydown="searchHandlerWithShortcut"
       @keyup="prettySearchHandler"
-      :placeholder="`${locale['en'].search}...`"
+      :placeholder="`${locale[useSettingsDataStore().locale].search}...`"
       autocomplete="off"
       ref="target"
       autofocus
