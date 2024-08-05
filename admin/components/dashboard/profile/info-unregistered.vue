@@ -8,17 +8,17 @@ const user = data.value?.user as UserDto;
 // vars
 const tempUser = [
   {
-    label: locale["en"].userName,
+    label: locale[useSettingsDataStore().locale].userName,
     placeholder: user.name,
     icon: "i-heroicons-user-circle-16-solid",
   },
   {
-    label: locale["en"].email,
+    label: locale[useSettingsDataStore().locale].email,
     placeholder: user.email,
     icon: "i-heroicons-envelope",
   },
   {
-    label: locale["en"].role,
+    label: locale[useSettingsDataStore().locale].role,
     placeholder: user.role,
     icon: "i-heroicons-shield-exclamation-20-solid",
   },

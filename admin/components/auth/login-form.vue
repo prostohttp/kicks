@@ -25,7 +25,7 @@ const { email, password } = storeToRefs(user);
       <UFormGroup name="email">
         <UInput
           variant="outline"
-          placeholder="Email"
+          :placeholder="locale[useSettingsDataStore().locale].email"
           v-model="email"
           input-class="input"
         />
@@ -34,7 +34,7 @@ const { email, password } = storeToRefs(user);
         <UInput
           type="password"
           variant="outline"
-          placeholder="Password"
+          :placeholder="locale[useSettingsDataStore().locale].password"
           v-model="password"
           input-class="input"
         />
@@ -46,7 +46,7 @@ const { email, password } = storeToRefs(user);
         class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow"
         trailing
       >
-        <span>{{ locale["en"].login }}</span>
+        <span>{{ locale[useSettingsDataStore().locale].login }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
       <UButton
@@ -54,7 +54,7 @@ const { email, password } = storeToRefs(user);
         class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow uppercase font-[Rubik] bg-yellow hover:text-fa-white hover:bg-dark-gray"
         trailing
       >
-        <span>{{ locale["en"].registerPage }}</span>
+        <span>{{ locale[useSettingsDataStore().locale].registerPage }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
     </div>

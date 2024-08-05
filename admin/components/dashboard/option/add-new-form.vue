@@ -13,7 +13,7 @@ const isSubmit = defineModel();
 
 // Store
 const optionDataStore = useOptionDataStore();
-const { option } = storeToRefs(optionDataStore);
+const { option, isVisibleTable } = storeToRefs(optionDataStore);
 
 // Vars
 const isAdmin = useIsAdmin();
@@ -31,34 +31,15 @@ const clearState = () => {
 
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    let values;
-    if (option.value.values) {
-      values = optionDataStore.isVisibleTable
-        ? Object.values(option.value.values)
-        : [];
-    }
-
     await $fetch("/api/option/add", {
       method: "POST",
       body: {
         title: event.data.title,
         type: event.data.type,
         sort: event.data.sort,
-        values,
+        values: option.value.values,
       },
     });
-    if (!optionDataStore.isVisibleTable && option.value.values) {
-      for (const item of Object.values(option.value.values)) {
-        if (item?.image) {
-          await $fetch("/api/image/remove", {
-            method: "DELETE",
-            body: {
-              image: item.image,
-            },
-          });
-        }
-      }
-    }
     clearState();
     toast.add({
       title: "Option added",
@@ -76,6 +57,12 @@ watch(isSubmit, () => {
   if (isSubmit.value) {
     submitRef.value?.submit();
     isSubmit.value = false;
+  }
+});
+
+watch(isVisibleTable, (newValue) => {
+  if (!newValue) {
+    option.value.values = [];
   }
 });
 
@@ -137,8 +124,9 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
             min="1"
           />
         </UFormGroup>
-        <DashboardOptionAddNewTable v-if="optionDataStore.isVisibleTable" />
+        <DashboardOptionAddNewTable v-if="isVisibleTable" />
       </UForm>
     </div>
+    <pre>{{ option }}</pre>
   </div>
 </template>

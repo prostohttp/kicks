@@ -7,7 +7,6 @@ import type { ForgotFormDto } from "~/types/server/server.types";
 // meta
 definePageMeta({
   layout: "auth",
-  name: "forgot",
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: "/dashboard",
@@ -15,7 +14,7 @@ definePageMeta({
   alias: ["/forgot"],
 });
 useHead({
-  title: "Forgot password",
+  title: locale[useSettingsDataStore().locale].forgotPassword,
 });
 
 // Vars
@@ -47,7 +46,7 @@ const forgot = async (data: ForgotFormDto) => {
       method: "POST",
       body: {
         email,
-        siteName: locale["en"].siteName,
+        siteName: locale[useSettingsDataStore().locale].siteName,
         siteUrl: Constants.SITE_URL,
         token: `token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
       },
@@ -68,7 +67,7 @@ const forgotHandler = useThrottleFn(forgot, 1000);
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
-            Forgot password
+            {{ locale[useSettingsDataStore().locale].forgotPassword }}
           </h1>
         </div>
         <AuthForgotPasswordForm @submit="forgotHandler" />
@@ -76,9 +75,9 @@ const forgotHandler = useThrottleFn(forgot, 1000);
         <span
           class="open-sans text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"
           @click.prevent="isOpen = true"
-          >KicksClub Terms & Conditions, Kicks Privacy Notice and Terms &
-          Conditions. By clicking 'Log In' you agree to our website</span
         >
+          {{ locale[useSettingsDataStore().locale].terms }}
+        </span>
       </div>
     </div>
     <UiModal

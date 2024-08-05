@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
+import { locale } from "~/lang/locale";
 import { type LoginFormDto } from "~/types/server/server.types";
 // Vars
 const isOpen = ref(false);
@@ -19,7 +20,7 @@ definePageMeta({
 });
 
 useHead({
-  title: "Login",
+  title: locale[useSettingsDataStore().locale].login,
 });
 
 // Handlers
@@ -32,7 +33,7 @@ const login = async (data: LoginFormDto) => {
   if (!isError.value.error) {
     navigateTo("/dashboard");
   } else {
-    toast.add({ title: "Wrong email or password" });
+    toast.add({ title: locale[useSettingsDataStore().locale].error.wrongData });
   }
 };
 const loginHandler = useThrottleFn(login, 1000);
@@ -46,11 +47,14 @@ const loginHandler = useThrottleFn(login, 1000);
     >
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
-          <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">Login</h1>
+          <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
+            {{ locale[useSettingsDataStore().locale].login }}
+          </h1>
           <ULink
             to="/auth/forgot"
             class="open-sans text-[16px] font-[600] underline decoration-gray-main"
-            >Forgot your password?
+          >
+            {{ locale[useSettingsDataStore().locale].forgotPassword }}
           </ULink>
         </div>
         <AuthLoginForm @submit="loginHandler" />
@@ -58,9 +62,9 @@ const loginHandler = useThrottleFn(login, 1000);
         <span
           class="open-sans text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"
           @click.prevent="isOpen = true"
-          >KicksClub Terms & Conditions, Kicks Privacy Notice and Terms &
-          Conditions. By clicking 'Log In' you agree to our website</span
         >
+          {{ locale[useSettingsDataStore().locale].terms }}
+        </span>
       </div>
     </div>
     <UiModal

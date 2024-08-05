@@ -13,7 +13,7 @@ const isSubmit = defineModel("submit");
 
 // Store
 const optionDataStore = useOptionDataStore();
-const { option } = storeToRefs(optionDataStore);
+const { option, isVisibleTable } = storeToRefs(optionDataStore);
 
 // Vars
 const isAdmin = useIsAdmin();
@@ -24,8 +24,6 @@ const submitRef: Ref<HTMLFormElement | null> = ref(null);
 // Handlers
 const submitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
-    const values = optionDataStore.isVisibleTable ? option.value.values : [];
-
     await $fetch("/api/option/edit", {
       method: "PUT",
       body: {
@@ -33,13 +31,10 @@ const submitHandler = async (event: FormSubmitEvent<Schema>) => {
         title: event.data.title,
         type: event.data.type,
         sort: event.data.sort,
-        values,
+        values: option.value.values,
       },
     });
 
-    if (!optionDataStore.isVisibleTable && option.value.values.length) {
-      option.value.values = [];
-    }
     toast.add({
       title: "Option updated",
       color: "green",
@@ -56,6 +51,12 @@ watch(isSubmit, () => {
   if (isSubmit.value) {
     submitRef.value?.submit();
     isSubmit.value = false;
+  }
+});
+
+watch(isVisibleTable, (newValue) => {
+  if (!newValue) {
+    option.value.values = [];
   }
 });
 

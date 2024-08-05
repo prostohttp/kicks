@@ -2,7 +2,7 @@
 import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
-import { Roles } from "~/types/server/server.types";
+import { Roles } from "~/types/server/server.types.js";
 import { Constants } from "~/constants";
 import * as v from "valibot";
 
@@ -33,7 +33,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale["en"].noImage,
+      title: locale[useSettingsDataStore().locale].noImage,
       color: "red",
     });
   }
@@ -58,12 +58,12 @@ const uploadImage = async (e: Event) => {
     await userDataStore.getUserById(userId);
     await userDataStore.getAllUsers(page);
     toast.add({
-      title: locale["en"].imageUploaded,
+      title: locale[useSettingsDataStore().locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -87,12 +87,12 @@ const deleteImageHandler = async () => {
     await userDataStore.getAllUsers(page);
     await userDataStore.getUserById(userId);
     toast.add({
-      title: locale["en"].imageDeleted,
+      title: locale[useSettingsDataStore().locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -110,13 +110,13 @@ const onDrop = async (files: File[] | null) => {
       await userDataStore.getAllUsers(page);
       await userDataStore.getUserById(userId);
       toast.add({
-        title: locale["en"].imageDeleted,
+        title: locale[useSettingsDataStore().locale].imageDeleted,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -126,6 +126,8 @@ useDropZone(dropZoneRef, { onDrop });
 
 const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
   try {
+    console.log("Role", event.data.role);
+
     await $fetch("/api/user/edit", {
       method: "PUT",
       body: {
@@ -145,7 +147,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     emit("close");
   } catch (error: any) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -226,7 +228,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
     </UFormGroup>
     <UButton type="submit" class="dark-button mt-[20px]">
-      {{ locale["en"].update }}
+      {{ locale[useSettingsDataStore().locale].update }}
     </UButton>
   </UForm>
 </template>

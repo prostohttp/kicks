@@ -51,7 +51,7 @@ const getSales = (id: string) => {
 const pageTitle = computed(() =>
   categoryDataStore.category?.title
     ? `${categoryDataStore.category?.title} | ${locale[useSettingsDataStore().locale].breadcrumbs.products}`
-    : locale["en"].breadcrumbs.products,
+    : locale[useSettingsDataStore().locale].breadcrumbs.products,
 );
 
 const deleteProduct = async (id: string) => {
@@ -65,7 +65,7 @@ const deleteProduct = async (id: string) => {
     await productDataStore.getProductCount();
     await productDataStore.getAllProducts(activePage.value, category.value);
     toast.add({
-      title: locale["en"].deleteProductSuccess,
+      title: locale[useSettingsDataStore().locale].deleteProductSuccess,
     });
   } catch (error: any) {
     toast.add({ title: error.message });

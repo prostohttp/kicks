@@ -39,7 +39,7 @@ const deleteBrand = () => {
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale["en"].deleteBrand }}
+            {{ locale[useSettingsDataStore().locale].deleteBrand }}
           </h3>
           <UButton
             color="gray"
@@ -52,20 +52,20 @@ const deleteBrand = () => {
       </template>
       <div class="flex flex-col gap-[20px]">
         <p class="dark:text-fa-white">
-          {{ locale["en"].deleteBrandText }}
+          {{ locale[useSettingsDataStore().locale].deleteBrandText }}
         </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
             @click="isOpen = false"
           >
-            {{ locale["en"].cancel }}
+            {{ locale[useSettingsDataStore().locale].cancel }}
           </UButton>
           <UButton
             @click="deleteBrand"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ locale["en"].deleteBrand }}
+            {{ locale[useSettingsDataStore().locale].deleteBrand }}
           </UButton>
         </div>
       </div>

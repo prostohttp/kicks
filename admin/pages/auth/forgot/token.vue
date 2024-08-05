@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
-import ResetPasswordForm from "~/components/auth/reset-password-form.vue";
 import type { ResetPasswordDto } from "~/types/server/server.types";
 
 // meta

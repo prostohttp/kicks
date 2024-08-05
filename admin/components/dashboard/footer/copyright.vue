@@ -6,7 +6,7 @@ import { locale } from "~/lang/locale";
   <div>
     <p>
       &copy; {{ new Date().getFullYear() }}
-      {{ locale["en"].copy }}
+      {{ locale[useSettingsDataStore().locale].copy }}
     </p>
   </div>
 </template>

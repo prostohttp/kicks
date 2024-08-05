@@ -50,7 +50,7 @@ const deleteImageHandler = () => {
       class="flex flex-col gap-[10px] text-[14px] items-center"
       v-if="isAdmin"
     >
-      <h3>{{ locale["en"].dragDropMessage }}</h3>
+      <h3>{{ locale[useSettingsDataStore().locale].dragDropMessage }}</h3>
       <UDivider
         :label="locale[useSettingsDataStore().locale].or"
         :ui="{
@@ -65,7 +65,7 @@ const deleteImageHandler = () => {
         @click="inputRef?.click()"
         class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] mb-[30px] dark:hover:bg-gray-main"
       >
-        {{ locale["en"].clickToUpload }}
+        {{ locale[useSettingsDataStore().locale].clickToUpload }}
       </button>
     </div>
   </div>

@@ -17,7 +17,7 @@ definePageMeta({
   name: "all-options",
 });
 useHead({
-  title: locale["en"].allOptions,
+  title: locale[useSettingsDataStore().locale].allOptions,
 });
 
 // store
@@ -32,15 +32,15 @@ const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "title",
-    label: "Option",
+    label: locale[useSettingsDataStore().locale].option,
   },
   {
     key: "type",
-    label: "Type",
+    label: locale[useSettingsDataStore().locale].type,
   },
   {
     key: "sort",
-    label: "Sort",
+    label: locale[useSettingsDataStore().locale].sort,
   },
   {
     key: "action",
@@ -138,7 +138,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale["en"].breadcrumbs.options }}
+            {{ locale[useSettingsDataStore().locale].breadcrumbs.options }}
           </span>
           <DashboardOptionMenuAction
             v-model:activePage="activePage"

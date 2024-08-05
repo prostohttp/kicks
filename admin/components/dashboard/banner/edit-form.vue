@@ -44,7 +44,7 @@ const submitHandler = async () => {
     await bannerDataSrore.getBannerById(banner.value._id!);
     isValidForm.value = true;
     toast.add({
-      title: locale["en"].successEdit,
+      title: locale[useSettingsDataStore().locale].successEdit,
       color: "green",
     });
   } catch (error: any) {
@@ -68,7 +68,7 @@ const addNewBanner = () => {
   });
   bannerTabs.value.push({
     id,
-    title: locale["en"].newBanner,
+    title: locale[useSettingsDataStore().locale].newBanner,
     sort: undefined,
   });
 };
@@ -90,7 +90,7 @@ const deleteBannerHandler = () => {
   try {
     bannerDataSrore.deleteBanner(banner.value._id!);
     toast.add({
-      title: locale["en"].successDeleteMessage,
+      title: locale[useSettingsDataStore().locale].successDeleteMessage,
     });
     navigateTo("/dashboard/banners?page=1");
   } catch (error: any) {
@@ -108,7 +108,7 @@ const deleteBannerHandler = () => {
       v-if="!isValidForm"
       class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
     >
-      {{ locale["en"].error.checkRequiredFields }}
+      {{ locale[useSettingsDataStore().locale].error.checkRequiredFields }}
     </div>
     <UForm
       :validate="validate"
@@ -142,7 +142,7 @@ const deleteBannerHandler = () => {
             type="button"
             @click="addNewBanner"
           >
-            {{ locale["en"].addNewBanner }}
+            {{ locale[useSettingsDataStore().locale].addNewBanner }}
           </UButton>
           <div
             v-for="(tab, index) in bannerTabs"
@@ -184,10 +184,10 @@ const deleteBannerHandler = () => {
           class="bg-danger dark:bg-danger text-fa-white hover:bg-danger hover:dark:bg-danger big-button"
           @click="deleteBannerHandler"
         >
-          {{ locale["en"].delete }}
+          {{ locale[useSettingsDataStore().locale].delete }}
         </UButton>
         <UButton type="submit" class="dark-button">
-          {{ locale["en"].save }}
+          {{ locale[useSettingsDataStore().locale].save }}
         </UButton>
       </div>
     </UForm>

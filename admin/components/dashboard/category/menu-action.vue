@@ -78,21 +78,21 @@ onMounted(async () => {
           @click="openEditCategoryModal(selected[0].id)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale["en"].editCategory }}
+          {{ locale[useSettingsDataStore().locale].editCategory }}
         </NuxtLink>
         <NuxtLink
           active-class="active"
           class="text-[16px] font-[400] opacity-20 hover:text-dark-gray dark:hover:text-fa-white"
           v-else
         >
-          {{ locale["en"].editCategory }}
+          {{ locale[useSettingsDataStore().locale].editCategory }}
         </NuxtLink>
 
         <NuxtLink
           @click="openDeleteCategoryModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale["en"].deleteCategory }}
+          {{ locale[useSettingsDataStore().locale].deleteCategory }}
         </NuxtLink>
       </ul>
     </template>

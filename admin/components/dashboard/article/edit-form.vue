@@ -44,7 +44,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale["en"].noImage,
+      title: locale[useSettingsDataStore().locale].noImage,
       color: "red",
     });
   }
@@ -68,12 +68,12 @@ const uploadImage = async (e: Event) => {
     await uploadImageHandler(formData);
     articleDataStore.getArticle(article.value?._id!);
     toast.add({
-      title: locale["en"].imageUploaded,
+      title: locale[useSettingsDataStore().locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -90,13 +90,13 @@ const onDrop = async (files: File[] | null) => {
       await uploadImageHandler(formData);
       articleDataStore.getArticle(article.value?._id!);
       toast.add({
-        title: locale["en"].imageUploaded,
+        title: locale[useSettingsDataStore().locale].imageUploaded,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -130,7 +130,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     articleDataStore.getArticle(article.value?._id!);
   } catch (error: any) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -155,12 +155,12 @@ const deleteImageHandler = async () => {
     });
     articleDataStore.getArticle(article.value?._id!);
     toast.add({
-      title: locale["en"].imageDeleted,
+      title: locale[useSettingsDataStore().locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -286,7 +286,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </div>
     <div class="flex justify-end" v-if="isAdmin">
       <UButton type="submit" class="dark-button">
-        {{ locale["en"].save }}
+        {{ locale[useSettingsDataStore().locale].save }}
       </UButton>
     </div>
   </UForm>

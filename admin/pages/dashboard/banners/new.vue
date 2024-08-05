@@ -8,12 +8,9 @@ const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 
 // meta
-definePageMeta({
-  name: locale["en"].addNewBanner,
-});
 
 useHead({
-  title: locale["en"].addNewBanner,
+  title: locale[useSettingsDataStore().locale].addNewBanner,
 });
 </script>
 

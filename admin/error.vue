@@ -14,9 +14,11 @@ const errorHandle = () => {
 
 const computedErrorMessage = computed(() => {
   if (error?.statusCode === 404) {
-    returnlocale["en"].pageNotFound;
+    returnlocale[useSettingsDataStore().locale].pageNotFound;
   } else {
-    return error?.message || locale["en"].somethingWentWrong;
+    return (
+      error?.message || locale[useSettingsDataStore().locale].somethingWentWrong
+    );
   }
 });
 
@@ -38,7 +40,7 @@ useHead({
     <h1 class="text-[4em] font-[Rubik]">{{ error!.statusCode }}</h1>
     <p>{{ computedErrorMessage }}</p>
     <UButton color="black" variant="solid" size="xl" @click="errorHandle">
-      {{ locale["en"].backToHome }}
+      {{ locale[useSettingsDataStore().locale].backToHome }}
     </UButton>
   </div>
 </template>

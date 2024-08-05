@@ -31,12 +31,9 @@ const openAddNewBrandModal = () => {
 };
 
 // meta
-definePageMeta({
-  name: locale["en"].breadcrumbs.brands,
-});
 
 useHead({
-  title: locale["en"].allBrands,
+  title: locale[useSettingsDataStore().locale].allBrands,
 });
 
 // Hooks

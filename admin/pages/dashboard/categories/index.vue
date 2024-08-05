@@ -18,7 +18,7 @@ definePageMeta({
   name: "all-categories",
 });
 useHead({
-  title: locale["en"].allCategories,
+  title: locale[useSettingsDataStore().locale].allCategories,
 });
 
 // store
@@ -74,8 +74,12 @@ const categories = computed((): Array<ITable> | undefined => {
       id: category._id,
       title: category.title,
       children: category.children.map((cat) => cat.title).join(", "),
-      parent: category.isParent ? locale["en"].yesText : locale["en"].noText,
-      enabled: category.isEnabled ? locale["en"].yesText : locale["en"].noText,
+      parent: category.isParent
+        ? locale[useSettingsDataStore().locale].yesText
+        : locale[useSettingsDataStore().locale].noText,
+      enabled: category.isEnabled
+        ? locale[useSettingsDataStore().locale].yesText
+        : locale[useSettingsDataStore().locale].noText,
     };
   });
 });
@@ -154,7 +158,7 @@ onMounted(async () => {
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale["en"].breadcrumbs.categories }}
+            {{ locale[useSettingsDataStore().locale].breadcrumbs.categories }}
           </span>
           <DashboardCategoryMenuAction
             v-model:activePage="activePage"

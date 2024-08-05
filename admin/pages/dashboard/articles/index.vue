@@ -17,7 +17,7 @@ definePageMeta({
   name: "all-articles",
 });
 useHead({
-  title: locale["en"].allArticles,
+  title: locale[useSettingsDataStore().locale].allArticles,
 });
 
 // store
@@ -32,23 +32,23 @@ const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "image",
-    label: "Image",
+    label: locale[useSettingsDataStore().locale].image,
   },
   {
     key: "title",
-    label: "Title",
+    label: locale[useSettingsDataStore().locale].title,
   },
   {
     key: "description",
-    label: "Description",
+    label: locale[useSettingsDataStore().locale].description,
   },
   {
     key: "enabled",
-    label: "Enabled",
+    label: locale[useSettingsDataStore().locale].isEnabled,
   },
   {
     key: "createdAt",
-    label: "Created at",
+    label: locale[useSettingsDataStore().locale].createdAt,
   },
 ];
 
@@ -66,7 +66,9 @@ const articles = computed((): Array<IArticle> | undefined => {
       image: article.image,
       title: article.title,
       description: article.shortDescription,
-      enabled: article.isEnabled ? locale["en"].yesText : locale["en"].noText,
+      enabled: article.isEnabled
+        ? locale[useSettingsDataStore().locale].yesText
+        : locale[useSettingsDataStore().locale].noText,
       createdAt: dateTimeFormat(article.createdAt, Locales.RU),
     };
   });
@@ -140,7 +142,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale["en"].breadcrumbs.articles }}
+            {{ locale[useSettingsDataStore().locale].breadcrumbs.articles }}
           </span>
           <DashboardArticleMenuAction
             v-model:activePage="activePage"

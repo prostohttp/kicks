@@ -18,7 +18,7 @@ defineEmits(["close", "delete"]);
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale["en"].deleteProduct }}
+            {{ locale[useSettingsDataStore().locale].deleteProduct }}
           </h3>
           <UButton
             color="gray"
@@ -32,20 +32,20 @@ defineEmits(["close", "delete"]);
 
       <div class="flex flex-col gap-[20px]">
         <p class="dark:text-fa-white">
-          {{ locale["en"].deleteProductText }}
+          {{ locale[useSettingsDataStore().locale].deleteProductText }}
         </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
             @click="$emit('close')"
           >
-            {{ locale["en"].cancel }}
+            {{ locale[useSettingsDataStore().locale].cancel }}
           </UButton>
           <UButton
             @click="$emit('delete')"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ locale["en"].deleteProduct }}
+            {{ locale[useSettingsDataStore().locale].deleteProduct }}
           </UButton>
         </div>
       </div>

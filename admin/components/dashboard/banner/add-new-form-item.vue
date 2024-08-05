@@ -25,7 +25,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale["en"].noImage,
+      title: locale[useSettingsDataStore().locale].noImage,
       color: "red",
     });
   }
@@ -43,12 +43,12 @@ const uploadImage = async (e: Event) => {
     const uploadedImage = await uploadImageHandler(formData);
     banner.value.banners[activeTab.value!].image = uploadedImage;
     toast.add({
-      title: locale["en"].imageUploaded,
+      title: locale[useSettingsDataStore().locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -65,13 +65,13 @@ const onDrop = async (files: File[] | null) => {
       const uploadedImage = await uploadImageHandler(formData);
       banner.value.banners[activeTab.value!].image = uploadedImage;
       toast.add({
-        title: locale["en"].imageUploaded,
+        title: locale[useSettingsDataStore().locale].imageUploaded,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -89,12 +89,12 @@ const deleteImageHandler = async () => {
     });
     banner.value.banners[activeTab.value!].image = "";
     toast.add({
-      title: locale["en"].imageDeleted,
+      title: locale[useSettingsDataStore().locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }

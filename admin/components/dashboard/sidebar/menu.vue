@@ -7,43 +7,43 @@ const isAdmin = useIsAdmin();
 const menuItems = [
   {
     to: "/dashboard",
-    title: locale["en"].dashboard,
+    title: locale[useSettingsDataStore().locale].dashboard,
     icon: "i-heroicons-squares-plus",
   },
   {
     to: "/dashboard/products?page=1",
-    title: locale["en"].allProducts,
+    title: locale[useSettingsDataStore().locale].allProducts,
     icon: "i-heroicons-list-bullet",
   },
   {
     to: "/dashboard/orders?page=1",
-    title: locale["en"].allOrders,
+    title: locale[useSettingsDataStore().locale].allOrders,
     icon: "i-heroicons-clipboard-document-list",
   },
   {
     to: "/dashboard/brands?page=1",
-    title: locale["en"].allBrands,
+    title: locale[useSettingsDataStore().locale].allBrands,
     icon: "i-heroicons-user-group",
   },
   {
     to: "/dashboard/articles?page=1",
-    title: locale["en"].allArticles,
+    title: locale[useSettingsDataStore().locale].allArticles,
     icon: "i-heroicons-newspaper",
   },
   {
     to: "/dashboard/options?page=1",
-    title: locale["en"].allOptions,
+    title: locale[useSettingsDataStore().locale].allOptions,
     icon: "i-heroicons-chart-bar",
   },
   {
     to: "/dashboard/users?page=1",
-    title: locale["en"].allUsers,
+    title: locale[useSettingsDataStore().locale].allUsers,
     icon: "i-heroicons-finger-print",
     protected: !isAdmin,
   },
   {
     to: "/dashboard/banners?page=1",
-    title: locale["en"].allBanners,
+    title: locale[useSettingsDataStore().locale].allBanners,
     icon: "i-material-symbols-add-photo-alternate-outline",
   },
 ];

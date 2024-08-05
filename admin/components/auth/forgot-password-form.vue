@@ -39,7 +39,7 @@ const isOpen = ref(false);
         class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:bg-yellow dark:hover:text-fa-white"
         trailing
       >
-        <span>{{ locale["en"].resetPassword }}</span>
+        <span>{{ locale[useSettingsDataStore().locale].resetPassword }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
       <UButton
@@ -47,7 +47,7 @@ const isOpen = ref(false);
         class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:bg-yellow dark:hover:text-fa-white font-[Rubik] uppercase bg-yellow hover:text-fa-white hover:bg-dark-gray"
         trailing
       >
-        <span>{{ locale["en"].loginPage }}</span>
+        <span>{{ locale[useSettingsDataStore().locale].loginPage }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
     </div>

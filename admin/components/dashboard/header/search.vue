@@ -13,6 +13,9 @@ const isOpen = ref(false);
 const founded: Ref<SearchProductDto[] | undefined> = ref();
 const metaPressed = ref(false);
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // handlers
 onClickOutside(target, () => (isOpen.value = false));
 
@@ -100,7 +103,7 @@ watch(query, (oldValue, newValue) => {
       name="query"
       @keydown="searchHandlerWithShortcut"
       @keyup="prettySearchHandler"
-      :placeholder="`${locale[useSettingsDataStore().locale].search}...`"
+      :placeholder="`${locale[settingsDataStore.locale].search}...`"
       autocomplete="off"
       ref="target"
       autofocus
@@ -117,7 +120,7 @@ watch(query, (oldValue, newValue) => {
           v-if="isOpen"
         >
           <h3 class="font-[Rubik] text-[20px] font-[600]">
-            {{ locale["en"].searchResult }}
+            {{ locale[settingsDataStore.locale].searchResult }}
           </h3>
           <DashboardHeaderSearchList :data="founded" v-model="isOpen" />
           <NuxtLink
@@ -126,7 +129,7 @@ watch(query, (oldValue, newValue) => {
             @click="hideSearchInputHandler"
             class="text-[16px] font-[600] text-blue dark:text-yellow hover:text-dark-gray dark:hover:text-fa-white"
           >
-            {{ locale["en"].seeAll }}
+            {{ locale[settingsDataStore.locale].seeAll }}
           </NuxtLink>
         </div>
       </Transition>

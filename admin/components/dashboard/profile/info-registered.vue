@@ -3,36 +3,36 @@ import { locale } from "~/lang/locale";
 
 const userData = [
   {
-    label: locale["en"].userName,
+    label: locale[useSettingsDataStore().locale].userName,
     name: "name",
-    placeholder: locale["en"].userName,
+    placeholder: locale[useSettingsDataStore().locale].userName,
     icon: "i-heroicons-user-circle-16-solid",
   },
   {
-    label: locale["en"].email,
+    label: locale[useSettingsDataStore().locale].email,
     name: "email",
-    placeholder: locale["en"].email,
+    placeholder: locale[useSettingsDataStore().locale].email,
     icon: "i-heroicons-envelope",
   },
   {
-    label: locale["en"].role,
+    label: locale[useSettingsDataStore().locale].role,
     name: "role",
-    placeholder: locale["en"].role,
+    placeholder: locale[useSettingsDataStore().locale].role,
     icon: "i-heroicons-shield-exclamation-20-solid",
     disabled: true,
   },
   {
-    label: locale["en"].password,
+    label: locale[useSettingsDataStore().locale].password,
     name: "oldPassword",
     type: "password",
-    placeholder: locale["en"].password,
+    placeholder: locale[useSettingsDataStore().locale].password,
     icon: "i-heroicons-lock-closed",
   },
   {
-    label: locale["en"].newPassword,
+    label: locale[useSettingsDataStore().locale].newPassword,
     name: "newPassword",
     type: "password",
-    placeholder: locale["en"].newPassword,
+    placeholder: locale[useSettingsDataStore().locale].newPassword,
     icon: "i-heroicons-lock-closed",
   },
 ];

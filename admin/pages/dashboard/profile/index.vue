@@ -13,9 +13,6 @@ const tempUser = data.value?.user as UserDto;
 // handlers
 
 // meta
-definePageMeta({
-  name: locale["en"].breadcrumbs.profile,
-});
 
 useHead({
   title: tempUser.name,

@@ -11,29 +11,33 @@ const { settings } = storeToRefs(settingsDataStore);
 const router = useRouter();
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
-  breadcrumbsArrayFactory(fullPath, locale["en"].settings, fullPath),
+  breadcrumbsArrayFactory(
+    fullPath,
+    locale[useSettingsDataStore().locale].settings,
+    fullPath,
+  ),
 );
 const items = [
   {
     slot: "general",
     icon: "i-heroicons-adjustments-vertical-16-solid",
-    label: locale["en"].general,
+    label: locale[useSettingsDataStore().locale].general,
   },
   {
     slot: "english",
     icon: "i-material-symbols-language",
-    label: locale["en"].english,
+    label: locale[useSettingsDataStore().locale].english,
   },
   {
     slot: "russian",
     icon: "i-material-symbols-language",
-    label: locale["en"].russian,
+    label: locale[useSettingsDataStore().locale].russian,
   },
 ];
 
 // meta
 useHeadSafe({
-  title: locale["en"].settings,
+  title: locale[useSettingsDataStore().locale].settings,
 });
 
 // hooks

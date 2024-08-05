@@ -36,11 +36,10 @@ const deletePerson = async (id: string) => {
 // meta
 definePageMeta({
   middleware: ["only-admin-access"],
-  name: locale["en"].breadcrumbs.users,
 });
 
 useHead({
-  title: locale["en"].allUsers,
+  title: locale[useSettingsDataStore().locale].allUsers,
 });
 
 // Hooks

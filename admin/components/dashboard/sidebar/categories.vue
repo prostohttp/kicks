@@ -14,14 +14,6 @@ const isActive = (id: string): boolean =>
   (route.query.category && route.query.category === id) as boolean;
 
 // handlers
-// const { data: products } = await useFetch<
-//   Array<{ _id: string; category: string[] }>
-// >("/api/product/all", {
-//   method: "GET",
-//   query: {
-//     forCategoryCount: true,
-//   },
-// });
 await useAsyncData("products", () => productDataStore.getProductCount());
 
 const { productsForCount } = storeToRefs(productDataStore);
@@ -32,7 +24,7 @@ const computedProducts = computed(() => {
 
 const items: AccordionItem[] | undefined = [
   {
-    label: "Categories",
+    label: locale[useSettingsDataStore().locale].breadcrumbs.categories,
     defaultOpen: true,
     content: parentTitles.value,
   },
@@ -74,7 +66,7 @@ const items: AccordionItem[] | undefined = [
               to="/dashboard/categories?page=1"
               class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
             >
-              {{ locale["en"].allCategories }}
+              {{ locale[useSettingsDataStore().locale].allCategories }}
             </NuxtLink>
           </li>
         </ul>

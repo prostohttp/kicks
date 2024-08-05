@@ -8,13 +8,9 @@ const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 
 // meta
-definePageMeta({
-  middleware: ["only-admin-access"],
-  name: locale["en"].addNewProduct,
-});
 
 useHead({
-  title: locale["en"].addNewProduct,
+  title: locale[useSettingsDataStore().locale].addNewProduct,
 });
 </script>
 

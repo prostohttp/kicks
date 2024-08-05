@@ -58,11 +58,11 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     categoryStore.getAllCategories(page);
     categoryStore.getAllTitles();
     selected.value = [];
-    toast.add({ title: locale["en"].successEdit });
+    toast.add({ title: locale[useSettingsDataStore().locale].successEdit });
     emit("close");
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
     });
   }
 };
@@ -142,13 +142,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
         @click="$emit('close')"
       >
-        {{ locale["en"].cancel }}
+        {{ locale[useSettingsDataStore().locale].cancel }}
       </UButton>
       <UButton
         type="submit"
         class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
       >
-        {{ locale["en"].save }}
+        {{ locale[useSettingsDataStore().locale].save }}
       </UButton>
     </div>
   </UForm>

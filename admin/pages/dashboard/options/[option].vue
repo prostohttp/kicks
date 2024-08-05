@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
-import { optionData } from "./data";
 
 // store
 const optionDataStore = useOptionDataStore();
@@ -13,7 +12,6 @@ const { option } = storeToRefs(optionDataStore);
 // vars
 let staticTitle = option.value.title;
 const router = useRouter();
-const id = useRoute().params.option.toString();
 
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
@@ -21,7 +19,29 @@ const links: Ref<BreadcrumbItem[]> = ref(
 );
 const isAdmin = useIsAdmin();
 const isSubmit = ref(false);
-const title = ref(option.value.title || locale["en"].empty);
+const title = ref(
+  option.value.title || locale[useSettingsDataStore().locale].empty,
+);
+const optionData: InputData[] = [
+  {
+    label: locale[useSettingsDataStore().locale].title,
+    name: "title",
+    type: "text",
+    placeholder: locale[useSettingsDataStore().locale].title,
+  },
+  {
+    label: locale[useSettingsDataStore().locale].type,
+    name: "type",
+    type: "select",
+    placeholder: locale[useSettingsDataStore().locale].typeText,
+  },
+  {
+    label: locale[useSettingsDataStore().locale].sort,
+    name: "sort",
+    type: "number",
+    placeholder: locale[useSettingsDataStore().locale].sort,
+  },
+];
 
 // handlers
 const submitHandler = async () => {
@@ -53,7 +73,7 @@ onUnmounted(() => {
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="staticTitle || locale['en'].empty"
+      :title="staticTitle || locale[useSettingsDataStore().locale].empty"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"

@@ -9,7 +9,7 @@ definePageMeta({
   name: "all-banners",
 });
 useHead({
-  title: locale["en"].allBanners,
+  title: locale[useSettingsDataStore().locale].allBanners,
 });
 
 // store
@@ -24,15 +24,15 @@ const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "images",
-    label: "Banner",
+    label: locale[useSettingsDataStore().locale].newBanner,
   },
   {
     key: "title",
-    label: "Title",
+    label: locale[useSettingsDataStore().locale].title,
   },
   {
     key: "action",
-    label: "Action",
+    label: "",
   },
 ];
 
@@ -112,7 +112,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale["en"].breadcrumbs.banners }}
+            {{ locale[useSettingsDataStore().locale].breadcrumbs.banners }}
           </span>
         </caption>
       </template>

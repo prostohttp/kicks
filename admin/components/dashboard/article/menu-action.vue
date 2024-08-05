@@ -61,7 +61,7 @@ const openDeleteArticleModal = (articles: IArticle[]) => {
           @click="openDeleteArticleModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale["en"].deleteArticle }}
+          {{ locale[useSettingsDataStore().locale].deleteArticle }}
         </NuxtLink>
       </ul>
     </template>

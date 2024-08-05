@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { UserDto } from "~/server/dto/user.dto";
 import { locale } from "~/lang/locale";
+import { Roles } from "~/types/server/server.types.js";
 import { DashboardUserEditModal, DashboardUserDeleteModal } from "#components";
 
 // define
@@ -34,7 +35,7 @@ const openDeleteUserModal = () => {
       emit("delete-person", user._id);
       modal.close();
       toast.add({
-        title: locale["en"].deletePersonSuccess,
+        title: locale[useSettingsDataStore().locale].deletePersonSuccess,
       });
     },
   });
@@ -110,11 +111,11 @@ onMounted(() => {
               @click="openEditUserModal(user._id)"
               class="cursor-pointer"
             >
-              {{ locale["en"].editProfile }}
+              {{ locale[useSettingsDataStore().locale].editProfile }}
             </NuxtLink>
 
             <NuxtLink @click="openDeleteUserModal" class="cursor-pointer">
-              {{ locale["en"].deletePerson }}
+              {{ locale[useSettingsDataStore().locale].deletePerson }}
             </NuxtLink>
           </ul>
         </template>

@@ -1,14 +1,32 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
-import { optionData } from "./data";
 
 // vars
 const router = useRouter();
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
-
 const isSubmit = ref(false);
+const optionData: InputData[] = [
+  {
+    label: locale[useSettingsDataStore().locale].title,
+    name: "title",
+    type: "text",
+    placeholder: locale[useSettingsDataStore().locale].title,
+  },
+  {
+    label: locale[useSettingsDataStore().locale].type,
+    name: "type",
+    type: "select",
+    placeholder: locale[useSettingsDataStore().locale].typeText,
+  },
+  {
+    label: locale[useSettingsDataStore().locale].sort,
+    name: "sort",
+    type: "number",
+    placeholder: locale[useSettingsDataStore().locale].sort,
+  },
+];
 
 // handlers
 const submitHandler = async () => {
@@ -17,7 +35,7 @@ const submitHandler = async () => {
 
 // meta
 useHead({
-  title: locale["en"].addNewOption,
+  title: locale[useSettingsDataStore().locale].addNewOption,
 });
 </script>
 

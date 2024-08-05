@@ -9,7 +9,6 @@ import { Roles, type RegisterFormDto } from "~/types/server/server.types";
 // meta
 definePageMeta({
   layout: "auth",
-  name: "register",
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: "/dashboard",
@@ -17,7 +16,7 @@ definePageMeta({
   alias: ["/register"],
 });
 useHead({
-  title: "Register",
+  title: locale[useSettingsDataStore().locale].register,
 });
 
 // vars
@@ -50,7 +49,7 @@ const register = async (data: RegisterFormDto) => {
         body: {
           name,
           userEmail: email,
-          siteName: locale["en"].siteName,
+          siteName: locale[useSettingsDataStore().locale].siteName,
           siteUrl: Constants.SITE_URL + "/login",
         },
       });
@@ -60,7 +59,7 @@ const register = async (data: RegisterFormDto) => {
         body: {
           name,
           userEmail: email,
-          siteName: locale["en"].siteName,
+          siteName: locale[useSettingsDataStore().locale].siteName,
           siteUrl: Constants.SITE_URL + "/login",
         },
       });
@@ -82,11 +81,17 @@ const registerHandler = useThrottleFn(register, 1000);
     <div class="flex py-[10px] lg:px-0 px-[30px] justify-center items-center">
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
-          <h1 class="font-[Rubik] font-[600] text-[36px]">Register</h1>
-          <h2 class="open-sans text-[20px] font-[600]">Sign up with</h2>
+          <h1 class="font-[Rubik] font-[600] text-[36px]">
+            {{ locale[useSettingsDataStore().locale].register }}
+          </h1>
+          <h2 class="open-sans text-[20px] font-[600]">
+            {{ locale[useSettingsDataStore().locale].signUp }}
+          </h2>
         </div>
         <AuthSocialButtons />
-        <h2 class="open-sans text-[20px] font-[600] uppercase">OR</h2>
+        <h2 class="open-sans text-[20px] font-[600] uppercase">
+          {{ locale[useSettingsDataStore().locale].or }}
+        </h2>
         <AuthRegisterForm @submit="registerHandler" />
       </div>
     </div>

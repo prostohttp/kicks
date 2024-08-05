@@ -75,7 +75,7 @@ const addNewBanner = () => {
   });
   bannerTabs.value.push({
     id,
-    title: locale["en"].newBanner,
+    title: locale[useSettingsDataStore().locale].newBanner,
   });
 };
 
@@ -102,7 +102,7 @@ async function onError(event: FormErrorEvent) {
       v-if="!isValidForm"
       class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
     >
-      {{ locale["en"].error.checkRequiredFields }}
+      {{ locale[useSettingsDataStore().locale].error.checkRequiredFields }}
     </div>
     <UForm
       :validate="validate"
@@ -136,7 +136,7 @@ async function onError(event: FormErrorEvent) {
             type="button"
             @click="addNewBanner"
           >
-            {{ locale["en"].addNewBanner }}
+            {{ locale[useSettingsDataStore().locale].addNewBanner }}
           </UButton>
           <div
             v-for="(tab, index) in bannerTabs"
@@ -172,7 +172,7 @@ async function onError(event: FormErrorEvent) {
         </div>
       </div>
       <UButton type="submit" class="dark-button float-end" v-if="isAdmin">
-        {{ locale["en"].save }}
+        {{ locale[useSettingsDataStore().locale].save }}
       </UButton>
     </UForm>
   </div>

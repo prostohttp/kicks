@@ -56,7 +56,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale["en"].noImage,
+      title: locale[useSettingsDataStore().locale].noImage,
       color: "red",
     });
   }
@@ -74,12 +74,12 @@ const uploadImage = async (e: Event) => {
     const uploadedImage = await uploadImageHandler(formData);
     articleImage.value = uploadedImage;
     toast.add({
-      title: locale["en"].imageUploaded,
+      title: locale[useSettingsDataStore().locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -96,13 +96,13 @@ const onDrop = async (files: File[] | null) => {
       const uploadedImage = await uploadImageHandler(formData);
       articleImage.value = uploadedImage;
       toast.add({
-        title: locale["en"].imageUploaded,
+        title: locale[useSettingsDataStore().locale].imageUploaded,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -132,14 +132,14 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
     articleImage.value = "";
     toast.add({
-      title: locale["en"].addNewArticle,
+      title: locale[useSettingsDataStore().locale].addNewArticle,
       color: "green",
     });
     articleDateStore.getAllArticlesForAdminMenu();
     clearState();
   } catch (error: any) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -160,12 +160,12 @@ const deleteImageHandler = async () => {
     });
     articleImage.value = "";
     toast.add({
-      title: locale["en"].imageDeleted,
+      title: locale[useSettingsDataStore().locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -293,7 +293,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </div>
     <div class="flex justify-end">
       <UButton type="submit" class="dark-button">
-        {{ locale["en"].addNewArticle }}
+        {{ locale[useSettingsDataStore().locale].addNewArticle }}
       </UButton>
     </div>
   </UForm>

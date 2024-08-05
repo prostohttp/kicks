@@ -19,7 +19,9 @@ const links: Ref<BreadcrumbItem[]> = ref(
 );
 
 const title = computed(() =>
-  article.value ? article.value?.title : locale["en"].empty,
+  article.value
+    ? article.value?.title
+    : locale[useSettingsDataStore().locale].empty,
 );
 
 // meta

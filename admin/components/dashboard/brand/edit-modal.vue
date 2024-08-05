@@ -21,7 +21,7 @@ const emit = defineEmits(["close"]);
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale["en"].editBrand }}
+            {{ locale[useSettingsDataStore().locale].editBrand }}
           </h3>
           <UButton
             color="gray"

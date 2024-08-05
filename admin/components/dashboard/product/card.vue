@@ -111,14 +111,14 @@ const openDeleteProductModal = () => {
                 :to="`/dashboard/products/${product._id}`"
                 class="cursor-pointer"
               >
-                {{ locale["en"].editProduct }}
+                {{ locale[useSettingsDataStore().locale].editProduct }}
               </NuxtLink>
               <NuxtLink
                 @click="openDeleteProductModal"
                 class="cursor-pointer"
                 v-if="isAdmin"
               >
-                {{ locale["en"].deleteProduct }}
+                {{ locale[useSettingsDataStore().locale].deleteProduct }}
               </NuxtLink>
             </ul>
           </template>
@@ -126,7 +126,9 @@ const openDeleteProductModal = () => {
       </div>
     </div>
     <div class="flex flex-col gap-[5px]">
-      <strong class="text-[16px]">{{ locale["en"].summary }}</strong>
+      <strong class="text-[16px]">{{
+        locale[useSettingsDataStore().locale].summary
+      }}</strong>
       <span
         class="text-[14px] md:whitespace-nowrap whitespace-pre-wrap sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
       >
@@ -135,11 +137,13 @@ const openDeleteProductModal = () => {
     </div>
     <div class="border rounded-[8px] border-[#c1c1c1] p-[16px] text-[14px]">
       <div class="flex justify-between pb-[8px] border-b border-[#c1c1c1]">
-        <span>{{ locale["en"].sales }}</span>
+        <span>{{ locale[useSettingsDataStore().locale].sales }}</span>
         <UiArrowStats :value="sales" />
       </div>
       <div class="flex justify-between pt-[8px]">
-        <span>{{ locale["en"].remainingProducts }}</span>
+        <span>{{
+          locale[useSettingsDataStore().locale].remainingProducts
+        }}</span>
         <UiPercentBar
           :percent="percentForStats(product.quantity)"
           :value="product.quantity"

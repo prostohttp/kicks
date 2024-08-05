@@ -3,21 +3,21 @@ import type { InputData } from "~/types/ui/ui.types";
 
 export const optionData: InputData[] = [
   {
-    label: locale["en"].title,
+    label: locale[useSettingsDataStore().locale].title,
     name: "title",
     type: "text",
-    placeholder: locale["en"].title,
+    placeholder: locale[useSettingsDataStore().locale].title,
   },
   {
-    label: locale["en"].type,
+    label: locale[useSettingsDataStore().locale].type,
     name: "type",
     type: "select",
-    placeholder: locale["en"].typeText,
+    placeholder: locale[useSettingsDataStore().locale].typeText,
   },
   {
-    label: locale["en"].sort,
+    label: locale[useSettingsDataStore().locale].sort,
     name: "sort",
     type: "number",
-    placeholder: locale["en"].sort,
+    placeholder: locale[useSettingsDataStore().locale].sort,
   },
 ];

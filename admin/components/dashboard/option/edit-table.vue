@@ -18,15 +18,15 @@ const toast = useToast();
 const columns = [
   {
     key: "value",
-    label: "Value",
+    label: locale[useSettingsDataStore().locale].value,
   },
   {
     key: "image",
-    label: "Image",
+    label: locale[useSettingsDataStore().locale].image,
   },
   {
     key: "sort",
-    label: "Sort",
+    label: locale[useSettingsDataStore().locale].sort,
   },
   {
     key: "action",
@@ -66,7 +66,7 @@ const uploadImage = async (e: Event, id: number) => {
 
     if (!uploadedImage) {
       toast.add({
-        title: locale["en"].notImage,
+        title: locale[useSettingsDataStore().locale].notImage,
         color: "red",
       });
     }
@@ -80,7 +80,7 @@ const uploadImage = async (e: Event, id: number) => {
       },
     });
     toast.add({
-      title: locale["en"].imageUploaded,
+      title: locale[useSettingsDataStore().locale].imageUploaded,
       color: "green",
     });
   } catch (error: any) {
@@ -106,7 +106,7 @@ const deleteImageHandler = async (id: number) => {
     });
     changeValueFromArray(id, option.value.values, "image", "");
     toast.add({
-      title: locale["en"].imageDeleted,
+      title: locale[useSettingsDataStore().locale].imageDeleted,
       color: "green",
     });
   } catch (error: any) {
@@ -141,7 +141,7 @@ const deleteValue = (id: number) => {
         class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative mt-[20px]"
       >
         <span>
-          {{ locale["en"].addValue }}
+          {{ locale[useSettingsDataStore().locale].addValue }}
         </span>
       </caption>
     </template>

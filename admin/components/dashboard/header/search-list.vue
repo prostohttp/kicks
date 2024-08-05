@@ -3,17 +3,22 @@ import { Currency, Locales } from "~/types/ui/ui.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
 import { locale } from "~/lang/locale";
 
+// define
 defineProps<{
   data: SearchProductDto[] | undefined;
 }>();
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
+// vars
 const model = defineModel();
 </script>
 
 <template>
   <div class="open-sans flex flex-col gap-[16px]">
     <div v-if="data && !data.length">
-      <span>{{ locale["en"].empty }}</span>
+      <span>{{ locale[settingsDataStore.locale].empty }}</span>
     </div>
     <ul
       class="flex flex-col gap-[16px] sm:w-[420px] w-full md:max-h-[400px] max-h-[200px] overflow-y-auto"

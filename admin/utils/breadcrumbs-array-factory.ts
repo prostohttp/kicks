@@ -9,7 +9,6 @@ export default (
   const items: BreadcrumbItem[] = [];
   const arrayFromData = data.split("/");
   for (const item of arrayFromData) {
-    // TODO: Испавить ошибку интернационализации
     const lang = locale[useSettingsDataStore().locale];
     const label = lang.breadcrumbs[item as keyof typeof lang.breadcrumbs];
     if (item !== "" && label) {

@@ -7,36 +7,36 @@ const emit = defineEmits(["close"]);
 // vars
 const inputData = [
   {
-    label: locale["en"].title,
+    label: locale[useSettingsDataStore().locale].title,
     name: "title",
-    placeholder: locale["en"].title,
+    placeholder: locale[useSettingsDataStore().locale].title,
     icon: "i-heroicons-queue-list",
   },
   {
-    label: locale["en"].description,
+    label: locale[useSettingsDataStore().locale].description,
     name: "description",
     type: "textarea",
-    placeholder: locale["en"].description,
+    placeholder: locale[useSettingsDataStore().locale].description,
     icon: "i-heroicons-document-text-16-solid",
   },
   {
-    label: locale["en"].childCategories,
+    label: locale[useSettingsDataStore().locale].childCategories,
     name: "children",
     type: "select",
-    placeholder: locale["en"].selectChildrenItems,
+    placeholder: locale[useSettingsDataStore().locale].selectChildrenItems,
     icon: "i-heroicons-list-bullet",
   },
   {
-    label: locale["en"].isParentTitle,
+    label: locale[useSettingsDataStore().locale].isParentTitle,
     name: "isParent",
     type: "checkbox",
-    placeholder: locale["en"].isParent,
+    placeholder: locale[useSettingsDataStore().locale].isParent,
   },
   {
-    label: locale["en"].isEnabled,
+    label: locale[useSettingsDataStore().locale].isEnabled,
     name: "isEnabled",
     type: "checkbox",
-    placeholder: locale["en"].isEnabled,
+    placeholder: locale[useSettingsDataStore().locale].isEnabled,
   },
 ];
 </script>
@@ -54,7 +54,7 @@ const inputData = [
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale["en"].addNewCategory }}
+            {{ locale[useSettingsDataStore().locale].addNewCategory }}
           </h3>
           <UButton
             color="gray"

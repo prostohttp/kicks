@@ -49,7 +49,7 @@ const { signOut } = useAuth();
             v-if="user?.isRegistered"
             @click="close"
           >
-            <span>{{ locale["en"].settings }}</span>
+            <span>{{ locale[useSettingsDataStore().locale].settings }}</span>
             <UIcon
               name="i-heroicons-chevron-right-20-solid"
               class="scale-[1.6]"
@@ -59,7 +59,7 @@ const { signOut } = useAuth();
             class="uppercase font-[Inter] flex justify-between w-full items-center cursor-pointer"
             @click="signOut({ callbackUrl: Constants.SITE_URL })"
           >
-            <span>{{ locale["en"].logOut }}</span>
+            <span>{{ locale[useSettingsDataStore().locale].logOut }}</span>
             <UIcon
               name="i-heroicons-arrow-right-end-on-rectangle-20-solid"
               class="scale-[1.3]"

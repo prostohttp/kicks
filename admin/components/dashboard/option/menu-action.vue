@@ -62,7 +62,7 @@ const openDeleteOptionModal = (options: IOption[]) => {
           @click="openDeleteOptionModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale["en"].deleteOption }}
+          {{ locale[useSettingsDataStore().locale].deleteOption }}
         </NuxtLink>
       </ul>
     </template>

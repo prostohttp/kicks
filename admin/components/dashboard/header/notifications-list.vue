@@ -21,7 +21,7 @@ defineProps<{ data: NotificationDto[] | null; close: () => void }>();
           class="text-[16px] font-[600]"
           @click="close"
         >
-          {{ locale["en"].order }}
+          {{ locale[useSettingsDataStore().locale].order }}
           {{ notification.order.orderId }}
         </NuxtLink>
         <span

@@ -37,12 +37,12 @@ const isOpen = ref(false);
   >
     <div class="flex flex-col gap-[20px]">
       <h1 class="font-[Rubik] font-[600] text-[24px]">
-        {{ locale["en"].yourName }}
+        {{ locale[useSettingsDataStore().locale].yourName }}
       </h1>
       <UFormGroup name="name">
         <UInput
           variant="outline"
-          placeholder="Full Name *"
+          :placeholder="locale[useSettingsDataStore().locale].userName"
           v-model="name"
           input-class="input"
         />
@@ -50,12 +50,12 @@ const isOpen = ref(false);
     </div>
     <div class="flex flex-col gap-[20px]">
       <h1 class="font-[Rubik] font-[600] text-[24px]">
-        {{ locale["en"].loginDetails }}
+        {{ locale[useSettingsDataStore().locale].loginDetails }}
       </h1>
       <UFormGroup name="email">
         <UInput
           variant="outline"
-          placeholder="Email *"
+          :placeholder="locale[useSettingsDataStore().locale].email"
           v-model="email"
           input-class="input"
         />
@@ -65,7 +65,7 @@ const isOpen = ref(false);
           <UInput
             type="password"
             variant="outline"
-            placeholder="Password *"
+            :placeholder="locale[useSettingsDataStore().locale].password"
             v-model="password"
             input-class="input"
           />
@@ -77,12 +77,12 @@ const isOpen = ref(false);
         <UCheckbox v-model="terms">
           <template #label>
             <span class="open-sans text-[16px] font-[600]">
-              {{ locale["en"].agreeText }}
+              {{ locale[useSettingsDataStore().locale].agreeText }}
               <small
                 @click.prevent="isOpen = true"
                 class="text-[16px] underline decoration-gray-main hover: cursor-pointer"
               >
-                {{ locale["en"].terms }}
+                {{ locale[useSettingsDataStore().locale].terms }}
               </small></span
             >
           </template>
@@ -92,7 +92,7 @@ const isOpen = ref(false);
         <UCheckbox v-model="keepLogged">
           <template #label>
             <span class="open-sans text-[16px] font-[600]">
-              {{ locale["en"].keepLogin }}
+              {{ locale[useSettingsDataStore().locale].keepLogin }}
             </span>
           </template>
         </UCheckbox>
@@ -102,7 +102,7 @@ const isOpen = ref(false);
         class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow"
         trailing
       >
-        <span>{{ locale["en"].register }}</span>
+        <span>{{ locale[useSettingsDataStore().locale].register }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
       <UButton
@@ -110,7 +110,7 @@ const isOpen = ref(false);
         class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow uppercase font-[Rubik] bg-yellow hover:text-fa-white hover:bg-dark-gray"
         trailing
       >
-        <span>{{ locale["en"].loginPage }}</span>
+        <span>{{ locale[useSettingsDataStore().locale].loginPage }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
     </div>

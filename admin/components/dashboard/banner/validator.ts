@@ -8,19 +8,19 @@ export const validate = (state: BannerDto): FormError[] => {
   if (!state.title)
     errors.push({
       path: "title",
-      message: locale["en"].error.string,
+      message: locale[useSettingsDataStore().locale].error.string,
     });
 
   if (!state.banners.length)
     errors.push({
       path: "banners",
-      message: locale["en"].error.needOneMoreItem,
+      message: locale[useSettingsDataStore().locale].error.needOneMoreItem,
     });
 
   if (state.title.length < Constants.STRING_MIN_LENGTH) {
     errors.push({
       path: "title",
-      message: locale["en"].error.stringMin,
+      message: locale[useSettingsDataStore().locale].error.stringMin,
     });
   }
 
@@ -28,19 +28,19 @@ export const validate = (state: BannerDto): FormError[] => {
     if (!item.sort) {
       errors.push({
         path: `sort${item.id}`,
-        message: locale["en"].error.number,
+        message: locale[useSettingsDataStore().locale].error.number,
       });
     }
     if (item.sort! < Constants.NUMBER_MIN_VALUE) {
       errors.push({
         path: `sort${item.id}`,
-        message: locale["en"].error.numberMin,
+        message: locale[useSettingsDataStore().locale].error.numberMin,
       });
     }
     if (!item.image) {
       errors.push({
         path: `image${item.id}`,
-        message: locale["en"].error.required,
+        message: locale[useSettingsDataStore().locale].error.required,
       });
     }
   }

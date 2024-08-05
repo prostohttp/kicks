@@ -18,7 +18,11 @@ const searchPhrase = ref(route.query.searchPhrase);
 const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(
   !searchPhrase.value
-    ? breadcrumbsArrayFactory(path, locale["en"].searchResult, path)
+    ? breadcrumbsArrayFactory(
+        path,
+        locale[useSettingsDataStore().locale].searchResult,
+        path,
+      )
     : breadcrumbsArrayFactory(
         path,
         searchPhrase.value.toString(),
@@ -40,7 +44,7 @@ await useAsyncData("asyncFoundedProducts", () =>
 const title = computed(() =>
   searchPhrase.value
     ? `${locale[useSettingsDataStore().locale].search} | ${searchPhrase.value}`
-    : locale["en"].search,
+    : locale[useSettingsDataStore().locale].search,
 );
 
 const getSales = (id: string) => {
@@ -65,7 +69,7 @@ const deleteProduct = async (id: string) => {
       activePage.value,
     );
     toast.add({
-      title: locale["en"].deleteProductSuccess,
+      title: locale[useSettingsDataStore().locale].deleteProductSuccess,
     });
   } catch (error: any) {
     toast.add({ title: error.message });

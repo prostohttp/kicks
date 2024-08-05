@@ -31,7 +31,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale["en"].noImage,
+      title: locale[useSettingsDataStore().locale].noImage,
       color: "red",
     });
   }
@@ -56,12 +56,12 @@ const uploadImage = async (e: Event) => {
     brandDataStore.getBrandById(brandId);
     brandDataStore.getAllBrands(page);
     toast.add({
-      title: locale["en"].imageUploaded,
+      title: locale[useSettingsDataStore().locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -79,13 +79,13 @@ const onDrop = async (files: File[] | null) => {
       brandDataStore.getBrandById(brandId);
       brandDataStore.getAllBrands(page);
       toast.add({
-        title: locale["en"].imageUploaded,
+        title: locale[useSettingsDataStore().locale].imageUploaded,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -107,10 +107,10 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     brandDataStore.getBrandById(brandId);
     brandDataStore.getAllBrands(page);
     emit("close");
-    toast.add({ title: locale["en"].successEdit });
+    toast.add({ title: locale[useSettingsDataStore().locale].successEdit });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
     });
   }
 };
@@ -135,12 +135,12 @@ const deleteImageHandler = async () => {
     brandDataStore.getBrandById(brandId);
     brandDataStore.getAllBrands(page);
     toast.add({
-      title: locale["en"].imageDeleted,
+      title: locale[useSettingsDataStore().locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -165,12 +165,12 @@ const deleteBrandHandler = async () => {
     brandDataStore.getAllBrands(page);
     emit("close");
     toast.add({
-      title: locale["en"].successDeleteMessage,
+      title: locale[useSettingsDataStore().locale].successDeleteMessage,
       color: "red",
     });
   } catch (_error) {
     toast.add({
-      title: locale["en"].somethingWentWrong,
+      title: locale[useSettingsDataStore().locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -269,13 +269,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
         @click="$emit('close')"
       >
-        {{ locale["en"].cancel }}
+        {{ locale[useSettingsDataStore().locale].cancel }}
       </UButton>
       <UButton
         type="submit"
         class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
       >
-        {{ locale["en"].save }}
+        {{ locale[useSettingsDataStore().locale].save }}
       </UButton>
     </div>
   </UForm>
