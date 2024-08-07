@@ -2,9 +2,13 @@
 import { locale } from "~/lang/locale";
 import { Locales } from "~/types/ui/ui.types";
 import type { NotificationDto } from "~/server/api/notification/dto/notification.dto";
+import dateTimeFormat from "~/utils/date-time-format";
 
 // define
 defineProps<{ data: NotificationDto[] | null; close: () => void }>();
+
+// store
+const settingsDataStore = useSettingsDataStore();
 </script>
 
 <template>
@@ -21,7 +25,7 @@ defineProps<{ data: NotificationDto[] | null; close: () => void }>();
           class="text-[16px] font-[600]"
           @click="close"
         >
-          {{ locale[useSettingsDataStore().locale].order }}
+          {{ locale[settingsDataStore.locale].order }}
           {{ notification.order.orderId }}
         </NuxtLink>
         <span

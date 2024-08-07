@@ -4,6 +4,8 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const productDataStore = useProductDataStore();
+const settingsDataStore = useSettingsDataStore();
+
 await useAsyncData("product", () =>
   productDataStore.getProductById(useRoute().params.product.toString()),
 );
@@ -11,16 +13,13 @@ const { product } = storeToRefs(productDataStore);
 
 // vars
 const router = useRouter();
-// const { data: products } = useNuxtData("products");
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(fullPath, product.value?.title, fullPath),
 );
 
 const title = computed(() =>
-  product.value
-    ? product.value?.title
-    : locale[useSettingsDataStore().locale].empty,
+  product.value ? product.value?.title : locale[settingsDataStore.locale].empty,
 );
 
 // meta
@@ -41,9 +40,7 @@ watch(product, () => {
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="
-      product ? product.title : locale[useSettingsDataStore().locale].empty
-    "
+    :title="product ? product.title : locale[settingsDataStore.locale].empty"
   />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"

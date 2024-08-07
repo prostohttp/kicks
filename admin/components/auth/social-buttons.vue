@@ -1,19 +1,23 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
+// vars
 const { signIn } = useAuth();
 </script>
 
 <template>
   <div class="flex justify-between gap-[5px] sm:gap-[24px]">
     <UTooltip
-      :text="locale[useSettingsDataStore().locale].loginGithub"
+      :text="locale[settingsDataStore.locale].loginGithub"
       class="w-[31%]"
     >
       <AuthSocialButton
         @click="signIn('github')"
         link="https:github.com"
-        :title="locale[useSettingsDataStore().locale].loginGithub"
+        :title="locale[settingsDataStore.locale].loginGithub"
         class="w-full"
       >
         <img
@@ -23,11 +27,11 @@ const { signIn } = useAuth();
       </AuthSocialButton>
     </UTooltip>
     <UTooltip
-      :text="locale[useSettingsDataStore().locale].loginYandex"
+      :text="locale[settingsDataStore.locale].loginYandex"
       class="w-[31%]"
     >
       <AuthSocialButton
-        :title="locale[useSettingsDataStore().locale].loginYandex"
+        :title="locale[settingsDataStore.locale].loginYandex"
         @click="signIn('yandex')"
         class="w-full"
       >
@@ -38,11 +42,11 @@ const { signIn } = useAuth();
       </AuthSocialButton>
     </UTooltip>
     <UTooltip
-      :text="locale[useSettingsDataStore().locale].loginDiscord"
+      :text="locale[settingsDataStore.locale].loginDiscord"
       class="w-[31%]"
     >
       <AuthSocialButton
-        :title="locale[useSettingsDataStore().locale].loginDiscord"
+        :title="locale[settingsDataStore.locale].loginDiscord"
         @click="signIn('discord')"
         class="w-full"
       >

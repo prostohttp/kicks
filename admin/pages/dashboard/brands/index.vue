@@ -4,9 +4,11 @@ import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
 import { useBrandDataStore } from "~/stores/brand-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
+import { addQuery } from "~/utils/add-query";
 
 // store
 const brandsDataStore = useBrandDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { brands: data } = storeToRefs(brandsDataStore);
 
 // vars
@@ -33,7 +35,7 @@ const openAddNewBrandModal = () => {
 // meta
 
 useHead({
-  title: locale[useSettingsDataStore().locale].allBrands,
+  title: locale[settingsDataStore.locale].allBrands,
 });
 
 // Hooks
@@ -64,12 +66,12 @@ onMounted(() => {
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale[useSettingsDataStore().locale].breadcrumbs.brands"
+      :title="locale[settingsDataStore.locale].breadcrumbs.brands"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale[useSettingsDataStore().locale].addNewBrand"
+      :label="locale[settingsDataStore.locale].addNewBrand"
       :to="addQuery('brandNew', 'yes')"
       @click="openAddNewBrandModal"
     />

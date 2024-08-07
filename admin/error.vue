@@ -2,6 +2,9 @@
 import type { NuxtError } from "#app";
 import { locale } from "./lang/locale";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // props
 const { error } = defineProps({
   error: Object as () => NuxtError,
@@ -14,10 +17,10 @@ const errorHandle = () => {
 
 const computedErrorMessage = computed(() => {
   if (error?.statusCode === 404) {
-    returnlocale[useSettingsDataStore().locale].pageNotFound;
+    return locale[settingsDataStore.locale].pageNotFound;
   } else {
     return (
-      error?.message || locale[useSettingsDataStore().locale].somethingWentWrong
+      error?.message || locale[settingsDataStore.locale].somethingWentWrong
     );
   }
 });
@@ -40,7 +43,7 @@ useHead({
     <h1 class="text-[4em] font-[Rubik]">{{ error!.statusCode }}</h1>
     <p>{{ computedErrorMessage }}</p>
     <UButton color="black" variant="solid" size="xl" @click="errorHandle">
-      {{ locale[useSettingsDataStore().locale].backToHome }}
+      {{ locale[settingsDataStore.locale].backToHome }}
     </UButton>
   </div>
 </template>

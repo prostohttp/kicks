@@ -6,6 +6,10 @@ interface IImageModel {
   name?: string;
   title?: string;
 }
+
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // define
 const { alt, addNew } = defineProps<{
   alt: string | undefined;
@@ -50,9 +54,9 @@ const deleteImageHandler = () => {
       class="flex flex-col gap-[10px] text-[14px] items-center"
       v-if="isAdmin"
     >
-      <h3>{{ locale[useSettingsDataStore().locale].dragDropMessage }}</h3>
+      <h3>{{ locale[settingsDataStore.locale].dragDropMessage }}</h3>
       <UDivider
-        :label="locale[useSettingsDataStore().locale].or"
+        :label="locale[settingsDataStore.locale].or"
         :ui="{
           border: {
             base: 'dark:border-[#70706e]',
@@ -65,7 +69,7 @@ const deleteImageHandler = () => {
         @click="inputRef?.click()"
         class="hover:bg-grey py-[2px] px-[10px] rounded-[8px] mb-[30px] dark:hover:bg-gray-main"
       >
-        {{ locale[useSettingsDataStore().locale].clickToUpload }}
+        {{ locale[settingsDataStore.locale].clickToUpload }}
       </button>
     </div>
   </div>

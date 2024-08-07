@@ -3,6 +3,8 @@ import { DashboardProductDeleteModal } from "#components";
 import { locale } from "~/lang/locale";
 import type { ProductDto } from "~/server/api/product/dto/product.dto";
 import { Currency, Locales } from "~/types/ui/ui.types";
+import percentForStats from "~/utils/percent-for-stats";
+import currencyFormat from "~/utils/currency-format";
 
 // define
 const { product, categories, sales } = defineProps<{
@@ -13,6 +15,7 @@ const { product, categories, sales } = defineProps<{
 const emit = defineEmits(["delete-product"]);
 
 // store
+const settingsDataStore = useSettingsDataStore();
 
 // vars
 const isAdmin = useIsAdmin();
@@ -55,7 +58,7 @@ const openDeleteProductModal = () => {
           <NuxtImg
             src="/no-image.svg"
             width="40"
-            :alt="locale[useSettingsDataStore().locale].noImage"
+            :alt="locale[settingsDataStore.locale].noImage"
             class="max-w-[200px]"
           />
         </template>
@@ -111,14 +114,14 @@ const openDeleteProductModal = () => {
                 :to="`/dashboard/products/${product._id}`"
                 class="cursor-pointer"
               >
-                {{ locale[useSettingsDataStore().locale].editProduct }}
+                {{ locale[settingsDataStore.locale].editProduct }}
               </NuxtLink>
               <NuxtLink
                 @click="openDeleteProductModal"
                 class="cursor-pointer"
                 v-if="isAdmin"
               >
-                {{ locale[useSettingsDataStore().locale].deleteProduct }}
+                {{ locale[settingsDataStore.locale].deleteProduct }}
               </NuxtLink>
             </ul>
           </template>
@@ -127,7 +130,7 @@ const openDeleteProductModal = () => {
     </div>
     <div class="flex flex-col gap-[5px]">
       <strong class="text-[16px]">{{
-        locale[useSettingsDataStore().locale].summary
+        locale[settingsDataStore.locale].summary
       }}</strong>
       <span
         class="text-[14px] md:whitespace-nowrap whitespace-pre-wrap sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
@@ -137,13 +140,11 @@ const openDeleteProductModal = () => {
     </div>
     <div class="border rounded-[8px] border-[#c1c1c1] p-[16px] text-[14px]">
       <div class="flex justify-between pb-[8px] border-b border-[#c1c1c1]">
-        <span>{{ locale[useSettingsDataStore().locale].sales }}</span>
+        <span>{{ locale[settingsDataStore.locale].sales }}</span>
         <UiArrowStats :value="sales" />
       </div>
       <div class="flex justify-between pt-[8px]">
-        <span>{{
-          locale[useSettingsDataStore().locale].remainingProducts
-        }}</span>
+        <span>{{ locale[settingsDataStore.locale].remainingProducts }}</span>
         <UiPercentBar
           :percent="percentForStats(product.quantity)"
           :value="product.quantity"

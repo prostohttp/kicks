@@ -4,6 +4,9 @@ import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
 import type { ForgotFormDto } from "~/types/server/server.types";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // meta
 definePageMeta({
   layout: "auth",
@@ -14,7 +17,7 @@ definePageMeta({
   alias: ["/forgot"],
 });
 useHead({
-  title: locale[useSettingsDataStore().locale].forgotPassword,
+  title: locale[settingsDataStore.locale].forgotPassword,
 });
 
 // Vars
@@ -46,7 +49,7 @@ const forgot = async (data: ForgotFormDto) => {
       method: "POST",
       body: {
         email,
-        siteName: locale[useSettingsDataStore().locale].siteName,
+        siteName: locale[settingsDataStore.locale].siteName,
         siteUrl: Constants.SITE_URL,
         token: `token?token=${savedToken.token}&timestamp=${savedToken.timestamp}`,
       },
@@ -67,7 +70,7 @@ const forgotHandler = useThrottleFn(forgot, 1000);
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
-            {{ locale[useSettingsDataStore().locale].forgotPassword }}
+            {{ locale[settingsDataStore.locale].forgotPassword }}
           </h1>
         </div>
         <AuthForgotPasswordForm @submit="forgotHandler" />
@@ -76,7 +79,7 @@ const forgotHandler = useThrottleFn(forgot, 1000);
           class="open-sans text-[16px] font-[600] underline decoration-gray-main hover: cursor-pointer"
           @click.prevent="isOpen = true"
         >
-          {{ locale[useSettingsDataStore().locale].terms }}
+          {{ locale[settingsDataStore.locale].terms }}
         </span>
       </div>
     </div>

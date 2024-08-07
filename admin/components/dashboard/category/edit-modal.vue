@@ -7,39 +7,42 @@ const { categoryId } = defineProps<{
 }>();
 const emit = defineEmits(["close"]);
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // vars
 const inputData = [
   {
-    label: locale[useSettingsDataStore().locale].title,
+    label: locale[settingsDataStore.locale].title,
     name: "title",
-    placeholder: locale[useSettingsDataStore().locale].title,
+    placeholder: locale[settingsDataStore.locale].title,
     icon: "i-heroicons-queue-list",
   },
   {
-    label: locale[useSettingsDataStore().locale].description,
+    label: locale[settingsDataStore.locale].description,
     name: "description",
     type: "textarea",
-    placeholder: locale[useSettingsDataStore().locale].description,
+    placeholder: locale[settingsDataStore.locale].description,
     icon: "i-heroicons-document-text-16-solid",
   },
   {
-    label: locale[useSettingsDataStore().locale].childCategories,
+    label: locale[settingsDataStore.locale].childCategories,
     name: "children",
     type: "select",
-    placeholder: locale[useSettingsDataStore().locale].selectChildrenItems,
+    placeholder: locale[settingsDataStore.locale].selectChildrenItems,
     icon: "i-heroicons-list-bullet",
   },
   {
-    label: locale[useSettingsDataStore().locale].isParentTitle,
+    label: locale[settingsDataStore.locale].isParentTitle,
     name: "isParent",
     type: "checkbox",
-    placeholder: locale[useSettingsDataStore().locale].isParent,
+    placeholder: locale[settingsDataStore.locale].isParent,
   },
   {
-    label: locale[useSettingsDataStore().locale].isEnabled,
+    label: locale[settingsDataStore.locale].isEnabled,
     name: "isEnabled",
     type: "checkbox",
-    placeholder: locale[useSettingsDataStore().locale].isEnabled,
+    placeholder: locale[settingsDataStore.locale].isEnabled,
   },
 ];
 </script>
@@ -57,7 +60,7 @@ const inputData = [
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale[useSettingsDataStore().locale].editCategory }}
+            {{ locale[settingsDataStore.locale].editCategory }}
           </h3>
           <UButton
             color="gray"

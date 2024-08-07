@@ -5,6 +5,7 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const userDataStore = useUserDataStore();
+const settingsDataStore = useSettingsDataStore();
 await useAsyncData("users", () =>
   userDataStore.getAllUsers(Number(useRoute().query.page)),
 );
@@ -39,7 +40,7 @@ definePageMeta({
 });
 
 useHead({
-  title: locale[useSettingsDataStore().locale].allUsers,
+  title: locale[settingsDataStore.locale].allUsers,
 });
 
 // Hooks
@@ -61,7 +62,7 @@ watch(activePage, async (newValue) => {
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="locale[useSettingsDataStore().locale].breadcrumbs.users"
+    :title="locale[settingsDataStore.locale].breadcrumbs.users"
   />
   <main class="flex flex-col">
     <LazyUiEmpty v-if="!data?.allItems" />

@@ -3,10 +3,12 @@ import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
 import { useStatsDataStore } from "~/stores/stats-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
+import unwrapAfterPopulate from "~/utils/unwrap-after-populate";
 
 // store
 const productDataStore = useProductDataStore();
 const categoryDataStore = useCategoryDataStore();
+const settingsDataStore = useSettingsDataStore();
 const statsDataStore = useStatsDataStore();
 const { products: data } = storeToRefs(productDataStore);
 
@@ -50,8 +52,8 @@ const getSales = (id: string) => {
 };
 const pageTitle = computed(() =>
   categoryDataStore.category?.title
-    ? `${categoryDataStore.category?.title} | ${locale[useSettingsDataStore().locale].breadcrumbs.products}`
-    : locale[useSettingsDataStore().locale].breadcrumbs.products,
+    ? `${categoryDataStore.category?.title} | ${locale[settingsDataStore.locale].breadcrumbs.products}`
+    : locale[settingsDataStore.locale].breadcrumbs.products,
 );
 
 const deleteProduct = async (id: string) => {
@@ -65,7 +67,7 @@ const deleteProduct = async (id: string) => {
     await productDataStore.getProductCount();
     await productDataStore.getAllProducts(activePage.value, category.value);
     toast.add({
-      title: locale[useSettingsDataStore().locale].deleteProductSuccess,
+      title: locale[settingsDataStore.locale].deleteProductSuccess,
     });
   } catch (error: any) {
     toast.add({ title: error.message });
@@ -115,13 +117,13 @@ watch(activePage, async (newValue) => {
       :title="
         categoryDataStore.category?.title
           ? categoryDataStore.category.title
-          : locale[useSettingsDataStore().locale].breadcrumbs.products
+          : locale[settingsDataStore.locale].breadcrumbs.products
       "
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale[useSettingsDataStore().locale].addNewProduct"
+      :label="locale[settingsDataStore.locale].addNewProduct"
       to="/dashboard/products/new"
     />
   </div>

@@ -22,6 +22,7 @@ useHead({
 
 // store
 const articleDataStore = useArticleDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { articles: data, selected } = storeToRefs(articleDataStore);
 
 // vars
@@ -32,23 +33,23 @@ const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "image",
-    label: locale[useSettingsDataStore().locale].image,
+    label: locale[settingsDataStore.locale].image,
   },
   {
     key: "title",
-    label: locale[useSettingsDataStore().locale].title,
+    label: locale[settingsDataStore.locale].title,
   },
   {
     key: "description",
-    label: locale[useSettingsDataStore().locale].description,
+    label: locale[settingsDataStore.locale].description,
   },
   {
     key: "enabled",
-    label: locale[useSettingsDataStore().locale].isEnabled,
+    label: locale[settingsDataStore.locale].isEnabled,
   },
   {
     key: "createdAt",
-    label: locale[useSettingsDataStore().locale].createdAt,
+    label: locale[settingsDataStore.locale].createdAt,
   },
 ];
 
@@ -67,8 +68,8 @@ const articles = computed((): Array<IArticle> | undefined => {
       title: article.title,
       description: article.shortDescription,
       enabled: article.isEnabled
-        ? locale[useSettingsDataStore().locale].yesText
-        : locale[useSettingsDataStore().locale].noText,
+        ? locale[settingsDataStore.locale].yesText
+        : locale[settingsDataStore.locale].noText,
       createdAt: dateTimeFormat(article.createdAt, Locales.RU),
     };
   });
@@ -97,12 +98,12 @@ watch(
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale[useSettingsDataStore().locale].breadcrumbs.articles"
+      :title="locale[settingsDataStore.locale].breadcrumbs.articles"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale[useSettingsDataStore().locale].addNewArticle"
+      :label="locale[settingsDataStore.locale].addNewArticle"
       to="/dashboard/articles/new"
       v-if="isAdmin"
     />
@@ -114,7 +115,7 @@ watch(
       :loading="!articles"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale[useSettingsDataStore().locale].loadingText,
+        label: locale[settingsDataStore.locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -142,7 +143,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale[useSettingsDataStore().locale].breadcrumbs.articles }}
+            {{ locale[settingsDataStore.locale].breadcrumbs.articles }}
           </span>
           <DashboardArticleMenuAction
             v-model:activePage="activePage"
@@ -154,7 +155,7 @@ watch(
         <NuxtLink :to="`/dashboard/articles/${row.id}`">
           <NuxtImg
             src="/no-image.svg"
-            :alt="locale[useSettingsDataStore().locale].noImage"
+            :alt="locale[settingsDataStore.locale].noImage"
             placeholder
             fit="inside"
             width="40"

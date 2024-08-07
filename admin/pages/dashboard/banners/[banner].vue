@@ -4,6 +4,7 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const bannerDataStore = useBannerDataStore();
+const settingsDataStore = useSettingsDataStore();
 await useAsyncData("asyncBanner", () =>
   bannerDataStore.getBannerById(useRoute().params.banner.toString()),
 );
@@ -11,16 +12,12 @@ const { banner } = storeToRefs(bannerDataStore);
 
 // vars
 const router = useRouter();
-
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(fullPath, banner.value?.title, fullPath),
 );
-
 const title = computed(() =>
-  banner.value
-    ? banner.value?.title
-    : locale[useSettingsDataStore().locale].empty,
+  banner.value ? banner.value?.title : locale[settingsDataStore.locale].empty,
 );
 
 // meta
@@ -45,7 +42,7 @@ watch(
   <DashboardBreadcrumbs
     :links="links"
     :title="
-      banner.title ? banner.title : locale[useSettingsDataStore().locale].empty
+      banner.title ? banner.title : locale[settingsDataStore.locale].empty
     "
   />
   <main

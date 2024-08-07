@@ -12,17 +12,18 @@ export interface IOption {
   images: (string | undefined)[];
 }
 
+// store
+const optionDataStore = useOptionDataStore();
+const settingsDataStore = useSettingsDataStore();
+const { options: data, selected } = storeToRefs(optionDataStore);
+
 // meta
 definePageMeta({
   name: "all-options",
 });
 useHead({
-  title: locale[useSettingsDataStore().locale].allOptions,
+  title: locale[settingsDataStore.locale].allOptions,
 });
-
-// store
-const optionDataStore = useOptionDataStore();
-const { options: data, selected } = storeToRefs(optionDataStore);
 
 // vars
 const isAdmin = useIsAdmin();
@@ -32,15 +33,15 @@ const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "title",
-    label: locale[useSettingsDataStore().locale].option,
+    label: locale[settingsDataStore.locale].option,
   },
   {
     key: "type",
-    label: locale[useSettingsDataStore().locale].type,
+    label: locale[settingsDataStore.locale].type,
   },
   {
     key: "sort",
-    label: locale[useSettingsDataStore().locale].sort,
+    label: locale[settingsDataStore.locale].sort,
   },
   {
     key: "action",
@@ -93,12 +94,12 @@ watch(
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale[useSettingsDataStore().locale].breadcrumbs.options"
+      :title="locale[settingsDataStore.locale].breadcrumbs.options"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale[useSettingsDataStore().locale].addNewOption"
+      :label="locale[settingsDataStore.locale].addNewOption"
       to="/dashboard/options/new"
       v-if="isAdmin"
     />
@@ -110,7 +111,7 @@ watch(
       :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale[useSettingsDataStore().locale].loadingText,
+        label: locale[settingsDataStore.locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -118,7 +119,7 @@ watch(
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: locale[useSettingsDataStore().locale].empty,
+        label: locale[settingsDataStore.locale].empty,
       }"
       :ui="{
         td: {
@@ -138,7 +139,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale[useSettingsDataStore().locale].breadcrumbs.options }}
+            {{ locale[settingsDataStore.locale].breadcrumbs.options }}
           </span>
           <DashboardOptionMenuAction
             v-model:activePage="activePage"

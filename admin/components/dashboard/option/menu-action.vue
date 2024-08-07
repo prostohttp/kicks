@@ -12,6 +12,7 @@ const modal = useModal();
 
 // store
 const optionDataStore = useOptionDataStore();
+const settingsDataStore = useSettingsDataStore();
 const uploadDeleteDataStore = useUploadDeleteDataStore();
 const { selected } = storeToRefs(optionDataStore);
 
@@ -62,7 +63,7 @@ const openDeleteOptionModal = (options: IOption[]) => {
           @click="openDeleteOptionModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale[useSettingsDataStore().locale].deleteOption }}
+          {{ locale[settingsDataStore.locale].deleteOption }}
         </NuxtLink>
       </ul>
     </template>

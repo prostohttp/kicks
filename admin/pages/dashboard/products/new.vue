@@ -2,22 +2,24 @@
 import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // vars
 const router = useRouter();
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 
 // meta
-
 useHead({
-  title: locale[useSettingsDataStore().locale].addNewProduct,
+  title: locale[settingsDataStore.locale].addNewProduct,
 });
 </script>
 
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="locale[useSettingsDataStore().locale].addNewProduct"
+    :title="locale[settingsDataStore.locale].addNewProduct"
   />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"

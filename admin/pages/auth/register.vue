@@ -3,12 +3,18 @@ import { useThrottleFn } from "@vueuse/core";
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
+// vars
+const toast = useToast();
 const { signIn } = useAuth();
 import { Roles, type RegisterFormDto } from "~/types/server/server.types";
 
 // meta
 definePageMeta({
   layout: "auth",
+  name: "register",
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: "/dashboard",
@@ -18,9 +24,6 @@ definePageMeta({
 useHead({
   title: locale[useSettingsDataStore().locale].register,
 });
-
-// vars
-const toast = useToast();
 
 // Handlers
 const register = async (data: RegisterFormDto) => {
@@ -82,15 +85,15 @@ const registerHandler = useThrottleFn(register, 1000);
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px]">
-            {{ locale[useSettingsDataStore().locale].register }}
+            {{ locale[settingsDataStore.locale].register }}
           </h1>
           <h2 class="open-sans text-[20px] font-[600]">
-            {{ locale[useSettingsDataStore().locale].signUp }}
+            {{ locale[settingsDataStore.locale].signUp }}
           </h2>
         </div>
         <AuthSocialButtons />
         <h2 class="open-sans text-[20px] font-[600] uppercase">
-          {{ locale[useSettingsDataStore().locale].or }}
+          {{ locale[settingsDataStore.locale].or }}
         </h2>
         <AuthRegisterForm @submit="registerHandler" />
       </div>

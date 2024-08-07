@@ -5,6 +5,7 @@ import { useUserDataStore } from "~/stores/user-data";
 
 // Store
 const userStore = useUserDataStore();
+const settingsDataStore = useSettingsDataStore();
 await useAsyncData("user", () => userStore.getUser());
 const { savedUser: user } = storeToRefs(userStore);
 
@@ -49,7 +50,7 @@ const { signOut } = useAuth();
             v-if="user?.isRegistered"
             @click="close"
           >
-            <span>{{ locale[useSettingsDataStore().locale].settings }}</span>
+            <span>{{ locale[settingsDataStore.locale].settings }}</span>
             <UIcon
               name="i-heroicons-chevron-right-20-solid"
               class="scale-[1.6]"
@@ -59,7 +60,7 @@ const { signOut } = useAuth();
             class="uppercase font-[Inter] flex justify-between w-full items-center cursor-pointer"
             @click="signOut({ callbackUrl: Constants.SITE_URL })"
           >
-            <span>{{ locale[useSettingsDataStore().locale].logOut }}</span>
+            <span>{{ locale[settingsDataStore.locale].logOut }}</span>
             <UIcon
               name="i-heroicons-arrow-right-end-on-rectangle-20-solid"
               class="scale-[1.3]"

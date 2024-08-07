@@ -3,8 +3,10 @@ import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
 import type { NotificationDto } from "~/server/api/notification/dto/notification.dto";
 
-// vars
+// store
+const settingsDataStore = useSettingsDataStore();
 
+// vars
 const notifications: Ref<NotificationDto[] | null> = ref([]);
 
 const { data } = await useFetch<NotificationDto[]>("/api/notification/many", {
@@ -61,7 +63,7 @@ const markAllAsRead = async () => {
         <div class="p-[20px] flex flex-col gap-[20px] items-start">
           <div class="flex justify-between items-center w-full gap-[30px]">
             <span class="font-[Rubik] font-[600] text-[20px]">
-              {{ locale[useSettingsDataStore().locale].notifications }}
+              {{ locale[settingsDataStore.locale].notifications }}
             </span>
             <UIcon
               name="i-heroicons-x-circle"
@@ -71,7 +73,7 @@ const markAllAsRead = async () => {
           </div>
           <div class="md:max-h-[400px] max-h-[200px] overflow-y-auto w-full">
             <template v-if="isEmpty">
-              <span>{{ locale[useSettingsDataStore().locale].empty }}</span>
+              <span>{{ locale[settingsDataStore.locale].empty }}</span>
             </template>
             <LazyDashboardHeaderNotificationsList
               :data="notifications"
@@ -91,9 +93,7 @@ const markAllAsRead = async () => {
                 name="i-heroicons-check-20-solid"
                 class="w-[20px] h-[20px] flex items-center justify-center"
               />
-              <span>{{
-                locale[useSettingsDataStore().locale].markAllAsRead
-              }}</span>
+              <span>{{ locale[settingsDataStore.locale].markAllAsRead }}</span>
             </NuxtLink>
             <NuxtLink
               activeClass="active"
@@ -101,7 +101,7 @@ const markAllAsRead = async () => {
               class="bg-dark-gray text-fa-white px-[16px] py-[8px] rounded-[8px] hover:text-fa-white hover:bg-blue dark:bg-fa-white dark:text-dark-gray dark:hover:bg-yellow dark:hover:text-dark-gray"
               @click="close"
             >
-              {{ locale[useSettingsDataStore().locale].viewAllNotifications }}
+              {{ locale[settingsDataStore.locale].viewAllNotifications }}
             </NuxtLink>
           </div>
         </div>

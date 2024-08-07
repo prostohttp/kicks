@@ -1,11 +1,15 @@
 <script lang="ts" setup>
+import type { ModelRef } from "vue";
 import { locale } from "~/lang/locale";
 
 // define
 const emit = defineEmits(["delete"]);
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // vars
-const isOpen = defineModel();
+const isOpen: ModelRef<boolean | undefined> = defineModel();
 
 // handlers
 const deleteBrand = () => {
@@ -39,7 +43,7 @@ const deleteBrand = () => {
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale[useSettingsDataStore().locale].deleteBrand }}
+            {{ locale[settingsDataStore.locale].deleteBrand }}
           </h3>
           <UButton
             color="gray"
@@ -52,20 +56,20 @@ const deleteBrand = () => {
       </template>
       <div class="flex flex-col gap-[20px]">
         <p class="dark:text-fa-white">
-          {{ locale[useSettingsDataStore().locale].deleteBrandText }}
+          {{ locale[settingsDataStore.locale].deleteBrandText }}
         </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
             @click="isOpen = false"
           >
-            {{ locale[useSettingsDataStore().locale].cancel }}
+            {{ locale[settingsDataStore.locale].cancel }}
           </UButton>
           <UButton
             @click="deleteBrand"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ locale[useSettingsDataStore().locale].deleteBrand }}
+            {{ locale[settingsDataStore.locale].deleteBrand }}
           </UButton>
         </div>
       </div>

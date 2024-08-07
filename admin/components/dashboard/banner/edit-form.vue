@@ -11,6 +11,7 @@ interface BannerTab {
 
 // store
 const bannerDataSrore = useBannerDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { banner } = storeToRefs(bannerDataSrore);
 
 // vars
@@ -23,7 +24,7 @@ const bannerTabs: Ref<BannerTab[]> = ref(
   banner.value.banners
     .map((banner) => ({
       id: banner.id,
-      title: `${locale[useSettingsDataStore().locale].newBanner} ${banner.sort}`,
+      title: `${locale[settingsDataStore.locale].newBanner} ${banner.sort}`,
       sort: banner.sort,
     }))
     .sort((a, b) => a.sort! - b.sort!),
@@ -44,7 +45,7 @@ const submitHandler = async () => {
     await bannerDataSrore.getBannerById(banner.value._id!);
     isValidForm.value = true;
     toast.add({
-      title: locale[useSettingsDataStore().locale].successEdit,
+      title: locale[settingsDataStore.locale].successEdit,
       color: "green",
     });
   } catch (error: any) {
@@ -68,7 +69,7 @@ const addNewBanner = () => {
   });
   bannerTabs.value.push({
     id,
-    title: locale[useSettingsDataStore().locale].newBanner,
+    title: locale[settingsDataStore.locale].newBanner,
     sort: undefined,
   });
 };
@@ -90,7 +91,7 @@ const deleteBannerHandler = () => {
   try {
     bannerDataSrore.deleteBanner(banner.value._id!);
     toast.add({
-      title: locale[useSettingsDataStore().locale].successDeleteMessage,
+      title: locale[settingsDataStore.locale].successDeleteMessage,
     });
     navigateTo("/dashboard/banners?page=1");
   } catch (error: any) {
@@ -108,7 +109,7 @@ const deleteBannerHandler = () => {
       v-if="!isValidForm"
       class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
     >
-      {{ locale[useSettingsDataStore().locale].error.checkRequiredFields }}
+      {{ locale[settingsDataStore.locale].error.checkRequiredFields }}
     </div>
     <UForm
       :validate="validate"
@@ -119,7 +120,7 @@ const deleteBannerHandler = () => {
     >
       <UFormGroup
         name="title"
-        :label="locale[useSettingsDataStore().locale].title"
+        :label="locale[settingsDataStore.locale].title"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -127,7 +128,7 @@ const deleteBannerHandler = () => {
         }"
       >
         <UInput
-          :placeholder="locale[useSettingsDataStore().locale].title"
+          :placeholder="locale[settingsDataStore.locale].title"
           inputClass="no-left-icon"
           v-model="title"
         />
@@ -142,7 +143,7 @@ const deleteBannerHandler = () => {
             type="button"
             @click="addNewBanner"
           >
-            {{ locale[useSettingsDataStore().locale].addNewBanner }}
+            {{ locale[settingsDataStore.locale].addNewBanner }}
           </UButton>
           <div
             v-for="(tab, index) in bannerTabs"
@@ -153,7 +154,7 @@ const deleteBannerHandler = () => {
           >
             <span>
               {{
-                `${locale[useSettingsDataStore().locale].newBanner} ${banner.banners[index].sort || ""}`
+                `${locale[settingsDataStore.locale].newBanner} ${banner.banners[index].sort || ""}`
               }}
             </span>
             <UButton
@@ -184,10 +185,10 @@ const deleteBannerHandler = () => {
           class="bg-danger dark:bg-danger text-fa-white hover:bg-danger hover:dark:bg-danger big-button"
           @click="deleteBannerHandler"
         >
-          {{ locale[useSettingsDataStore().locale].delete }}
+          {{ locale[settingsDataStore.locale].delete }}
         </UButton>
         <UButton type="submit" class="dark-button">
-          {{ locale[useSettingsDataStore().locale].save }}
+          {{ locale[settingsDataStore.locale].save }}
         </UButton>
       </div>
     </UForm>

@@ -14,6 +14,7 @@ useHead({
 
 // store
 const bannerDataStore = useBannerDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { banners: data } = storeToRefs(bannerDataStore);
 
 // vars
@@ -24,11 +25,11 @@ const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "images",
-    label: locale[useSettingsDataStore().locale].newBanner,
+    label: locale[settingsDataStore.locale].newBanner,
   },
   {
     key: "title",
-    label: locale[useSettingsDataStore().locale].title,
+    label: locale[settingsDataStore.locale].title,
   },
   {
     key: "action",
@@ -65,12 +66,12 @@ watch(
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale[useSettingsDataStore().locale].breadcrumbs.banners"
+      :title="locale[settingsDataStore.locale].breadcrumbs.banners"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale[useSettingsDataStore().locale].addNewBanner"
+      :label="locale[settingsDataStore.locale].addNewBanner"
       to="/dashboard/banners/new"
       v-if="isAdmin"
     />
@@ -82,14 +83,14 @@ watch(
       :loading="!data"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale[useSettingsDataStore().locale].loadingText,
+        label: locale[settingsDataStore.locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       :rows="data?.banners"
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: locale[useSettingsDataStore().locale].empty,
+        label: locale[settingsDataStore.locale].empty,
       }"
       :ui="{
         td: {
@@ -112,7 +113,7 @@ watch(
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale[useSettingsDataStore().locale].breadcrumbs.banners }}
+            {{ locale[settingsDataStore.locale].breadcrumbs.banners }}
           </span>
         </caption>
       </template>
@@ -120,7 +121,7 @@ watch(
         <NuxtImg
           src="/no-image.svg"
           width="40"
-          :alt="locale[useSettingsDataStore().locale].noImage"
+          :alt="locale[settingsDataStore.locale].noImage"
           class="dark:opacity-90 rounded-[8px]"
           v-if="!row.banners[0].image"
         />

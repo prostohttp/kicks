@@ -8,6 +8,9 @@ const { options } = defineProps<{
   options: IOption[];
 }>();
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // vars
 const toast = useToast();
 
@@ -25,13 +28,13 @@ const deleteOption = async () => {
       },
     });
     toast.add({
-      title: locale[useSettingsDataStore().locale].successDeleteMessage,
+      title: locale[settingsDataStore.locale].successDeleteMessage,
       color: "green",
     });
     emit("delete");
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -51,7 +54,7 @@ const deleteOption = async () => {
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale[useSettingsDataStore().locale].deleteOption }}
+            {{ locale[settingsDataStore.locale].deleteOption }}
           </h3>
           <UButton
             color="gray"
@@ -64,20 +67,20 @@ const deleteOption = async () => {
       </template>
       <div class="flex flex-col gap-[20px]">
         <p class="dark:text-fa-white">
-          {{ locale[useSettingsDataStore().locale].deleteOptionText }}
+          {{ locale[settingsDataStore.locale].deleteOptionText }}
         </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
             @click="$emit('close')"
           >
-            {{ locale[useSettingsDataStore().locale].cancel }}
+            {{ locale[settingsDataStore.locale].cancel }}
           </UButton>
           <UButton
             @click="deleteOption"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ locale[useSettingsDataStore().locale].deleteOption }}
+            {{ locale[settingsDataStore.locale].deleteOption }}
           </UButton>
         </div>
       </div>

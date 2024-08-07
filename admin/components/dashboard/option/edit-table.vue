@@ -10,6 +10,7 @@ const { optionId } = defineProps<{
 
 // store
 const optionDataStore = useOptionDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { option } = storeToRefs(optionDataStore);
 
 // vars
@@ -18,15 +19,15 @@ const toast = useToast();
 const columns = [
   {
     key: "value",
-    label: locale[useSettingsDataStore().locale].value,
+    label: locale[settingsDataStore.locale].value,
   },
   {
     key: "image",
-    label: locale[useSettingsDataStore().locale].image,
+    label: locale[settingsDataStore.locale].image,
   },
   {
     key: "sort",
-    label: locale[useSettingsDataStore().locale].sort,
+    label: locale[settingsDataStore.locale].sort,
   },
   {
     key: "action",
@@ -66,7 +67,7 @@ const uploadImage = async (e: Event, id: number) => {
 
     if (!uploadedImage) {
       toast.add({
-        title: locale[useSettingsDataStore().locale].notImage,
+        title: locale[settingsDataStore.locale].notImage,
         color: "red",
       });
     }
@@ -80,7 +81,7 @@ const uploadImage = async (e: Event, id: number) => {
       },
     });
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageUploaded,
+      title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
     });
   } catch (error: any) {
@@ -106,7 +107,7 @@ const deleteImageHandler = async (id: number) => {
     });
     changeValueFromArray(id, option.value.values, "image", "");
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageDeleted,
+      title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
     });
   } catch (error: any) {
@@ -141,14 +142,14 @@ const deleteValue = (id: number) => {
         class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative mt-[20px]"
       >
         <span>
-          {{ locale[useSettingsDataStore().locale].addValue }}
+          {{ locale[settingsDataStore.locale].addValue }}
         </span>
       </caption>
     </template>
     <template #value-data="{ row }">
       <UFormGroup :name="`value${row.id}`">
         <UInput
-          :placeholder="locale[useSettingsDataStore().locale].addValue"
+          :placeholder="locale[settingsDataStore.locale].addValue"
           inputClass="clean-field"
           v-model="row.value"
         />
@@ -164,7 +165,7 @@ const deleteValue = (id: number) => {
     <template #sort-data="{ row }">
       <UFormGroup :name="`sort${row.id}`">
         <UInput
-          :placeholder="locale[useSettingsDataStore().locale].sort"
+          :placeholder="locale[settingsDataStore.locale].sort"
           inputClass="clean-field"
           v-model="row.sort"
           type="number"

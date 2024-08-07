@@ -5,6 +5,7 @@ import {
 } from "#components";
 import { locale } from "~/lang/locale";
 import type { ITable } from "~/pages/dashboard/categories/index.vue";
+import { addQuery } from "~/utils/add-query";
 
 // define
 const activePage = defineModel("activePage");
@@ -15,6 +16,7 @@ const route = useRoute();
 
 // store
 const categoryDataStore = useCategoryDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { selected } = storeToRefs(categoryDataStore);
 
 // handlers
@@ -78,21 +80,21 @@ onMounted(async () => {
           @click="openEditCategoryModal(selected[0].id)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale[useSettingsDataStore().locale].editCategory }}
+          {{ locale[settingsDataStore.locale].editCategory }}
         </NuxtLink>
         <NuxtLink
           active-class="active"
           class="text-[16px] font-[400] opacity-20 hover:text-dark-gray dark:hover:text-fa-white"
           v-else
         >
-          {{ locale[useSettingsDataStore().locale].editCategory }}
+          {{ locale[settingsDataStore.locale].editCategory }}
         </NuxtLink>
 
         <NuxtLink
           @click="openDeleteCategoryModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale[useSettingsDataStore().locale].deleteCategory }}
+          {{ locale[settingsDataStore.locale].deleteCategory }}
         </NuxtLink>
       </ul>
     </template>

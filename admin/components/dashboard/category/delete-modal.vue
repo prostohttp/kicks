@@ -8,6 +8,9 @@ const { categories } = defineProps<{
   categories: ITable[] | undefined;
 }>();
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
@@ -26,13 +29,13 @@ const deleteCategory = async () => {
       },
     });
     toast.add({
-      title: locale[useSettingsDataStore().locale].successDeleteMessage,
+      title: locale[settingsDataStore.locale].successDeleteMessage,
       color: "green",
     });
     emit("delete");
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -52,7 +55,7 @@ const deleteCategory = async () => {
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale[useSettingsDataStore().locale].deleteCategory }}
+            {{ locale[settingsDataStore.locale].deleteCategory }}
           </h3>
           <UButton
             color="gray"
@@ -65,20 +68,20 @@ const deleteCategory = async () => {
       </template>
       <div class="flex flex-col gap-[20px]" v-if="isAdmin">
         <p class="dark:text-fa-white">
-          {{ locale[useSettingsDataStore().locale].deleteCategoryText }}
+          {{ locale[settingsDataStore.locale].deleteCategoryText }}
         </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
             class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase"
             @click="$emit('close')"
           >
-            {{ locale[useSettingsDataStore().locale].cancel }}
+            {{ locale[settingsDataStore.locale].cancel }}
           </UButton>
           <UButton
             @click="deleteCategory"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ locale[useSettingsDataStore().locale].deleteCategory }}
+            {{ locale[settingsDataStore.locale].deleteCategory }}
           </UButton>
         </div>
       </div>

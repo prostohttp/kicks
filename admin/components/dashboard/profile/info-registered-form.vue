@@ -12,6 +12,7 @@ defineProps<{ userData: UserData[] }>();
 
 // Store
 const userStore = useUserDataStore();
+const settingsDataStore = useSettingsDataStore();
 await useAsyncData("savedUser", () => userStore.getUser());
 const { savedUser: user } = storeToRefs(userStore);
 
@@ -36,7 +37,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].noImage,
+      title: locale[settingsDataStore.locale].noImage,
       color: "red",
     });
   }
@@ -60,12 +61,12 @@ const uploadImage = async (e: Event) => {
     await uploadImageHandler(formData);
     await userStore.getUser();
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageUploaded,
+      title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -82,12 +83,12 @@ const onDrop = async (files: File[] | null) => {
       await uploadImageHandler(formData);
       await userStore.getUser();
       toast.add({
-        title: locale[useSettingsDataStore().locale].imageUploaded,
+        title: locale[settingsDataStore.locale].imageUploaded,
         color: "green",
       });
     } catch (error) {
       toast.add({
-        title: locale[useSettingsDataStore().locale].somethingWentWrong,
+        title: locale[settingsDataStore.locale].somethingWentWrong,
         color: "red",
       });
     }
@@ -117,7 +118,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
   } catch (error: any) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -142,12 +143,12 @@ const deleteImageHandler = async () => {
     });
     await userStore.getUser();
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageDeleted,
+      title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -198,7 +199,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </div>
     <div class="flex justify-end">
       <UButton type="submit" class="dark-button">
-        {{ locale[useSettingsDataStore().locale].update }}
+        {{ locale[settingsDataStore.locale].update }}
       </UButton>
     </div>
   </UForm>

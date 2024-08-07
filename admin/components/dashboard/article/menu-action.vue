@@ -12,6 +12,7 @@ const modal = useModal();
 
 // store
 const articleDataStore = useArticleDataStore();
+const settingsDataStore = useSettingsDataStore();
 const uploadDeleteDataStore = useUploadDeleteDataStore();
 const { selected } = storeToRefs(articleDataStore);
 
@@ -61,7 +62,7 @@ const openDeleteArticleModal = (articles: IArticle[]) => {
           @click="openDeleteArticleModal(selected)"
           class="cursor-pointer text-[16px] font-[400]"
         >
-          {{ locale[useSettingsDataStore().locale].deleteArticle }}
+          {{ locale[settingsDataStore.locale].deleteArticle }}
         </NuxtLink>
       </ul>
     </template>

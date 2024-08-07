@@ -4,6 +4,7 @@ import { locale } from "~/lang/locale";
 
 // store
 const categoryDataStore = useCategoryDataStore();
+const settingsDataStore = useSettingsDataStore();
 const productDataStore = useProductDataStore();
 const { parentTitles } = storeToRefs(categoryDataStore);
 
@@ -24,7 +25,7 @@ const computedProducts = computed(() => {
 
 const items: AccordionItem[] | undefined = [
   {
-    label: locale[useSettingsDataStore().locale].breadcrumbs.categories,
+    label: locale[settingsDataStore.locale].breadcrumbs.categories,
     defaultOpen: true,
     content: parentTitles.value,
   },
@@ -66,7 +67,7 @@ const items: AccordionItem[] | undefined = [
               to="/dashboard/categories?page=1"
               class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
             >
-              {{ locale[useSettingsDataStore().locale].allCategories }}
+              {{ locale[settingsDataStore.locale].allCategories }}
             </NuxtLink>
           </li>
         </ul>

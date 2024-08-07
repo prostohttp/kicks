@@ -2,9 +2,11 @@
 import { type BreadcrumbItem } from "~/types/ui/ui.types";
 import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
+import unwrapAfterPopulate from "~/utils/unwrap-after-populate";
 
 // store
 const statsDataStore = useStatsDataStore();
+const settingsDataStore = useSettingsDataStore();
 const productDataStore = useProductDataStore();
 await useAsyncData("saleProducts", () => statsDataStore.getSaleProducts());
 const { saleProducts } = storeToRefs(statsDataStore);
@@ -20,7 +22,7 @@ const links: Ref<BreadcrumbItem[]> = ref(
   !searchPhrase.value
     ? breadcrumbsArrayFactory(
         path,
-        locale[useSettingsDataStore().locale].searchResult,
+        locale[settingsDataStore.locale].searchResult,
         path,
       )
     : breadcrumbsArrayFactory(
@@ -43,8 +45,8 @@ await useAsyncData("asyncFoundedProducts", () =>
 // handlers
 const title = computed(() =>
   searchPhrase.value
-    ? `${locale[useSettingsDataStore().locale].search} | ${searchPhrase.value}`
-    : locale[useSettingsDataStore().locale].search,
+    ? `${locale[settingsDataStore.locale].search} | ${searchPhrase.value}`
+    : locale[settingsDataStore.locale].search,
 );
 
 const getSales = (id: string) => {
@@ -69,7 +71,7 @@ const deleteProduct = async (id: string) => {
       activePage.value,
     );
     toast.add({
-      title: locale[useSettingsDataStore().locale].deleteProductSuccess,
+      title: locale[settingsDataStore.locale].deleteProductSuccess,
     });
   } catch (error: any) {
     toast.add({ title: error.message });
@@ -116,7 +118,7 @@ watch(activePage, async (newValue) => {
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale[useSettingsDataStore().locale].search"
+      :title="locale[settingsDataStore.locale].search"
     />
   </div>
   <main class="flex flex-col">

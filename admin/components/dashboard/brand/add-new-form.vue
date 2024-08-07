@@ -11,6 +11,7 @@ const emit = defineEmits(["close"]);
 
 // store
 const brandStore = useBrandDataStore();
+const settingsDataStore = useSettingsDataStore();
 const persistStore = usePersistDataStore();
 const { brandImage } = storeToRefs(persistStore);
 
@@ -32,7 +33,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].noImage,
+      title: locale[settingsDataStore.locale].noImage,
       color: "red",
     });
   }
@@ -50,12 +51,12 @@ const uploadImage = async (e: Event) => {
     const uploadedImage = await uploadImageHandler(formData);
     brandImage.value = uploadedImage;
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageUploaded,
+      title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
     });
   } catch (_error: any) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -72,13 +73,13 @@ const onDrop = async (files: File[] | null) => {
       const uploadedImage = await uploadImageHandler(formData);
       brandImage.value = uploadedImage;
       toast.add({
-        title: locale[useSettingsDataStore().locale].imageUploaded,
+        title: locale[settingsDataStore.locale].imageUploaded,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -98,12 +99,12 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
     brandStore.getAllBrands(page);
     toast.add({
-      title: locale[useSettingsDataStore().locale].successAddMessage,
+      title: locale[settingsDataStore.locale].successAddMessage,
     });
     emit("close");
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
     });
   }
 };
@@ -120,12 +121,12 @@ const deleteImageHandler = async () => {
     });
     brandImage.value = "";
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageDeleted,
+      title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -155,7 +156,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
     </div>
     <UFormGroup
-      :label="locale[useSettingsDataStore().locale].title"
+      :label="locale[settingsDataStore.locale].title"
       name="title"
       :ui="{
         label: {
@@ -164,7 +165,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       }"
     >
       <UInput
-        :placeholder="locale[useSettingsDataStore().locale].title"
+        :placeholder="locale[settingsDataStore.locale].title"
         v-model="state.title"
         inputClass="input-label"
         icon="i-heroicons-queue-list"
@@ -172,7 +173,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </UFormGroup>
 
     <UFormGroup
-      :label="locale[useSettingsDataStore().locale].description"
+      :label="locale[settingsDataStore.locale].description"
       name="description"
       :ui="{
         label: {
@@ -182,7 +183,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     >
       <UTextarea
         v-model="state.description"
-        :placeholder="locale[useSettingsDataStore().locale].description"
+        :placeholder="locale[settingsDataStore.locale].description"
         class="textarea"
       />
     </UFormGroup>
@@ -194,13 +195,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
         @click="$emit('close')"
       >
-        {{ locale[useSettingsDataStore().locale].cancel }}
+        {{ locale[settingsDataStore.locale].cancel }}
       </UButton>
       <UButton
         type="submit"
         class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
       >
-        {{ locale[useSettingsDataStore().locale].save }}
+        {{ locale[settingsDataStore.locale].save }}
       </UButton>
     </div>
   </UForm>

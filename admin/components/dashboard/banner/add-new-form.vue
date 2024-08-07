@@ -12,6 +12,7 @@ interface BannerTab {
 
 // store
 const bannerDataSrore = useBannerDataStore();
+const settingsDataStore = useSettingsDataStore();
 bannerDataSrore.clearBanner();
 const { banner } = storeToRefs(bannerDataSrore);
 
@@ -23,7 +24,7 @@ const activeTab = ref(0);
 const bannerTabs: Ref<BannerTab[]> = ref(
   banner.value.banners.map((banner) => ({
     id: banner.id,
-    title: `${locale[useSettingsDataStore().locale].newBanner} ${banner.sort}`,
+    title: `${locale[settingsDataStore.locale].newBanner} ${banner.sort}`,
   })),
 );
 const isValidForm = ref(true);
@@ -75,7 +76,7 @@ const addNewBanner = () => {
   });
   bannerTabs.value.push({
     id,
-    title: locale[useSettingsDataStore().locale].newBanner,
+    title: locale[settingsDataStore.locale].newBanner,
   });
 };
 
@@ -102,7 +103,7 @@ async function onError(event: FormErrorEvent) {
       v-if="!isValidForm"
       class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
     >
-      {{ locale[useSettingsDataStore().locale].error.checkRequiredFields }}
+      {{ locale[settingsDataStore.locale].error.checkRequiredFields }}
     </div>
     <UForm
       :validate="validate"
@@ -113,7 +114,7 @@ async function onError(event: FormErrorEvent) {
     >
       <UFormGroup
         name="title"
-        :label="locale[useSettingsDataStore().locale].title"
+        :label="locale[settingsDataStore.locale].title"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -121,7 +122,7 @@ async function onError(event: FormErrorEvent) {
         }"
       >
         <UInput
-          :placeholder="locale[useSettingsDataStore().locale].title"
+          :placeholder="locale[settingsDataStore.locale].title"
           inputClass="no-left-icon"
           v-model="banner.title"
         />
@@ -136,7 +137,7 @@ async function onError(event: FormErrorEvent) {
             type="button"
             @click="addNewBanner"
           >
-            {{ locale[useSettingsDataStore().locale].addNewBanner }}
+            {{ locale[settingsDataStore.locale].addNewBanner }}
           </UButton>
           <div
             v-for="(tab, index) in bannerTabs"
@@ -146,7 +147,7 @@ async function onError(event: FormErrorEvent) {
             @click="activeTab = index"
           >
             <span>{{
-              `${locale[useSettingsDataStore().locale].newBanner} ${banner.banners[index].sort || ""}`
+              `${locale[settingsDataStore.locale].newBanner} ${banner.banners[index].sort || ""}`
             }}</span>
             <UButton
               class="icon-button"
@@ -172,7 +173,7 @@ async function onError(event: FormErrorEvent) {
         </div>
       </div>
       <UButton type="submit" class="dark-button float-end" v-if="isAdmin">
-        {{ locale[useSettingsDataStore().locale].save }}
+        {{ locale[settingsDataStore.locale].save }}
       </UButton>
     </UForm>
   </div>

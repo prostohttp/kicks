@@ -4,6 +4,7 @@ import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import { useCategoryDataStore } from "~/stores/category-data";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
+import { addQuery } from "~/utils/add-query";
 
 export interface ITable {
   id: string;
@@ -23,6 +24,7 @@ useHead({
 
 // store
 const categoryDataStore = useCategoryDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { categories: data, selected } = storeToRefs(categoryDataStore);
 
 // vars
@@ -75,11 +77,11 @@ const categories = computed((): Array<ITable> | undefined => {
       title: category.title,
       children: category.children.map((cat) => cat.title).join(", "),
       parent: category.isParent
-        ? locale[useSettingsDataStore().locale].yesText
-        : locale[useSettingsDataStore().locale].noText,
+        ? locale[settingsDataStore.locale].yesText
+        : locale[settingsDataStore.locale].noText,
       enabled: category.isEnabled
-        ? locale[useSettingsDataStore().locale].yesText
-        : locale[useSettingsDataStore().locale].noText,
+        ? locale[settingsDataStore.locale].yesText
+        : locale[settingsDataStore.locale].noText,
     };
   });
 });
@@ -113,12 +115,12 @@ onMounted(async () => {
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale[useSettingsDataStore().locale].breadcrumbs.categories"
+      :title="locale[settingsDataStore.locale].breadcrumbs.categories"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-plus-circle"
-      :label="locale[useSettingsDataStore().locale].addNewCategory"
+      :label="locale[settingsDataStore.locale].addNewCategory"
       :to="addQuery('categoryNew', 'yes')"
       @click="openAddNewCategoryModal()"
     />
@@ -130,7 +132,7 @@ onMounted(async () => {
       :loading="!categories"
       :loading-state="{
         icon: 'i-heroicons-arrow-path-20-solid',
-        label: locale[useSettingsDataStore().locale].loadingText,
+        label: locale[settingsDataStore.locale].loadingText,
       }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       v-model="selected"
@@ -138,7 +140,7 @@ onMounted(async () => {
       :columns="columns"
       :empty-state="{
         icon: 'i-heroicons-circle-stack-20-solid',
-        label: locale[useSettingsDataStore().locale].empty,
+        label: locale[settingsDataStore.locale].empty,
       }"
       :ui="{
         td: {
@@ -158,7 +160,7 @@ onMounted(async () => {
           class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative"
         >
           <span>
-            {{ locale[useSettingsDataStore().locale].breadcrumbs.categories }}
+            {{ locale[settingsDataStore.locale].breadcrumbs.categories }}
           </span>
           <DashboardCategoryMenuAction
             v-model:activePage="activePage"

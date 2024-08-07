@@ -2,6 +2,9 @@
 import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
 // vars
 const router = useRouter();
 const fullPath = router.currentRoute.value.fullPath;
@@ -9,22 +12,22 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 const isSubmit = ref(false);
 const optionData: InputData[] = [
   {
-    label: locale[useSettingsDataStore().locale].title,
+    label: locale[settingsDataStore.locale].title,
     name: "title",
     type: "text",
-    placeholder: locale[useSettingsDataStore().locale].title,
+    placeholder: locale[settingsDataStore.locale].title,
   },
   {
-    label: locale[useSettingsDataStore().locale].type,
+    label: locale[settingsDataStore.locale].type,
     name: "type",
     type: "select",
-    placeholder: locale[useSettingsDataStore().locale].typeText,
+    placeholder: locale[settingsDataStore.locale].typeText,
   },
   {
-    label: locale[useSettingsDataStore().locale].sort,
+    label: locale[settingsDataStore.locale].sort,
     name: "sort",
     type: "number",
-    placeholder: locale[useSettingsDataStore().locale].sort,
+    placeholder: locale[settingsDataStore.locale].sort,
   },
 ];
 
@@ -35,7 +38,7 @@ const submitHandler = async () => {
 
 // meta
 useHead({
-  title: locale[useSettingsDataStore().locale].addNewOption,
+  title: locale[settingsDataStore.locale].addNewOption,
 });
 </script>
 
@@ -45,13 +48,13 @@ useHead({
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="locale[useSettingsDataStore().locale].addNewOption"
+      :title="locale[settingsDataStore.locale].addNewOption"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-clipboard-document-20-solid"
       @click="submitHandler"
-      :label="locale[useSettingsDataStore().locale].save"
+      :label="locale[settingsDataStore.locale].save"
     />
   </div>
   <main

@@ -6,6 +6,9 @@ const { brandId } = defineProps<{
   brandId: string;
 }>();
 const emit = defineEmits(["close"]);
+
+// sore
+const settingsDataStore = useSettingsDataStore();
 </script>
 
 <template>
@@ -21,7 +24,7 @@ const emit = defineEmits(["close"]);
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale[useSettingsDataStore().locale].editBrand }}
+            {{ locale[settingsDataStore.locale].editBrand }}
           </h3>
           <UButton
             color="gray"

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { schema, type Schema } from "./schema/article-schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import { useProductDataStore } from "~/stores/product-data";
@@ -13,6 +12,7 @@ const { articleData } = defineProps<{ articleData: InputData[] }>();
 
 // Store
 const articleDateStore = useArticleDataStore();
+const settingsDataStore = useSettingsDataStore();
 const persistDataStore = usePersistDataStore();
 const productDataStore = useProductDataStore();
 const { titles: data } = storeToRefs(productDataStore);
@@ -25,7 +25,6 @@ await productDataStore.getTitles();
 const titles = ref(data.value.map((el) => el.title));
 const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
-
 const state = reactive({
   title: "",
   description: "",
@@ -35,6 +34,29 @@ const state = reactive({
   siteMenu: false,
   isEnabled: true,
   sort: "",
+});
+const schema = v.object({
+  title: v.pipe(
+    v.string(locale[useSettingsDataStore().locale].error.required),
+    v.trim(),
+    v.minLength(3, locale[useSettingsDataStore().locale].error.stringMin3),
+  ),
+  description: v.string(),
+  shortDescription: v.pipe(
+    v.string(locale[useSettingsDataStore().locale].error.required),
+    v.minLength(
+      10,
+      locale[useSettingsDataStore().locale].error.invalidDescription,
+    ),
+  ),
+  isEnabled: v.boolean(),
+  adminMenu: v.boolean(),
+  siteMenu: v.boolean(),
+  featuredProducts: v.array(v.string()),
+  sort: v.pipe(
+    v.number(locale[useSettingsDataStore().locale].error.number),
+    v.minValue(1, locale[useSettingsDataStore().locale].error.numberMin),
+  ),
 });
 
 // Handlers
@@ -56,7 +78,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].noImage,
+      title: locale[settingsDataStore.locale].noImage,
       color: "red",
     });
   }
@@ -74,12 +96,12 @@ const uploadImage = async (e: Event) => {
     const uploadedImage = await uploadImageHandler(formData);
     articleImage.value = uploadedImage;
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageUploaded,
+      title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -96,13 +118,13 @@ const onDrop = async (files: File[] | null) => {
       const uploadedImage = await uploadImageHandler(formData);
       articleImage.value = uploadedImage;
       toast.add({
-        title: locale[useSettingsDataStore().locale].imageUploaded,
+        title: locale[settingsDataStore.locale].imageUploaded,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -110,7 +132,7 @@ const onDrop = async (files: File[] | null) => {
 
 useDropZone(dropZoneRef, { onDrop });
 
-const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
+const onSubmitHandler = async (event: FormSubmitEvent<any>) => {
   isLoading.value = true;
   try {
     await $fetch("/api/article/add", {
@@ -132,14 +154,14 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     });
     articleImage.value = "";
     toast.add({
-      title: locale[useSettingsDataStore().locale].addNewArticle,
+      title: locale[settingsDataStore.locale].addNewArticle,
       color: "green",
     });
     articleDateStore.getAllArticlesForAdminMenu();
     clearState();
   } catch (error: any) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -160,12 +182,12 @@ const deleteImageHandler = async () => {
     });
     articleImage.value = "";
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageDeleted,
+      title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -203,9 +225,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           />
           <UTextarea
             v-model="state.shortDescription"
-            :placeholder="
-              locale[useSettingsDataStore().locale].shortDescription
-            "
+            :placeholder="locale[settingsDataStore.locale].shortDescription"
             class="textarea"
             v-else-if="name === 'shortDescription'"
           />
@@ -293,7 +313,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     </div>
     <div class="flex justify-end">
       <UButton type="submit" class="dark-button">
-        {{ locale[useSettingsDataStore().locale].addNewArticle }}
+        {{ locale[settingsDataStore.locale].addNewArticle }}
       </UButton>
     </div>
   </UForm>

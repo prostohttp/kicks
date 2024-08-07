@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { schema } from "~/components/auth/schema/forgot.schema";
 import { locale } from "~/lang/locale";
 import * as v from "valibot";
 
@@ -8,10 +7,17 @@ defineEmits(["submit"]);
 
 // store
 const user = useAuthDataStore();
+const settingsDataStore = useSettingsDataStore();
 const { email } = storeToRefs(user);
 
 // vars
 const isOpen = ref(false);
+const schema = v.object({
+  email: v.pipe(
+    v.string(),
+    v.email(locale[settingsDataStore.locale].error.invalidEmail),
+  ),
+});
 </script>
 
 <template>
@@ -39,7 +45,7 @@ const isOpen = ref(false);
         class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:bg-yellow dark:hover:text-fa-white"
         trailing
       >
-        <span>{{ locale[useSettingsDataStore().locale].resetPassword }}</span>
+        <span>{{ locale[settingsDataStore.locale].resetPassword }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
       <UButton
@@ -47,7 +53,7 @@ const isOpen = ref(false);
         class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:bg-yellow dark:hover:text-fa-white font-[Rubik] uppercase bg-yellow hover:text-fa-white hover:bg-dark-gray"
         trailing
       >
-        <span>{{ locale[useSettingsDataStore().locale].loginPage }}</span>
+        <span>{{ locale[settingsDataStore.locale].loginPage }}</span>
         <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
       </UButton>
     </div>

@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 import type { UserDto } from "~/server/dto/user.dto";
 import { locale } from "~/lang/locale";
-import { Roles } from "~/types/server/server.types.js";
 import { DashboardUserEditModal, DashboardUserDeleteModal } from "#components";
+import { addQuery } from "~/utils/add-query";
 
 // define
 const emit = defineEmits(["delete-person"]);
 const { user } = defineProps<{
   user: UserDto;
 }>();
+
+// store
+const settingsDataStore = useSettingsDataStore();
 
 // vars
 const route = useRoute();
@@ -35,7 +38,7 @@ const openDeleteUserModal = () => {
       emit("delete-person", user._id);
       modal.close();
       toast.add({
-        title: locale[useSettingsDataStore().locale].deletePersonSuccess,
+        title: locale[settingsDataStore.locale].deletePersonSuccess,
       });
     },
   });
@@ -70,7 +73,7 @@ onMounted(() => {
         <NuxtImg
           src="/no-image.svg"
           width="40"
-          :alt="locale[useSettingsDataStore().locale].noImage"
+          :alt="locale[settingsDataStore.locale].noImage"
         />
       </template>
     </div>
@@ -111,11 +114,11 @@ onMounted(() => {
               @click="openEditUserModal(user._id)"
               class="cursor-pointer"
             >
-              {{ locale[useSettingsDataStore().locale].editProfile }}
+              {{ locale[settingsDataStore.locale].editProfile }}
             </NuxtLink>
 
             <NuxtLink @click="openDeleteUserModal" class="cursor-pointer">
-              {{ locale[useSettingsDataStore().locale].deletePerson }}
+              {{ locale[settingsDataStore.locale].deletePerson }}
             </NuxtLink>
           </ul>
         </template>

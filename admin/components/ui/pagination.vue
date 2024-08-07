@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 import type { ModelRef } from "vue";
 import { locale } from "~/lang/locale";
+import pageCount from "~/utils/page-count";
 
 // define
 const { allItems, elementInPage } = defineProps<{
   allItems: number | undefined;
   elementInPage: number | undefined;
 }>();
+
+// store
+const settingsDataStore = useSettingsDataStore();
 
 // vars
 const activePage: ModelRef<number | undefined> = defineModel();
@@ -27,12 +31,12 @@ const activePage: ModelRef<number | undefined> = defineModel();
       }"
       :prev-button="{
         icon: 'i-heroicons-chevron-left-20-solid',
-        label: locale[useSettingsDataStore().locale].prev,
+        label: locale[settingsDataStore.locale].prev,
         inactiveClass: activePage !== 1 ? 'pagination-prev-next' : 'hidden',
       }"
       :next-button="{
         icon: 'i-heroicons-chevron-right-20-solid',
-        label: locale[useSettingsDataStore().locale].next,
+        label: locale[settingsDataStore.locale].next,
         trailing: true,
         inactiveClass:
           activePage !== pageCount(allItems!, elementInPage!)

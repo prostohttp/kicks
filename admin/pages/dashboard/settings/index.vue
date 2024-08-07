@@ -13,7 +13,7 @@ const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(
     fullPath,
-    locale[useSettingsDataStore().locale].settings,
+    locale[settingsDataStore.locale].settings,
     fullPath,
   ),
 );
@@ -21,23 +21,23 @@ const items = [
   {
     slot: "general",
     icon: "i-heroicons-adjustments-vertical-16-solid",
-    label: locale[useSettingsDataStore().locale].general,
+    label: locale[settingsDataStore.locale].general,
   },
   {
     slot: "english",
     icon: "i-material-symbols-language",
-    label: locale[useSettingsDataStore().locale].english,
+    label: locale[settingsDataStore.locale].english,
   },
   {
     slot: "russian",
     icon: "i-material-symbols-language",
-    label: locale[useSettingsDataStore().locale].russian,
+    label: locale[settingsDataStore.locale].russian,
   },
 ];
 
 // meta
 useHeadSafe({
-  title: locale[useSettingsDataStore().locale].settings,
+  title: locale[settingsDataStore.locale].settings,
 });
 
 // hooks
@@ -46,7 +46,7 @@ useHeadSafe({
 <template>
   <DashboardBreadcrumbs
     :links="links"
-    :title="locale[useSettingsDataStore().locale].settings"
+    :title="locale[settingsDataStore.locale].settings"
   />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"

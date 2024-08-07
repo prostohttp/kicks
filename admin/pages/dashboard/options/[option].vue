@@ -4,6 +4,7 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 
 // store
 const optionDataStore = useOptionDataStore();
+const settingsDataStore = useSettingsDataStore();
 await useAsyncData("options", () =>
   optionDataStore.getOption(useRoute().params.option.toString()),
 );
@@ -12,34 +13,31 @@ const { option } = storeToRefs(optionDataStore);
 // vars
 let staticTitle = option.value.title;
 const router = useRouter();
-
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(fullPath, staticTitle, fullPath),
 );
 const isAdmin = useIsAdmin();
 const isSubmit = ref(false);
-const title = ref(
-  option.value.title || locale[useSettingsDataStore().locale].empty,
-);
+const title = ref(option.value.title || locale[settingsDataStore.locale].empty);
 const optionData: InputData[] = [
   {
-    label: locale[useSettingsDataStore().locale].title,
+    label: locale[settingsDataStore.locale].title,
     name: "title",
     type: "text",
-    placeholder: locale[useSettingsDataStore().locale].title,
+    placeholder: locale[settingsDataStore.locale].title,
   },
   {
-    label: locale[useSettingsDataStore().locale].type,
+    label: locale[settingsDataStore.locale].type,
     name: "type",
     type: "select",
-    placeholder: locale[useSettingsDataStore().locale].typeText,
+    placeholder: locale[settingsDataStore.locale].typeText,
   },
   {
-    label: locale[useSettingsDataStore().locale].sort,
+    label: locale[settingsDataStore.locale].sort,
     name: "sort",
     type: "number",
-    placeholder: locale[useSettingsDataStore().locale].sort,
+    placeholder: locale[settingsDataStore.locale].sort,
   },
 ];
 
@@ -73,13 +71,13 @@ onUnmounted(() => {
   >
     <DashboardBreadcrumbs
       :links="links"
-      :title="staticTitle || locale[useSettingsDataStore().locale].empty"
+      :title="staticTitle || locale[settingsDataStore.locale].empty"
     />
     <UButton
       class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
       icon="i-heroicons-clipboard-document-20-solid"
       @click="submitHandler"
-      :label="locale[useSettingsDataStore().locale].save"
+      :label="locale[settingsDataStore.locale].save"
       v-if="option && isAdmin"
     />
   </div>

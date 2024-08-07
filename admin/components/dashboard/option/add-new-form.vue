@@ -127,6 +127,5 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         <DashboardOptionAddNewTable v-if="isVisibleTable" />
       </UForm>
     </div>
-    <pre>{{ option }}</pre>
   </div>
 </template>

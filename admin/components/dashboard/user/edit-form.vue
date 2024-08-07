@@ -14,6 +14,7 @@ const emit = defineEmits(["close"]);
 
 // store
 const userDataStore = useUserDataStore();
+const settingsDataStore = useSettingsDataStore();
 await useAsyncData("userById", () => userDataStore.getUserById(userId));
 const { userById: user } = storeToRefs(userDataStore);
 
@@ -33,7 +34,7 @@ const uploadImageHandler = async (formData: FormData) => {
   });
   if (!uploadedImage) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].noImage,
+      title: locale[settingsDataStore.locale].noImage,
       color: "red",
     });
   }
@@ -58,12 +59,12 @@ const uploadImage = async (e: Event) => {
     await userDataStore.getUserById(userId);
     await userDataStore.getAllUsers(page);
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageUploaded,
+      title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -87,12 +88,12 @@ const deleteImageHandler = async () => {
     await userDataStore.getAllUsers(page);
     await userDataStore.getUserById(userId);
     toast.add({
-      title: locale[useSettingsDataStore().locale].imageDeleted,
+      title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
     });
   } catch (_error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -110,13 +111,13 @@ const onDrop = async (files: File[] | null) => {
       await userDataStore.getAllUsers(page);
       await userDataStore.getUserById(userId);
       toast.add({
-        title: locale[useSettingsDataStore().locale].imageDeleted,
+        title: locale[settingsDataStore.locale].imageDeleted,
         color: "green",
       });
     }
   } catch (error) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -147,7 +148,7 @@ const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
     emit("close");
   } catch (error: any) {
     toast.add({
-      title: locale[useSettingsDataStore().locale].somethingWentWrong,
+      title: locale[settingsDataStore.locale].somethingWentWrong,
       color: "red",
     });
   }
@@ -179,7 +180,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
     </div>
     <UFormGroup
-      :label="locale[useSettingsDataStore().locale].userName"
+      :label="locale[settingsDataStore.locale].userName"
       name="name"
       :ui="{
         label: {
@@ -188,14 +189,14 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       }"
     >
       <UInput
-        :placeholder="locale[useSettingsDataStore().locale].userName"
+        :placeholder="locale[settingsDataStore.locale].userName"
         icon="i-heroicons-user-circle-16-solid"
         v-model="user.name"
         inputClass="input-label"
       />
     </UFormGroup>
     <UFormGroup
-      :label="locale[useSettingsDataStore().locale].email"
+      :label="locale[settingsDataStore.locale].email"
       name="email"
       :ui="{
         label: {
@@ -204,14 +205,14 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       }"
     >
       <UInput
-        :placeholder="locale[useSettingsDataStore().locale].email"
+        :placeholder="locale[settingsDataStore.locale].email"
         icon="i-heroicons-envelope"
         v-model="user.email"
         inputClass="input-label"
       />
     </UFormGroup>
     <UFormGroup
-      :label="locale[useSettingsDataStore().locale].role"
+      :label="locale[settingsDataStore.locale].role"
       name="role"
       :ui="{
         label: {
@@ -228,7 +229,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
       />
     </UFormGroup>
     <UButton type="submit" class="dark-button mt-[20px]">
-      {{ locale[useSettingsDataStore().locale].update }}
+      {{ locale[settingsDataStore.locale].update }}
     </UButton>
   </UForm>
 </template>
