@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
       select: "title",
     });
 
-    const foundedProducts = await Product.find({
+    const allFoundedProducts = await Product.find({
       $or: [
         { title: { $regex: new RegExp(searchPhrase!, "i") } },
         { description: { $regex: new RegExp(searchPhrase!, "i") } },
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       select: "title",
     });
 
-    const foundedProductsLength = foundedProducts.length;
+    const allFoundedProductsLength = allFoundedProducts.length;
     const productsLength = products.length;
     const pagesInPagination = pageCount(productsLength, perPage);
 
@@ -71,7 +71,8 @@ export default defineEventHandler(async (event) => {
     }
 
     if (
-      isValidPaginationPage(page, pagesInPagination, productsLength, perPage)
+      isValidPaginationPage(page, pagesInPagination, productsLength, perPage) &&
+      !searchPhrase
     ) {
       return {
         products,
@@ -100,21 +101,21 @@ export default defineEventHandler(async (event) => {
         isValidPaginationPage(
           page,
           pagesInPagination,
-          foundedProductsLength,
+          allFoundedProductsLength,
           perPage,
         )
       ) {
         return {
-          products: foundedProducts,
+          products: allFoundedProducts,
           pagesInPagination: 0,
-          allItems: foundedProductsLength,
+          allItems: allFoundedProductsLength,
         };
       }
       return {
         products: productsInPage,
         pagesInPagination,
         activePage: page,
-        allItems: foundedProductsLength,
+        allItems: allFoundedProductsLength,
       };
     }
 

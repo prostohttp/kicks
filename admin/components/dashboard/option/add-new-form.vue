@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { InputData } from "~/types/ui/ui.types";
 import { optionTypes } from "~/types/ui/ui.types";
-import { type Schema } from "./schema/option-schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { validate } from "./validator";
 
@@ -29,7 +28,7 @@ const clearState = () => {
   option.value.values = [];
 };
 
-const submitHandler = async (event: FormSubmitEvent<Schema>) => {
+const submitHandler = async (event: FormSubmitEvent<any>) => {
   try {
     await $fetch("/api/option/add", {
       method: "POST",

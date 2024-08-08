@@ -6,6 +6,7 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 const router = useRouter();
 const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
+// TODO: необходимость дублирование тут и в [article].vue из за доступа к стору не в компоненте
 const articleData: InputData[] = [
   {
     label: locale[useSettingsDataStore().locale].title,

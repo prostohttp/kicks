@@ -14,14 +14,6 @@ export interface ITable {
   enabled: string;
 }
 
-// meta
-definePageMeta({
-  name: "all-categories",
-});
-useHead({
-  title: locale[useSettingsDataStore().locale].allCategories,
-});
-
 // store
 const categoryDataStore = useCategoryDataStore();
 const settingsDataStore = useSettingsDataStore();
@@ -36,19 +28,19 @@ const page = Number(useRoute().query.page);
 const columns = [
   {
     key: "title",
-    label: "Title",
+    label: locale[settingsDataStore.locale].title,
   },
   {
     key: "children",
-    label: "Children",
+    label: locale[settingsDataStore.locale].childCategories,
   },
   {
     key: "parent",
-    label: "Parent",
+    label: locale[settingsDataStore.locale].isParent,
   },
   {
     key: "enabled",
-    label: "Enabled",
+    label: locale[settingsDataStore.locale].isEnabled,
   },
 ];
 
@@ -59,6 +51,14 @@ await useAsyncData("categories", () =>
 const activePage = ref(data.value?.activePage || 1);
 const path = router.currentRoute.value.path;
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
+
+// meta
+definePageMeta({
+  name: "all-categories",
+});
+useHead({
+  title: locale[settingsDataStore.locale].allCategories,
+});
 
 // handlers
 const openAddNewCategoryModal = () => {

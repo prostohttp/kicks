@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import { useUserDataStore } from "~/stores/user-data";
@@ -20,13 +19,25 @@ const { savedUser: user } = storeToRefs(userStore);
 const isAdmin = useIsAdmin();
 const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
-
 const state = reactive({
   name: user.value?.name,
   email: user.value?.email,
   role: user.value?.role,
   oldPassword: "",
   newPassword: "",
+});
+const schema = v.object({
+  name: v.pipe(
+    v.string(locale[settingsDataStore.locale].error.required),
+    v.trim(),
+    v.minLength(3, locale[settingsDataStore.locale].error.stringMin3),
+  ),
+  email: v.pipe(
+    v.string(locale[settingsDataStore.locale].error.required),
+    v.email(locale[settingsDataStore.locale].error.invalidEmail),
+  ),
+  oldPassword: v.string(),
+  newPassword: v.string(),
 });
 
 // Handlers
@@ -97,7 +108,7 @@ const onDrop = async (files: File[] | null) => {
 
 useDropZone(dropZoneRef, { onDrop });
 
-const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
+const onSubmitHandler = async (event: FormSubmitEvent<any>) => {
   try {
     await $fetch("/api/user/edit", {
       method: "PUT",

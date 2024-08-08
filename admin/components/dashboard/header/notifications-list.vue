@@ -50,7 +50,7 @@ const settingsDataStore = useSettingsDataStore();
         </li>
       </ul>
       <span class="text-[12px] text-dark-gray opacity-[80%]">
-        {{ dateTimeFormat(notification.createdAt, Locales.EN) }}
+        {{ dateTimeFormat(notification.createdAt, Locales.en) }}
       </span>
     </div>
   </div>

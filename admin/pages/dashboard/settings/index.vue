@@ -36,7 +36,7 @@ const items = [
 ];
 
 // meta
-useHeadSafe({
+useHead({
   title: locale[settingsDataStore.locale].settings,
 });
 
@@ -56,13 +56,13 @@ useHeadSafe({
       class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]"
     >
       <UTabs :items="items" class="w-full">
-        <template #general="item">
+        <template #general>
           <DashboardSettingsForm />
         </template>
-        <template #english="item">
+        <template #english>
           <DashboardSettingsLocaleForm locale="en" />
         </template>
-        <template #russian="item">
+        <template #russian>
           <DashboardSettingsLocaleForm locale="ru" />
         </template>
       </UTabs>

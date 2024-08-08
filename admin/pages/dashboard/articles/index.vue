@@ -70,7 +70,7 @@ const articles = computed((): Array<IArticle> | undefined => {
       enabled: article.isEnabled
         ? locale[settingsDataStore.locale].yesText
         : locale[settingsDataStore.locale].noText,
-      createdAt: dateTimeFormat(article.createdAt, Locales.RU),
+      createdAt: dateTimeFormat(article.createdAt, Locales.ru),
     };
   });
 });

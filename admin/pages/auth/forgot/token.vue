@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
+import { locale } from "~/lang/locale";
 import type { ResetPasswordDto } from "~/types/server/server.types";
+
+// store
+const settingsDataStore = useSettingsDataStore();
 
 // meta
 definePageMeta({
@@ -14,7 +18,7 @@ definePageMeta({
   alias: ["/token"],
 });
 useHead({
-  title: "Reset password",
+  title: locale[settingsDataStore.locale].resetPassword,
 });
 
 // Vars
@@ -43,7 +47,7 @@ const resetPassword = async (data: ResetPasswordDto) => {
     });
     navigateTo("/login");
     toast.add({
-      title: "Password changed, now you can Login",
+      title: locale[settingsDataStore.locale].passwordChanged,
       click: () => {
         navigateTo("/login");
       },
@@ -81,26 +85,25 @@ onMounted(async () => {
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]" v-else>
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
-            Reset password
+            {{ locale[settingsDataStore.locale].resetPassword }}
           </h1>
         </div>
         <LazyResetPasswordForm @submit="resetPasswordHandler" v-if="isValid" />
         <template v-else>
-          <p>Sorry, but the password reset link is no longer valid.</p>
           <p>
-            Please try to reset your password again and make sure to use the
-            latest link provided in the email.
+            {{ locale[settingsDataStore.locale].resetPasswordLinkNotValid }}
           </p>
           <p>
-            If you continue to experience issues, feel free to contact our
-            support team for further assistance. Thank you for your
-            understanding.
+            {{ locale[settingsDataStore.locale].tryResetPasswordAgain }}
+          </p>
+          <p>
+            {{ locale[settingsDataStore.locale].contactUsForHelp }}
           </p>
           <UButton
             to="/forgot"
             class="bg-dark-gray h-[48px] px-[16px] flex w-full uppercase justify-center font-[Rubik] font-[500] hover:bg-yellow"
           >
-            Try again
+            {{ locale[settingsDataStore.locale].tryAgain }}
           </UButton>
         </template>
       </div>

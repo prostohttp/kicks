@@ -34,6 +34,14 @@ export const locale = {
     searchResult: "Search results",
     seeAll: "See all",
     resetPassword: "Reset Password",
+    passwordChanged: "Password changed, now you can Login",
+    resetPasswordLinkNotValid:
+      "Sorry, but the password reset link is no longer valid.",
+    tryResetPasswordAgain:
+      "Please try to reset your password again and make sure to use the latest link provided in the email.",
+    contactUsForHelp:
+      "If you continue to experience issues, feel free to contact our support team for further assistance. Thank you for your understanding.",
+    tryAgain: "Try again",
     yourName: "Your Name",
     login: "Login",
     loginDetails: "Login Details",
@@ -201,10 +209,18 @@ export const locale = {
     viewAllNotifications: "Просмотреть все уведомления",
     search: "Поиск",
     empty: "Пусто",
-    signUp: "Войти через",
+    signUp: "Войти",
     searchResult: "Результаты поиска",
     seeAll: "Посмотреть все",
     resetPassword: "Сбросить пароль",
+    resetPasswordLinkNotValid:
+      "Извините, но ссылка для сброса пароля больше не действительна.",
+    tryResetPasswordAgain:
+      "Пожалуйста, попробуйте сбросить пароль еще раз и обязательно используйте последнюю ссылку, указанную в электронном письме.",
+    contactUsForHelp:
+      "Если у вас по-прежнему возникают проблемы, свяжитесь с нашей службой поддержки для получения дополнительной помощи. Спасибо за Ваше понимание.",
+    tryAgain: "Попробуйте еще раз",
+    passwordChanged: "Пароль брошен, теперь вы можете войти с новым паролем",
     yourName: "Ваше имя",
     login: "Войти",
     loginDetails: "Данные для входа",
@@ -217,9 +233,9 @@ export const locale = {
     register: "Регистрация",
     loginPage: "Войти",
     registerPage: "Страница регистрации",
-    loginGithub: "Войти через Github",
-    loginYandex: "Войти через Yandex",
-    loginDiscord: "Войти через Discord",
+    loginGithub: "Войти с Github",
+    loginYandex: "Войти с Yandex",
+    loginDiscord: "Войти с Discord",
     userName: "Имя пользователя",
     email: "Эл. почта",
     role: "Роль",

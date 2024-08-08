@@ -4,6 +4,7 @@ import { Constants } from "~/constants";
 // store
 const settingsDataStore = useSettingsDataStore();
 await useAsyncData("settingsLocale", () => settingsDataStore.getLocale());
+await useAsyncData("settingsCurrency", () => settingsDataStore.getCurrency());
 
 // vars
 const isOpen = ref(false);

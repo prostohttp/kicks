@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { AccordionItem } from "~/types/ui/ui.types";
 import { locale } from "~/lang/locale";
+import { Constants } from "~/constants";
 
 // store
 const categoryDataStore = useCategoryDataStore();
@@ -9,6 +10,7 @@ const productDataStore = useProductDataStore();
 const { parentTitles } = storeToRefs(categoryDataStore);
 
 // vars
+const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
 const route = useRoute();
 await categoryDataStore.getAllTitles();
 const isActive = (id: string): boolean =>
@@ -66,6 +68,7 @@ const items: AccordionItem[] | undefined = [
             <NuxtLink
               to="/dashboard/categories?page=1"
               class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
+              @click="isOpenMobileSidebar = false"
             >
               {{ locale[settingsDataStore.locale].allCategories }}
             </NuxtLink>

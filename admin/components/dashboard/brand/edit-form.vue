@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import { schema, type Schema } from "./schema/add-new-brand.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { Constants } from "~/constants";
 import * as v from "valibot";
@@ -23,6 +22,14 @@ const toast = useToast();
 const isOpenDeleteModal = ref(false);
 const page = Number(useRoute().query.page);
 const dropZoneRef = ref<HTMLInputElement | undefined>();
+const schema = v.object({
+  title: v.pipe(
+    v.string(locale[settingsDataStore.locale].error.required),
+    v.trim(),
+    v.minLength(3, locale[settingsDataStore.locale].error.stringMin3),
+  ),
+  description: v.string(),
+});
 
 // handlers
 const uploadImageHandler = async (formData: FormData) => {
@@ -94,7 +101,7 @@ const onDrop = async (files: File[] | null) => {
 
 useDropZone(dropZoneRef, { onDrop });
 
-const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
+const onSubmitHandler = async (event: FormSubmitEvent<any>) => {
   try {
     await $fetch("/api/brand/edit", {
       method: "PUT",

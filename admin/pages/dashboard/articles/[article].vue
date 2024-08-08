@@ -19,6 +19,7 @@ const links: Ref<BreadcrumbItem[]> = ref(
 const title = computed(() =>
   article.value ? article.value?.title : locale[settingsDataStore.locale].empty,
 );
+// TODO: необходимость дублирование тут и в [article].vue из за доступа к стору не в компоненте
 const articleData: InputData[] = [
   {
     label: locale[useSettingsDataStore().locale].title,

@@ -77,18 +77,18 @@ const openDeleteProductModal = () => {
         >
           <template v-if="product.salePrice">
             <span>{{
-              currencyFormat(product.salePrice, Currency.USD, Locales.EN)
+              currencyFormat(product.salePrice, Currency.usd, Locales.en)
             }}</span>
             <span
               class="line-through text-[#919090] font-normal text-[13px] leading-[23px]"
             >
               {{
-                currencyFormat(product.regularPrice, Currency.USD, Locales.EN)
+                currencyFormat(product.regularPrice, Currency.usd, Locales.en)
               }}
             </span>
           </template>
           <template v-else>
-            {{ currencyFormat(product.regularPrice, Currency.USD, Locales.EN) }}
+            {{ currencyFormat(product.regularPrice, Currency.usd, Locales.en) }}
           </template>
         </strong>
       </div>

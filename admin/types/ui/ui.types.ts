@@ -16,13 +16,13 @@ export interface BreadcrumbItem {
 }
 
 export enum Locales {
-  EN = "en-US",
-  RU = "ru",
+  en = "en-US",
+  ru = "ru",
 }
 
 export enum Currency {
-  USD = "USD",
-  RUB = "RUB",
+  usd = "USD",
+  rub = "RUB",
 }
 
 export interface UserData {

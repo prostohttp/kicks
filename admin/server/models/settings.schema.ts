@@ -22,6 +22,15 @@ export const Settings = defineMongooseModel({
       enum: Object.values(Currency),
       required: true,
     },
+    mainCurrency: {
+      type: String,
+      enum: Object.values(Currency),
+      required: true,
+    },
+    secondCurrencyRate: {
+      type: Number,
+      required: true,
+    },
     en: {
       title: {
         min: 3,

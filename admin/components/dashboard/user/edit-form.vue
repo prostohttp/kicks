@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { schema, type Schema } from "./schema/user-info.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import { Roles } from "~/types/server/server.types.js";
@@ -25,6 +24,18 @@ const page = Number(route.query.page);
 const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
 const roles = Object.values(Roles).filter((role) => role !== Roles.ADMIN);
+const schema = v.object({
+  name: v.pipe(
+    v.string(),
+    v.trim(),
+    v.minLength(3, locale[settingsDataStore.locale].error.stringMin3),
+  ),
+  email: v.pipe(
+    v.string(),
+    v.email(locale[settingsDataStore.locale].error.invalidEmail),
+  ),
+  role: v.string(),
+});
 
 // handlers
 const uploadImageHandler = async (formData: FormData) => {
@@ -125,7 +136,7 @@ const onDrop = async (files: File[] | null) => {
 
 useDropZone(dropZoneRef, { onDrop });
 
-const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
+const onSubmitHandler = async (event: FormSubmitEvent<any>) => {
   try {
     console.log("Role", event.data.role);
 

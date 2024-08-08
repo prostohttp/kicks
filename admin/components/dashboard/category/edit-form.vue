@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import { schema, type Schema } from "./schema/add-new-category.schema";
 import type { FormSubmitEvent } from "#ui/types";
 import { useCategoryDataStore } from "~/stores/category-data";
 import type { InputData } from "~/types/ui/ui.types";
@@ -17,7 +16,6 @@ const { inputData, categoryId } = defineProps<{
 const categoryStore = useCategoryDataStore();
 const settingsDataStore = useSettingsDataStore();
 const { titles: data, category, selected } = storeToRefs(categoryStore);
-
 await useAsyncData("titles", () => categoryStore.getAllTitles());
 await useAsyncData("category", () => categoryStore.getCategoryById(categoryId));
 const titles = ref(
@@ -37,9 +35,20 @@ const state = reactive({
   children: category.value?.children.map((el) => el.title),
 });
 const page = Number(useRoute().query.page);
+const schema = v.object({
+  title: v.pipe(
+    v.string(locale[settingsDataStore.locale].error.required),
+    v.trim(),
+    v.minLength(3, locale[settingsDataStore.locale].error.stringMin3),
+  ),
+  description: v.string(),
+  children: v.array(v.string()),
+  isParent: v.boolean(),
+  isEnabled: v.boolean(),
+});
 
 // handlers
-const onSubmitHandler = async (event: FormSubmitEvent<Schema>) => {
+const onSubmitHandler = async (event: FormSubmitEvent<any>) => {
   try {
     await $fetch("/api/category/edit", {
       method: "PUT",
@@ -93,15 +102,19 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         },
       }"
     >
-      <!-- TODO: v-model -->
-      <UCheckbox
-        v-if="type === 'checkbox'"
-        :label="placeholder"
-        v-model="state[name as keyof typeof state]"
+      <UInput
+        :placeholder="placeholder"
+        v-model="state.title"
+        inputClass="input-label"
+        :icon="icon"
         class="mb-[25px]"
-        :ui="{
-          label: 'dark:text-[#6b7280] text-[16px]',
-        }"
+        v-if="name === 'title'"
+      />
+      <UTextarea
+        v-model="state.description"
+        :placeholder="placeholder"
+        class="textarea"
+        v-else-if="name === 'description'"
       />
       <USelectMenu
         :icon="icon"
@@ -121,19 +134,23 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         }"
         v-else-if="type === 'select'"
       />
-      <UTextarea
-        v-model="state.description"
-        :placeholder="placeholder"
-        class="textarea"
-        v-else-if="type === 'textarea'"
-      />
-      <UInput
-        :placeholder="placeholder"
-        v-model="state[name as keyof typeof state]"
-        inputClass="input-label"
-        :icon="icon"
+      <UCheckbox
+        v-if="name === 'isParent'"
+        :label="placeholder"
+        v-model="state.isParent"
         class="mb-[25px]"
-        v-else
+        :ui="{
+          label: 'dark:text-[#6b7280] text-[16px]',
+        }"
+      />
+      <UCheckbox
+        v-if="name === 'isEnabled'"
+        :label="placeholder"
+        v-model="state.isEnabled"
+        class="mb-[25px]"
+        :ui="{
+          label: 'dark:text-[#6b7280] text-[16px]',
+        }"
       />
     </UFormGroup>
     <div

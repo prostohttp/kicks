@@ -2,6 +2,7 @@
 import { Currency, Locales } from "~/types/ui/ui.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
 import { locale } from "~/lang/locale";
+import currencyFormat from "~/utils/currency-format";
 
 // define
 defineProps<{
@@ -36,15 +37,8 @@ const model = defineModel();
             :src="`/${el.image}`"
             width="60"
             :alt="el.title"
-            class="image"
           />
-          <NuxtImg
-            src="/no-image.svg"
-            width="40"
-            :alt="el.title"
-            class="image"
-            v-else
-          />
+          <NuxtImg src="/no-image.svg" width="40" :alt="el.title" v-else />
         </NuxtLink>
         <div class="flex flex-col w-[80%]">
           <NuxtLink
@@ -60,14 +54,14 @@ const model = defineModel();
           </span>
           <div v-if="el.salePrice" class="flex gap-[5px] items-center">
             <span class="font-[600]">
-              {{ currencyFormat(el.salePrice, Currency.USD, Locales.EN) }}
+              {{ currencyFormat(el.salePrice, Currency.usd, Locales.en) }}
             </span>
             <span class="text-[12px] line-through">
-              {{ currencyFormat(el.regularPrice, Currency.USD, Locales.EN) }}
+              {{ currencyFormat(el.regularPrice, Currency.usd, Locales.en) }}
             </span>
           </div>
           <div class="font-[600]" v-else>
-            {{ currencyFormat(el.regularPrice, Currency.USD, Locales.EN) }}
+            {{ currencyFormat(el.regularPrice, Currency.usd, Locales.en) }}
           </div>
         </div>
       </li>
@@ -76,9 +70,6 @@ const model = defineModel();
 </template>
 
 <style scoped>
-.image {
-  @apply w-[60px];
-}
 .active {
   @apply text-dark-gray dark:text-fa-white;
 }

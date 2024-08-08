@@ -85,15 +85,13 @@ const registerHandler = useThrottleFn(register, 1000);
       <div class="max-w-[480px] flex flex-col w-full gap-[24px]">
         <div>
           <h1 class="font-[Rubik] font-[600] text-[36px]">
-            {{ locale[settingsDataStore.locale].register }}
-          </h1>
-          <h2 class="open-sans text-[20px] font-[600]">
             {{ locale[settingsDataStore.locale].signUp }}
-          </h2>
+          </h1>
+          <h2 class="open-sans text-[20px] font-[600]"></h2>
         </div>
         <AuthSocialButtons />
-        <h2 class="open-sans text-[20px] font-[600] uppercase">
-          {{ locale[settingsDataStore.locale].or }}
+        <h2 class="font-[Rubik] font-[600] text-[36px]">
+          {{ locale[settingsDataStore.locale].register }}
         </h2>
         <AuthRegisterForm @submit="registerHandler" />
       </div>
