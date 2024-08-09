@@ -118,20 +118,22 @@ watch(
         </caption>
       </template>
       <template #images-data="{ row }">
-        <NuxtImg
-          src="/no-image.svg"
-          width="40"
-          :alt="locale[settingsDataStore.locale].noImage"
-          class="dark:opacity-90 rounded-[8px]"
-          v-if="!row.banners[0].image"
-        />
-        <NuxtImg
-          width="200"
-          height="60"
-          :src="`/${row.banners[0].image}`"
-          class="dark:opacity-90 rounded-[8px]"
-          v-else
-        />
+        <NuxtLink :to="`/dashboard/banners/${row._id}`">
+          <NuxtImg
+            src="/no-image.svg"
+            width="40"
+            :alt="locale[settingsDataStore.locale].noImage"
+            class="dark:opacity-90 rounded-[8px]"
+            v-if="!row.banners[0].image"
+          />
+          <NuxtImg
+            width="200"
+            height="60"
+            :src="`/${row.banners[0].image}`"
+            class="dark:opacity-90 rounded-[8px]"
+            v-else
+          />
+        </NuxtLink>
       </template>
       <template #title-data="{ row }">
         {{ row.title }}

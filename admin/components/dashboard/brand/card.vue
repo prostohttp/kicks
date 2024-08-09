@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { DashboardBrandEditModal } from "#components";
 import type { BrandDto } from "~/server/api/brand/dto/brand.dto";
+import { addQuery } from "~/utils/add-query";
 
 // define
 const { brand } = defineProps<{
