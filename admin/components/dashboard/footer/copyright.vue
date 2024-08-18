@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-import { locale } from "~/lang/locale";
-
 // store
 const settingsDataStore = useSettingsDataStore();
+await useAsyncData(() => settingsDataStore.getSettings());
+const { settings } = storeToRefs(settingsDataStore);
+
+// vars
+const locale = ref(settingsDataStore.locale);
 </script>
 
 <template>
   <div>
     <p>
       &copy; {{ new Date().getFullYear() }}
-      {{ locale[settingsDataStore.locale].copy }}
+      {{ settings![locale].title }}
     </p>
   </div>
 </template>

@@ -14,7 +14,7 @@ const emit = defineEmits(["close"]);
 // store
 const userDataStore = useUserDataStore();
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("userById", () => userDataStore.getUserById(userId));
+await useAsyncData(() => userDataStore.getUserById(userId));
 const { userById: user } = storeToRefs(userDataStore);
 
 // vars

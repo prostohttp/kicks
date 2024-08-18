@@ -17,7 +17,7 @@ const isActive = (id: string): boolean =>
   (route.query.category && route.query.category === id) as boolean;
 
 // handlers
-await useAsyncData("products", () => productDataStore.getProductCount());
+await useAsyncData(() => productDataStore.getProductCount());
 
 const { productsForCount } = storeToRefs(productDataStore);
 

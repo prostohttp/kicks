@@ -42,6 +42,13 @@ const uploadImage = async (e: Event) => {
     }
     const uploadedImage = await uploadImageHandler(formData);
     banner.value.banners[activeTab.value!].image = uploadedImage;
+    await $fetch("/api/banner/edit", {
+      method: "PUT",
+      body: {
+        _id: banner.value._id,
+        banners: banner.value.banners,
+      },
+    });
     toast.add({
       title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
@@ -64,6 +71,13 @@ const onDrop = async (files: File[] | null) => {
       }
       const uploadedImage = await uploadImageHandler(formData);
       banner.value.banners[activeTab.value!].image = uploadedImage;
+      await $fetch("/api/banner/edit", {
+        method: "PUT",
+        body: {
+          _id: banner.value._id,
+          banners: banner.value.banners,
+        },
+      });
       toast.add({
         title: locale[settingsDataStore.locale].imageUploaded,
         color: "green",
@@ -88,6 +102,13 @@ const deleteImageHandler = async () => {
       },
     });
     banner.value.banners[activeTab.value!].image = "";
+    await $fetch("/api/banner/edit", {
+      method: "PUT",
+      body: {
+        _id: banner.value._id,
+        banners: banner.value.banners,
+      },
+    });
     toast.add({
       title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",

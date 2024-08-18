@@ -7,11 +7,13 @@ export interface SettingsLocale {
 }
 
 export interface SettingsDto {
-  _id: string;
+  _id?: string;
   logo: string;
   localeDashboard: string;
   localeStore: string;
   currency: string;
+  secondCurrencyRate: number;
+  mainCurrency: string;
   en: SettingsLocale;
   ru: SettingsLocale;
 }

@@ -6,7 +6,7 @@ import { useUserDataStore } from "~/stores/user-data";
 // Store
 const userStore = useUserDataStore();
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("user", () => userStore.getUser());
+await useAsyncData(() => userStore.getUser());
 const { savedUser: user } = storeToRefs(userStore);
 
 // Vars

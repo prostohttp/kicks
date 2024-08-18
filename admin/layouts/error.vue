@@ -3,8 +3,8 @@ import { Constants } from "~/constants";
 
 // store
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("settingsLocale", () => settingsDataStore.getLocale());
-await useAsyncData("settingsCurrency", () => settingsDataStore.getCurrency());
+await useAsyncData(() => settingsDataStore.getLocale());
+await useAsyncData(() => settingsDataStore.getCurrency());
 
 // vars
 const isOpen = ref(false);

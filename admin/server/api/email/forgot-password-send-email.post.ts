@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import { Constants } from "~/constants";
 
 const runtimeConfig = useRuntimeConfig();
-const resend = new Resend(runtimeConfig.RESEND_API_KEY);
+const resend = new Resend(runtimeConfig.NUXT_RESEND_API_KEY);
 
 export default defineEventHandler(async (event) => {
   const { email, siteName, siteUrl, token } = await readBody(event);

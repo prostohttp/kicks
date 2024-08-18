@@ -11,7 +11,7 @@ import bcrypt from "bcrypt";
 const runtimeConfig = useRuntimeConfig();
 
 export default NuxtAuthHandler({
-  secret: runtimeConfig.AUTH_SECRET,
+  secret: runtimeConfig.NUXT_AUTH_SECRET,
   session: {
     maxAge: 7 * 24 * 60 * 60,
   },
@@ -36,18 +36,18 @@ export default NuxtAuthHandler({
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     YandexProvider.default({
-      clientId: runtimeConfig.public.YANDEX_CLIENT_ID,
-      clientSecret: runtimeConfig.YANDEX_CLIENT_SECRET,
+      clientId: runtimeConfig.public.NUXT_YANDEX_CLIENT_ID,
+      clientSecret: runtimeConfig.NUXT_YANDEX_CLIENT_SECRET,
     }),
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     DiscordProvider.default({
-      clientId: runtimeConfig.public.DISCORD_CLIENT_ID,
-      clientSecret: runtimeConfig.DISCORD_CLIENT_SECRET,
+      clientId: runtimeConfig.public.NUXT_DISCORD_CLIENT_ID,
+      clientSecret: runtimeConfig.NUXT_DISCORD_CLIENT_SECRET,
     }),
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GitHubProvider.default({
-      clientId: runtimeConfig.public.GITHUB_CLIENT_ID,
-      clientSecret: runtimeConfig.GITHUB_CLIENT_SECRET,
+      clientId: runtimeConfig.public.NUXT_GITHUB_CLIENT_ID,
+      clientSecret: runtimeConfig.NUXT_GITHUB_CLIENT_SECRET,
     }),
 
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point

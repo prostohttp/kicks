@@ -6,7 +6,7 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 // store
 const userDataStore = useUserDataStore();
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("users", () =>
+await useAsyncData(() =>
   userDataStore.getAllUsers(Number(useRoute().query.page)),
 );
 const { allUsers: data } = storeToRefs(userDataStore);

@@ -35,17 +35,19 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout name="error" v-if="data">
-    <div
-      class="flex flex-col justify-center items-center py-[50px] gap-[20px] px-[20px] xl:px-0 dark:text-white"
-    >
-      <h1 class="text-[4em] font-[Rubik]">{{ error!.statusCode }}</h1>
-      <p>{{ computedErrorMessage }}</p>
-      <UButton color="black" variant="solid" size="xl" @click="errorHandle">
-        {{ locale[settingsDataStore.locale].backToHome }}
-      </UButton>
-    </div>
-  </NuxtLayout>
+  <div v-if="data">
+    <NuxtLayout name="error">
+      <div
+        class="flex flex-col justify-center items-center py-[50px] gap-[20px] px-[20px] xl:px-0 dark:text-white"
+      >
+        <h1 class="text-[4em] font-[Rubik]">{{ error!.statusCode }}</h1>
+        <p>{{ computedErrorMessage }}</p>
+        <UButton color="black" variant="solid" size="xl" @click="errorHandle">
+          {{ locale[settingsDataStore.locale].backToHome }}
+        </UButton>
+      </div>
+    </NuxtLayout>
+  </div>
   <div
     class="flex flex-col justify-center items-center h-dvh gap-[20px] px-[20px] xl:px-0 dark:text-white"
     v-else

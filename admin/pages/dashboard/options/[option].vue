@@ -5,8 +5,10 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 // store
 const optionDataStore = useOptionDataStore();
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("options", () =>
-  optionDataStore.getOption(useRoute().params.option.toString()),
+await useAsyncData(() =>
+  optionDataStore.getOption(
+    useRoute("dashboard-options-option").params.option.toString(),
+  ),
 );
 const { option } = storeToRefs(optionDataStore);
 

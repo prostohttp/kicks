@@ -5,8 +5,10 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 // store
 const bannerDataStore = useBannerDataStore();
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("asyncBanner", () =>
-  bannerDataStore.getBannerById(useRoute().params.banner.toString()),
+await useAsyncData(() =>
+  bannerDataStore.getBannerById(
+    useRoute("dashboard-banners-banner").params.banner.toString(),
+  ),
 );
 const { banner } = storeToRefs(bannerDataStore);
 

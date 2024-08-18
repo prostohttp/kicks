@@ -5,8 +5,10 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 // store
 const articleDataStore = useArticleDataStore();
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("articles", () =>
-  articleDataStore.getArticle(useRoute().params.article.toString()),
+await useAsyncData(() =>
+  articleDataStore.getArticle(
+    useRoute("dashboard-articles-article").params.article.toString(),
+  ),
 );
 const { article } = storeToRefs(articleDataStore);
 

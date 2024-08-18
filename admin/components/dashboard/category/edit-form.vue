@@ -16,8 +16,8 @@ const { inputData, categoryId } = defineProps<{
 const categoryStore = useCategoryDataStore();
 const settingsDataStore = useSettingsDataStore();
 const { titles: data, category, selected } = storeToRefs(categoryStore);
-await useAsyncData("titles", () => categoryStore.getAllTitles());
-await useAsyncData("category", () => categoryStore.getCategoryById(categoryId));
+await useAsyncData(() => categoryStore.getAllTitles());
+await useAsyncData(() => categoryStore.getCategoryById(categoryId));
 const titles = ref(
   data.value
     .filter((el) => el.title !== category.value?.title)

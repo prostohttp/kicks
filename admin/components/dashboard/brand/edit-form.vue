@@ -13,7 +13,7 @@ const emit = defineEmits(["close"]);
 // store
 const brandDataStore = useBrandDataStore();
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("brand", () => brandDataStore.getBrandById(brandId));
+await useAsyncData(() => brandDataStore.getBrandById(brandId));
 const { brand } = storeToRefs(brandDataStore);
 
 // vars

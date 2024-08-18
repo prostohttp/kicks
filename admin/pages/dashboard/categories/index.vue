@@ -44,9 +44,7 @@ const columns = [
   },
 ];
 
-await useAsyncData("categories", () =>
-  categoryDataStore.getAllCategories(page),
-);
+await useAsyncData(() => categoryDataStore.getAllCategories(page));
 
 const activePage = ref(data.value?.activePage || 1);
 const path = router.currentRoute.value.path;

@@ -88,7 +88,10 @@ onMounted(async () => {
             {{ locale[settingsDataStore.locale].resetPassword }}
           </h1>
         </div>
-        <LazyResetPasswordForm @submit="resetPasswordHandler" v-if="isValid" />
+        <LazyAuthResetPasswordForm
+          @submit="resetPasswordHandler"
+          v-if="isValid"
+        />
         <template v-else>
           <p>
             {{ locale[settingsDataStore.locale].resetPasswordLinkNotValid }}

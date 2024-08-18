@@ -49,7 +49,7 @@ const columns = [
   },
 ];
 
-await useAsyncData("options", () => optionDataStore.getAllOptions(page));
+await useAsyncData(() => optionDataStore.getAllOptions(page));
 
 const activePage = ref(data.value?.activePage || 1);
 const path = router.currentRoute.value.path;

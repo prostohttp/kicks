@@ -53,7 +53,7 @@ const columns = [
   },
 ];
 
-await useAsyncData("articles", () => articleDataStore.getAllArticles(page));
+await useAsyncData(() => articleDataStore.getAllArticles(page));
 
 const activePage = ref(data.value?.activePage || 1);
 const path = router.currentRoute.value.path;

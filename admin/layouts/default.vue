@@ -1,10 +1,18 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 
+// browser
+const cookieLocale = useCookie("locale");
+const cookieCurrency = useCookie("currency");
+
 // store
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("settingsLocale", () => settingsDataStore.getLocale());
-await useAsyncData("settingsCurrency", () => settingsDataStore.getCurrency());
+const { locale, currency } = storeToRefs(settingsDataStore);
+await useAsyncData(() => settingsDataStore.getLocale());
+await useAsyncData(() => settingsDataStore.getCurrency());
+// TODO: вариант с использованием cookie для схем в отдельных файлах, игра не стоит свеч, там где схемы имеют небольшой объем кода, для примера реализовано на settings
+cookieLocale.value = locale.value;
+cookieCurrency.value = currency.value;
 
 // vars
 const isOpen = ref(false);

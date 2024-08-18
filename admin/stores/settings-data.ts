@@ -5,7 +5,7 @@ export const useSettingsDataStore = defineStore("settingsData", () => {
   // vars
   const settings: Ref<SettingsDto | undefined> = ref();
   const locale: Ref<"en" | "ru"> = ref("en");
-  const currency = ref("");
+  const currency: Ref<"usd" | "rub"> = ref("usd");
 
   // handlers
   const getSettings = async () => {
@@ -46,7 +46,7 @@ export const useSettingsDataStore = defineStore("settingsData", () => {
 
   const getCurrency = async () => {
     try {
-      currency.value = await $fetch<"USD" | "RUB">("/api/settings/all", {
+      currency.value = await $fetch<"usd" | "rub">("/api/settings/all", {
         method: "GET",
         query: {
           currency: true,

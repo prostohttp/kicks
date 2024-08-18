@@ -1,7 +1,12 @@
 <script lang="ts" setup>
+// browser
+const cookieLocale = useCookie("locale");
+
 // store
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData("settingsLocale", () => settingsDataStore.getLocale());
+const { locale } = storeToRefs(settingsDataStore);
+await useAsyncData(() => settingsDataStore.getLocale());
+cookieLocale.value = locale.value;
 </script>
 
 <template>

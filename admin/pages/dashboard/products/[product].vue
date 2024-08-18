@@ -6,8 +6,10 @@ import type { BreadcrumbItem } from "~/types/ui/ui.types";
 const productDataStore = useProductDataStore();
 const settingsDataStore = useSettingsDataStore();
 
-await useAsyncData("product", () =>
-  productDataStore.getProductById(useRoute().params.product.toString()),
+await useAsyncData(() =>
+  productDataStore.getProductById(
+    useRoute("dashboard-products-product").params.product.toString(),
+  ),
 );
 const { product } = storeToRefs(productDataStore);
 

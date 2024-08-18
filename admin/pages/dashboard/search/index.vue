@@ -8,7 +8,7 @@ import unwrapAfterPopulate from "~/utils/unwrap-after-populate";
 const statsDataStore = useStatsDataStore();
 const settingsDataStore = useSettingsDataStore();
 const productDataStore = useProductDataStore();
-await useAsyncData("saleProducts", () => statsDataStore.getSaleProducts());
+await useAsyncData(() => statsDataStore.getSaleProducts());
 const { saleProducts } = storeToRefs(statsDataStore);
 
 // vars
@@ -34,7 +34,7 @@ const links: Ref<BreadcrumbItem[]> = ref(
 
 const { foundedProducts } = storeToRefs(productDataStore);
 const activePage = ref(page || foundedProducts.value?.activePage || 1);
-await useAsyncData("asyncFoundedProducts", () =>
+await useAsyncData(() =>
   productDataStore.searchProduct(
     searchPhrase.value!.toString(),
     Constants.PER_PAGE_SEARCH,

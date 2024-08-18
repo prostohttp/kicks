@@ -37,7 +37,7 @@ const columns = [
   },
 ];
 
-await useAsyncData("banners", () => bannerDataStore.getAllBanners(page));
+await useAsyncData(() => bannerDataStore.getAllBanners(page));
 const path = router.currentRoute.value.path;
 const activePage = ref(data.value?.activePage || 1);
 const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
@@ -154,9 +154,3 @@ watch(
     :all-items="data?.allItems"
   />
 </template>
-
-<style scoped>
-.active {
-  @apply dark:text-fa-white dark:hover:text-yellow text-dark-gray hover:text-blue;
-}
-</style>

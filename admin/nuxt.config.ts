@@ -7,7 +7,11 @@ export default defineNuxtConfig({
       prerender: true,
     },
   },
-
+  experimental: {
+    typedPages: true,
+    // TODO: Удалить
+    clientFallback: true,
+  },
   app: {
     head: {
       link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
@@ -15,15 +19,15 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-    YANDEX_CLIENT_SECRET: process.env.YANDEX_CLIENT_SECRET,
-    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
-    AUTH_SECRET: process.env.AUTH_SECRET,
-    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    NUXT_GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    NUXT_YANDEX_CLIENT_SECRET: process.env.YANDEX_CLIENT_SECRET,
+    NUXT_DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    NUXT_AUTH_SECRET: process.env.AUTH_SECRET,
+    NUXT_RESEND_API_KEY: process.env.RESEND_API_KEY,
     public: {
-      GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-      YANDEX_CLIENT_ID: process.env.YANDEX_CLIENT_ID,
-      DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
+      NUXT_GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+      NUXT_YANDEX_CLIENT_ID: process.env.YANDEX_CLIENT_ID,
+      NUXT_DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     },
   },
 

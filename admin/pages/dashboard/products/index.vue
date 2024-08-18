@@ -12,7 +12,7 @@ const settingsDataStore = useSettingsDataStore();
 const statsDataStore = useStatsDataStore();
 const { products: data } = storeToRefs(productDataStore);
 
-await useAsyncData("saleProducts", () => statsDataStore.getSaleProducts());
+await useAsyncData(() => statsDataStore.getSaleProducts());
 const { saleProducts } = storeToRefs(statsDataStore);
 
 // vars
@@ -22,9 +22,7 @@ const toast = useToast();
 const routeCategory = route.query.category;
 const path = router.currentRoute.value.path;
 const category = ref(routeCategory?.toString());
-await useAsyncData("foundedCategory", () =>
-  categoryDataStore.getCategoryById(category.value),
-);
+await useAsyncData(() => categoryDataStore.getCategoryById(category.value));
 const fullPath = computed(() =>
   !categoryDataStore.category ? path : `${path}/${category.value}`,
 );
@@ -37,7 +35,7 @@ const links: Ref<BreadcrumbItem[]> = ref(
         `${path}?category=${category.value}`,
       ),
 );
-await useAsyncData<ProductsPayload>("products", () =>
+await useAsyncData<ProductsPayload>(() =>
   productDataStore.getAllProducts(Number(route.query.page), category.value),
 );
 const activePage = ref(data.value?.activePage || 1);
