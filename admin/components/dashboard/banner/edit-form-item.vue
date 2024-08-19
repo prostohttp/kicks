@@ -120,8 +120,6 @@ const deleteImageHandler = async () => {
     });
   }
 };
-
-// hooks
 </script>
 
 <template>

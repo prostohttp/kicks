@@ -25,6 +25,16 @@ export enum Currency {
   rub = "RUB",
 }
 
+export enum SettingsCurrency {
+  usd = "usd",
+  rub = "rub",
+}
+
+export enum SettingsLocale {
+  ru = "ru",
+  en = "en",
+}
+
 export interface UserData {
   label: string;
   name: string;
@@ -44,12 +54,12 @@ export interface InputData {
 }
 
 export const optionTypes = {
-  [locale["en"].optionTypes.list]: "select",
-  [locale["en"].optionTypes.select]: "select",
-  [locale["en"].optionTypes.checkbox]: "select",
-  [locale["en"].optionTypes.text]: "text",
-  [locale["en"].optionTypes.textarea]: "textarea",
-  [locale["en"].optionTypes.date]: "date",
-  [locale["en"].optionTypes.time]: "time",
-  [locale["en"].optionTypes.datetime]: "datetime",
+  [locale[SettingsLocale.en].optionTypes.list]: "select",
+  [locale[SettingsLocale.en].optionTypes.select]: "select",
+  [locale[SettingsLocale.en].optionTypes.checkbox]: "select",
+  [locale[SettingsLocale.en].optionTypes.text]: "text",
+  [locale[SettingsLocale.en].optionTypes.textarea]: "textarea",
+  [locale[SettingsLocale.en].optionTypes.date]: "date",
+  [locale[SettingsLocale.en].optionTypes.time]: "time",
+  [locale[SettingsLocale.en].optionTypes.datetime]: "datetime",
 };

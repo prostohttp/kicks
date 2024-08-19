@@ -5,15 +5,17 @@ interface IImageModel {
   image: string;
   name?: string;
   title?: string;
+  classForDarkMode?: string;
 }
 
 // store
 const settingsDataStore = useSettingsDataStore();
 
 // define
-const { alt, addNew } = defineProps<{
+const { alt, addNew, classForDarkMode } = defineProps<{
   alt: string | undefined;
   addNew?: boolean;
+  classForDarkMode?: string;
 }>();
 const model: Ref<IImageModel | undefined> = defineModel("image");
 
@@ -79,6 +81,7 @@ const deleteImageHandler = () => {
       placeholder
       fit="inside"
       width="800"
+      :class="classForDarkMode"
       class="w-full rounded-[8px] group-hover:opacity-70 transition-opacity"
       :alt="alt"
     />

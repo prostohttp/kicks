@@ -1,3 +1,6 @@
+import { SettingsLocale as locale } from "~/types/ui/ui.types";
+import { SettingsCurrency as currency } from "~/types/ui/ui.types";
+
 export interface SettingsLocale {
   title: string;
   phone: string;
@@ -8,12 +11,24 @@ export interface SettingsLocale {
 
 export interface SettingsDto {
   _id?: string;
-  logo: string;
-  localeDashboard: string;
-  localeStore: string;
-  currency: string;
+  image: string;
+  localeDashboard: {
+    value: locale.ru | locale.en;
+    label: string;
+  };
+  localeStore: {
+    value: locale.ru | locale.en;
+    label: string;
+  };
+  currency: {
+    value: currency.rub | currency.usd;
+    label: string;
+  };
   secondCurrencyRate: number;
-  mainCurrency: string;
+  mainCurrency: {
+    value: currency.rub | currency.usd;
+    label: string;
+  };
   en: SettingsLocale;
   ru: SettingsLocale;
 }

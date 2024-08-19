@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
-
-// define
+import { SettingsLocale } from "~/types/ui/ui.types";
+import { SettingsCurrency } from "~/types/ui/ui.types";
 
 // store
 const settingsDataStore = useSettingsDataStore();
@@ -11,6 +11,27 @@ const { settings } = storeToRefs(settingsDataStore);
 // vars
 const dropZoneRef = ref<HTMLInputElement | undefined>();
 const toast = useToast();
+const localeOptions = [
+  {
+    label: locale.en.russian,
+    value: SettingsLocale.ru,
+  },
+  {
+    label: locale.en.english,
+    value: SettingsLocale.en,
+  },
+];
+
+const currencyOptions = [
+  {
+    label: locale.en.rub,
+    value: SettingsCurrency.rub,
+  },
+  {
+    label: locale.en.usd,
+    value: SettingsCurrency.usd,
+  },
+];
 
 // handlers
 const uploadImageHandler = async (formData: FormData) => {
@@ -24,6 +45,7 @@ const uploadImageHandler = async (formData: FormData) => {
       color: "red",
     });
   }
+  return uploadedImage;
 };
 
 const uploadImage = async (e: Event) => {
@@ -34,7 +56,15 @@ const uploadImage = async (e: Event) => {
       formData.append("folderName", Constants.IMG_PUBLIC);
       formData.append("image", fileInput.files![0]);
     }
-    await uploadImageHandler(formData);
+    const uploadedImage = await uploadImageHandler(formData);
+    settings.value!.image = uploadedImage;
+
+    await $fetch("/api/settings/edit", {
+      method: "PUT",
+      body: {
+        image: uploadedImage,
+      },
+    });
     toast.add({
       title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
@@ -55,7 +85,15 @@ const onDrop = async (files: File[] | null) => {
         formData.append("folderName", Constants.IMG_PUBLIC);
         formData.append("image", files![0]);
       }
-      await uploadImageHandler(formData);
+      const uploadedImage = await uploadImageHandler(formData);
+      settings.value!.image = uploadedImage;
+
+      await $fetch("/api/settings/edit", {
+        method: "PUT",
+        body: {
+          image: uploadedImage,
+        },
+      });
       toast.add({
         title: locale[settingsDataStore.locale].imageDeleted,
         color: "green",
@@ -73,6 +111,19 @@ useDropZone(dropZoneRef, { onDrop });
 
 const deleteImageHandler = async () => {
   try {
+    await $fetch("/api/image/remove", {
+      method: "DELETE",
+      body: {
+        image: settings.value!.image,
+      },
+    });
+    settings.value!.image = "";
+    await $fetch("/api/settings/edit", {
+      method: "PUT",
+      body: {
+        image: settings.value!.image,
+      },
+    });
     toast.add({
       title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
@@ -98,7 +149,11 @@ const deleteImageHandler = async () => {
           },
         }"
       >
-        <UInput v-model="settings!.localeDashboard" inputClass="input-label" />
+        <USelectMenu
+          v-model="settings!.localeDashboard!"
+          :options="localeOptions"
+          selectClass="select-label-without-icon"
+        />
       </UFormGroup>
       <UFormGroup
         :label="locale[settingsDataStore.locale].localeStore"
@@ -109,7 +164,11 @@ const deleteImageHandler = async () => {
           },
         }"
       >
-        <UInput v-model="settings!.localeStore" inputClass="input-label" />
+        <USelectMenu
+          v-model="settings!.localeStore"
+          :options="localeOptions"
+          selectClass="select-label-without-icon"
+        />
       </UFormGroup>
       <UFormGroup
         :label="locale[settingsDataStore.locale].mainCurrency"
@@ -120,7 +179,11 @@ const deleteImageHandler = async () => {
           },
         }"
       >
-        <UInput v-model="settings!.mainCurrency" inputClass="input-label" />
+        <USelectMenu
+          v-model="settings!.mainCurrency"
+          :options="currencyOptions"
+          selectClass="select-label-without-icon"
+        />
       </UFormGroup>
       <UFormGroup
         :label="locale[settingsDataStore.locale].secondCurrencyRate"
@@ -134,7 +197,7 @@ const deleteImageHandler = async () => {
         <UInput
           type="number"
           v-model="settings!.secondCurrencyRate"
-          inputClass="input-label"
+          inputClass="input-label-without-icon"
         />
       </UFormGroup>
       <UFormGroup
@@ -146,7 +209,11 @@ const deleteImageHandler = async () => {
           },
         }"
       >
-        <UInput v-model="settings!.currency" inputClass="input-label" />
+        <USelectMenu
+          v-model="settings!.currency"
+          :options="currencyOptions"
+          selectClass="select-label-without-icon"
+        />
       </UFormGroup>
     </div>
     <div class="lg:w-[32%] w-full flex flex-col gap-[20px] lg:mb-0 mb-[20px]">
@@ -160,14 +227,14 @@ const deleteImageHandler = async () => {
         }"
       >
         <UiImageUpload
-          v-model:image="settings"
+          v-model:image="settings!"
           alt="logo"
           v-model:drop-zone-ref="dropZoneRef"
           @delete="deleteImageHandler"
           @change="uploadImage($event)"
+          :classForDarkMode="'dark:invert-[1] dark:invert-1'"
         />
       </UFormGroup>
     </div>
   </div>
-  <!-- <pre>{{ settings }}</pre> -->
 </template>

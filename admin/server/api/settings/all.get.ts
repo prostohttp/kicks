@@ -8,9 +8,9 @@ export default defineEventHandler(async (event) => {
     const settings: SettingsDto | null = await Settings.findOne();
 
     if (query && locale && settings) {
-      return settings.localeDashboard;
+      return settings.localeDashboard.value;
     } else if (query && currency && settings) {
-      return settings.currency;
+      return settings.currency.value;
     } else {
       return settings;
     }

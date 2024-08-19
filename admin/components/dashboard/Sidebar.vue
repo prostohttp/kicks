@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 
+// inject
 const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
+
+// store
+const settingsDataStore = useSettingsDataStore();
+const { settings } = storeToRefs(settingsDataStore);
 </script>
 
 <template>
@@ -14,6 +19,13 @@ const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
       @click="isOpenMobileSidebar = false"
     >
       <img
+        v-if="settings?.image"
+        :src="`/${settings.image}`"
+        alt="kicks"
+        class="w-[128px] dark:invert-[1] dark:invert-1"
+      />
+      <img
+        v-else
         src="~/assets/img/small-logo.svg"
         alt="kicks"
         class="w-[128px] dark:invert-[1] dark:invert-1"

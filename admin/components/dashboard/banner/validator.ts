@@ -5,17 +5,19 @@ import type { BannerDto } from "~/server/api/banner/dto/banner.dto";
 
 export const validate = (state: BannerDto): FormError[] => {
   const errors = [];
-  if (!state.title)
+  if (!state.title) {
     errors.push({
       path: "title",
       message: locale[useSettingsDataStore().locale].error.string,
     });
+  }
 
-  if (!state.banners.length)
+  if (!state.banners.length) {
     errors.push({
       path: "banners",
       message: locale[useSettingsDataStore().locale].error.needOneMoreItem,
     });
+  }
 
   if (state.title.length < Constants.STRING_MIN_LENGTH) {
     errors.push({

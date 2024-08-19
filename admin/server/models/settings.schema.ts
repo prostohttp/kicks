@@ -3,29 +3,53 @@ import { defineMongooseModel } from "#nuxt/mongoose";
 export const Settings = defineMongooseModel({
   name: "Settings",
   schema: {
-    logo: {
+    image: {
       type: String,
       required: true,
     },
     localeDashboard: {
-      type: String,
-      enum: Object.values(Locales),
-      required: true,
+      value: {
+        type: String,
+        enum: Object.values(Locales),
+        required: true,
+      },
+      label: {
+        type: String,
+        required: true,
+      },
     },
     localeStore: {
-      type: String,
-      enum: Object.values(Locales),
-      required: true,
+      value: {
+        type: String,
+        enum: Object.values(Locales),
+        required: true,
+      },
+      label: {
+        type: String,
+        required: true,
+      },
     },
     currency: {
-      type: String,
-      enum: Object.values(Currency),
-      required: true,
+      value: {
+        type: String,
+        enum: Object.values(Currency),
+        required: true,
+      },
+      label: {
+        type: String,
+        required: true,
+      },
     },
     mainCurrency: {
-      type: String,
-      enum: Object.values(Currency),
-      required: true,
+      value: {
+        type: String,
+        enum: Object.values(Currency),
+        required: true,
+      },
+      label: {
+        type: String,
+        required: true,
+      },
     },
     secondCurrencyRate: {
       type: Number,

@@ -108,12 +108,20 @@ a:hover {
   @apply py-[15px] px-[16px] pl-[35px]
 }
 
+.input-label-without-icon {
+  @apply py-[15px] px-[20px];
+}
+
 .sidebar {
   @apply w-[260px] max-w-[260px]
 }
 
 .select-label {
   @apply ring-0 border border-dark-gray dark:border-[#374151] text-[16px] shadow-none h-[52px];
+}
+
+.select-label-without-icon {
+  @apply select-label px-[20px]
 }
 
 .red-button {
