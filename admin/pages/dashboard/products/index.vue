@@ -13,6 +13,7 @@ const statsDataStore = useStatsDataStore();
 const { products: data } = storeToRefs(productDataStore);
 
 await useAsyncData(() => statsDataStore.getSaleProducts());
+await useAsyncData(() => settingsDataStore.getSettings());
 const { saleProducts } = storeToRefs(statsDataStore);
 
 // vars

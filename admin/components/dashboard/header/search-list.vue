@@ -14,17 +14,9 @@ const { settings } = storeToRefs(settingsDataStore);
 
 // vars
 const model = defineModel();
-
-// handlers
-const calculatedPriceHandler = (
-  currency: SettingsCurrency,
-  price: number,
-  rate: number = 1,
-) => {
-  return settings.value?.mainCurrency.value !== settings.value?.currency.value
-    ? localizedFormatPrice(currency, price, rate)
-    : localizedFormatPrice(currency, price);
-};
+const needCalculate = computed(
+  () => settings.value?.mainCurrency.value !== settings.value?.currency.value,
+);
 </script>
 
 <template>
@@ -66,18 +58,20 @@ const calculatedPriceHandler = (
           <div v-if="el.salePrice" class="flex gap-[5px] items-center">
             <span class="font-[600]">
               {{
-                calculatedPriceHandler(
+                localizedFormatPrice(
                   settings!.currency.value,
                   el.salePrice,
+                  needCalculate,
                   settings!.secondCurrencyRate,
                 )
               }}
             </span>
             <span class="text-[12px] line-through">
               {{
-                calculatedPriceHandler(
+                localizedFormatPrice(
                   settings!.currency.value,
                   el.regularPrice,
+                  needCalculate,
                   settings!.secondCurrencyRate,
                 )
               }}
@@ -85,9 +79,10 @@ const calculatedPriceHandler = (
           </div>
           <div class="font-[600]" v-else>
             {{
-              calculatedPriceHandler(
+              localizedFormatPrice(
                 settings!.currency.value,
                 el.regularPrice,
+                needCalculate,
                 settings!.secondCurrencyRate,
               )
             }}

@@ -14,12 +14,14 @@ const emit = defineEmits(["delete-product"]);
 
 // store
 const settingsDataStore = useSettingsDataStore();
-await useAsyncData(() => settingsDataStore.getSettings());
 const { settings } = storeToRefs(settingsDataStore);
 
 // vars
 const isAdmin = useIsAdmin();
 const modal = useModal();
+const needCalculate = computed(
+  () => settings.value?.mainCurrency.value !== settings.value?.currency.value,
+);
 
 // handlers
 const openDeleteProductModal = () => {
@@ -32,16 +34,6 @@ const openDeleteProductModal = () => {
       modal.close();
     },
   });
-};
-
-const calculatedPriceHandler = (
-  currency: SettingsCurrency,
-  price: number,
-  rate: number = 1,
-) => {
-  return settings.value?.mainCurrency.value !== settings.value?.currency.value
-    ? localizedFormatPrice(currency, price, rate)
-    : localizedFormatPrice(currency, price);
 };
 </script>
 
@@ -87,9 +79,10 @@ const calculatedPriceHandler = (
           <template v-if="product.salePrice">
             <span>
               {{
-                calculatedPriceHandler(
+                localizedFormatPrice(
                   settings!.currency.value,
                   product.salePrice,
+                  needCalculate,
                   settings!.secondCurrencyRate,
                 )
               }}
@@ -98,9 +91,10 @@ const calculatedPriceHandler = (
               class="line-through text-[#919090] font-normal text-[13px] leading-[23px]"
             >
               {{
-                calculatedPriceHandler(
+                localizedFormatPrice(
                   settings!.currency.value,
                   product.regularPrice,
+                  needCalculate,
                   settings!.secondCurrencyRate,
                 )
               }}
@@ -108,9 +102,10 @@ const calculatedPriceHandler = (
           </template>
           <template v-else>
             {{
-              calculatedPriceHandler(
+              localizedFormatPrice(
                 settings!.currency.value,
                 product.regularPrice,
+                needCalculate,
                 settings!.secondCurrencyRate,
               )
             }}
