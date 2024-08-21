@@ -2,9 +2,7 @@
 import { DashboardProductDeleteModal } from "#components";
 import { locale } from "~/lang/locale";
 import type { ProductDto } from "~/server/api/product/dto/product.dto";
-import { Currency, Locales } from "~/types/ui/ui.types";
 import percentForStats from "~/utils/percent-for-stats";
-import currencyFormat from "~/utils/currency-format";
 
 // define
 const { product, categories, sales } = defineProps<{
@@ -16,6 +14,8 @@ const emit = defineEmits(["delete-product"]);
 
 // store
 const settingsDataStore = useSettingsDataStore();
+await useAsyncData(() => settingsDataStore.getSettings());
+const { settings } = storeToRefs(settingsDataStore);
 
 // vars
 const isAdmin = useIsAdmin();
@@ -33,7 +33,16 @@ const openDeleteProductModal = () => {
     },
   });
 };
-// hooks
+
+const calculatedPriceHandler = (
+  currency: SettingsCurrency,
+  price: number,
+  rate: number = 1,
+) => {
+  return settings.value?.mainCurrency.value !== settings.value?.currency.value
+    ? localizedFormatPrice(currency, price, rate)
+    : localizedFormatPrice(currency, price);
+};
 </script>
 
 <template>
@@ -76,19 +85,35 @@ const openDeleteProductModal = () => {
           class="font-[600] sm:mt-auto mt-[15px] uppercase flex gap-[10px]"
         >
           <template v-if="product.salePrice">
-            <span>{{
-              currencyFormat(product.salePrice, Currency.usd, Locales.en)
-            }}</span>
+            <span>
+              {{
+                calculatedPriceHandler(
+                  settings!.currency.value,
+                  product.salePrice,
+                  settings!.secondCurrencyRate,
+                )
+              }}
+            </span>
             <span
               class="line-through text-[#919090] font-normal text-[13px] leading-[23px]"
             >
               {{
-                currencyFormat(product.regularPrice, Currency.usd, Locales.en)
+                calculatedPriceHandler(
+                  settings!.currency.value,
+                  product.regularPrice,
+                  settings!.secondCurrencyRate,
+                )
               }}
             </span>
           </template>
           <template v-else>
-            {{ currencyFormat(product.regularPrice, Currency.usd, Locales.en) }}
+            {{
+              calculatedPriceHandler(
+                settings!.currency.value,
+                product.regularPrice,
+                settings!.secondCurrencyRate,
+              )
+            }}
           </template>
         </strong>
       </div>

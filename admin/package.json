@@ -17,7 +17,7 @@
     "@pinia/nuxt": "^0.5.3",
     "@sidebase/nuxt-auth": "^0.8.2",
     "@vue-email/nuxt": "^0.8.19",
-    "@vueuse/nuxt": "^11.0.0",
+    "@vueuse/nuxt": "^11.0.1",
     "bcrypt": "^5.1.1",
     "nanoid": "^5.0.7",
     "nuxt-mongoose": "^1.0.6",

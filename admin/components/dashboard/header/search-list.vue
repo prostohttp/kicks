@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { Currency, Locales } from "~/types/ui/ui.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
 import { locale } from "~/lang/locale";
-import currencyFormat from "~/utils/currency-format";
 
 // define
 defineProps<{
@@ -11,9 +9,22 @@ defineProps<{
 
 // store
 const settingsDataStore = useSettingsDataStore();
+await useAsyncData(() => settingsDataStore.getSettings());
+const { settings } = storeToRefs(settingsDataStore);
 
 // vars
 const model = defineModel();
+
+// handlers
+const calculatedPriceHandler = (
+  currency: SettingsCurrency,
+  price: number,
+  rate: number = 1,
+) => {
+  return settings.value?.mainCurrency.value !== settings.value?.currency.value
+    ? localizedFormatPrice(currency, price, rate)
+    : localizedFormatPrice(currency, price);
+};
 </script>
 
 <template>
@@ -54,14 +65,32 @@ const model = defineModel();
           </span>
           <div v-if="el.salePrice" class="flex gap-[5px] items-center">
             <span class="font-[600]">
-              {{ currencyFormat(el.salePrice, Currency.usd, Locales.en) }}
+              {{
+                calculatedPriceHandler(
+                  settings!.currency.value,
+                  el.salePrice,
+                  settings!.secondCurrencyRate,
+                )
+              }}
             </span>
             <span class="text-[12px] line-through">
-              {{ currencyFormat(el.regularPrice, Currency.usd, Locales.en) }}
+              {{
+                calculatedPriceHandler(
+                  settings!.currency.value,
+                  el.regularPrice,
+                  settings!.secondCurrencyRate,
+                )
+              }}
             </span>
           </div>
           <div class="font-[600]" v-else>
-            {{ currencyFormat(el.regularPrice, Currency.usd, Locales.en) }}
+            {{
+              calculatedPriceHandler(
+                settings!.currency.value,
+                el.regularPrice,
+                settings!.secondCurrencyRate,
+              )
+            }}
           </div>
         </div>
       </li>

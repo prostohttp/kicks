@@ -6,6 +6,7 @@ const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
 
 // store
 const settingsDataStore = useSettingsDataStore();
+await useAsyncData(() => settingsDataStore.getSettings());
 const { settings } = storeToRefs(settingsDataStore);
 </script>
 
