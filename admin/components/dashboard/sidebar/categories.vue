@@ -8,6 +8,7 @@ const categoryDataStore = useCategoryDataStore();
 const settingsDataStore = useSettingsDataStore();
 const productDataStore = useProductDataStore();
 const { parentTitles } = storeToRefs(categoryDataStore);
+const { locale: storeLocale } = storeToRefs(settingsDataStore);
 
 // vars
 const isOpenMobileSidebar = inject(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR);
@@ -25,13 +26,21 @@ const computedProducts = computed(() => {
   return elementCountForId(productsForCount.value);
 });
 
-const items: AccordionItem[] | undefined = [
+const items: Ref<AccordionItem[] | undefined> = ref([
   {
-    label: locale[settingsDataStore.locale].breadcrumbs.categories,
+    label: locale[storeLocale.value].allCategories,
     defaultOpen: true,
     content: parentTitles.value,
   },
-];
+]);
+
+// hooks
+watch(
+  () => locale[storeLocale.value].allCategories,
+  (newValue) => {
+    items.value![0].label = newValue;
+  },
+);
 </script>
 
 <template>
@@ -70,7 +79,7 @@ const items: AccordionItem[] | undefined = [
               class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
               @click="isOpenMobileSidebar = false"
             >
-              {{ locale[settingsDataStore.locale].allCategories }}
+              {{ locale[storeLocale].allCategories }}
             </NuxtLink>
           </li>
         </ul>

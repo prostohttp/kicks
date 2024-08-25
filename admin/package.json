@@ -14,10 +14,10 @@
     "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.18.4",
     "@nuxtjs/google-fonts": "^3.2.0",
-    "@pinia/nuxt": "^0.5.3",
-    "@sidebase/nuxt-auth": "^0.8.2",
+    "@pinia/nuxt": "^0.5.4",
+    "@sidebase/nuxt-auth": "^0.9.0",
     "@vue-email/nuxt": "^0.8.19",
-    "@vueuse/nuxt": "^11.0.1",
+    "@vueuse/nuxt": "^11.0.3",
     "bcrypt": "^5.1.1",
     "nanoid": "^5.0.7",
     "nuxt-mongoose": "^1.0.6",
@@ -25,14 +25,14 @@
     "pinia": "^2.2.2",
     "prettier": "^3.3.3",
     "resend": "^4.0.0",
-    "valibot": "^0.38.0",
+    "valibot": "^0.39.0",
     "vue": "^3.4.38",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
-    "@tiptap/extension-placeholder": "^2.6.4",
+    "@tiptap/extension-placeholder": "^2.6.6",
     "@types/bcrypt": "^5.0.2",
-    "nuxt": "^3.12.4"
+    "nuxt": "^3.13.0"
   }
 }

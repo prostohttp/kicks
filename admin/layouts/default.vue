@@ -7,9 +7,9 @@ const cookieCurrency = useCookie("currency");
 
 // store
 const settingsDataStore = useSettingsDataStore();
-const { locale, currency } = storeToRefs(settingsDataStore);
 await useAsyncData(() => settingsDataStore.getLocale());
 await useAsyncData(() => settingsDataStore.getCurrency());
+const { locale, currency } = storeToRefs(settingsDataStore);
 // TODO: вариант с использованием cookie для схем в отдельных файлах, игра не стоит свеч, там где схемы имеют небольшой объем кода, для примера реализовано на settings
 cookieLocale.value = locale.value;
 cookieCurrency.value = currency.value;

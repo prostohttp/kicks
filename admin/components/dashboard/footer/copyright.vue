@@ -3,9 +3,7 @@
 const settingsDataStore = useSettingsDataStore();
 await useAsyncData(() => settingsDataStore.getSettings());
 const { settings } = storeToRefs(settingsDataStore);
-
-// vars
-const locale = ref(settingsDataStore.locale);
+const { locale } = storeToRefs(settingsDataStore);
 </script>
 
 <template>

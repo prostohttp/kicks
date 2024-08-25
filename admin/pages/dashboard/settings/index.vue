@@ -8,7 +8,7 @@ import type { FormErrorEvent } from "#ui/types";
 // store
 const settingsDataStore = useSettingsDataStore();
 await useAsyncData(() => settingsDataStore.getSettings());
-const { settings } = storeToRefs(settingsDataStore);
+const { settings, locale: storeLocale } = storeToRefs(settingsDataStore);
 
 // vars
 const router = useRouter();
@@ -18,33 +18,34 @@ const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
   breadcrumbsArrayFactory(
     fullPath,
-    locale[settingsDataStore.locale].settings,
+    locale[storeLocale.value].settings,
     fullPath,
   ),
 );
-const items = [
+const items = ref([
   {
     slot: "general",
     icon: "i-heroicons-adjustments-vertical-16-solid",
-    label: locale[settingsDataStore.locale].general,
+    label: locale[storeLocale.value].general,
   },
   {
     slot: "english",
     icon: "i-material-symbols-language",
-    label: locale[settingsDataStore.locale].english,
+    label: locale[storeLocale.value].english,
   },
   {
     slot: "russian",
     icon: "i-material-symbols-language",
-    label: locale[settingsDataStore.locale].russian,
+    label: locale[storeLocale.value].russian,
   },
-];
+]);
 const isValidForm = ref(true);
-const isLocaleChanged = ref(false);
+// TODO: Вариант с перезагрузкой приложения
+// const isLocaleChanged = ref(false);
 
 // meta
 useHead({
-  title: locale[settingsDataStore.locale].settings,
+  title: locale[storeLocale.value].settings,
 });
 
 const onSubmitHandler = async () => {
@@ -56,13 +57,19 @@ const onSubmitHandler = async () => {
     isValidForm.value = true;
 
     await settingsDataStore.getLocale();
-    // FIXME: Другой вариант, без перезагрузки приложения
-    if (isLocaleChanged.value) {
-      reloadNuxtApp({ ttl: 1000 });
-      isLocaleChanged.value = false;
-    }
+    // TODO: Вариант с перезагрузкой приложения
+    // if (isLocaleChanged.value) {
+    //   reloadNuxtApp({ ttl: 1000 });
+    //   isLocaleChanged.value = false;
+    // } else {
+    //   toast.add({
+    //     title: locale[storeLocale].successEdit,
+    //     color: "green",
+    //   });
+    // }
+
     toast.add({
-      title: locale[settingsDataStore.locale].successEdit,
+      title: locale[storeLocale.value].successEdit,
       color: "green",
     });
   } catch (error: any) {
@@ -82,19 +89,30 @@ async function onError(event: FormErrorEvent) {
 }
 
 // hooks
+// TODO: Вариант с перезагрузкой приложения
+// watch(
+//   () => settings.value?.localeDashboard.value,
+//   (newValue, oldValue) => {
+//     isLocaleChanged.value = true;
+//   },
+// );
 watch(
-  () => settings.value?.localeDashboard.value,
-  (newValue, oldValue) => {
-    isLocaleChanged.value = true;
+  () => locale[storeLocale.value],
+  (newValue) => {
+    links.value = breadcrumbsArrayFactory(
+      fullPath,
+      newValue.settings,
+      fullPath,
+    );
+    items.value[0].label = newValue.general;
+    items.value[1].label = newValue.english;
+    items.value[2].label = newValue.russian;
   },
 );
 </script>
 
 <template>
-  <DashboardBreadcrumbs
-    :links="links"
-    :title="locale[settingsDataStore.locale].settings"
-  />
+  <DashboardBreadcrumbs :links="links" :title="locale[storeLocale].settings" />
   <main
     class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
   >
@@ -109,7 +127,7 @@ watch(
         v-if="!isValidForm"
         class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
       >
-        {{ locale[settingsDataStore.locale].error.checkRequiredFields }}
+        {{ locale[storeLocale].error.checkRequiredFields }}
       </div>
       <UTabs :items="items" class="w-full">
         <template #general>
@@ -124,7 +142,7 @@ watch(
       </UTabs>
       <div>
         <UButton type="submit" class="dark-button my-[10px]">
-          {{ locale[settingsDataStore.locale].save }}
+          {{ locale[storeLocale].save }}
         </UButton>
       </div>
     </UForm>

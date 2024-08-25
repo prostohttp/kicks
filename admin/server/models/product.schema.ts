@@ -89,10 +89,4 @@ export const Product = defineMongooseModel({
       required: true,
     },
   },
-  hooks(schema) {
-    schema.pre("save", function (this, next) {
-      this.title = this.title.toString().trim() as any;
-      next();
-    });
-  },
 });
