@@ -31,7 +31,7 @@ export const useProductDataStore = defineStore("productData", () => {
       product.value = await $fetch("/api/product/one", {
         method: "GET",
         query: {
-          id: id,
+          id,
         },
       });
     } catch (error: any) {

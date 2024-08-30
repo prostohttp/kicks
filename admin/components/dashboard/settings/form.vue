@@ -219,7 +219,7 @@ const deleteImageHandler = async () => {
     <div class="lg:w-[32%] w-full flex flex-col gap-[20px] lg:mb-0 mb-[20px]">
       <UFormGroup
         :label="locale[settingsDataStore.locale].logo"
-        name="logo"
+        name="image"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',

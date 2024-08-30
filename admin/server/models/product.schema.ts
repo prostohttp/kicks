@@ -81,8 +81,14 @@ export const Product = defineMongooseModel({
       },
     ],
     isEnabled: {
-      type: Boolean,
-      required: true,
+      label: {
+        type: String,
+        required: true,
+      },
+      value: {
+        type: Boolean,
+        required: true,
+      },
     },
     createdAt: {
       type: Date,

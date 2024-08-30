@@ -10,6 +10,10 @@ export default defineEventHandler(async (event) => {
       { children: { $in: ids } },
       { $pull: { children: { $in: ids } } },
     );
+    await Product.updateMany(
+      { category: { $in: ids } },
+      { $pull: { category: { $in: ids } } },
+    );
 
     return {
       statusMessage: "Categories deleted",

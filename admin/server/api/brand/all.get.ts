@@ -5,11 +5,16 @@ import pageCount from "~/utils/page-count";
 export default defineEventHandler(async (event) => {
   try {
     const query = getQuery(event);
+    const titles = query.titles;
     const page = Number(query.page) || 1;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_BRAND;
     const brands = await Brand.find();
     const brandLength = brands.length;
     const pagesInPagination = pageCount(brandLength, perPage);
+
+    if (titles) {
+      return await Brand.find().select("title");
+    }
 
     if (isValidPaginationPage(page, pagesInPagination, brandLength, perPage)) {
       return {

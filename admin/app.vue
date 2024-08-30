@@ -17,7 +17,7 @@ useHead({
     <NuxtClientFallback fallback-tag="span" fallback="Hello world">
       <!-- TODO: Удалить -->
       <NuxtLayout>
-        <NuxtLoadingIndicator :height="5" color="#FFA52F" />
+        <NuxtLoadingIndicator :height="3" color="#FFA52F" />
         <UiSwitchTheme />
         <NuxtPage />
       </NuxtLayout>

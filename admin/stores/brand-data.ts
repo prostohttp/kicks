@@ -11,6 +11,12 @@ export const useBrandDataStore = defineStore("brandData", () => {
   // vars
   const brands: Ref<BrandsPayload | undefined> = ref();
   const brand: Ref<BrandDto | undefined> = ref();
+  const titles: Ref<
+    Array<{
+      _id: string;
+      title: string;
+    }>
+  > = ref([]);
 
   // handlers
   const getAllBrands = async (page: number): Promise<void> => {
@@ -19,6 +25,19 @@ export const useBrandDataStore = defineStore("brandData", () => {
         method: "GET",
         query: {
           page: page || 1,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const getAllTitles = async () => {
+    try {
+      titles.value = await $fetch("/api/brand/all", {
+        method: "GET",
+        query: {
+          titles: true,
         },
       });
     } catch (error: any) {
@@ -42,6 +61,8 @@ export const useBrandDataStore = defineStore("brandData", () => {
   return {
     brand,
     brands,
+    titles,
+    getAllTitles,
     getAllBrands,
     getBrandById,
   };

@@ -5,7 +5,7 @@ import type { IArticle } from "~/pages/dashboard/articles/index.vue";
 // define
 const emit = defineEmits(["delete", "close"]);
 const { articles } = defineProps<{
-  articles: IArticle[] | undefined;
+  articles: IArticle[];
 }>();
 
 // store
