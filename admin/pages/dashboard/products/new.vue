@@ -36,6 +36,7 @@ const state: Ref<ProductDto> = ref({
   },
   quantity: 1,
   category: [],
+  tags: [],
 } as ProductDto);
 
 // meta

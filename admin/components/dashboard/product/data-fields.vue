@@ -170,6 +170,17 @@ const localeOptions = [
       />
     </UFormGroup>
     <UFormGroup
+      :label="locale[settingsDataStore.locale].productTags"
+      name="tags"
+      :ui="{
+        label: {
+          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+        },
+      }"
+    >
+      <DashboardProductTags v-model:tags="state.tags!" />
+    </UFormGroup>
+    <UFormGroup
       :label="locale[settingsDataStore.locale].productVisibility"
       name="isEnabled"
       :ui="{

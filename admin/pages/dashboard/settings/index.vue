@@ -15,12 +15,9 @@ const router = useRouter();
 const isAdmin = useIsAdmin();
 const toast = useToast();
 const fullPath = router.currentRoute.value.fullPath;
+const title = computed(() => locale[storeLocale.value].settings);
 const links: Ref<BreadcrumbItem[]> = ref(
-  breadcrumbsArrayFactory(
-    fullPath,
-    locale[storeLocale.value].settings,
-    fullPath,
-  ),
+  breadcrumbsArrayFactory(fullPath, title.value, fullPath),
 );
 const items = ref([
   {
@@ -43,11 +40,7 @@ const isValidForm = ref(true);
 // TODO: Вариант с перезагрузкой приложения
 // const isLocaleChanged = ref(false);
 
-// meta
-useHead({
-  title: locale[storeLocale.value].settings,
-});
-
+// handlers
 const onSubmitHandler = async () => {
   try {
     await $fetch("/api/settings/edit", {
@@ -109,6 +102,11 @@ watch(
     items.value[2].label = newValue.russian;
   },
 );
+
+// meta
+useHead({
+  title: title,
+});
 </script>
 
 <template>

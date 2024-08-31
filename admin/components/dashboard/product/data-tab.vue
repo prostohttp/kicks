@@ -14,5 +14,5 @@ const state: ModelRef<ProductDto> = defineModel("state", {
     <DashboardProductDataFields v-model:state="state" />
     <DashboardProductDataImages v-model:state="state" />
   </div>
-  <!-- <pre>{{ state }}</pre> -->
+  <pre>{{ state }}</pre>
 </template>
