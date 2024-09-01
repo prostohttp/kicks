@@ -8,10 +8,11 @@ import type { ProductDto } from "./product.dto";
 const settingsDataStore = useSettingsDataStore();
 const productDataStore = useProductDataStore();
 const categoryStore = useCategoryDataStore();
+const brandDataStore = useBrandDataStore();
+const { brand } = storeToRefs(brandDataStore);
 const { titles: data } = storeToRefs(categoryStore);
 await useAsyncData(() => settingsDataStore.getSettings());
 const { locale: storeLocale } = storeToRefs(settingsDataStore);
-// const { product } = storeToRefs(productDataStore);
 
 // vars
 const toast = useToast();
@@ -58,7 +59,9 @@ const clearState = () => {
 
 const onSubmitHandler = async () => {
   try {
-    isLoading.value = true;
+    if (state.value.brand) {
+      await brandDataStore.getBrandByTitle(state.value.brand);
+    }
     await $fetch("/api/product/add", {
       method: "POST",
       body: {
@@ -66,11 +69,11 @@ const onSubmitHandler = async () => {
         category: data.value.filter((el) =>
           state.value.category?.includes(el.title),
         ),
-        // FIXME: id вместо title
-        brand: state.value.brand ? state.value.brand : null,
+        brand: brand.value ? brand.value._id : null,
         createdAt: new Date(),
       },
     });
+    isLoading.value = true;
     await productDataStore.getProductCount();
     toast.add({
       title: locale[storeLocale.value].successEdit,

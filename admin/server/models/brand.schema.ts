@@ -7,6 +7,7 @@ export const Brand = defineMongooseModel({
       min: 3,
       type: String,
       required: true,
+      index: true,
     },
     description: {
       type: String,
@@ -16,11 +17,5 @@ export const Brand = defineMongooseModel({
       type: String,
       required: false,
     },
-  },
-  hooks(schema) {
-    schema.pre("save", function (this, next) {
-      this.title = this.title.toString().trim() as any;
-      next();
-    });
   },
 });

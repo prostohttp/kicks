@@ -58,12 +58,28 @@ export const useBrandDataStore = defineStore("brandData", () => {
     }
     return true;
   };
+
+  const getBrandByTitle = async (title: string) => {
+    try {
+      brand.value = await $fetch("/api/brand/one", {
+        method: "GET",
+        query: {
+          title,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+    return true;
+  };
+
   return {
     brand,
     brands,
     titles,
     getAllTitles,
     getAllBrands,
+    getBrandByTitle,
     getBrandById,
   };
 });
