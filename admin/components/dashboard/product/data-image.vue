@@ -2,7 +2,7 @@
 import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
-import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import type { ProductDto } from "~/pages/dashboard/products/product.dto";
 
 // define
 const state: ModelRef<ProductDto> = defineModel("state", {

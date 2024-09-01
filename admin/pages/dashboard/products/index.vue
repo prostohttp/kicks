@@ -134,7 +134,7 @@ watch(activePage, async (newValue) => {
         @delete-product="deleteProduct"
         :product="product"
         :categories="unwrapAfterPopulate(product.category)"
-        :sales="getSales(product._id)"
+        :sales="getSales(product._id!)"
         :key="product._id"
       />
     </div>

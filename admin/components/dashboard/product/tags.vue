@@ -4,7 +4,6 @@ import type { ModelRef } from "vue";
 // define
 const tags: ModelRef<string[]> = defineModel("tags", {
   required: true,
-  default: [],
 });
 
 // vars

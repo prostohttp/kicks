@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ModelRef } from "vue";
 import { locale } from "~/lang/locale";
-import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import type { ProductDto } from "~/pages/dashboard/products/product.dto";
 
 // define
 const state: ModelRef<ProductDto> = defineModel("state", {
@@ -26,5 +26,5 @@ const settingsDataStore = useSettingsDataStore();
       </div>
     </div>
   </div>
-  <pre>{{ state }}</pre>
+  <!-- <pre>{{ state }}</pre> -->
 </template>

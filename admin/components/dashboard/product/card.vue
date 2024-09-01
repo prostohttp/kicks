@@ -148,14 +148,14 @@ const openDeleteProductModal = () => {
         </UPopover>
       </div>
     </div>
-    <div class="flex flex-col gap-[5px]">
+    <div class="flex flex-col gap-[5px]" v-if="product.description">
       <strong class="text-[16px]">{{
         locale[settingsDataStore.locale].summary
       }}</strong>
       <span
         class="text-[14px] md:whitespace-nowrap whitespace-pre-wrap sm:h-auto sm:overflow-auto h-[40px] overflow-hidden opacity-60"
       >
-        {{ product.description }}
+        {{ removeHtmlTag(trimString(product.description)) }}
       </span>
     </div>
     <div class="border rounded-[8px] border-[#c1c1c1] p-[16px] text-[14px]">
