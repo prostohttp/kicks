@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // ssr: false,
   routeRules: {
     "/server/api/**": { cors: true },
     "/api/**": { cors: true },

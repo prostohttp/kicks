@@ -47,13 +47,13 @@ const deleteImageHandler = () => {
         <UButton
           class="icon-button float-right"
           icon="i-heroicons-inbox-arrow-down-solid"
-          @click="onClickHandler()"
+          @click="onClickHandler"
           v-if="!model"
         />
         <UButton
           class="icon-button float-right"
           icon="i-heroicons-archive-box-x-mark-solid"
-          @click="deleteImageHandler()"
+          @click="deleteImageHandler"
           v-else
         />
       </div>

@@ -14,7 +14,7 @@ const tagRef: Ref<HTMLInputElement | undefined> = ref();
 const addTagHandler = (e: any) => {
   const value = e.target.value as string;
   if (value.trim().length) {
-    if (!tags.value.includes(value)) {
+    if (!tags.value.includes(value.trim())) {
       tags.value.push(value);
     }
     e.target.value = "";

@@ -102,7 +102,7 @@ const deleteImageHandler = async () => {
 </script>
 
 <template>
-  <div class="lg:w-[32%] w-full flex flex-col gap-[20px] lg:mb-0 mb-[20px]">
+  <div>
     <UFormGroup
       :label="locale[settingsDataStore.locale].productPhoto"
       name="image"

@@ -26,6 +26,13 @@ export const validate = (state: ProductDto): FormError[] => {
     });
   }
 
+  if (state.salePrice && state.salePrice <= 0) {
+    errors.push({
+      path: "salePrice",
+      message: locale[useSettingsDataStore().locale].error.notZero,
+    });
+  }
+
   if (!state.isEnabled || typeof state.isEnabled.value !== "boolean") {
     errors.push({
       path: "isEnabled",

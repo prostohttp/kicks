@@ -5,15 +5,15 @@ export interface ProductDto {
   _id?: string;
   title: string;
   description?: string;
-  category?: [];
+  category?: string[];
   brand?: string;
   sku?: string;
   quantity: number;
   regularPrice: number;
   salePrice?: number;
-  tags?: [];
+  tags?: string[];
   image?: string;
-  additionImages?: string[];
+  additionImages: string[];
   isEnabled: {
     label: string;
     value: boolean;
