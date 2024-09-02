@@ -42,59 +42,63 @@ onBeforeUnmount(() => {
   <div class="relative w-full min-h-[150px]">
     <div v-if="editor" v-show="isVisible" class="buttons" ref="editorRef">
       <UButton
+        type="button"
         icon="i-heroicons-bold"
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
       />
       <UButton
+        type="button"
         icon="i-heroicons-italic"
         @click="editor.chain().focus().toggleItalic().run()"
         :disabled="!editor.can().chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
       />
       <UButton
+        type="button"
         icon="i-heroicons-bars-3-bottom-left"
         @click="editor.chain().focus().setParagraph().run()"
         :class="{ 'is-active': editor.isActive('paragraph') }"
       />
       <UButton
+        type="button"
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
       >
         h1
       </UButton>
-      <button
+      <UButton
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
       >
         h2
-      </button>
-      <button
+      </UButton>
+      <UButton
         @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
       >
         h3
-      </button>
-      <button
+      </UButton>
+      <UButton
         icon=""
         @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
       >
         h4
-      </button>
-      <button
+      </UButton>
+      <UButton
         @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
       >
         h5
-      </button>
-      <button
+      </UButton>
+      <UButton
         @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
       >
         h6
-      </button>
+      </UButton>
       <UButton
         icon="i-heroicons-list-bullet"
         @click="editor.chain().focus().toggleBulletList().run()"

@@ -17,9 +17,10 @@ const onClickHandler = () => {
 
 const changeHandler = (e: Event) => {
   emit("change", e);
+  // FIXME: Не нравится вариант
   setTimeout(() => {
     inputRef.value!.value = "";
-  }, 100);
+  }, 1000);
 };
 </script>
 
