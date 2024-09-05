@@ -12,6 +12,7 @@ const { settings, locale: storeLocale } = storeToRefs(settingsDataStore);
 
 // vars
 const router = useRouter();
+const route = useRoute();
 const isAdmin = useIsAdmin();
 const toast = useToast();
 const fullPath = router.currentRoute.value.fullPath;
@@ -24,21 +25,36 @@ const items = ref([
     slot: "general",
     icon: "i-heroicons-adjustments-vertical-16-solid",
     label: locale[storeLocale.value].general,
+    tab: "general",
   },
   {
     slot: "english",
     icon: "i-material-symbols-language",
     label: locale[storeLocale.value].english,
+    tab: "english",
   },
   {
     slot: "russian",
     icon: "i-material-symbols-language",
     label: locale[storeLocale.value].russian,
+    tab: "russian",
   },
 ]);
 const isValidForm = ref(true);
-// TODO: Вариант с перезагрузкой приложения
-// const isLocaleChanged = ref(false);
+const selected = computed({
+  get() {
+    const index = items.value.findIndex((item) => item.tab === route.query.tab);
+    if (index === -1) {
+      return 0;
+    }
+    return index;
+  },
+  set(val) {
+    router.replace({
+      query: { tab: items.value[val].tab },
+    });
+  },
+});
 
 // handlers
 const onSubmitHandler = async () => {
@@ -48,19 +64,7 @@ const onSubmitHandler = async () => {
       body: settings.value,
     });
     isValidForm.value = true;
-
     await settingsDataStore.getLocale();
-    // TODO: Вариант с перезагрузкой приложения
-    // if (isLocaleChanged.value) {
-    //   reloadNuxtApp({ ttl: 1000 });
-    //   isLocaleChanged.value = false;
-    // } else {
-    //   toast.add({
-    //     title: locale[storeLocale].successEdit,
-    //     color: "green",
-    //   });
-    // }
-
     toast.add({
       title: locale[storeLocale.value].successEdit,
       color: "green",
@@ -81,14 +85,6 @@ async function onError(event: FormErrorEvent) {
   }
 }
 
-// hooks
-// TODO: Вариант с перезагрузкой приложения
-// watch(
-//   () => settings.value?.localeDashboard.value,
-//   (newValue, oldValue) => {
-//     isLocaleChanged.value = true;
-//   },
-// );
 watch(
   () => locale[storeLocale.value],
   (newValue) => {
@@ -127,7 +123,7 @@ useHead({
       >
         {{ locale[storeLocale].error.checkRequiredFields }}
       </div>
-      <UTabs :items="items" class="w-full">
+      <UTabs :items="items" class="w-full" v-model="selected">
         <template #general>
           <DashboardSettingsForm />
         </template>

@@ -3,6 +3,7 @@ import type { IOption } from "~/pages/dashboard/options/index.vue";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
 import type { UiOptionDto } from "~/types/server/server.types";
 import { SettingsLocale } from "~/types/ui/ui.types";
+
 export const useOptionDataStore = defineStore("optionData", () => {
   interface OptionsPayload {
     options: OptionDto[];
@@ -19,16 +20,20 @@ export const useOptionDataStore = defineStore("optionData", () => {
     sort: undefined,
     values: [],
   });
-
   const options: Ref<OptionsPayload | undefined> = ref();
-
   const selected: Ref<IOption[]> = ref([]);
-
   const optionImages: Ref<{
     [id: string]: {
       image: string;
     };
   }> = ref({});
+  const titles: Ref<
+    Array<{
+      _id: string;
+      title: string;
+      type: string;
+    }>
+  > = ref([]);
 
   // handlers
   const getAllOptions = async (page: number) => {
@@ -36,13 +41,26 @@ export const useOptionDataStore = defineStore("optionData", () => {
       options.value = await $fetch("/api/option/all", {
         method: "GET",
         query: {
-          page: page || 1,
+          page: page,
         },
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
     return true;
+  };
+
+  const getAllTitles = async () => {
+    try {
+      titles.value = await $fetch("/api/option/all", {
+        method: "GET",
+        query: {
+          titles: true,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
   };
 
   const getOption = async (id: string) => {
@@ -93,11 +111,13 @@ export const useOptionDataStore = defineStore("optionData", () => {
   return {
     isVisibleTable,
     option,
+    titles,
     optionImages,
     options,
     selected,
     getOption,
     getAllOptions,
+    getAllTitles,
     clearState,
     addNewValue,
   };

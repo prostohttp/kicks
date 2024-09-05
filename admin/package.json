@@ -25,14 +25,14 @@
     "pinia": "^2.2.2",
     "prettier": "^3.3.3",
     "resend": "^4.0.0",
-    "valibot": "^0.40.0",
-    "vue": "^3.4.38",
+    "valibot": "^0.41.0",
+    "vue": "^3.5.1",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@tiptap/extension-placeholder": "^2.6.6",
     "@types/bcrypt": "^5.0.2",
-    "nuxt": "^3.13.0"
+    "nuxt": "^3.13.1"
   }
 }

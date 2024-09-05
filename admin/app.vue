@@ -1,30 +1,32 @@
 <script lang="ts" setup>
 import { locale } from "./lang/locale";
 
+// store
+const settingsDataStore = useSettingsDataStore();
+
+// vars
+const description = computed(() => {
+  return "%s - " + locale[settingsDataStore.locale].siteHeading;
+});
+
 // meta
 useSeoMeta({
   ogImage: "/kicks-marketplace.svg",
 });
 useHead({
-  titleTemplate: `%s - ${locale[useSettingsDataStore().locale].siteHeading}`,
+  titleTemplate: description,
 });
 </script>
 
 <template>
   <div class="w-full max-w-[1440px] mx-auto">
     <NuxtRouteAnnouncer />
-    <!-- TODO: Удалить -->
-    <NuxtClientFallback fallback-tag="span" fallback="Hello world">
-      <!-- TODO: Удалить -->
-      <NuxtLayout>
-        <NuxtLoadingIndicator :height="3" color="#FFA52F" />
-        <UiSwitchTheme />
-        <NuxtPage />
-      </NuxtLayout>
-      <UNotifications />
-      <UModals />
-      <!-- TODO: Удалить -->
-    </NuxtClientFallback>
-    <!-- TODO: Удалить -->
+    <NuxtLayout>
+      <NuxtLoadingIndicator :height="3" color="#FFA52F" />
+      <UiSwitchTheme />
+      <NuxtPage />
+    </NuxtLayout>
+    <UNotifications />
+    <UModals />
   </div>
 </template>

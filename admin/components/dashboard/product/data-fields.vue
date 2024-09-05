@@ -47,6 +47,17 @@ const localeOptions = [
       <UInput v-model="state.title" inputClass="input-label-without-icon" />
     </UFormGroup>
     <UFormGroup
+      :label="locale[settingsDataStore.locale].shortDescription"
+      name="shortDescription"
+      :ui="{
+        label: {
+          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+        },
+      }"
+    >
+      <UTextarea v-model="state.shortDescription" class="textarea" />
+    </UFormGroup>
+    <UFormGroup
       :label="locale[settingsDataStore.locale].description"
       name="description"
       :ui="{

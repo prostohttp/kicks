@@ -8,8 +8,6 @@ interface BannerTab {
   title: string;
 }
 
-// define
-
 // store
 const bannerDataSrore = useBannerDataStore();
 const settingsDataStore = useSettingsDataStore();

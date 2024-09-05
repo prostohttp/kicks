@@ -54,9 +54,9 @@ const needCalculate = computed(
           </NuxtLink>
           <span
             class="text-[12px] h-[3em] whitespace-normal line-clamp-2"
-            v-if="el.description"
+            v-if="el.shortDescription"
           >
-            {{ removeHtmlTag(trimString(el.description)) }}
+            {{ el.shortDescription }}
           </span>
           <div v-if="el.salePrice" class="flex gap-[5px] items-center">
             <span class="font-[600]">

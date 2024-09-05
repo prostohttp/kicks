@@ -4,6 +4,7 @@ import { TitleObjectAfterPopulate } from "~/types/server/server.types";
 export interface ProductDto {
   _id?: string;
   title: string;
+  shortDescription: string;
   description?: string;
   category?: TitleObjectAfterPopulate[];
   brand?: string;

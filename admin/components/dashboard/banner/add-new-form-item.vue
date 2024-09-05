@@ -178,6 +178,5 @@ const deleteImageHandler = async () => {
         min="1"
       />
     </UFormGroup>
-    <!-- <pre>{{ banner.banners[index] }}</pre> -->
   </div>
 </template>

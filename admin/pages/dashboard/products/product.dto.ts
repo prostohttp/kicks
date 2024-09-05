@@ -1,8 +1,21 @@
-import type { OptionDto } from "~/server/api/option/dto/option.dto";
+export interface ProductOptionDto {
+  id: number;
+  title: string;
+  value?: string;
+  type: string;
+  sort: number | undefined;
+  required: boolean;
+  values?: {
+    value: string;
+    count?: number;
+    price?: number;
+  }[];
+}
 
 export interface ProductDto {
   _id?: string;
   title: string;
+  shortDescription: string;
   description?: string;
   category?: string[];
   brand?: string;
@@ -17,5 +30,5 @@ export interface ProductDto {
     label: string;
     value: boolean;
   };
-  options?: OptionDto[];
+  options?: ProductOptionDto[];
 }

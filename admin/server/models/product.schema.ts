@@ -9,6 +9,10 @@ export const Product = defineMongooseModel({
       type: String,
       required: true,
     },
+    shortDescription: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: false,
@@ -22,23 +26,29 @@ export const Product = defineMongooseModel({
     ],
     options: [
       {
-        optionId: {
-          type: Types.ObjectId || String,
+        // TODO: Удалить
+        // optionId: {
+        //   type: Types.ObjectId || String,
+        //   required: true,
+        //   ref: "Option",
+        // },
+        value: {
+          type: String,
+          required: false,
+        },
+        sort: {
+          type: Number,
           required: true,
-          ref: "Option",
+        },
+        required: {
+          type: Boolean,
+          required: true,
         },
         values: [
           {
-            valueId: {
-              type: Types.ObjectId || String,
-              required: true,
-              ref: "OptionValue",
-            },
-            productCount: {
-              type: Number,
-              required: true,
-              min: 1,
-            },
+            type: Types.ObjectId || String,
+            required: false,
+            ref: "OptionValue",
           },
         ],
       },

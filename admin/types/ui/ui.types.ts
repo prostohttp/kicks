@@ -53,13 +53,33 @@ export interface InputData {
   disabled?: boolean;
 }
 
+export enum OptionTypes {
+  SELECT = "select",
+  TEXT = "text",
+  TEXTAREA = "textarea",
+  DATE = "date",
+  TIME = "time",
+  DATETIME = "datetime",
+}
+
+export const optionKeys = {
+  list: "List",
+  select: "Select",
+  checkbox: "Checkbox",
+  text: "Text",
+  textarea: "Textarea",
+  date: "Date",
+  time: "Time",
+  datetime: "Date and Time",
+};
+
 export const optionTypes = {
-  [locale[SettingsLocale.en].optionTypes.list]: "select",
-  [locale[SettingsLocale.en].optionTypes.select]: "select",
-  [locale[SettingsLocale.en].optionTypes.checkbox]: "select",
-  [locale[SettingsLocale.en].optionTypes.text]: "text",
-  [locale[SettingsLocale.en].optionTypes.textarea]: "textarea",
-  [locale[SettingsLocale.en].optionTypes.date]: "date",
-  [locale[SettingsLocale.en].optionTypes.time]: "time",
-  [locale[SettingsLocale.en].optionTypes.datetime]: "datetime",
+  [optionKeys.list]: OptionTypes.SELECT,
+  [optionKeys.select]: OptionTypes.SELECT,
+  [optionKeys.checkbox]: OptionTypes.SELECT,
+  [optionKeys.text]: OptionTypes.TEXT,
+  [optionKeys.textarea]: OptionTypes.TEXTAREA,
+  [optionKeys.date]: OptionTypes.DATE,
+  [optionKeys.time]: OptionTypes.TIME,
+  [optionKeys.datetime]: OptionTypes.DATETIME,
 };

@@ -1,6 +1,6 @@
 import type { FormError } from "#ui/types";
 import { locale } from "~/lang/locale";
-import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import type { ProductDto } from "./product.dto";
 
 export const validate = (state: ProductDto): FormError[] => {
   const errors = [];
@@ -9,6 +9,13 @@ export const validate = (state: ProductDto): FormError[] => {
     errors.push({
       path: "title",
       message: locale[useSettingsDataStore().locale].error.stringMin3,
+    });
+  }
+
+  if (!state.shortDescription || state.shortDescription.length < 10) {
+    errors.push({
+      path: "shortDescription",
+      message: locale[useSettingsDataStore().locale].error.invalidDescription,
     });
   }
 
@@ -39,5 +46,22 @@ export const validate = (state: ProductDto): FormError[] => {
       message: locale[useSettingsDataStore().locale].error.required,
     });
   }
+  if (state.options) {
+    for (const item of state.options) {
+      if (!item.sort) {
+        errors.push({
+          path: `sort-${item.id}`,
+          message: locale[useSettingsDataStore().locale].error.required,
+        });
+      }
+      if (!item.title && item.title.length < 3) {
+        errors.push({
+          path: `title-${item.id}`,
+          message: locale[useSettingsDataStore().locale].error.stringMin3,
+        });
+      }
+    }
+  }
+
   return errors;
 };
