@@ -1,5 +1,4 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
-// import { Types } from "mongoose";
 
 export const OptionValue = defineMongooseModel({
   name: "OptionValue",

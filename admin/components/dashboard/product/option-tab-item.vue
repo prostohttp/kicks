@@ -7,16 +7,12 @@ import { optionKeys } from "~/types/ui/ui.types";
 const { id } = defineProps<{
   id: number;
 }>();
-const activeTab = defineModel("activeTab", {
-  required: true,
-});
 const options = defineModel("options", {
   required: true,
   default: [] as ProductOptionDto[] | undefined,
 });
 
 // store
-const optionDataStore = useOptionDataStore();
 const settingsDataStore = useSettingsDataStore();
 
 // vars
@@ -38,8 +34,6 @@ const isDateTime = computed(
     option.value?.type === optionKeys.time ||
     option.value?.type === optionKeys.datetime,
 );
-
-// handlers
 </script>
 
 <template>
@@ -86,6 +80,5 @@ const isDateTime = computed(
         <span>{{ locale[settingsDataStore.locale].requiredOrnNot }}</span>
       </div>
     </UFormGroup>
-    <!-- <pre>{{ option }}</pre> -->
   </div>
 </template>

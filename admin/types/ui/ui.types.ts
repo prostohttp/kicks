@@ -1,5 +1,3 @@
-import { locale } from "~/lang/locale";
-
 export interface AccordionItem {
   label: string;
   slot?: string;
@@ -53,15 +51,6 @@ export interface InputData {
   disabled?: boolean;
 }
 
-export enum OptionTypes {
-  SELECT = "select",
-  TEXT = "text",
-  TEXTAREA = "textarea",
-  DATE = "date",
-  TIME = "time",
-  DATETIME = "datetime",
-}
-
 export const optionKeys = {
   list: "List",
   select: "Select",
@@ -71,15 +60,4 @@ export const optionKeys = {
   date: "Date",
   time: "Time",
   datetime: "Date and Time",
-};
-
-export const optionTypes = {
-  [optionKeys.list]: OptionTypes.SELECT,
-  [optionKeys.select]: OptionTypes.SELECT,
-  [optionKeys.checkbox]: OptionTypes.SELECT,
-  [optionKeys.text]: OptionTypes.TEXT,
-  [optionKeys.textarea]: OptionTypes.TEXTAREA,
-  [optionKeys.date]: OptionTypes.DATE,
-  [optionKeys.time]: OptionTypes.TIME,
-  [optionKeys.datetime]: OptionTypes.DATETIME,
 };

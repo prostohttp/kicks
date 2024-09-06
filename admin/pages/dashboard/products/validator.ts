@@ -54,11 +54,16 @@ export const validate = (state: ProductDto): FormError[] => {
           message: locale[useSettingsDataStore().locale].error.required,
         });
       }
-      if (!item.title && item.title.length < 3) {
-        errors.push({
-          path: `title-${item.id}`,
-          message: locale[useSettingsDataStore().locale].error.stringMin3,
-        });
+      // TODO: Удалить
+      if (item.values) {
+        for (const optionValue of item.values) {
+          if (!optionValue.value) {
+            errors.push({
+              path: `value-${optionValue.id}`,
+              message: locale[useSettingsDataStore().locale].error.required,
+            });
+          }
+        }
       }
     }
   }

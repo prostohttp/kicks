@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     const pagesInPagination = pageCount(optionsLength, perPage);
 
     if (titles) {
-      return await Option.find().select("title type");
+      return await Option.find().select("title type sort");
     }
 
     if (

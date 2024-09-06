@@ -1,8 +1,7 @@
-import { locale } from "~/lang/locale";
 import type { IOption } from "~/pages/dashboard/options/index.vue";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
 import type { UiOptionDto } from "~/types/server/server.types";
-import { SettingsLocale } from "~/types/ui/ui.types";
+import { optionKeys } from "~/types/ui/ui.types";
 
 export const useOptionDataStore = defineStore("optionData", () => {
   interface OptionsPayload {
@@ -32,6 +31,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
       _id: string;
       title: string;
       type: string;
+      sort: number;
     }>
   > = ref([]);
 
@@ -82,21 +82,13 @@ export const useOptionDataStore = defineStore("optionData", () => {
     return true;
   };
 
-  const addNewValue = () => {
-    const id = Date.now();
-    option.values.unshift({
-      id: id,
-      value: "",
-      sort: undefined,
-      image: "",
-    });
-  };
+  const addNewValue = () => {};
 
   const isVisibleTable = computed(
     () =>
-      option?.type === locale[SettingsLocale.en].optionTypes.list ||
-      option?.type === locale[SettingsLocale.en].optionTypes.select ||
-      option?.type === locale[SettingsLocale.en].optionTypes.checkbox,
+      option?.type === optionKeys.list ||
+      option?.type === optionKeys.select ||
+      option?.type === optionKeys.checkbox,
   );
 
   const clearState = () => {

@@ -26,12 +26,6 @@ export const Product = defineMongooseModel({
     ],
     options: [
       {
-        // TODO: Удалить
-        // optionId: {
-        //   type: Types.ObjectId || String,
-        //   required: true,
-        //   ref: "Option",
-        // },
         value: {
           type: String,
           required: false,
@@ -46,9 +40,23 @@ export const Product = defineMongooseModel({
         },
         values: [
           {
-            type: Types.ObjectId || String,
-            required: false,
-            ref: "OptionValue",
+            optionId: {
+              type: Types.ObjectId || String,
+              required: true,
+              ref: "Option",
+            },
+            value: {
+              type: String,
+              required: true,
+            },
+            count: {
+              type: Number,
+              required: false,
+            },
+            price: {
+              type: Number,
+              required: false,
+            },
           },
         ],
       },

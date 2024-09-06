@@ -1,5 +1,5 @@
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
-import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import type { ProductDto } from "~/pages/dashboard/products/product.dto";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
 export interface ProductsPayload {
@@ -73,6 +73,23 @@ export const useProductDataStore = defineStore("productData", () => {
     return true;
   };
 
+  const addNewValue = (optionId: number) => {
+    const id = Date.now();
+    const index = product.value?.options!.findIndex(
+      (opt) => opt.id === optionId,
+    );
+    console.log("index", product.value);
+
+    // if (index && index !== -1) {
+    //   product.value?.options![index].values?.unshift({
+    //     id: id,
+    //     value: "",
+    //     price: undefined,
+    //     count: undefined,
+    //   });
+    // }
+  };
+
   const clearFoundedProducts = () => {
     foundedProducts.value = {
       products: [],
@@ -115,6 +132,7 @@ export const useProductDataStore = defineStore("productData", () => {
     productsForCount,
     titles,
     selected,
+    addNewValue,
     getProductById,
     getTitles,
     getAllProducts,

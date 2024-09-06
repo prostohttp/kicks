@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { InputData } from "~/types/ui/ui.types";
-import { optionTypes } from "~/types/ui/ui.types";
+import { optionKeys } from "~/types/ui/ui.types";
 import type { FormSubmitEvent } from "#ui/types";
 import { validate } from "./validator";
 
@@ -17,7 +17,7 @@ const { option, isVisibleTable } = storeToRefs(optionDataStore);
 // Vars
 const isAdmin = useIsAdmin();
 const toast = useToast();
-const types: string[] = Object.keys(optionTypes).map((label) => label);
+const types: string[] = Object.values(optionKeys);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
 // Handlers

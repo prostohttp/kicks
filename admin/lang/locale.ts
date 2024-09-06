@@ -162,6 +162,7 @@ export const locale = {
     russian: "Russian",
     pageNotFound: "Page not found",
     requiredOrnNot: "Required field",
+    count: "Count",
     error: {
       required: "Required field",
       string: "Required and must be a string",
@@ -182,16 +183,6 @@ export const locale = {
       manager: "Manager",
       customer: "Customer",
       admin: "Admin",
-    },
-    optionTypes: {
-      list: "List",
-      select: "Select",
-      checkbox: "Checkbox",
-      text: "Text",
-      textarea: "Textarea",
-      date: "Date",
-      time: "Time",
-      datetime: "Date and Time",
     },
     breadcrumbs: {
       profile: "Profile",
@@ -370,6 +361,7 @@ export const locale = {
     russian: "Русский",
     pageNotFound: "Страница не найдена",
     requiredOrnNot: "Обязательное поле",
+    count: "Кол-во",
     error: {
       required: "Обязательное поле",
       string: "Обязательное и должно быть строкой",
@@ -390,16 +382,6 @@ export const locale = {
       manager: "Менеджер",
       customer: "Покупатель",
       admin: "Администратор",
-    },
-    optionTypes: {
-      list: "List",
-      select: "Select",
-      checkbox: "Checkbox",
-      text: "Text",
-      textarea: "Textarea",
-      date: "Date",
-      time: "Time",
-      datetime: "Date and Time",
     },
     breadcrumbs: {
       profile: "Профиль",

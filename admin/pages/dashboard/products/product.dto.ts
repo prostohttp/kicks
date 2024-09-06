@@ -1,11 +1,13 @@
 export interface ProductOptionDto {
   id: number;
+  optionId: string;
   title: string;
   value?: string;
   type: string;
   sort: number | undefined;
   required: boolean;
   values?: {
+    id: number;
     value: string;
     count?: number;
     price?: number;
@@ -30,5 +32,5 @@ export interface ProductDto {
     label: string;
     value: boolean;
   };
-  options?: ProductOptionDto[];
+  options: ProductOptionDto[];
 }

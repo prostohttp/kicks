@@ -16,7 +16,9 @@ const { titles } = storeToRefs(optionDataStore);
 
 // vars
 const activeTab = ref(0);
-const optionTitles = computed(() => titles.value.map((el) => el.title));
+const optionTitles = computed(() =>
+  titles.value.sort((a, b) => a.sort - b.sort).map((el) => el.title),
+);
 const optionModel = ref("");
 const option = computed(() =>
   titles.value.find((el) => el.title === optionModel.value),
@@ -26,6 +28,7 @@ const option = computed(() =>
 const changeOptionHandler = () => {
   options.value.push({
     id: Date.now(),
+    optionId: option.value!._id,
     title: optionModel.value,
     value: "",
     type: option.value!.type,
@@ -97,14 +100,12 @@ const deleteOption = (id: number) => {
         v-for="(option, index) in options"
         :id="option.id"
         v-model:options="options"
-        v-model:activeTab="activeTab"
         v-show="index === activeTab"
         :key="option.id"
         @click="activeTab = index"
       />
     </div>
   </div>
-  <!-- <pre>{{ options }}</pre> -->
 </template>
 
 <style scoped>

@@ -75,6 +75,7 @@ const clearState = () => {
     tags: [] as string[],
     additionImages: [] as string[],
     image: "",
+    options: [] as ProductOptionDto[],
   } as ProductDto;
 };
 
@@ -169,5 +170,4 @@ useHead({
       </UForm>
     </div>
   </main>
-  <pre>{{ state }}</pre>
 </template>
