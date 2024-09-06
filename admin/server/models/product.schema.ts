@@ -30,6 +30,11 @@ export const Product = defineMongooseModel({
           type: String,
           required: false,
         },
+        optionId: {
+          type: Types.ObjectId || String,
+          required: true,
+          ref: "Option",
+        },
         sort: {
           type: Number,
           required: true,
@@ -40,11 +45,6 @@ export const Product = defineMongooseModel({
         },
         values: [
           {
-            optionId: {
-              type: Types.ObjectId || String,
-              required: true,
-              ref: "Option",
-            },
             value: {
               type: String,
               required: true,

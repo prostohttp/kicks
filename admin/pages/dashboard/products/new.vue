@@ -88,6 +88,13 @@ const onSubmitHandler = async () => {
       method: "POST",
       body: {
         ...state.value,
+        options: state.value.options.map((option) => ({
+          ...option,
+          values: option.values?.map((opt) => ({
+            ...opt,
+            value: opt.value.value,
+          })),
+        })),
         category: data.value.filter((el) =>
           state.value.category?.includes(el.title),
         ),

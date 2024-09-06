@@ -8,7 +8,10 @@ export interface ProductOptionDto {
   required: boolean;
   values?: {
     id: number;
-    value: string;
+    value: {
+      value: string;
+      label: string;
+    };
     count?: number;
     price?: number;
   }[];

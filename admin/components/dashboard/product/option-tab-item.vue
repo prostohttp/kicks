@@ -80,5 +80,6 @@ const isDateTime = computed(
         <span>{{ locale[settingsDataStore.locale].requiredOrnNot }}</span>
       </div>
     </UFormGroup>
+    <pre>{{ option }}</pre>
   </div>
 </template>
