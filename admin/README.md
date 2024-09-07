@@ -5,6 +5,7 @@
 - Typescript
 - Docker
 - Nuxt 3
+- REST API
 - Pinia
 - NuxtUI
 - MongoDb

@@ -12,6 +12,7 @@
 - Typescript
 - Docker
 - Nuxt 3
+- REST API
 - Pinia
 - NuxtUI
 - MongoDb
@@ -25,6 +26,7 @@
 - Typescript
 - Docker
 - Vue 3
+- GraphQL
 - Pinia
 - Shadcn/vue
 - MongoDb
@@ -38,4 +40,5 @@
 - Typescript
 - Docker
 - Nest.js
+- GraphQL
 - MongoDb
