@@ -82,7 +82,15 @@ export const useOptionDataStore = defineStore("optionData", () => {
     return true;
   };
 
-  const addNewValue = () => {};
+  const addNewValue = () => {
+    const id = Date.now();
+    option.values.push({
+      id: id,
+      value: "",
+      sort: undefined,
+      image: "",
+    });
+  };
 
   const isVisibleTable = computed(
     () =>

@@ -33,7 +33,7 @@ export interface MultiPartData {
 }
 
 export interface ValueOption {
-  _id: string;
+  _id?: string;
   id: number;
   value: string;
   sort: number | undefined;

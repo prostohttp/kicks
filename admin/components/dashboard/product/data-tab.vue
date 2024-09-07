@@ -26,5 +26,4 @@ const settingsDataStore = useSettingsDataStore();
       </div>
     </div>
   </div>
-  <!-- <pre>{{ state }}</pre> -->
 </template>
