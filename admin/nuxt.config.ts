@@ -2,16 +2,14 @@
 export default defineNuxtConfig({
   // ssr: false,
   routeRules: {
-    "/server/api/**": { cors: true },
-    "/api/**": { cors: true },
+    // "/server/api/**": { cors: true },
+    // "/api/**": { cors: true },
     "/auth/**": {
       prerender: true,
     },
   },
   experimental: {
     typedPages: true,
-    // TODO: Удалить
-    clientFallback: true,
   },
   app: {
     head: {

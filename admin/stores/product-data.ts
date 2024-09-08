@@ -73,23 +73,6 @@ export const useProductDataStore = defineStore("productData", () => {
     return true;
   };
 
-  const addNewValue = (optionId: number) => {
-    const id = Date.now();
-    const index = product.value?.options!.findIndex(
-      (opt) => opt.id === optionId,
-    );
-    console.log("index", product.value);
-
-    // if (index && index !== -1) {
-    //   product.value?.options![index].values?.unshift({
-    //     id: id,
-    //     value: "",
-    //     price: undefined,
-    //     count: undefined,
-    //   });
-    // }
-  };
-
   const clearFoundedProducts = () => {
     foundedProducts.value = {
       products: [],
