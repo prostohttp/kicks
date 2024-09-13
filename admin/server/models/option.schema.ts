@@ -22,6 +22,10 @@ export const Option = defineMongooseModel({
           type: String,
           required: true,
         },
+        id: {
+          type: Number,
+          required: true,
+        },
         sort: {
           type: Number,
           required: true,

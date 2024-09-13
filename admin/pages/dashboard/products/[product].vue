@@ -66,15 +66,14 @@ const addNeededFieldsToOptions = (options: OptionDto[]) => {
       title: savedOption?.title!,
       type: savedOption?.type!,
       values: option.values?.map((outerOption) => {
-        const value = {
-          value: outerOption.value,
-          label: savedOption?.values?.find(
-            (innerOption) => innerOption._id === outerOption.value,
-          )?.value!,
-        };
         return {
           ...outerOption,
-          value: value,
+          value: {
+            value: outerOption.value,
+            label: savedOption?.values?.find(
+              (innerOption) => innerOption._id === outerOption.value,
+            )?.value!,
+          },
         };
       }),
     };
@@ -211,6 +210,5 @@ useHeadSafe({
       </div>
     </div>
     <!-- <pre>{{ state }}</pre> -->
-    <pre>{{ product }}</pre>
   </main>
 </template>
