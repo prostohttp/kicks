@@ -81,9 +81,9 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
     parentTitles,
     titles,
     selected,
-    getAllTitles,
     category,
     categories,
+    getAllTitles,
     getAllCategories,
     getCategoryById,
   };

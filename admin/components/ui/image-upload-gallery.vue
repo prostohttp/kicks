@@ -11,8 +11,10 @@ const isAdmin = useIsAdmin();
 
 // handlers
 const onClickHandler = () => {
-  inputRef.value?.click();
-  inputRef.value!.value = "";
+  if (isAdmin) {
+    inputRef.value?.click();
+    inputRef.value!.value = "";
+  }
 };
 
 const changeHandler = (e: Event) => {

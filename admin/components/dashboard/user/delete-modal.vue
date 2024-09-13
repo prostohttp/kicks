@@ -21,7 +21,7 @@ const settingsDataStore = useSettingsDataStore();
           <h3
             class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
           >
-            {{ locale[settingsDataStore.locale].deleteProduct }}
+            {{ locale[settingsDataStore.locale].deletePerson }}
           </h3>
           <UButton
             color="gray"
@@ -35,7 +35,7 @@ const settingsDataStore = useSettingsDataStore();
 
       <div class="flex flex-col gap-[20px]">
         <p class="dark:text-fa-white">
-          {{ locale[settingsDataStore.locale].deleteProductText }}
+          {{ locale[settingsDataStore.locale].deletePersonText }}
         </p>
         <div class="flex gap-[10px] mt-auto justify-end">
           <UButton
@@ -48,7 +48,7 @@ const settingsDataStore = useSettingsDataStore();
             @click="$emit('delete')"
             class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
           >
-            {{ locale[settingsDataStore.locale].deleteProduct }}
+            {{ locale[settingsDataStore.locale].deletePerson }}
           </UButton>
         </div>
       </div>

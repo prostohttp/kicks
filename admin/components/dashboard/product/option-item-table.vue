@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
 import type { ProductOptionDto } from "~/pages/dashboard/products/product.dto";
-import { optionKeys } from "~/types/ui/ui.types";
 
 // define
 const option = defineModel("option", {
@@ -17,9 +16,6 @@ await useAsyncData(() => optionDataStore.getOption(option.value.optionId));
 const { option: dataOption } = storeToRefs(optionDataStore);
 
 // vars
-// const isList = computed(() => option.value.type === optionKeys.list);
-// const isSelect = computed(() => option.value.type === optionKeys.select);
-// const isCheckbox = computed(() => option.value.type === optionKeys.checkbox);
 const optionValues = dataOption.value.values.map((option) => ({
   label: option.value,
   value: option._id,

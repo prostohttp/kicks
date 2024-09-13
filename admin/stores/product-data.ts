@@ -115,7 +115,6 @@ export const useProductDataStore = defineStore("productData", () => {
     productsForCount,
     titles,
     selected,
-    addNewValue,
     getProductById,
     getTitles,
     getAllProducts,

@@ -8,10 +8,10 @@ import type { ProductDto, ProductOptionDto } from "./product.dto";
 // store
 const settingsDataStore = useSettingsDataStore();
 const productDataStore = useProductDataStore();
-const categoryStore = useCategoryDataStore();
+const categoryDataStore = useCategoryDataStore();
 const brandDataStore = useBrandDataStore();
 const { brand } = storeToRefs(brandDataStore);
-const { titles: data } = storeToRefs(categoryStore);
+const { titles: data } = storeToRefs(categoryDataStore);
 await useAsyncData(() => settingsDataStore.getSettings());
 const { locale: storeLocale } = storeToRefs(settingsDataStore);
 
@@ -170,11 +170,12 @@ useHead({
           </template>
         </UTabs>
         <div>
-          <UButton type="submit" class="dark-button my-[10px]">
+          <UButton type="submit" class="dark-button my-[10px]" v-if="isAdmin">
             {{ locale[storeLocale].save }}
           </UButton>
         </div>
       </UForm>
     </div>
+    <!-- <pre>{{ state }}</pre> -->
   </main>
 </template>

@@ -18,10 +18,6 @@ export const Option = defineMongooseModel({
     },
     values: [
       {
-        id: {
-          type: Number,
-          required: true,
-        },
         value: {
           type: String,
           required: true,

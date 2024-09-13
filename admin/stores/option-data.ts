@@ -20,6 +20,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     values: [],
   });
   const options: Ref<OptionsPayload | undefined> = ref();
+  const optionsWithoutPagination: Ref<OptionDto[] | undefined> = ref();
   const selected: Ref<IOption[]> = ref([]);
   const optionImages: Ref<{
     [id: string]: {
@@ -42,6 +43,20 @@ export const useOptionDataStore = defineStore("optionData", () => {
         method: "GET",
         query: {
           page: page,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+    return true;
+  };
+
+  const getAllTitlesWithoutPagination = async () => {
+    try {
+      optionsWithoutPagination.value = await $fetch("/api/option/all", {
+        method: "GET",
+        query: {
+          all: true,
         },
       });
     } catch (error: any) {
@@ -79,7 +94,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
-    return true;
+    return option;
   };
 
   const addNewValue = () => {
@@ -114,9 +129,11 @@ export const useOptionDataStore = defineStore("optionData", () => {
     titles,
     optionImages,
     options,
+    optionsWithoutPagination,
     selected,
     getOption,
     getAllOptions,
+    getAllTitlesWithoutPagination,
     getAllTitles,
     clearState,
     addNewValue,

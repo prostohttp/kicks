@@ -35,6 +35,10 @@ export const Product = defineMongooseModel({
           required: true,
           ref: "Option",
         },
+        id: {
+          type: Number,
+          required: true,
+        },
         sort: {
           type: Number,
           required: true,
@@ -47,6 +51,10 @@ export const Product = defineMongooseModel({
           {
             value: {
               type: String,
+              required: true,
+            },
+            id: {
+              type: Number,
               required: true,
             },
             count: {

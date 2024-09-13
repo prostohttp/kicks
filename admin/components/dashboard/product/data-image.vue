@@ -5,6 +5,9 @@ import { locale } from "~/lang/locale";
 import type { ProductDto } from "~/pages/dashboard/products/product.dto";
 
 // define
+const { isSaved } = defineProps<{
+  isSaved?: boolean;
+}>();
 const state: ModelRef<ProductDto> = defineModel("state", {
   required: true,
   default: {} as ProductDto,
@@ -14,6 +17,7 @@ const state: ModelRef<ProductDto> = defineModel("state", {
 const settingsDataStore = useSettingsDataStore();
 
 // vars
+const isAdmin = useIsAdmin();
 const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
 
@@ -42,6 +46,15 @@ const uploadImage = async (e: Event) => {
     }
     const uploadedImage = await uploadImageHandler(formData);
     state.value.image = uploadedImage;
+    if (isSaved) {
+      await $fetch("/api/product/edit", {
+        method: "PUT",
+        body: {
+          _id: state.value._id,
+          image: uploadedImage,
+        },
+      });
+    }
     toast.add({
       title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
@@ -56,7 +69,7 @@ const uploadImage = async (e: Event) => {
 
 const onDrop = async (files: File[] | null) => {
   try {
-    if (files) {
+    if (files && isAdmin) {
       const formData = new FormData();
       if (files![0]) {
         formData.append("folderName", Constants.IMG_PRODUCTS);
@@ -64,6 +77,15 @@ const onDrop = async (files: File[] | null) => {
       }
       const uploadedImage = await uploadImageHandler(formData);
       state.value.image = uploadedImage;
+      if (isSaved) {
+        await $fetch("/api/product/edit", {
+          method: "PUT",
+          body: {
+            _id: state.value._id,
+            image: uploadedImage,
+          },
+        });
+      }
       toast.add({
         title: locale[settingsDataStore.locale].imageDeleted,
         color: "green",
@@ -88,13 +110,23 @@ const deleteImageHandler = async () => {
       },
     });
     state.value.image = "";
+    if (isSaved) {
+      await $fetch("/api/product/edit", {
+        method: "PUT",
+        body: {
+          _id: state.value._id,
+          image: "",
+        },
+      });
+    }
+
     toast.add({
       title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
     });
-  } catch (_error) {
+  } catch (error: any) {
     toast.add({
-      title: locale[settingsDataStore.locale].somethingWentWrong,
+      title: error.message,
       color: "red",
     });
   }

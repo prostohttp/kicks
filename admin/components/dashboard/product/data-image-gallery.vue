@@ -3,7 +3,11 @@ import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
 import type { ProductDto } from "~/pages/dashboard/products/product.dto";
+
 // define
+const { isSaved } = defineProps<{
+  isSaved?: boolean;
+}>();
 const state: ModelRef<ProductDto> = defineModel("state", {
   required: true,
   default: {} as ProductDto,
@@ -41,6 +45,15 @@ const uploadImage = async (e: Event) => {
         const uploadedImage = await uploadImageHandler(formData);
         state.value.additionImages?.push(uploadedImage);
       }
+      if (isSaved) {
+        await $fetch("/api/product/edit", {
+          method: "PUT",
+          body: {
+            _id: state.value._id,
+            additionImages: state.value.additionImages,
+          },
+        });
+      }
     }
     toast.add({
       title: locale[settingsDataStore.locale].imageUploaded,
@@ -63,6 +76,15 @@ const deleteImageHandler = async (index: number) => {
       },
     });
     state.value.additionImages?.splice(index, 1);
+    if (isSaved) {
+      await $fetch("/api/product/edit", {
+        method: "PUT",
+        body: {
+          _id: state.value._id,
+          additionImages: state.value.additionImages,
+        },
+      });
+    }
     toast.add({
       title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",

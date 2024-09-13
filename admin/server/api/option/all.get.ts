@@ -7,11 +7,16 @@ export default defineEventHandler(async (event) => {
   try {
     let query = getQuery(event);
     const page = Number(query.page) || 1;
+    const all = query.all;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_OPTION;
     const titles = query.titles;
     const options = await Option.find().sort({ sort: 1 });
     const optionsLength = options.length;
     const pagesInPagination = pageCount(optionsLength, perPage);
+
+    if (all) {
+      return Option.find();
+    }
 
     if (titles) {
       return await Option.find().select("title type sort");

@@ -1,4 +1,5 @@
 export interface ProductOptionDto {
+  _id?: string;
   id: number;
   optionId: string;
   title: string;
