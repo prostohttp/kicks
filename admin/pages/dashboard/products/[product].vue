@@ -212,7 +212,7 @@ useHeadSafe({
         </UForm>
       </div>
     </div>
-    <pre>{{ product }}</pre>
+    <!-- <pre>{{ product }}</pre> -->
     <!-- <pre>{{ product }}</pre> -->
   </main>
 </template>

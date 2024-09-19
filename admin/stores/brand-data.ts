@@ -58,7 +58,7 @@ export const useBrandDataStore = defineStore("brandData", () => {
         throw createError({ statusMessage: error.message });
       }
     }
-    return brand.value;
+    return true;
   };
 
   const getBrandByTitle = async (title: string) => {

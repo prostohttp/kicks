@@ -16,8 +16,6 @@ export interface ProductsPayload {
 export const useProductDataStore = defineStore("productData", () => {
   // store
   const optionDataStore = useOptionDataStore();
-  const categoryDataStore = useCategoryDataStore();
-  const brandDataStore = useBrandDataStore();
   const { optionsWithoutPagination } = storeToRefs(optionDataStore);
 
   // vars
@@ -108,10 +106,6 @@ export const useProductDataStore = defineStore("productData", () => {
     }
     return true;
   };
-
-  const deleteNonExistingCategories = async (ids: string[]) => {};
-
-  const deleteNonExistingBrand = async (id: string) => {};
 
   const getProductById = async (id: string) => {
     try {
@@ -226,7 +220,5 @@ export const useProductDataStore = defineStore("productData", () => {
     clearFoundedProducts,
     deleteNonExistingOptions,
     deleteNonExistingOptionsValue,
-    deleteNonExistingCategories,
-    deleteNonExistingBrand,
   };
 });
