@@ -10,6 +10,7 @@ export interface OptionDto {
     _id: string;
     id: number;
     value: string;
+    valueId: string;
     sort: number | undefined;
     image: string;
   }[];

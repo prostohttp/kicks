@@ -12,7 +12,10 @@ const isSubmit = defineModel("submit");
 
 // Store
 const optionDataStore = useOptionDataStore();
+const productDataStore = useProductDataStore();
 const { option, isVisibleTable } = storeToRefs(optionDataStore);
+await productDataStore.getAllProductsWithoutPagination();
+const { allProducts } = storeToRefs(productDataStore);
 
 // Vars
 const isAdmin = useIsAdmin();
@@ -33,7 +36,7 @@ const submitHandler = async (event: FormSubmitEvent<any>) => {
         values: option.value.values,
       },
     });
-
+    await productDataStore.deleteNonExistingOptionsValue(allProducts.value!);
     toast.add({
       title: "Option updated",
       color: "green",
@@ -119,5 +122,6 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         />
       </UForm>
     </div>
+    <!-- <pre>{{ option }}</pre> -->
   </div>
 </template>

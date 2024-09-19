@@ -72,6 +72,7 @@ export const useCategoryDataStore = defineStore("categoryData", () => {
           parents: true,
         },
       });
+      return true;
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }

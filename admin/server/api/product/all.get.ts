@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
   try {
     const query = getQuery(event);
     const page = Number(query.page) || 1;
+    const all = query.all;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_PRODUCT;
     const searchPhrase = query.searchPhrase?.toString();
     const titles = query.titles;
@@ -15,6 +16,10 @@ export default defineEventHandler(async (event) => {
       path: "category",
       select: "title",
     });
+
+    if (all) {
+      return await Product.find();
+    }
 
     const allFoundedProducts = await Product.find({
       $or: [

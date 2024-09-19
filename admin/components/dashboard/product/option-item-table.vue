@@ -43,6 +43,7 @@ const addNewValue = () => {
   const id = Date.now();
   option.value.values?.push({
     id: id,
+    valueId: "",
     value: {
       value: "",
       label: "",

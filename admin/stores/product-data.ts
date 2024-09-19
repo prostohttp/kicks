@@ -1,5 +1,9 @@
+import { useOptionDataStore } from "./option-data";
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
-import type { ProductDto } from "~/pages/dashboard/products/product.dto";
+import type {
+  ProductDto,
+  ProductOptionDto,
+} from "~/pages/dashboard/products/product.dto";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
 export interface ProductsPayload {
@@ -10,7 +14,14 @@ export interface ProductsPayload {
 }
 
 export const useProductDataStore = defineStore("productData", () => {
+  // store
+  const optionDataStore = useOptionDataStore();
+  const categoryDataStore = useCategoryDataStore();
+  const brandDataStore = useBrandDataStore();
+  const { optionsWithoutPagination } = storeToRefs(optionDataStore);
+
   // vars
+  const allProducts: Ref<ProductDto[] | undefined> = ref();
   const products: Ref<ProductsPayload | undefined> = ref();
   const foundedProducts: Ref<ProductsPayload | undefined> = ref();
   const product: Ref<ProductDto | undefined> = ref();
@@ -26,6 +37,82 @@ export const useProductDataStore = defineStore("productData", () => {
   > = ref([]);
 
   // handlers
+  const deleteNonExistingOptions = async (
+    ids: string[],
+    products: ProductDto[],
+  ) => {
+    try {
+      for (const product of products) {
+        if (product.options && product.options.length) {
+          const newOptions: ProductOptionDto[] = [];
+          for (const option of product.options) {
+            if (!ids.includes(option.optionId)) {
+              newOptions.push(option);
+            }
+          }
+          await $fetch("/api/product/edit", {
+            method: "PUT",
+            body: {
+              _id: product._id,
+              options: newOptions,
+            },
+          });
+        }
+      }
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const deleteNonExistingOptionsValue = async (products: ProductDto[]) => {
+    try {
+      await optionDataStore.getAllOptionsWithoutPagination();
+      const existingOptionValues: string[] = [];
+
+      optionsWithoutPagination.value?.map((option) => {
+        if (option.values && option.values.length) {
+          for (const value of option.values) {
+            existingOptionValues.push(value._id);
+          }
+        }
+      });
+
+      for (const product of products) {
+        if (product.options && product.options.length) {
+          const newOptions: ProductOptionDto[] = [];
+
+          for (let i = 0; i < product.options.length; i++) {
+            const option = product.options[i];
+            if (option.values && option.values.length) {
+              const newValues = [];
+              for (const optionValue of option.values) {
+                if (existingOptionValues.includes(optionValue.valueId)) {
+                  newValues.push(optionValue);
+                }
+              }
+              option.values = newValues;
+            }
+            newOptions.push(option);
+          }
+          await $fetch("/api/product/edit", {
+            method: "PUT",
+            body: {
+              _id: product._id,
+              options: newOptions,
+            },
+          });
+        }
+      }
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+    return true;
+  };
+
+  const deleteNonExistingCategories = async (ids: string[]) => {};
+
+  const deleteNonExistingBrand = async (id: string) => {};
+
   const getProductById = async (id: string) => {
     try {
       product.value = await $fetch("/api/product/one", {
@@ -58,6 +145,20 @@ export const useProductDataStore = defineStore("productData", () => {
       throw createError({ statusMessage: error.message });
     }
     return products.value;
+  };
+
+  const getAllProductsWithoutPagination = async () => {
+    try {
+      allProducts.value = await $fetch<ProductDto[]>("/api/product/all", {
+        method: "GET",
+        query: {
+          all: true,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+    return true;
   };
 
   const searchProduct = async (search: string, limit: number, page: number) => {
@@ -111,6 +212,7 @@ export const useProductDataStore = defineStore("productData", () => {
   return {
     product,
     foundedProducts,
+    allProducts,
     products,
     productsForCount,
     titles,
@@ -118,8 +220,13 @@ export const useProductDataStore = defineStore("productData", () => {
     getProductById,
     getTitles,
     getAllProducts,
+    getAllProductsWithoutPagination,
     getProductCount,
     searchProduct,
     clearFoundedProducts,
+    deleteNonExistingOptions,
+    deleteNonExistingOptionsValue,
+    deleteNonExistingCategories,
+    deleteNonExistingBrand,
   };
 });

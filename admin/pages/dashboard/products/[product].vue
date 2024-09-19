@@ -12,19 +12,21 @@ const brandDataStore = useBrandDataStore();
 const categoryDataStore = useCategoryDataStore();
 const settingsDataStore = useSettingsDataStore();
 const optionDataStore = useOptionDataStore();
-const { titles: categoryTitles } = storeToRefs(categoryDataStore);
-const { locale: storeLocale } = storeToRefs(settingsDataStore);
-await useAsyncData(() => brandDataStore.getBrandById(product.value?.brand));
-await useAsyncData(() => categoryDataStore.getAllTitles());
-const { brand } = storeToRefs(brandDataStore);
-await useAsyncData(() => optionDataStore.getAllTitlesWithoutPagination());
+
 await useAsyncData(() =>
   productDataStore.getProductById(
-    useRoute("dashboard-products-product").params.product.toString(),
+    useRoute("dashboard-products-product").params.product,
   ),
 );
-const { optionsWithoutPagination } = storeToRefs(optionDataStore);
 const { product } = storeToRefs(productDataStore);
+await useAsyncData(() => brandDataStore.getBrandById(product.value?.brand));
+await useAsyncData(() => categoryDataStore.getAllTitles());
+await useAsyncData(() => optionDataStore.getAllOptionsWithoutPagination());
+
+const { brand } = storeToRefs(brandDataStore);
+const { optionsWithoutPagination } = storeToRefs(optionDataStore);
+const { titles: categoryTitles } = storeToRefs(categoryDataStore);
+const { locale: storeLocale } = storeToRefs(settingsDataStore);
 
 // vars
 const toast = useToast();
@@ -55,7 +57,6 @@ const getSelectedCategoryTitlesByIds = categoryTitles.value
   .filter((el) => product.value?.category?.includes(el._id))
   .map((el) => el.title);
 
-// TODO: Рефакторинг
 const addNeededFieldsToOptions = (options: OptionDto[]) => {
   return options.map((option) => {
     const savedOption = optionsWithoutPagination.value?.find(
@@ -88,6 +89,7 @@ const state: Ref<ProductDto> = ref({
 });
 
 // handlers
+// TODO: !!!Переделать схему продукта, опции, отдельная сущность на значение опции, передача в продукт id опции, передача в опцию id значения опции!!!
 const onSubmitHandler = async () => {
   try {
     if (state.value?.brand) {
@@ -104,6 +106,7 @@ const onSubmitHandler = async () => {
           values: option.values?.map((opt) => ({
             ...opt,
             value: opt.value.value,
+            valueId: opt.value.value,
           })),
         })),
         category: categoryTitles.value
@@ -209,6 +212,7 @@ useHeadSafe({
         </UForm>
       </div>
     </div>
-    <!-- <pre>{{ state }}</pre> -->
+    <pre>{{ product }}</pre>
+    <!-- <pre>{{ product }}</pre> -->
   </main>
 </template>

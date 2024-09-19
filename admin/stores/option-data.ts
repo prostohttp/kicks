@@ -51,7 +51,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     return true;
   };
 
-  const getAllTitlesWithoutPagination = async () => {
+  const getAllOptionsWithoutPagination = async () => {
     try {
       optionsWithoutPagination.value = await $fetch("/api/option/all", {
         method: "GET",
@@ -76,6 +76,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
+    return true;
   };
 
   const getOption = async (id: string) => {
@@ -116,6 +117,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
   const clearState = () => {
     if (option) {
+      option._id = "";
       option.title = "";
       option.type = "";
       option.sort = undefined;
@@ -133,7 +135,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     selected,
     getOption,
     getAllOptions,
-    getAllTitlesWithoutPagination,
+    getAllOptionsWithoutPagination,
     getAllTitles,
     clearState,
     addNewValue,

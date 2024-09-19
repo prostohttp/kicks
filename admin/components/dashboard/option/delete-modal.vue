@@ -10,6 +10,9 @@ const { options } = defineProps<{
 
 // store
 const settingsDataStore = useSettingsDataStore();
+const productDataStore = useProductDataStore();
+await productDataStore.getAllProductsWithoutPagination();
+const { allProducts } = storeToRefs(productDataStore);
 
 // vars
 const toast = useToast();
@@ -21,20 +24,22 @@ const getIdsHelper = (options: IOption[]): string[] => {
 
 const deleteOption = async () => {
   try {
+    const ids = options ? getIdsHelper(options) : [];
     await $fetch("/api/option/remove", {
       method: "DELETE",
       body: {
-        ids: options ? getIdsHelper(options) : [],
+        ids: ids,
       },
     });
+    await productDataStore.deleteNonExistingOptions(ids, allProducts.value!);
     toast.add({
       title: locale[settingsDataStore.locale].successDeleteMessage,
       color: "green",
     });
     emit("delete");
-  } catch (_error) {
+  } catch (error: any) {
     toast.add({
-      title: locale[settingsDataStore.locale].somethingWentWrong,
+      title: error.message,
       color: "red",
     });
   }

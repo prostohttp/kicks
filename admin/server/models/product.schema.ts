@@ -57,6 +57,10 @@ export const Product = defineMongooseModel({
               type: Number,
               required: true,
             },
+            valueId: {
+              type: String,
+              required: true,
+            },
             count: {
               type: Number,
               required: false,

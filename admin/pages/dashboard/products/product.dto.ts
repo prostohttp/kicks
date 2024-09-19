@@ -9,6 +9,7 @@ export interface ProductOptionDto {
   required: boolean;
   values?: {
     id: number;
+    valueId: string;
     value: {
       value: string;
       label: string;

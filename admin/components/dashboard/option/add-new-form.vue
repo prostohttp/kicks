@@ -21,12 +21,7 @@ const types: string[] = Object.values(optionKeys);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
 // Handlers
-const clearState = () => {
-  option.value.title = "";
-  option.value.type = "";
-  option.value.sort = undefined;
-  option.value.values = [];
-};
+optionDataStore.clearState();
 
 const submitHandler = async (event: FormSubmitEvent<any>) => {
   try {
@@ -39,7 +34,7 @@ const submitHandler = async (event: FormSubmitEvent<any>) => {
         values: option.value.values,
       },
     });
-    clearState();
+    optionDataStore.clearState();
     toast.add({
       title: "Option added",
       color: "green",
@@ -63,10 +58,6 @@ watch(isVisibleTable, (newValue) => {
   if (!newValue) {
     option.value.values = [];
   }
-});
-
-onUnmounted(() => {
-  clearState();
 });
 
 const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
