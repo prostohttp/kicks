@@ -3,7 +3,7 @@ import type { FormErrorEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import { validate } from "./validator";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
-import type { ProductDto } from "./product.dto";
+import type { ProductDto } from "~/server/api/product/dto/product-page.dto";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
 
 // store

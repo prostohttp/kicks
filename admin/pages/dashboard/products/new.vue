@@ -3,7 +3,10 @@ import type { FormErrorEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 import { validate } from "./validator";
-import type { ProductDto, ProductOptionDto } from "./product.dto";
+import type {
+  ProductDto,
+  ProductOptionDto,
+} from "~/server/api/product/dto/product-page.dto";
 
 // store
 const settingsDataStore = useSettingsDataStore();

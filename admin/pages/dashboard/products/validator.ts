@@ -1,6 +1,6 @@
 import type { FormError } from "#ui/types";
 import { locale } from "~/lang/locale";
-import type { ProductDto } from "./product.dto";
+import type { ProductDto } from "~/server/api/product/dto/product-page.dto";
 
 export const validate = (state: ProductDto): FormError[] => {
   const errors = [];

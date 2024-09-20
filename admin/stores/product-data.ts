@@ -3,7 +3,7 @@ import type { IArticle } from "~/pages/dashboard/articles/index.vue";
 import type {
   ProductDto,
   ProductOptionDto,
-} from "~/pages/dashboard/products/product.dto";
+} from "~/server/api/product/dto/product-page.dto";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
 export interface ProductsPayload {

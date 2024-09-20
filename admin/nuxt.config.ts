@@ -49,6 +49,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
 
   auth: {
+    baseURL: "http://localhost:3001",
     isEnabled: true,
     provider: {
       type: "authjs",

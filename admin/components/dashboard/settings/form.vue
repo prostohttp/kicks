@@ -45,7 +45,13 @@ const uploadImageHandler = async (formData: FormData) => {
       color: "red",
     });
   }
-  return uploadedImage;
+  await $fetch("/api/settings/edit", {
+    method: "PUT",
+    body: {
+      image: uploadedImage,
+    },
+  });
+  settings.value!.image = uploadedImage;
 };
 
 const uploadImage = async (e: Event) => {
@@ -56,15 +62,7 @@ const uploadImage = async (e: Event) => {
       formData.append("folderName", Constants.IMG_PUBLIC);
       formData.append("image", fileInput.files![0]);
     }
-    const uploadedImage = await uploadImageHandler(formData);
-    settings.value!.image = uploadedImage;
-
-    await $fetch("/api/settings/edit", {
-      method: "PUT",
-      body: {
-        image: uploadedImage,
-      },
-    });
+    await uploadImageHandler(formData);
     toast.add({
       title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
@@ -85,15 +83,7 @@ const onDrop = async (files: File[] | null) => {
         formData.append("folderName", Constants.IMG_PUBLIC);
         formData.append("image", files![0]);
       }
-      const uploadedImage = await uploadImageHandler(formData);
-      settings.value!.image = uploadedImage;
-
-      await $fetch("/api/settings/edit", {
-        method: "PUT",
-        body: {
-          image: uploadedImage,
-        },
-      });
+      await uploadImageHandler(formData);
       toast.add({
         title: locale[settingsDataStore.locale].imageDeleted,
         color: "green",
@@ -121,16 +111,16 @@ const deleteImageHandler = async () => {
     await $fetch("/api/settings/edit", {
       method: "PUT",
       body: {
-        image: settings.value!.image,
+        image: "",
       },
     });
     toast.add({
       title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
     });
-  } catch (_error) {
+  } catch (error: any) {
     toast.add({
-      title: locale[settingsDataStore.locale].somethingWentWrong,
+      title: error.message,
       color: "red",
     });
   }
@@ -227,7 +217,7 @@ const deleteImageHandler = async () => {
         }"
       >
         <UiImageUpload
-          v-model:image="settings!"
+          v-model:image="settings"
           alt="logo"
           v-model:drop-zone-ref="dropZoneRef"
           @delete="deleteImageHandler"
@@ -237,4 +227,5 @@ const deleteImageHandler = async () => {
       </UFormGroup>
     </div>
   </div>
+  <pre>{{ settings }}</pre>
 </template>
