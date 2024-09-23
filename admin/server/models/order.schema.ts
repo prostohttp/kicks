@@ -24,7 +24,7 @@ export const Order = defineMongooseModel({
         },
       },
     ],
-    customer: {
+    customerId: {
       type: Types.ObjectId || String,
       required: true,
       ref: "User",

@@ -7,6 +7,7 @@ import type { NotificationDto } from "~/server/api/notification/dto/notification
 const settingsDataStore = useSettingsDataStore();
 
 // vars
+const isAdmin = useIsAdmin();
 const notifications: Ref<NotificationDto[] | null> = ref([]);
 
 const { data } = await useFetch<NotificationDto[]>("/api/notification/many", {
@@ -22,12 +23,14 @@ notifications.value = data.value;
 const isEmpty = computed(() => !notifications.value?.length);
 
 const markAllAsRead = async () => {
-  notifications.value = await $fetch("/api/notification/mark-as-read", {
-    method: "GET",
-    query: {
-      limit: Constants.NOTIFICATIONS_LIMIT,
-    },
-  });
+  if (isAdmin) {
+    notifications.value = await $fetch("/api/notification/mark-as-read", {
+      method: "GET",
+      query: {
+        limit: Constants.NOTIFICATIONS_LIMIT,
+      },
+    });
+  }
 };
 </script>
 

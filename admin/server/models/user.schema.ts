@@ -1,4 +1,5 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
+import { Types } from "mongoose";
 import { Roles } from "~/types/server/server.types";
 
 export const User = defineMongooseModel({
@@ -27,11 +28,17 @@ export const User = defineMongooseModel({
       type: String,
       required: false,
     },
-  },
-  hooks(schema) {
-    schema.pre("save", function (this, next) {
-      this.email = this.email.toString().toLowerCase().trim() as any;
-      next();
-    });
+    // Только для покупателей
+    address: {
+      type: String,
+      required: false,
+    },
+    orders: [
+      {
+        type: Types.ObjectId || String,
+        required: false,
+        ref: "Order",
+      },
+    ],
   },
 });
