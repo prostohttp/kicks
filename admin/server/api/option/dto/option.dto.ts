@@ -1,17 +1,17 @@
+import { OptionValueDto } from "../../option-value/dto/option-value.dto";
+
 export interface OptionDto {
-  _id: string;
-  id: number;
+  _id?: string;
   title: string;
   type: string;
-  required: boolean;
   sort: number | undefined;
-  optionId: string;
-  values?: {
-    _id: string;
-    id: number;
-    value: string;
-    valueId: string;
-    sort: number | undefined;
-    image: string;
-  }[];
+  values?: string[];
+}
+
+export interface OptionDtoWithValues {
+  _id?: string;
+  title: string;
+  type: string;
+  sort: number;
+  values?: OptionValueDto[];
 }

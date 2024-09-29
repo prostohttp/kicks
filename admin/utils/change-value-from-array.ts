@@ -1,16 +1,16 @@
 interface ArrayWithIdAndKey {
-  id: number;
+  _id?: string;
   [key: string]: any;
 }
 
 export default <T extends ArrayWithIdAndKey, K extends keyof T>(
-  id: number,
+  id: string,
   array: Array<T>,
   key: K,
   value: any,
 ) => {
   for (const item of array) {
-    if (item.id === id) {
+    if (item._id === id) {
       item[key] = value;
     }
   }

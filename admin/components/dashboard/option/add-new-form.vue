@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { InputData } from "~/types/ui/ui.types";
 import { optionKeys } from "~/types/ui/ui.types";
-import type { FormSubmitEvent } from "#ui/types";
 import { validate } from "./validator";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 
 // define
 const { optionData } = defineProps<{
@@ -10,9 +10,8 @@ const { optionData } = defineProps<{
 }>();
 const isSubmit = defineModel();
 
-// Store
+// store
 const optionDataStore = useOptionDataStore();
-const { option, isVisibleTable } = storeToRefs(optionDataStore);
 
 // Vars
 const isAdmin = useIsAdmin();
@@ -20,21 +19,47 @@ const toast = useToast();
 const types: string[] = Object.values(optionKeys);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);
 
-// Handlers
-optionDataStore.clearState();
+const state: OptionDtoWithValues = reactive({
+  title: "",
+  type: "",
+  sort: 1,
+  values: [],
+});
 
-const submitHandler = async (event: FormSubmitEvent<any>) => {
+// Handlers
+const isVisibleTable = computed(
+  () =>
+    state.type === optionKeys.list ||
+    state.type === optionKeys.select ||
+    state.type === optionKeys.checkbox,
+);
+
+const clearState = () => {
+  state.title = "";
+  state.type = "";
+  state.sort = 1;
+  state.values = [];
+};
+
+const submitHandler = async () => {
   try {
+    const optionValueIds: string[] = [];
+    for (const value of state.values!) {
+      const { _id, ...optionWithoutId } = value;
+      const optionValue = await optionDataStore.addNewValue(optionWithoutId);
+      optionValueIds.push(optionValue._id!);
+    }
+
     await $fetch("/api/option/add", {
       method: "POST",
       body: {
-        title: event.data.title,
-        type: event.data.type,
-        sort: event.data.sort,
-        values: option.value.values,
+        title: state.title,
+        type: state.type,
+        sort: state.sort,
+        values: optionValueIds,
       },
     });
-    optionDataStore.clearState();
+    clearState();
     toast.add({
       title: "Option added",
       color: "green",
@@ -54,12 +79,6 @@ watch(isSubmit, () => {
   }
 });
 
-watch(isVisibleTable, (newValue) => {
-  if (!newValue) {
-    option.value.values = [];
-  }
-});
-
 const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
@@ -68,7 +87,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     <div class="flex flex-col w-full gap-[24px]">
       <UForm
         :validate="validate"
-        :state="option"
+        :state="state"
         class="space-y-4 w-full"
         @submit="protectedSubmitHandler"
         ref="submitRef"
@@ -87,13 +106,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           <UInput
             :placeholder="placeholder"
             inputClass="no-left-icon"
-            v-model="option.title"
+            v-model="state.title"
             v-if="name === 'title'"
           />
           <USelectMenu
             :options="types"
             :placeholder="placeholder"
-            v-model="option.type"
+            v-model="state.type"
             :uiMenu="{
               option: {
                 color: 'dark:text-[#6b7280]',
@@ -106,7 +125,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
           />
           <UInput
             :placeholder="placeholder"
-            v-model="option.sort"
+            v-model="state.sort"
             inputClass="no-left-icon"
             v-if="name === 'sort'"
             required
@@ -114,8 +133,12 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
             min="1"
           />
         </UFormGroup>
-        <DashboardOptionAddNewTable v-if="isVisibleTable" />
+        <DashboardOptionAddNewTable
+          v-model:state="state"
+          v-if="isVisibleTable"
+        />
       </UForm>
     </div>
+    <pre>{{ state }}</pre>
   </div>
 </template>

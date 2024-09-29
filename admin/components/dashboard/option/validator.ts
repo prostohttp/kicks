@@ -37,25 +37,25 @@ export const validate = (state: UiOptionDto): FormError[] => {
   for (const item of state.values) {
     if (!item.value) {
       errors.push({
-        path: `value${item.id}`,
+        path: `value${item._id}`,
         message: locale[useSettingsDataStore().locale].error.string,
       });
     }
     if (item.value.length < Constants.STRING_MIN_LENGTH) {
       errors.push({
-        path: `value${item.id}`,
+        path: `value${item._id}`,
         message: locale[useSettingsDataStore().locale].error.stringMin,
       });
     }
     if (!item.sort) {
       errors.push({
-        path: `sort${item.id}`,
+        path: `sort${item._id}`,
         message: locale[useSettingsDataStore().locale].error.number,
       });
     }
     if (item.sort! < Constants.NUMBER_MIN_VALUE) {
       errors.push({
-        path: `sort${item.id}`,
+        path: `sort${item._id}`,
         message: locale[useSettingsDataStore().locale].error.numberMin,
       });
     }

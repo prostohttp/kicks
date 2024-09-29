@@ -1,7 +1,7 @@
 interface ArrayWithId {
-  id: number;
+  _id?: string;
 }
-export default (id: number, array: Array<ArrayWithId>): void => {
-  const index = array.findIndex((value) => value.id === id);
+export default (id: string, array: Array<ArrayWithId>): void => {
+  const index = array.findIndex((value) => value._id === id);
   array.splice(index, 1);
 };

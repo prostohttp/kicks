@@ -1,7 +1,6 @@
 import type { IOption } from "~/pages/dashboard/options/index.vue";
+import type { OptionValueDto } from "~/server/api/option-value/dto/option-value.dto";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
-import type { UiOptionDto } from "~/types/server/server.types";
-import { optionKeys } from "~/types/ui/ui.types";
 
 export const useOptionDataStore = defineStore("optionData", () => {
   interface OptionsPayload {
@@ -12,13 +11,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
   }
 
   // vars
-  const option: UiOptionDto = reactive({
-    _id: "",
-    title: "",
-    type: "",
-    sort: undefined,
-    values: [],
-  });
+  const option: Ref<OptionDto | undefined> = ref();
   const options: Ref<OptionsPayload | undefined> = ref();
   const optionsWithoutPagination: Ref<OptionDto[] | undefined> = ref();
   const selected: Ref<IOption[]> = ref([]);
@@ -81,52 +74,43 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
   const getOption = async (id: string) => {
     try {
-      const rawOption = await $fetch("/api/option/one", {
+      option.value = await $fetch("/api/option/one", {
         method: "GET",
         query: {
           id,
         },
       });
-      option._id = rawOption._id;
-      option.title = rawOption.title;
-      option.type = rawOption.type;
-      option.sort = rawOption.sort;
-      option.values = rawOption.values;
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
     return option;
   };
 
-  const addNewValue = () => {
-    const id = Date.now();
-    option.values.push({
-      id: id,
-      value: "",
-      sort: undefined,
-      image: "",
-    });
+  const addNewValue = async (data: OptionValueDto): Promise<OptionValueDto> => {
+    try {
+      return await $fetch("/api/option-value/add", {
+        method: "POST",
+        body: data,
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
   };
 
-  const isVisibleTable = computed(
-    () =>
-      option?.type === optionKeys.list ||
-      option?.type === optionKeys.select ||
-      option?.type === optionKeys.checkbox,
-  );
-
-  const clearState = () => {
-    if (option) {
-      option._id = "";
-      option.title = "";
-      option.type = "";
-      option.sort = undefined;
-      option.values = [];
+  const deleteValue = async (id: string) => {
+    try {
+      await $fetch("/api/option-value/remove", {
+        method: "DELETE",
+        body: {
+          id,
+        },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
     }
   };
 
   return {
-    isVisibleTable,
     option,
     titles,
     optionImages,
@@ -137,7 +121,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     getAllOptions,
     getAllOptionsWithoutPagination,
     getAllTitles,
-    clearState,
     addNewValue,
+    deleteValue,
   };
 });

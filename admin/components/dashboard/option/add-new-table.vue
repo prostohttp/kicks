@@ -1,11 +1,15 @@
 <script lang="ts" setup>
+import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
+
+// define
+const state: ModelRef<OptionDtoWithValues | undefined> = defineModel("state");
 
 // store
 const optionDataStore = useOptionDataStore();
 const settingsDataStore = useSettingsDataStore();
-const { option } = storeToRefs(optionDataStore);
 
 // vars
 const toast = useToast();
@@ -28,7 +32,16 @@ const columns = [
 ];
 
 // handlers
-const uploadImage = async (e: Event, id: number) => {
+const addNewValue = () => {
+  state.value?.values?.push({
+    _id: Date.now().toString(),
+    value: "",
+    sort: 1,
+    image: "",
+  });
+};
+
+const uploadImage = async (e: Event, id: string) => {
   try {
     let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
@@ -41,7 +54,7 @@ const uploadImage = async (e: Event, id: number) => {
       body: formData,
     });
 
-    changeValueFromArray(id, option.value.values, "image", uploadedImage);
+    changeValueFromArray(id, state.value?.values!, "image", uploadedImage);
 
     if (!uploadedImage) {
       toast.add({
@@ -58,15 +71,16 @@ const uploadImage = async (e: Event, id: number) => {
   }
 };
 
-const deleteImageHandler = async (id: number) => {
+const deleteImageHandler = async (id: string) => {
   try {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: option.value.values.filter((value) => value.id === id)[0].image,
+        image: state.value?.values!.filter((value) => value._id === id)[0]
+          .image,
       },
     });
-    changeValueFromArray(id, option.value.values, "image", "");
+    changeValueFromArray(id, state.value?.values!, "image", "");
     toast.add({
       title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
@@ -76,14 +90,14 @@ const deleteImageHandler = async (id: number) => {
   }
 };
 
-const deleteValue = (id: number) => {
-  deleteValueFromArray(id, option.value.values);
+const deleteValue = (id: string) => {
+  deleteValueFromArray(id, state.value?.values!);
 };
 </script>
 
 <template>
   <UTable
-    :rows="option.values"
+    :rows="state?.values"
     :columns="columns"
     :empty-state="{
       icon: '',
@@ -108,7 +122,7 @@ const deleteValue = (id: number) => {
       </caption>
     </template>
     <template #value-data="{ row }">
-      <UFormGroup :name="`value${row.id}`">
+      <UFormGroup :name="`value${row._id}`">
         <UInput
           :placeholder="locale[settingsDataStore.locale].addValue"
           inputClass="clean-field"
@@ -119,12 +133,12 @@ const deleteValue = (id: number) => {
     <template #image-data="{ row }">
       <UiImageUploadSmall
         v-model="row.image"
-        @change="uploadImage($event, row.id)"
-        @delete="deleteImageHandler(row.id)"
+        @change="uploadImage($event, row._id)"
+        @delete="deleteImageHandler(row._id)"
       />
     </template>
     <template #sort-data="{ row }">
-      <UFormGroup :name="`sort${row.id}`">
+      <UFormGroup :name="`sort${row._id}`">
         <UInput
           :placeholder="locale[settingsDataStore.locale].sort"
           inputClass="clean-field"
@@ -138,7 +152,7 @@ const deleteValue = (id: number) => {
       <UButton
         class="icon-button float-right"
         icon="i-heroicons-minus-circle-16-solid"
-        @click="deleteValue(row.id)"
+        @click="deleteValue(row._id)"
       />
     </template>
   </UTable>
@@ -146,6 +160,6 @@ const deleteValue = (id: number) => {
     class="icon-button float-right mr-[15px]"
     icon="i-heroicons-plus-circle-16-solid"
     type="button"
-    @click="optionDataStore.addNewValue"
+    @click="addNewValue"
   />
 </template>
