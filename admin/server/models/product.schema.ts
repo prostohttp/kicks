@@ -80,6 +80,7 @@ export const Product = defineMongooseModel({
     },
     sku: {
       type: String,
+      min: 3,
       required: false,
     },
     quantity: {

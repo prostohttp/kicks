@@ -12,6 +12,7 @@ export const User = defineMongooseModel({
     },
     email: {
       type: String,
+      min: 3,
       unique: true,
       required: true,
     },
@@ -23,6 +24,7 @@ export const User = defineMongooseModel({
     role: {
       type: String,
       enum: Object.values(Roles),
+      required: true,
     },
     image: {
       type: String,

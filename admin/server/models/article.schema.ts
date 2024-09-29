@@ -30,7 +30,7 @@ export const Article = defineMongooseModel({
     },
     adminMenu: {
       type: Boolean,
-      required: false,
+      required: true,
     },
     siteMenu: {
       type: Boolean,

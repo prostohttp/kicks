@@ -10,6 +10,7 @@ export const Option = defineMongooseModel({
     },
     type: {
       type: String,
+      min: 3,
       required: true,
     },
     sort: {

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
+import type { ProductDto } from "~/server/api/product/dto/product.dto";
 import { useStatsDataStore } from "~/stores/stats-data";
+import type { TitleObjectAfterPopulate } from "~/types/server/server.types";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 import unwrapAfterPopulate from "~/utils/unwrap-after-populate";
 
@@ -132,8 +134,12 @@ watch(activePage, async (newValue) => {
       <DashboardProductCard
         v-for="product in data?.products"
         @delete-product="deleteProduct"
-        :product="product"
-        :categories="unwrapAfterPopulate(product.category)"
+        :product="product as ProductDto"
+        :categories="
+          unwrapAfterPopulate(
+            product.category as unknown as TitleObjectAfterPopulate[],
+          )
+        "
         :sales="getSales(product._id!)"
         :key="product._id"
       />

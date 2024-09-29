@@ -3,6 +3,8 @@ import { type BreadcrumbItem } from "~/types/ui/ui.types";
 import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import unwrapAfterPopulate from "~/utils/unwrap-after-populate";
+import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import type { TitleObjectAfterPopulate } from "~/types/server/server.types";
 
 // store
 const statsDataStore = useStatsDataStore();
@@ -127,9 +129,13 @@ watch(activePage, async (newValue) => {
       <DashboardProductCard
         v-for="product in foundedProducts?.products"
         @delete-product="deleteProduct"
-        :product="product"
-        :categories="unwrapAfterPopulate(product.category)"
-        :sales="getSales(product._id)"
+        :product="product as ProductDto"
+        :categories="
+          unwrapAfterPopulate(
+            product.category as unknown as TitleObjectAfterPopulate[],
+          )
+        "
+        :sales="getSales(product._id!)"
         :key="product._id"
       />
     </div>

@@ -6,6 +6,7 @@ export const Shipping = defineMongooseModel({
     title: {
       type: String,
       required: true,
+      min: 3,
       unique: true,
     },
     description: {
