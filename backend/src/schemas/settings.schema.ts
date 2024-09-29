@@ -10,8 +10,8 @@ export class Settings {
   @Prop({ required: false, type: String })
   image: string;
 
-  @Prop([
-    {
+  @Prop({
+    type: {
       value: {
         type: String,
         default: Locales.EN,
@@ -22,14 +22,14 @@ export class Settings {
         required: true,
       },
     },
-  ])
+  })
   localeDashboard: {
     value: Locales;
     label: string;
   };
 
-  @Prop([
-    {
+  @Prop({
+    type: {
       value: {
         type: String,
         default: Currency.USD,
@@ -40,14 +40,14 @@ export class Settings {
         required: true,
       },
     },
-  ])
+  })
   currency: {
     value: Currency;
     label: string;
   };
 
-  @Prop([
-    {
+  @Prop({
+    type: {
       value: {
         type: String,
         default: Currency.USD,
@@ -58,7 +58,7 @@ export class Settings {
         required: true,
       },
     },
-  ])
+  })
   mainCurrency: {
     value: Currency;
     label: string;
@@ -68,27 +68,29 @@ export class Settings {
   secondCurrencyRate: number;
 
   @Prop({
-    title: {
-      type: String,
-      min: 3,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    description: {
-      min: 10,
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: false,
+    type: {
+      title: {
+        type: String,
+        min: 3,
+        required: true,
+      },
+      phone: {
+        type: String,
+        required: true,
+      },
+      description: {
+        min: 10,
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: false,
+      },
     },
   })
   en: {
@@ -100,27 +102,29 @@ export class Settings {
   };
 
   @Prop({
-    title: {
-      type: String,
-      min: 3,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    description: {
-      min: 10,
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: false,
+    type: {
+      title: {
+        type: String,
+        min: 3,
+        required: true,
+      },
+      phone: {
+        type: String,
+        required: true,
+      },
+      description: {
+        min: 10,
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: false,
+      },
     },
   })
   ru: {

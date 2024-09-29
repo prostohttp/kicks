@@ -17,14 +17,16 @@ export class Category {
   @Prop({ required: true, type: Boolean })
   isParent: boolean;
 
-  @Prop([
-    {
-      type: MongooseSchema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
-  ])
-  children: (MongooseSchema.Types.ObjectId | string)[];
+  @Prop({
+    type: [
+      {
+        type: MongooseSchema.Types.ObjectId,
+        ref: "Category",
+        required: false,
+      },
+    ],
+  })
+  children: Category[];
 
   @Prop({ required: true, type: Boolean })
   isEnabled: boolean;

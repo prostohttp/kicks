@@ -1,6 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Schema as MongooseSchema } from "mongoose";
 import { OrderStatus } from "src/types/order-status";
+import { Product } from "./product.schema";
+import { User } from "./user.schema";
+import { Shipping } from "./shipping.schema";
+import { Payment } from "./payment.schema";
 
 export type OrderDocument = HydratedDocument<Order>;
 
@@ -9,53 +13,63 @@ export class Order {
   @Prop({ required: true, unique: true, type: String })
   orderId: string;
 
-  @Prop([
-    {
-      productId: {
-        type: MongooseSchema.Types.ObjectId,
-        ref: "Product",
-        required: true,
+  @Prop({
+    type: [
+      {
+        productId: {
+          type: MongooseSchema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        productCount: {
+          type: Number,
+          required: true,
+          min: 1,
+        },
       },
-      productCount: {
-        type: Number,
-        required: true,
-        min: 1,
-      },
-    },
-  ])
+    ],
+  })
   products: {
-    productId: MongooseSchema.Types.ObjectId | string;
+    productId: Product;
     productCount: number;
   }[];
 
   @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: "User",
-    required: true,
+    type: {
+      type: MongooseSchema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   })
-  customerId: MongooseSchema.Types.ObjectId | string;
+  customerId: User;
 
   @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: "Shipping",
-    required: true,
+    type: {
+      type: MongooseSchema.Types.ObjectId,
+      ref: "Shipping",
+      required: true,
+    },
   })
-  shipping: MongooseSchema.Types.ObjectId | string;
+  shipping: Shipping;
 
   @Prop({ required: false, type: String })
   shippingAddress: string;
 
   @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: "Payment",
-    required: true,
+    type: {
+      type: MongooseSchema.Types.ObjectId,
+      ref: "Payment",
+      required: true,
+    },
   })
-  payment: MongooseSchema.Types.ObjectId | string;
+  payment: Payment;
 
   @Prop({
-    required: true,
-    default: OrderStatus.PROCESSING,
-    type: String,
+    type: {
+      required: true,
+      default: OrderStatus.PROCESSING,
+      type: String,
+    },
   })
   status: OrderStatus;
 

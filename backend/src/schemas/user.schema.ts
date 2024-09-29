@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Schema as MongooseSchema } from "mongoose";
 import { Roles } from "src/types/role";
+import { Order } from "./order.schema";
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -15,7 +16,7 @@ export class User {
   @Prop({ required: true, min: 6, type: String })
   password: string;
 
-  @Prop({ required: true, type: String, default: Roles.CUSTOMER })
+  @Prop({ type: { required: true, type: String, default: Roles.CUSTOMER } })
   role: Roles;
 
   @Prop({ required: false, type: String })
@@ -24,14 +25,16 @@ export class User {
   @Prop({ required: false, type: String })
   address: string;
 
-  @Prop([
-    {
-      type: MongooseSchema.Types.ObjectId,
-      ref: "Order",
-      required: false,
-    },
-  ])
-  orders: (MongooseSchema.Types.ObjectId | string)[];
+  @Prop({
+    type: [
+      {
+        type: MongooseSchema.Types.ObjectId,
+        ref: "Order",
+        required: false,
+      },
+    ],
+  })
+  orders: Order[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

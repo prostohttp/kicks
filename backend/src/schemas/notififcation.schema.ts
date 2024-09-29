@@ -1,16 +1,19 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Schema as MongooseSchema } from "mongoose";
+import { Order } from "./order.schema";
 
 export type NotificationDocument = HydratedDocument<Notification>;
 
 @Schema()
 export class Notification {
   @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: "Order",
-    required: true,
+    type: {
+      type: MongooseSchema.Types.ObjectId,
+      ref: "Order",
+      required: true,
+    },
   })
-  order: MongooseSchema.Types.ObjectId | string;
+  order: Order;
 
   @Prop({ required: true, type: Boolean })
   isRead: boolean;
