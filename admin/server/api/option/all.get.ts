@@ -5,7 +5,7 @@ import pageCount from "~/utils/page-count";
 
 export default defineEventHandler(async (event) => {
   try {
-    let query = getQuery(event);
+    const query = getQuery(event);
     const page = Number(query.page) || 1;
     const all = query.all;
     const perPage = Number(query.perPage) || Constants.PER_PAGE_OPTION;

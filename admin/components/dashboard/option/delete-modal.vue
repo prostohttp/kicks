@@ -31,7 +31,6 @@ const deleteOption = async () => {
         ids: ids,
       },
     });
-    await productDataStore.deleteNonExistingOptions(ids, allProducts.value!);
     toast.add({
       title: locale[settingsDataStore.locale].successDeleteMessage,
       color: "green",

@@ -35,78 +35,6 @@ export const useProductDataStore = defineStore("productData", () => {
   > = ref([]);
 
   // handlers
-  const deleteNonExistingOptions = async (
-    ids: string[],
-    products: ProductDto[],
-  ) => {
-    try {
-      for (const product of products) {
-        if (product.options && product.options.length) {
-          const newOptions: ProductOptionDto[] = [];
-          for (const option of product.options) {
-            if (!ids.includes(option.optionId)) {
-              newOptions.push(option);
-            }
-          }
-          await $fetch("/api/product/edit", {
-            method: "PUT",
-            body: {
-              _id: product._id,
-              options: newOptions,
-            },
-          });
-        }
-      }
-    } catch (error: any) {
-      throw createError({ statusMessage: error.message });
-    }
-  };
-
-  const deleteNonExistingOptionsValue = async (products: ProductDto[]) => {
-    try {
-      await optionDataStore.getAllOptionsWithoutPagination();
-      const existingOptionValues: string[] = [];
-
-      optionsWithoutPagination.value?.map((option) => {
-        if (option.values && option.values.length) {
-          for (const value of option.values) {
-            existingOptionValues.push(value._id);
-          }
-        }
-      });
-
-      for (const product of products) {
-        if (product.options && product.options.length) {
-          const newOptions: ProductOptionDto[] = [];
-
-          for (let i = 0; i < product.options.length; i++) {
-            const option = product.options[i];
-            if (option.values && option.values.length) {
-              const newValues = [];
-              for (const optionValue of option.values) {
-                if (existingOptionValues.includes(optionValue.valueId)) {
-                  newValues.push(optionValue);
-                }
-              }
-              option.values = newValues;
-            }
-            newOptions.push(option);
-          }
-          await $fetch("/api/product/edit", {
-            method: "PUT",
-            body: {
-              _id: product._id,
-              options: newOptions,
-            },
-          });
-        }
-      }
-    } catch (error: any) {
-      throw createError({ statusMessage: error.message });
-    }
-    return true;
-  };
-
   const getProductById = async (id: string) => {
     try {
       product.value = await $fetch("/api/product/one", {
@@ -218,7 +146,5 @@ export const useProductDataStore = defineStore("productData", () => {
     getProductCount,
     searchProduct,
     clearFoundedProducts,
-    deleteNonExistingOptions,
-    deleteNonExistingOptionsValue,
   };
 });

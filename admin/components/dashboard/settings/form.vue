@@ -227,5 +227,4 @@ const deleteImageHandler = async () => {
       </UFormGroup>
     </div>
   </div>
-  <pre>{{ settings }}</pre>
 </template>

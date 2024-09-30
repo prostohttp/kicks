@@ -1,5 +1,8 @@
 import type { IOption } from "~/pages/dashboard/options/index.vue";
-import type { OptionValueDto } from "~/server/api/option-value/dto/option-value.dto";
+import type {
+  ExtendedOptionValueDto,
+  OptionValueDto,
+} from "~/server/api/option-value/dto/option-value.dto";
 import type { OptionDto } from "~/server/api/option/dto/option.dto";
 
 export const useOptionDataStore = defineStore("optionData", () => {
@@ -83,10 +86,26 @@ export const useOptionDataStore = defineStore("optionData", () => {
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
-    return option;
+    return true;
   };
 
-  const addNewValue = async (data: OptionValueDto): Promise<OptionValueDto> => {
+  const addNewOptionValueToTable = (
+    values: ExtendedOptionValueDto[] | undefined,
+  ) => {
+    if (values && Array.isArray(values)) {
+      values.push({
+        _id: Date.now().toString(),
+        value: "",
+        sort: 1,
+        image: "",
+        new: true,
+      });
+    }
+  };
+
+  const addNewOptionValueToDatabase = async (
+    data: OptionValueDto,
+  ): Promise<OptionValueDto> => {
     try {
       return await $fetch("/api/option-value/add", {
         method: "POST",
@@ -97,13 +116,37 @@ export const useOptionDataStore = defineStore("optionData", () => {
     }
   };
 
-  const deleteValue = async (id: string) => {
+  const editOptionValueFromDatabase = async (
+    data: ExtendedOptionValueDto,
+  ): Promise<OptionValueDto> => {
+    try {
+      return await $fetch("/api/option-value/edit", {
+        method: "PUT",
+        body: data,
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const deleteValue = async (id: string | number) => {
     try {
       await $fetch("/api/option-value/remove", {
         method: "DELETE",
         body: {
           id,
         },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const getValuesById = async (ids: string[]): Promise<OptionValueDto[]> => {
+    try {
+      return await $fetch("/api/option-value/many", {
+        method: "POST",
+        body: { ids },
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
@@ -121,7 +164,10 @@ export const useOptionDataStore = defineStore("optionData", () => {
     getAllOptions,
     getAllOptionsWithoutPagination,
     getAllTitles,
-    addNewValue,
+    addNewOptionValueToTable,
+    addNewOptionValueToDatabase,
+    editOptionValueFromDatabase,
     deleteValue,
+    getValuesById,
   };
 });

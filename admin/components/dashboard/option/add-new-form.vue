@@ -44,18 +44,18 @@ const clearState = () => {
 const submitHandler = async () => {
   try {
     const optionValueIds: string[] = [];
-    for (const value of state.values!) {
-      const { _id, ...optionWithoutId } = value;
-      const optionValue = await optionDataStore.addNewValue(optionWithoutId);
-      optionValueIds.push(optionValue._id!);
+    if (state?.values) {
+      for (const value of state.values) {
+        const { _id, ...optionWithoutId } = value;
+        const optionValue =
+          await optionDataStore.addNewOptionValueToDatabase(optionWithoutId);
+        optionValueIds.push(optionValue._id!);
+      }
     }
-
     await $fetch("/api/option/add", {
       method: "POST",
       body: {
-        title: state.title,
-        type: state.type,
-        sort: state.sort,
+        ...state,
         values: optionValueIds,
       },
     });
@@ -139,6 +139,5 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         />
       </UForm>
     </div>
-    <pre>{{ state }}</pre>
   </div>
 </template>

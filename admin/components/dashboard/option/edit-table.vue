@@ -1,12 +1,12 @@
 <script lang="ts" setup>
+import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
-import type { UiOptionDto } from "~/types/server/server.types";
+import type { ExtendedOptionValueDto } from "~/server/api/option-value/dto/option-value.dto";
 
 // emits
-const { optionId } = defineProps<{
-  optionId: string;
-}>();
+const state: ModelRef<ExtendedOptionValueDto[] | undefined> =
+  defineModel("state");
 
 // store
 const optionDataStore = useOptionDataStore();
@@ -35,24 +35,7 @@ const columns = [
 ];
 
 // handlers
-const setOptionImageHandler = (
-  option: UiOptionDto,
-  id: number,
-  image: string,
-) => {
-  return option.values.map((option) => {
-    if (option.id === id) {
-      return {
-        ...option,
-        image: image,
-      };
-    } else {
-      return option;
-    }
-  });
-};
-
-const uploadImage = async (e: Event, id: number) => {
+const uploadImage = async (e: Event, id: string) => {
   try {
     let fileInput = e.target as HTMLInputElement;
     const formData = new FormData();
@@ -71,15 +54,7 @@ const uploadImage = async (e: Event, id: number) => {
         color: "red",
       });
     }
-    changeValueFromArray(id, option.value.values, "image", uploadedImage);
-
-    await $fetch("/api/option/edit", {
-      method: "PUT",
-      body: {
-        _id: optionId,
-        values: setOptionImageHandler(option.value!, id, uploadedImage),
-      },
-    });
+    changeValueFromArray(id, state.value!, "image", uploadedImage);
     toast.add({
       title: locale[settingsDataStore.locale].imageUploaded,
       color: "green",
@@ -89,23 +64,15 @@ const uploadImage = async (e: Event, id: number) => {
   }
 };
 
-const deleteImageHandler = async (id: number) => {
+const deleteImageHandler = async (id: string) => {
   try {
     await $fetch("/api/image/remove", {
       method: "DELETE",
       body: {
-        image: option.value.values.filter((value) => value.id === id)[0].image,
+        image: state.value!.filter((value) => value._id === id)[0].image,
       },
     });
-
-    await $fetch("/api/option/edit", {
-      method: "PUT",
-      body: {
-        _id: optionId,
-        values: setOptionImageHandler(option.value, id, ""),
-      },
-    });
-    changeValueFromArray(id, option.value.values, "image", "");
+    changeValueFromArray(id, state.value!, "image", "");
     toast.add({
       title: locale[settingsDataStore.locale].imageDeleted,
       color: "green",
@@ -115,76 +82,79 @@ const deleteImageHandler = async (id: number) => {
   }
 };
 
-const deleteValue = (id: number) => {
-  deleteValueFromArray(id, option.value.values);
+const deleteValue = (id: string) => {
+  deleteValueFromArray(id, state.value!);
 };
 </script>
 
 <template>
-  <UTable
-    :rows="option.values"
-    :columns="columns"
-    :empty-state="{
-      icon: '',
-      label: '',
-    }"
-    :ui="{
-      td: {
-        base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal for-absolute',
-      },
-      emptyState: {
-        wrapper: 'hidden',
-      },
-    }"
-  >
-    <template #caption>
-      <caption
-        class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative mt-[20px]"
-      >
-        <span>
-          {{ locale[settingsDataStore.locale].addValue }}
-        </span>
-      </caption>
-    </template>
-    <template #value-data="{ row }">
-      <UFormGroup :name="`value${row.id}`">
-        <UInput
-          :placeholder="locale[settingsDataStore.locale].addValue"
-          inputClass="clean-field"
-          v-model="row.value"
+  <div v-if="state">
+    <UTable
+      :rows="state"
+      :columns="columns"
+      :empty-state="{
+        icon: '',
+        label: '',
+      }"
+      :ui="{
+        td: {
+          base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal for-absolute',
+        },
+        emptyState: {
+          wrapper: 'hidden',
+        },
+      }"
+    >
+      <template #caption>
+        <caption
+          class="pb-[15px] w-full justify-between items-center text-left text-[20px] dark:text-fa-white font-[Rubik] font-[500] relative mt-[20px]"
+        >
+          <span>
+            {{ locale[settingsDataStore.locale].addValue }}
+          </span>
+        </caption>
+      </template>
+      <template #value-data="{ row }">
+        <UFormGroup :name="`value${row._id}`">
+          <UInput
+            :placeholder="locale[settingsDataStore.locale].addValue"
+            inputClass="clean-field"
+            v-model="row.value"
+          />
+        </UFormGroup>
+      </template>
+      <template #image-data="{ row }">
+        <UiImageUploadSmall
+          v-model="row.image"
+          @change="uploadImage($event, row._id)"
+          @delete="deleteImageHandler(row._id)"
         />
-      </UFormGroup>
-    </template>
-    <template #image-data="{ row }">
-      <UiImageUploadSmall
-        v-model="row.image"
-        @change="uploadImage($event, row.id)"
-        @delete="deleteImageHandler(row.id)"
-      />
-    </template>
-    <template #sort-data="{ row }">
-      <UFormGroup :name="`sort${row.id}`">
-        <UInput
-          :placeholder="locale[settingsDataStore.locale].sort"
-          inputClass="clean-field"
-          v-model="row.sort"
-          type="number"
-          min="1"
+      </template>
+      <template #sort-data="{ row }">
+        <UFormGroup :name="`sort${row.id}`">
+          <UInput
+            :placeholder="locale[settingsDataStore.locale].sort"
+            inputClass="clean-field"
+            v-model="row.sort"
+            type="number"
+            min="1"
+          />
+        </UFormGroup>
+      </template>
+      <template #action-data="{ row }">
+        <UButton
+          class="icon-button float-right"
+          icon="i-heroicons-minus-circle-16-solid"
+          @click="deleteValue(row._id)"
         />
-      </UFormGroup>
-    </template>
-    <template #action-data="{ row }">
-      <UButton
-        class="icon-button float-right"
-        icon="i-heroicons-minus-circle-16-solid"
-        @click="deleteValue(row.id)"
-      />
-    </template>
-  </UTable>
+      </template>
+    </UTable>
+  </div>
   <UButton
     type="button"
     class="icon-button float-right mr-[15px]"
     icon="i-heroicons-plus-circle-16-solid"
-    @click="optionDataStore.addNewValue"
+    @click="optionDataStore.addNewOptionValueToTable(state!)"
   />
+  <!-- <pre>{{ state }}</pre> -->
 </template>

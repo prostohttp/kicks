@@ -4,3 +4,7 @@ export interface OptionValueDto {
   sort: number;
   image: string;
 }
+
+export interface ExtendedOptionValueDto extends OptionValueDto {
+  new?: boolean;
+}

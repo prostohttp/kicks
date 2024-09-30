@@ -8,8 +8,8 @@ import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 const state: ModelRef<OptionDtoWithValues | undefined> = defineModel("state");
 
 // store
-const optionDataStore = useOptionDataStore();
 const settingsDataStore = useSettingsDataStore();
+const optionDataStore = useOptionDataStore();
 
 // vars
 const toast = useToast();
@@ -32,15 +32,6 @@ const columns = [
 ];
 
 // handlers
-const addNewValue = () => {
-  state.value?.values?.push({
-    _id: Date.now().toString(),
-    value: "",
-    sort: 1,
-    image: "",
-  });
-};
-
 const uploadImage = async (e: Event, id: string) => {
   try {
     let fileInput = e.target as HTMLInputElement;
@@ -160,6 +151,6 @@ const deleteValue = (id: string) => {
     class="icon-button float-right mr-[15px]"
     icon="i-heroicons-plus-circle-16-solid"
     type="button"
-    @click="addNewValue"
+    @click="optionDataStore.addNewOptionValueToTable(state?.values)"
   />
 </template>
