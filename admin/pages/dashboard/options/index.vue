@@ -5,11 +5,10 @@ import { type BreadcrumbItem } from "~/types/ui/ui.types";
 import { useOptionDataStore } from "~/stores/option-data";
 
 export interface IOption {
-  id: string;
+  id?: string;
   title: string;
   type: string;
   sort: number | undefined;
-  images: (string | undefined)[];
 }
 
 // store
@@ -58,15 +57,11 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(path));
 // handlers
 const options = computed((): Array<IOption> | undefined => {
   return data.value?.options.map((option) => {
-    const images =
-      option.values?.filter((item) => item.image).map((item) => item.image) ||
-      [];
     return {
       id: option._id,
       title: option.title,
       type: option.type,
       sort: option.sort,
-      images: images,
     };
   });
 });

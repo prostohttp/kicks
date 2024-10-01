@@ -13,7 +13,6 @@ const modal = useModal();
 // store
 const optionDataStore = useOptionDataStore();
 const settingsDataStore = useSettingsDataStore();
-const uploadDeleteDataStore = useUploadDeleteDataStore();
 const { selected } = storeToRefs(optionDataStore);
 
 // handlers
@@ -24,13 +23,6 @@ const openDeleteOptionModal = (options: IOption[]) => {
       modal.close();
     },
     async onDelete() {
-      for (const option of options) {
-        if (option.images.length) {
-          for (const image of option.images) {
-            await uploadDeleteDataStore.deleteHandler(image!);
-          }
-        }
-      }
       optionDataStore.getAllOptions(1);
       activePage.value = 1;
       selected.value = [];

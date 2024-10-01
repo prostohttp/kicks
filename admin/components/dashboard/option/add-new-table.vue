@@ -16,15 +16,15 @@ const toast = useToast();
 const columns = [
   {
     key: "value",
-    label: "Value",
+    label: locale[settingsDataStore.locale].value,
   },
   {
     key: "image",
-    label: "Image",
+    label: locale[settingsDataStore.locale].image,
   },
   {
     key: "sort",
-    label: "Sort",
+    label: locale[settingsDataStore.locale].sort,
   },
   {
     key: "action",

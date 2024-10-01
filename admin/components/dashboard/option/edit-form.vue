@@ -16,6 +16,7 @@ const state: ModelRef<OptionDtoWithValues | undefined> = defineModel("state");
 const optionDataStore = useOptionDataStore();
 const productDataStore = useProductDataStore();
 await productDataStore.getAllProductsWithoutPagination();
+const { option } = storeToRefs(optionDataStore);
 
 // Vars
 const isAdmin = useIsAdmin();
@@ -34,7 +35,7 @@ const isVisibleTable = computed(
 const submitHandler = async () => {
   try {
     const optionValueIds: string[] = [];
-    if (state.value?.values) {
+    if (state.value?.values && isVisibleTable.value) {
       for (const value of state.value.values) {
         if (!value.new) {
           await optionDataStore.editOptionValueFromDatabase(value);
@@ -46,7 +47,19 @@ const submitHandler = async () => {
           await optionDataStore.addNewOptionValueToDatabase(optionWithoutId);
         optionValueIds.push(optionValue._id!);
       }
+    } else if (state.value?.values && !isVisibleTable.value) {
+      for (const _id of option.value?.values!) {
+        await optionDataStore.deleteValue(_id);
+      }
     }
+    if (option.value?.values) {
+      for (const id of option.value.values) {
+        if (!optionValueIds.includes(id)) {
+          await optionDataStore.deleteValue(id);
+        }
+      }
+    }
+
     await $fetch("/api/option/edit", {
       method: "PUT",
       body: {
@@ -138,5 +151,6 @@ watch(isSubmit, () => {
       </UForm>
     </div>
     <!-- <pre>{{ state }}</pre> -->
+    <!-- <pre>{{ option }}</pre> -->
   </div>
 </template>

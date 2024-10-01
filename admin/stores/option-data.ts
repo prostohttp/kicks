@@ -89,6 +89,17 @@ export const useOptionDataStore = defineStore("optionData", () => {
     return true;
   };
 
+  const getOptions = async (ids: string[]): Promise<OptionDto[]> => {
+    try {
+      return await $fetch("/api/option/many", {
+        method: "POST",
+        body: { ids },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
   const addNewOptionValueToTable = (
     values: ExtendedOptionValueDto[] | undefined,
   ) => {
@@ -129,13 +140,45 @@ export const useOptionDataStore = defineStore("optionData", () => {
     }
   };
 
-  const deleteValue = async (id: string | number) => {
+  const deleteValue = async (_id: string) => {
     try {
       await $fetch("/api/option-value/remove", {
         method: "DELETE",
-        body: {
-          id,
-        },
+        body: { _id },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const deleteValues = async (ids: string[]) => {
+    try {
+      await $fetch("/api/option-value/remove", {
+        method: "DELETE",
+        body: { ids },
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const deleteOptions = async (ids: string[]) => {
+    try {
+      const optionValueIds: string[] = [];
+      const options = await getOptions(ids);
+
+      for (const option of options) {
+        if (option.values?.length) {
+          for (const id of option.values) {
+            optionValueIds.push(id);
+          }
+        }
+      }
+      await deleteValues(optionValueIds);
+
+      await $fetch("/api/option/remove", {
+        method: "DELETE",
+        body: { ids },
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
@@ -161,12 +204,14 @@ export const useOptionDataStore = defineStore("optionData", () => {
     optionsWithoutPagination,
     selected,
     getOption,
+    getOptions,
     getAllOptions,
     getAllOptionsWithoutPagination,
     getAllTitles,
     addNewOptionValueToTable,
     addNewOptionValueToDatabase,
     editOptionValueFromDatabase,
+    deleteOptions,
     deleteValue,
     getValuesById,
   };

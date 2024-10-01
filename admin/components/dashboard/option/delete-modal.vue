@@ -11,26 +11,21 @@ const { options } = defineProps<{
 // store
 const settingsDataStore = useSettingsDataStore();
 const productDataStore = useProductDataStore();
+const optionDataStore = useOptionDataStore();
 await productDataStore.getAllProductsWithoutPagination();
-const { allProducts } = storeToRefs(productDataStore);
 
 // vars
 const toast = useToast();
 
 // handlers
 const getIdsHelper = (options: IOption[]): string[] => {
-  return options.map((option) => option.id);
+  return options.map((option) => option.id!);
 };
 
 const deleteOption = async () => {
   try {
     const ids = options ? getIdsHelper(options) : [];
-    await $fetch("/api/option/remove", {
-      method: "DELETE",
-      body: {
-        ids: ids,
-      },
-    });
+    await optionDataStore.deleteOptions(ids);
     toast.add({
       title: locale[settingsDataStore.locale].successDeleteMessage,
       color: "green",

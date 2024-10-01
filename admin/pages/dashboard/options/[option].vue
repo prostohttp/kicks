@@ -64,15 +64,15 @@ useHeadSafe({
 });
 
 // hooks
-watch(
-  () => option.value?.title,
-  (newValue) => {
-    if (newValue) {
-      title.value = newValue || locale[settingsDataStore.locale].empty;
-      links.value = breadcrumbsArrayFactory(fullPath, newValue, fullPath);
-    }
-  },
-);
+watch(option, (newValue, oldValue) => {
+  if (newValue?.title !== oldValue?.title) {
+    title.value = newValue?.title || locale[settingsDataStore.locale].empty;
+    links.value = breadcrumbsArrayFactory(fullPath, newValue?.title, fullPath);
+  }
+  if (!newValue?.values?.length) {
+    state.values = [];
+  }
+});
 </script>
 
 <template>
