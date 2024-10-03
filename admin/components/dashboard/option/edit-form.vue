@@ -35,30 +35,30 @@ const isVisibleTable = computed(
 const submitHandler = async () => {
   try {
     const optionValueIds: string[] = [];
-    if (state.value?.values && isVisibleTable.value) {
-      for (const value of state.value.values) {
-        if (!value.new) {
-          await optionDataStore.editOptionValueFromDatabase(value);
-          optionValueIds.push(value._id!);
-          continue;
+    if (state.value?.values?.length && isVisibleTable.value) {
+      for (const optValue of state.value.values) {
+        if (!optValue.new) {
+          await optionDataStore.editOptionValueFromDatabase(optValue);
+          optionValueIds.push(optValue.value.value);
+        } else {
+          const optionValue =
+            await optionDataStore.addNewOptionValueToDatabase(optValue);
+          optionValueIds.push(optionValue._id!);
         }
-        const { _id, ...optionWithoutId } = value;
-        const optionValue =
-          await optionDataStore.addNewOptionValueToDatabase(optionWithoutId);
-        optionValueIds.push(optionValue._id!);
       }
-    } else if (state.value?.values && !isVisibleTable.value) {
-      for (const _id of option.value?.values!) {
-        await optionDataStore.deleteValue(_id);
+    } else if (state.value?.values?.length && !isVisibleTable.value) {
+      for (const id of option.value?.values!) {
+        await optionDataStore.deleteValue(id);
       }
     }
-    if (option.value?.values) {
+    if (option.value?.values?.length) {
       for (const id of option.value.values) {
-        if (!optionValueIds.includes(id)) {
+        if (optionValueIds.length && !optionValueIds.includes(id)) {
           await optionDataStore.deleteValue(id);
         }
       }
     }
+    console.log("optionValueIds", optionValueIds);
 
     await $fetch("/api/option/edit", {
       method: "PUT",
@@ -150,7 +150,5 @@ watch(isSubmit, () => {
         />
       </UForm>
     </div>
-    <!-- <pre>{{ state }}</pre> -->
-    <!-- <pre>{{ option }}</pre> -->
   </div>
 </template>

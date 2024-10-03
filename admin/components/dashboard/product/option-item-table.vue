@@ -1,22 +1,22 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import type { ProductOptionDto } from "~/pages/dashboard/products/product.dto";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 
 // define
 const option = defineModel("option", {
   required: true,
-  default: {} as ProductOptionDto | undefined,
+  default: {} as OptionDtoWithValues | undefined,
 });
 
 // store
 const settingsDataStore = useSettingsDataStore();
 const optionDataStore = useOptionDataStore();
 const { locale: settingsLocale } = storeToRefs(settingsDataStore);
-await useAsyncData(() => optionDataStore.getOption(option.value.optionId));
+await useAsyncData(() => optionDataStore.getOption(option.value._id!));
 const { option: dataOption } = storeToRefs(optionDataStore);
 
 // vars
-const optionValues = dataOption.value.values.map((option) => ({
+const optionValues = dataOption.value?.values!.map((option) => ({
   label: option.value,
   value: option._id,
 }));
@@ -40,9 +40,8 @@ const columns = [
 
 // handlers
 const addNewValue = () => {
-  const id = Date.now();
   option.value.values?.push({
-    id: id,
+    _id: option.value._id,
     valueId: "",
     value: {
       value: "",

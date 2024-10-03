@@ -15,16 +15,12 @@ const settingsDataStore = useSettingsDataStore();
 const toast = useToast();
 
 // handlers
-const getIdsHelper = (articles: IArticle[]): string[] => {
-  return articles.map((category) => category.id);
-};
-
 const deleteArticle = async () => {
   try {
     await $fetch("/api/article/remove", {
       method: "DELETE",
       body: {
-        ids: articles ? getIdsHelper(articles) : [],
+        ids: articles.map((category) => category.id),
       },
     });
     toast.add({

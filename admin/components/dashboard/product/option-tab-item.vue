@@ -1,22 +1,22 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import type { ProductOptionDto } from "~/pages/dashboard/products/product.dto";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 import { optionKeys } from "~/types/ui/ui.types";
 
 // define
 const { id } = defineProps<{
-  id: number;
+  id: string;
 }>();
 const options = defineModel("options", {
   required: true,
-  default: [] as ProductOptionDto[] | undefined,
+  default: [] as OptionDtoWithValues[] | undefined,
 });
 
 // store
 const settingsDataStore = useSettingsDataStore();
 
 // vars
-const option = computed(() => options.value.find((el) => el.id === id));
+const option = computed(() => options.value.find((el) => el._id === id));
 const isTable = computed(
   () =>
     option.value?.type === optionKeys.list ||
@@ -40,7 +40,7 @@ const isDateTime = computed(
   <div class="flex flex-col gap-[30px]">
     <UFormGroup
       :label="locale[settingsDataStore.locale].sort"
-      :name="`sort-${option?.id}`"
+      :name="`sort-${option?._id}`"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -62,7 +62,7 @@ const isDateTime = computed(
       <DashboardProductOptionItemTable v-model:option="option" v-if="isTable" />
     </div>
     <UFormGroup
-      :name="`required-${option?.id}`"
+      :name="`required-${option?._id}`"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',

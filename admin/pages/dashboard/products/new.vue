@@ -3,10 +3,8 @@ import type { FormErrorEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 import { validate } from "./validator";
-import type {
-  ProductDto,
-  ProductOptionDto,
-} from "~/server/api/product/dto/product-page.dto";
+import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 
 // store
 const settingsDataStore = useSettingsDataStore();
@@ -46,7 +44,7 @@ const state: Ref<ProductDto> = ref({
   category: [] as string[],
   tags: [] as string[],
   additionImages: [] as string[],
-  options: [] as ProductOptionDto[],
+  options: [] as OptionDtoWithValues[],
 } as ProductDto);
 const isLoading = ref(false);
 const isValidForm = ref(true);
@@ -78,7 +76,7 @@ const clearState = () => {
     tags: [] as string[],
     additionImages: [] as string[],
     image: "",
-    options: [] as ProductOptionDto[],
+    options: [] as OptionDtoWithValues[],
   } as ProductDto;
 };
 
@@ -91,13 +89,6 @@ const onSubmitHandler = async () => {
       method: "POST",
       body: {
         ...state.value,
-        options: state.value.options.map((option) => ({
-          ...option,
-          values: option.values?.map((opt) => ({
-            ...opt,
-            value: opt.value.value,
-          })),
-        })),
         category: data.value.filter((el) =>
           state.value.category?.includes(el.title),
         ),
@@ -179,6 +170,6 @@ useHead({
         </div>
       </UForm>
     </div>
-    <!-- <pre>{{ state }}</pre> -->
+    <pre>{{ state }}</pre>
   </main>
 </template>

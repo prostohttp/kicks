@@ -1,6 +1,6 @@
 import type { FormError } from "#ui/types";
 import { locale } from "~/lang/locale";
-import type { ProductDto } from "~/server/api/product/dto/product-page.dto";
+import type { ProductDto } from "~/server/api/product/dto/product.dto";
 
 export const validate = (state: ProductDto): FormError[] => {
   const errors = [];
@@ -50,7 +50,7 @@ export const validate = (state: ProductDto): FormError[] => {
     for (const item of state.options) {
       if (!item.sort) {
         errors.push({
-          path: `sort-${item.id}`,
+          path: `sort-${item._id}`,
           message: locale[useSettingsDataStore().locale].error.required,
         });
       }
@@ -59,7 +59,7 @@ export const validate = (state: ProductDto): FormError[] => {
         for (const optionValue of item.values) {
           if (!optionValue.value) {
             errors.push({
-              path: `value-${optionValue.id}`,
+              path: `value-${optionValue._id}`,
               message: locale[useSettingsDataStore().locale].error.required,
             });
           }

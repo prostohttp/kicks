@@ -4,7 +4,7 @@ import { NotificationDto } from "~/server/api/notification/dto/notification.dto"
 export default defineEventHandler(async (event) => {
   try {
     const body: NotificationDto = await readBody(event);
-    const orderId = body.orderId;
+    const orderId = body.order.orderId;
     const order = await Order.findById(orderId).select("_id");
     // const products = await Product.find({
     //   _id: { $in: [...order!.products.map((p) => p.productId)] },

@@ -18,13 +18,9 @@ await productDataStore.getAllProductsWithoutPagination();
 const toast = useToast();
 
 // handlers
-const getIdsHelper = (options: IOption[]): string[] => {
-  return options.map((option) => option.id!);
-};
-
 const deleteOption = async () => {
   try {
-    const ids = options ? getIdsHelper(options) : [];
+    const ids = options.map((option) => option.id!);
     await optionDataStore.deleteOptions(ids);
     toast.add({
       title: locale[settingsDataStore.locale].successDeleteMessage,

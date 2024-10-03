@@ -117,7 +117,7 @@ const deleteValue = (id: string) => {
         <UInput
           :placeholder="locale[settingsDataStore.locale].addValue"
           inputClass="clean-field"
-          v-model="row.value"
+          v-model="row.value.label"
         />
       </UFormGroup>
     </template>

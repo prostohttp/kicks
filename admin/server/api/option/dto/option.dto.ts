@@ -13,5 +13,6 @@ export interface OptionDtoWithValues {
   title: string;
   type: string;
   sort: number;
+  required?: boolean;
   values?: ExtendedOptionValueDto[];
 }

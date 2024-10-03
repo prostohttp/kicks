@@ -1,12 +1,11 @@
-import { OptionDto } from "~/server/api/option/dto/option.dto";
-import { TitleObjectAfterPopulate } from "~/types/server/server.types";
+import { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 
 export interface ProductDto {
   _id?: string;
   title: string;
   shortDescription: string;
   description?: string;
-  category?: TitleObjectAfterPopulate[];
+  category?: string[];
   brand?: string;
   sku?: string;
   quantity: number;
@@ -19,5 +18,5 @@ export interface ProductDto {
     label: string;
     value: boolean;
   };
-  options?: OptionDto[];
+  options?: OptionDtoWithValues[];
 }

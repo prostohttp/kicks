@@ -4,7 +4,13 @@ export interface OptionValueDto {
   sort: number;
   image: string;
 }
-
-export interface ExtendedOptionValueDto extends OptionValueDto {
+export interface ExtendedOptionValueDto {
+  _id?: string;
+  value: {
+    value: string;
+    label: string;
+  };
+  sort: number;
+  image?: string;
   new?: boolean;
 }

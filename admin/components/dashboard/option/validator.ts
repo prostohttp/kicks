@@ -1,8 +1,9 @@
 import type { FormError } from "#ui/types";
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 
-export const validate = (state: UiOptionDto): FormError[] => {
+export const validate = (state: OptionDtoWithValues): FormError[] => {
   const errors = [];
   if (!state.title) {
     errors.push({
@@ -34,14 +35,14 @@ export const validate = (state: UiOptionDto): FormError[] => {
       message: locale[useSettingsDataStore().locale].error.string,
     });
   }
-  for (const item of state.values) {
-    if (!item.value) {
+  for (const item of state.values!) {
+    if (!item.value.label) {
       errors.push({
         path: `value${item._id}`,
         message: locale[useSettingsDataStore().locale].error.string,
       });
     }
-    if (item.value.length < Constants.STRING_MIN_LENGTH) {
+    if (item.value.label.length < Constants.STRING_MIN_LENGTH) {
       errors.push({
         path: `value${item._id}`,
         message: locale[useSettingsDataStore().locale].error.stringMin,

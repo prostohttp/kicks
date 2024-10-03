@@ -19,7 +19,7 @@ const { data: optionValues } = await useAsyncData(() =>
 // vars
 const state: OptionDtoWithValues = reactive({
   ...option.value!,
-  values: optionValues.value || [],
+  values: optionValues.value!,
 });
 
 const router = useRouter();

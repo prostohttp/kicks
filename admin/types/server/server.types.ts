@@ -5,10 +5,10 @@ export enum Roles {
 }
 
 export enum OrderStatus {
-  SOLD = "sold",
-  PROCESSING = "processing",
-  DELIVERED = "delivered",
-  CANCELLED = "cancelled",
+  SOLD = "SOLD",
+  PROCESSING = "PROCESSING",
+  DELIVERED = "DELIVERED",
+  CANCELLED = "CANCELLED",
 }
 
 export enum ModelNamesForSearchEngine {

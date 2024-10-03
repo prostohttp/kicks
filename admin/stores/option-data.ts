@@ -13,6 +13,9 @@ export const useOptionDataStore = defineStore("optionData", () => {
     activePage?: number;
   }
 
+  // store
+  const productDataStore = useProductDataStore();
+
   // vars
   const option: Ref<OptionDto | undefined> = ref();
   const options: Ref<OptionsPayload | undefined> = ref();
@@ -106,7 +109,10 @@ export const useOptionDataStore = defineStore("optionData", () => {
     if (values && Array.isArray(values)) {
       values.push({
         _id: Date.now().toString(),
-        value: "",
+        value: {
+          value: "",
+          label: "",
+        },
         sort: 1,
         image: "",
         new: true,
@@ -115,12 +121,15 @@ export const useOptionDataStore = defineStore("optionData", () => {
   };
 
   const addNewOptionValueToDatabase = async (
-    data: OptionValueDto,
+    data: ExtendedOptionValueDto,
   ): Promise<OptionValueDto> => {
     try {
+      const { _id, ...result } = data;
+      const option = { ...result, value: data.value.label };
+      // console.log("option", option);
       return await $fetch("/api/option-value/add", {
         method: "POST",
-        body: data,
+        body: option,
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
@@ -133,7 +142,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
     try {
       return await $fetch("/api/option-value/edit", {
         method: "PUT",
-        body: data,
+        body: { ...data, value: data.value.label },
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
@@ -162,10 +171,10 @@ export const useOptionDataStore = defineStore("optionData", () => {
     }
   };
 
-  const deleteOptions = async (ids: string[]) => {
+  const deleteOptions = async (optionIds: string[]) => {
     try {
       const optionValueIds: string[] = [];
-      const options = await getOptions(ids);
+      const options = await getOptions(optionIds);
 
       for (const option of options) {
         if (option.values?.length) {
@@ -175,22 +184,31 @@ export const useOptionDataStore = defineStore("optionData", () => {
         }
       }
       await deleteValues(optionValueIds);
-
+      await productDataStore.editProductsByOptionIds(optionIds);
       await $fetch("/api/option/remove", {
         method: "DELETE",
-        body: { ids },
+        body: { ids: optionIds },
       });
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
   };
 
-  const getValuesById = async (ids: string[]): Promise<OptionValueDto[]> => {
+  const getValuesById = async (
+    ids: string[],
+  ): Promise<ExtendedOptionValueDto[]> => {
     try {
-      return await $fetch("/api/option-value/many", {
+      const options: OptionValueDto[] = await $fetch("/api/option-value/many", {
         method: "POST",
         body: { ids },
       });
+      return options.map((item) => ({
+        ...item,
+        value: {
+          value: item._id!,
+          label: item.value,
+        },
+      }));
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }

@@ -26,51 +26,9 @@ export const Product = defineMongooseModel({
     ],
     options: [
       {
-        value: {
-          type: String,
-          required: false,
-        },
-        optionId: {
-          type: Types.ObjectId || String,
-          required: true,
-          ref: "Option",
-        },
-        id: {
-          type: Number,
-          required: true,
-        },
-        sort: {
-          type: Number,
-          required: true,
-        },
-        required: {
-          type: Boolean,
-          required: true,
-        },
-        values: [
-          {
-            value: {
-              type: String,
-              required: true,
-            },
-            id: {
-              type: Number,
-              required: true,
-            },
-            valueId: {
-              type: String,
-              required: true,
-            },
-            count: {
-              type: Number,
-              required: false,
-            },
-            price: {
-              type: Number,
-              required: false,
-            },
-          },
-        ],
+        type: Types.ObjectId || String,
+        required: false,
+        ref: "Option",
       },
     ],
     brand: {

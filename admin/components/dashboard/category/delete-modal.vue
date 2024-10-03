@@ -16,16 +16,12 @@ const isAdmin = useIsAdmin();
 const toast = useToast();
 
 // handlers
-const getIdsHelper = (categories: ITable[]): string[] => {
-  return categories.map((category) => category.id);
-};
-
 const deleteCategory = async () => {
   try {
     await $fetch("/api/category/remove", {
       method: "DELETE",
       body: {
-        ids: categories ? getIdsHelper(categories) : [],
+        ids: categories ? categories.map((category) => category.id) : [],
       },
     });
     toast.add({

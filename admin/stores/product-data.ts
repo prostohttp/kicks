@@ -1,9 +1,5 @@
-import { useOptionDataStore } from "./option-data";
 import type { IArticle } from "~/pages/dashboard/articles/index.vue";
-import type {
-  ProductDto,
-  ProductOptionDto,
-} from "~/server/api/product/dto/product-page.dto";
+import type { ProductDto } from "~/server/api/product/dto/product.dto";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 
 export interface ProductsPayload {
@@ -14,10 +10,6 @@ export interface ProductsPayload {
 }
 
 export const useProductDataStore = defineStore("productData", () => {
-  // store
-  const optionDataStore = useOptionDataStore();
-  const { optionsWithoutPagination } = storeToRefs(optionDataStore);
-
   // vars
   const allProducts: Ref<ProductDto[] | undefined> = ref();
   const products: Ref<ProductsPayload | undefined> = ref();
@@ -131,6 +123,40 @@ export const useProductDataStore = defineStore("productData", () => {
       throw createError({ statusMessage: error.message });
     }
   };
+
+  const editProductById = async (data: ProductDto) => {
+    try {
+      await $fetch("/api/product/edit", {
+        method: "PUT",
+        body: data,
+      });
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const editProductsByOptionIds = async (optionIds: string[]) => {
+    try {
+      const products: ProductDto[] = await $fetch("/api/product/many", {
+        method: "POST",
+        body: { optionIds },
+      });
+      for (const product of products) {
+        const resultProduct = {
+          ...product,
+          options: product.options!.filter((option) =>
+            optionIds.includes(option._id!),
+          ),
+        };
+        await editProductById(resultProduct);
+      }
+    } catch (error: any) {
+      throw createError({ statusMessage: error.message });
+    }
+  };
+
+  const editProductsByOptionValueIds = async (ids: string[]) => {};
+
   return {
     product,
     foundedProducts,
@@ -140,11 +166,14 @@ export const useProductDataStore = defineStore("productData", () => {
     titles,
     selected,
     getProductById,
+    editProductById,
     getTitles,
     getAllProducts,
     getAllProductsWithoutPagination,
     getProductCount,
     searchProduct,
     clearFoundedProducts,
+    editProductsByOptionIds,
+    editProductsByOptionValueIds,
   };
 });

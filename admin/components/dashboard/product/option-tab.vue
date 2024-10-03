@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import type { ProductOptionDto } from "~/pages/dashboard/products/product.dto";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 
 // define
 const options = defineModel("options", {
   required: true,
-  default: [] as ProductOptionDto[] | undefined,
+  default: [] as OptionDtoWithValues[] | undefined,
 });
 
 // store
@@ -27,10 +27,8 @@ const option = computed(() =>
 // handlers
 const changeOptionHandler = () => {
   options.value.push({
-    id: Date.now(),
-    optionId: option.value!._id,
+    _id: option.value?._id,
     title: optionModel.value,
-    value: "",
     type: option.value!.type,
     sort: 1,
     required: false,
@@ -98,10 +96,10 @@ const deleteOption = (id: number) => {
     <div class="lg:w-[70%] w-full">
       <DashboardProductOptionTabItem
         v-for="(option, index) in options"
-        :id="option.id"
+        :id="option._id!"
         v-model:options="options"
         v-show="index === activeTab"
-        :key="option.id"
+        :key="option._id"
         @click="activeTab = index"
       />
     </div>
