@@ -49,7 +49,7 @@ const items = [
     tab: "options",
   },
 ];
-const state: Ref<FlatProductDto> = ref(initialState);
+const state: Ref<FlatProductDto> = ref({ ...initialState });
 const isLoading = ref(false);
 const isValidForm = ref(true);
 
@@ -78,14 +78,24 @@ const onSubmitHandler = async () => {
   try {
     const data = {
       ...state.value,
-      options: state.value?.options.map((option) => ({
-        ...option,
-        optionValue: option.optionValue._id,
-        values: option.values?.map((opt) => ({
-          ...opt,
-          optionValue: opt.optionValue.value.value,
-        })),
-      })),
+      options: state.value?.options.map((option) => {
+        const values = [];
+        for (const opt of option.values!) {
+          if (opt.optionValue.value.label) {
+            values.push({
+              ...opt,
+              optionValue: opt.optionValue.value.value,
+            });
+          } else if (opt.optionValue.value.label === "") {
+            continue;
+          }
+        }
+        return {
+          ...option,
+          optionValue: option.optionValue._id,
+          values: values,
+        };
+      }),
       category: categoryTitles.value
         .filter((el) => state.value.category?.includes(el.title))
         .map((el) => el._id),
@@ -170,6 +180,6 @@ useHead({
         </div>
       </UForm>
     </div>
-    <pre>{{ state }}</pre>
+    <!-- <pre>{{ state }}</pre> -->
   </main>
 </template>
