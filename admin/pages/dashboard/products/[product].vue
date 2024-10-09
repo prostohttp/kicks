@@ -3,8 +3,7 @@ import type { FormErrorEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import { validate } from "./validator";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
-import type { ExtendedProductDto } from "~/server/api/product/dto/product-page.dto";
-import type { OptionDto } from "~/server/api/option/dto/option.dto";
+import type { FlatProductDto } from "~/server/api/product/dto/product.dto";
 
 // store
 const productDataStore = useProductDataStore();
@@ -19,12 +18,10 @@ await useAsyncData(() =>
   ),
 );
 const { product } = storeToRefs(productDataStore);
-await useAsyncData(() => brandDataStore.getBrandById(product.value?.brand));
 await useAsyncData(() => categoryDataStore.getAllTitles());
 await useAsyncData(() => optionDataStore.getAllOptionsWithoutPagination());
 
 const { brand } = storeToRefs(brandDataStore);
-const { optionsWithoutPagination } = storeToRefs(optionDataStore);
 const { titles: categoryTitles } = storeToRefs(categoryDataStore);
 const { locale: storeLocale } = storeToRefs(settingsDataStore);
 
@@ -53,67 +50,51 @@ const items = [
     tab: "options",
   },
 ];
-const getSelectedCategoryTitlesByIds = categoryTitles.value
-  .filter((el) => product.value?.category?.includes(el._id))
-  .map((el) => el.title);
 
-const addNeededFieldsToOptions = (options: OptionDto[]) => {
-  return options.map((option) => {
-    const savedOption = optionsWithoutPagination.value?.find(
-      (opt) => opt._id === option.optionId,
-    );
-    return {
-      ...option,
-      title: savedOption?.title!,
-      type: savedOption?.type!,
-      values: option.values?.map((outerOption) => {
-        return {
-          ...outerOption,
-          value: {
-            value: outerOption.value,
-            label: savedOption?.values?.find(
-              (innerOption) => innerOption._id === outerOption.value,
-            )?.value!,
-          },
-        };
-      }),
-    };
-  });
-};
-
-const state: Ref<ExtendedProductDto> = ref({
+const state: Ref<FlatProductDto> = ref({
   ...product.value!,
-  category: getSelectedCategoryTitlesByIds,
-  brand: brand.value?.title,
-  options: addNeededFieldsToOptions(product.value!.options as OptionDto[]),
+  category: product.value?.category!.map((item) => item.title)!,
+  brand: product.value?.brand?.title!,
+  options: product.value?.options!,
 });
 
 // handlers
-// TODO: !!!Переделать схему продукта, опции, отдельная сущность на значение опции, передача в продукт id опции, передача в опцию id значения опции!!!
 const onSubmitHandler = async () => {
   try {
-    if (state.value?.brand) {
-      await brandDataStore.getBrandByTitle(state.value.brand);
-    } else {
-      brand.value = undefined;
-    }
+    const data = {
+      ...state.value,
+      options: state.value?.options.map((option) => {
+        const values = [];
+        for (const opt of option.values!) {
+          if (opt.optionValue.value.label) {
+            values.push({
+              ...opt,
+              optionValue: opt.optionValue.value.value,
+            });
+          } else if (opt.optionValue.value.label === "") {
+            continue;
+          } else {
+            values.push({
+              ...opt,
+              optionValue: opt.optionValue._id,
+            });
+          }
+        }
+        return {
+          ...option,
+          optionValue: option.optionValue._id,
+          values: values,
+        };
+      }),
+      category: categoryTitles.value
+        .filter((el) => state.value.category?.includes(el.title))
+        .map((el) => el._id),
+      brand: brand.value?._id || null,
+    };
+
     await $fetch("/api/product/edit", {
       method: "PUT",
-      body: {
-        ...state.value,
-        options: state.value?.options.map((option) => ({
-          ...option,
-          values: option.values?.map((opt) => ({
-            ...opt,
-            value: opt.value.value,
-            valueId: opt.value.value,
-          })),
-        })),
-        category: categoryTitles.value
-          .filter((el) => state.value.category?.includes(el.title))
-          .map((el) => el._id),
-        brand: brand.value?._id || null,
-      },
+      body: data,
     });
     isValidForm.value = true;
     await productDataStore.getProductCount();
@@ -212,7 +193,6 @@ useHeadSafe({
         </UForm>
       </div>
     </div>
-    <!-- <pre>{{ product }}</pre> -->
-    <!-- <pre>{{ product }}</pre> -->
+    <!-- <pre>{{ state }}</pre> -->
   </main>
 </template>

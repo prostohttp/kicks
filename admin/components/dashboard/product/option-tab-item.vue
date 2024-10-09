@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
+import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 import { optionKeys } from "~/types/ui/ui.types";
 
 // define
@@ -9,30 +9,32 @@ const { id } = defineProps<{
 }>();
 const options = defineModel("options", {
   required: true,
-  default: [] as OptionDtoWithValues[] | undefined,
+  default: [] as ProductOptionDto[] | undefined,
 });
 
 // store
 const settingsDataStore = useSettingsDataStore();
 
 // vars
-const option = computed(() => options.value.find((el) => el._id === id));
+const computedOption = computed(() =>
+  options.value.find((el) => el.optionValue._id === id),
+);
 const isTable = computed(
   () =>
-    option.value?.type === optionKeys.list ||
-    option.value?.type === optionKeys.select ||
-    option.value?.type === optionKeys.checkbox,
+    computedOption.value?.optionValue.type === optionKeys.list ||
+    computedOption.value?.optionValue.type === optionKeys.select ||
+    computedOption.value?.optionValue.type === optionKeys.checkbox,
 );
 const isText = computed(
   () =>
-    option.value?.type === optionKeys.text ||
-    option.value?.type === optionKeys.textarea,
+    computedOption.value?.optionValue.type === optionKeys.text ||
+    computedOption.value?.optionValue.type === optionKeys.textarea,
 );
 const isDateTime = computed(
   () =>
-    option.value?.type === optionKeys.date ||
-    option.value?.type === optionKeys.time ||
-    option.value?.type === optionKeys.datetime,
+    computedOption.value?.optionValue.type === optionKeys.date ||
+    computedOption.value?.optionValue.type === optionKeys.time ||
+    computedOption.value?.optionValue.type === optionKeys.datetime,
 );
 </script>
 
@@ -40,7 +42,7 @@ const isDateTime = computed(
   <div class="flex flex-col gap-[30px]">
     <UFormGroup
       :label="locale[settingsDataStore.locale].sort"
-      :name="`sort-${option?._id}`"
+      :name="`sort-${computedOption?.optionValue._id}`"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -48,21 +50,27 @@ const isDateTime = computed(
       }"
     >
       <UInput
-        v-model="option!.sort"
+        v-model="computedOption!.sort"
         inputClass="input-label-without-icon"
         type="number"
       />
     </UFormGroup>
     <div>
-      <DashboardProductOptionItemText v-model:option="option" v-if="isText" />
+      <DashboardProductOptionItemText
+        v-model:option="computedOption"
+        v-if="isText"
+      />
       <DashboardProductOptionItemDatetime
-        v-model:option="option"
+        v-model:option="computedOption"
         v-if="isDateTime"
       />
-      <DashboardProductOptionItemTable v-model:option="option" v-if="isTable" />
+      <DashboardProductOptionItemTable
+        v-model:option="computedOption"
+        v-if="isTable"
+      />
     </div>
     <UFormGroup
-      :name="`required-${option?._id}`"
+      :name="`required-${computedOption?.optionValue._id}`"
       :ui="{
         label: {
           base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -72,7 +80,7 @@ const isDateTime = computed(
       <div class="flex gap-[10px] items-center mb-[10px]">
         <UToggle
           size="md"
-          v-model="option!.required"
+          v-model="computedOption!.required"
           :ui="{
             active: 'bg-blue dark:bg-yellow',
           }"

@@ -3,7 +3,11 @@ import type {
   ExtendedOptionValueDto,
   OptionValueDto,
 } from "~/server/api/option-value/dto/option-value.dto";
-import type { OptionDto } from "~/server/api/option/dto/option.dto";
+import type {
+  OptionDto,
+  OptionDtoWithValues,
+} from "~/server/api/option/dto/option.dto";
+import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 
 export const useOptionDataStore = defineStore("optionData", () => {
   interface OptionsPayload {
@@ -17,7 +21,8 @@ export const useOptionDataStore = defineStore("optionData", () => {
   const productDataStore = useProductDataStore();
 
   // vars
-  const option: Ref<OptionDto | undefined> = ref();
+  const option: Ref<OptionDtoWithValues | undefined> = ref();
+  const optionForProduct: Ref<ProductOptionDto | undefined> = ref();
   const options: Ref<OptionsPayload | undefined> = ref();
   const optionsWithoutPagination: Ref<OptionDto[] | undefined> = ref();
   const selected: Ref<IOption[]> = ref([]);
@@ -126,7 +131,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
     try {
       const { _id, ...result } = data;
       const option = { ...result, value: data.value.label };
-      // console.log("option", option);
       return await $fetch("/api/option-value/add", {
         method: "POST",
         body: option,
@@ -216,6 +220,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
   return {
     option,
+    optionForProduct,
     titles,
     optionImages,
     options,

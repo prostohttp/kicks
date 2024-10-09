@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { DashboardProductDeleteModal } from "#components";
 import { locale } from "~/lang/locale";
-import type { ProductDto } from "~/server/api/product/dto/product.dto";
+import type { ProductDtoWithValues } from "~/server/api/product/dto/product.dto";
 import percentForStats from "~/utils/percent-for-stats";
 
 // define
 const { product, categories, sales } = defineProps<{
-  product: ProductDto;
+  product: ProductDtoWithValues;
   categories: string[];
   sales: number;
 }>();

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import type { ProductOptionDto } from "~/pages/dashboard/products/product.dto";
+import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 import { optionKeys } from "~/types/ui/ui.types";
 
 // define
-const option = defineModel("option", {
+const optionModel = defineModel("option", {
   required: true,
   default: {} as ProductOptionDto | undefined,
 });
@@ -13,15 +13,20 @@ const option = defineModel("option", {
 const settingsDataStore = useSettingsDataStore();
 
 // vars
-const isDate = computed(() => option.value.type === optionKeys.date);
-const isTime = computed(() => option.value.type === optionKeys.time);
-const isDateTime = computed(() => option.value.type === optionKeys.datetime);
+const isDate = computed(
+  () => optionModel.value.optionValue.type === optionKeys.date,
+);
+const isTime = computed(
+  () => optionModel.value.optionValue.type === optionKeys.time,
+);
+const isDateTime = computed(
+  () => optionModel.value.optionValue.type === optionKeys.datetime,
+);
 </script>
-
 <template>
   <UFormGroup
     :label="locale[settingsDataStore.locale].value"
-    :name="`value-${option?.id}`"
+    :name="`value-${optionModel?.optionValue._id}`"
     :ui="{
       label: {
         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -30,19 +35,19 @@ const isDateTime = computed(() => option.value.type === optionKeys.datetime);
   >
     <UInput
       type="date"
-      v-model="option!.value"
+      v-model="optionModel.value"
       inputClass="input-label-without-icon"
       v-if="isDate"
     />
     <UInput
       type="time"
-      v-model="option!.value"
+      v-model="optionModel.value"
       inputClass="input-label-without-icon"
       v-if="isTime"
     />
     <UInput
       type="datetime-local"
-      v-model="option!.value"
+      v-model="optionModel.value"
       inputClass="input-label-without-icon"
       v-if="isDateTime"
     />

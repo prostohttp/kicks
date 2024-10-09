@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
+import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 
 // define
 const options = defineModel("options", {
   required: true,
-  default: [] as OptionDtoWithValues[] | undefined,
+  default: [] as ProductOptionDto[] | undefined,
 });
 
 // store
@@ -20,18 +20,22 @@ const optionTitles = computed(() =>
   titles.value.sort((a, b) => a.sort - b.sort).map((el) => el.title),
 );
 const optionModel = ref("");
-const option = computed(() =>
+const computedOption = computed(() =>
   titles.value.find((el) => el.title === optionModel.value),
 );
 
 // handlers
 const changeOptionHandler = () => {
   options.value.push({
-    _id: option.value?._id,
-    title: optionModel.value,
-    type: option.value!.type,
-    sort: 1,
+    optionValue: {
+      _id: computedOption.value?._id,
+      title: computedOption.value?.title!,
+      value: "",
+      type: computedOption.value?.type!,
+    },
     required: false,
+    value: "",
+    sort: 1,
     values: [],
   });
   optionModel.value = "";
@@ -53,13 +57,13 @@ const deleteOption = (id: number) => {
         {{ locale[settingsDataStore.locale].option }}
       </h2>
       <div
-        v-for="(option, index) in options"
+        v-for="(item, index) in options"
         :key="index"
         class="cursor-pointer py-[10px] pl-[20px] pr-[10px] rounded-[8px] flex justify-between items-center"
         :class="{ 'active-tab': activeTab === index }"
         @click="activeTab = index"
       >
-        <span>{{ option.title }}</span>
+        <span>{{ item.optionValue.title }}</span>
         <UButton
           class="icon-button"
           icon="i-heroicons-minus-circle-16-solid"
@@ -95,11 +99,11 @@ const deleteOption = (id: number) => {
     </div>
     <div class="lg:w-[70%] w-full">
       <DashboardProductOptionTabItem
-        v-for="(option, index) in options"
-        :id="option._id!"
+        v-for="(item, index) in options"
+        :id="item.optionValue._id!"
         v-model:options="options"
         v-show="index === activeTab"
-        :key="option._id"
+        :key="item.optionValue._id"
         @click="activeTab = index"
       />
     </div>

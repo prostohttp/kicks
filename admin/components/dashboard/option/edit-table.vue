@@ -83,7 +83,11 @@ const deleteImageHandler = async (id: string) => {
 };
 
 const deleteValue = (id: string) => {
-  deleteValueFromArray(id, state.value!);
+  const array = state.value!;
+  const index = array.findIndex((value) => value._id === id);
+  if (index !== -1) {
+    array.splice(index, 1);
+  }
 };
 </script>
 

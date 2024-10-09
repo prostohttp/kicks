@@ -13,7 +13,7 @@ await useAsyncData(() =>
 );
 const { option } = storeToRefs(optionDataStore);
 const { data: optionValues } = await useAsyncData(() =>
-  optionDataStore.getValuesById(option.value?.values!),
+  optionDataStore.getValuesById(option.value!.values!.map((item) => item._id!)),
 );
 
 // vars

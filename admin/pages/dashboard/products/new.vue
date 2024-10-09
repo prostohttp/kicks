@@ -3,8 +3,7 @@ import type { FormErrorEvent } from "#ui/types";
 import { locale } from "~/lang/locale";
 import type { BreadcrumbItem } from "~/types/ui/ui.types";
 import { validate } from "./validator";
-import type { ProductDto } from "~/server/api/product/dto/product.dto";
-import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
+import type { FlatProductDto } from "~/server/api/product/dto/product.dto";
 
 // store
 const settingsDataStore = useSettingsDataStore();
@@ -12,11 +11,26 @@ const productDataStore = useProductDataStore();
 const categoryDataStore = useCategoryDataStore();
 const brandDataStore = useBrandDataStore();
 const { brand } = storeToRefs(brandDataStore);
-const { titles: data } = storeToRefs(categoryDataStore);
+const { titles: categoryTitles } = storeToRefs(categoryDataStore);
 await useAsyncData(() => settingsDataStore.getSettings());
 const { locale: storeLocale } = storeToRefs(settingsDataStore);
 
 // vars
+const initialState: FlatProductDto = {
+  title: "",
+  shortDescription: "",
+  quantity: 1,
+  regularPrice: 100,
+  category: [],
+  brand: "",
+  isEnabled: {
+    label: locale[storeLocale.value].isEnabled,
+    value: true,
+  },
+  options: [],
+  tags: [],
+  additionImages: [],
+};
 const toast = useToast();
 const isAdmin = useIsAdmin();
 const router = useRouter();
@@ -35,17 +49,7 @@ const items = [
     tab: "options",
   },
 ];
-const state: Ref<ProductDto> = ref({
-  isEnabled: {
-    label: locale[storeLocale.value].isEnabled,
-    value: true,
-  },
-  quantity: 1,
-  category: [] as string[],
-  tags: [] as string[],
-  additionImages: [] as string[],
-  options: [] as OptionDtoWithValues[],
-} as ProductDto);
+const state: Ref<FlatProductDto> = ref(initialState);
 const isLoading = ref(false);
 const isValidForm = ref(true);
 
@@ -66,35 +70,31 @@ const selected = computed({
 
 // handlers
 const clearState = () => {
-  state.value = {
-    isEnabled: {
-      label: locale[storeLocale.value].isEnabled,
-      value: true,
-    },
-    quantity: 1,
-    category: [] as string[],
-    tags: [] as string[],
-    additionImages: [] as string[],
-    image: "",
-    options: [] as OptionDtoWithValues[],
-  } as ProductDto;
+  state.value = initialState;
+  state.value.options.length = 0;
 };
 
 const onSubmitHandler = async () => {
   try {
-    if (state.value.brand) {
-      await brandDataStore.getBrandByTitle(state.value.brand);
-    }
+    const data = {
+      ...state.value,
+      options: state.value?.options.map((option) => ({
+        ...option,
+        optionValue: option.optionValue._id,
+        values: option.values?.map((opt) => ({
+          ...opt,
+          optionValue: opt.optionValue.value.value,
+        })),
+      })),
+      category: categoryTitles.value
+        .filter((el) => state.value.category?.includes(el.title))
+        .map((el) => el._id),
+      brand: brand.value?._id || null,
+      createdAt: new Date(),
+    };
     await $fetch("/api/product/add", {
       method: "POST",
-      body: {
-        ...state.value,
-        category: data.value.filter((el) =>
-          state.value.category?.includes(el.title),
-        ),
-        brand: brand.value ? brand.value._id : null,
-        createdAt: new Date(),
-      },
+      body: data,
     });
     isLoading.value = true;
     isValidForm.value = true;
@@ -157,7 +157,7 @@ useHead({
       >
         <UTabs :items="items" class="w-full" v-model="selected">
           <template #data>
-            <DashboardProductDataTab v-model:state="state" />
+            <DashboardProductDataTab v-model:state="state" :isSaved="false" />
           </template>
           <template #options>
             <DashboardProductOptionTab v-model:options="state.options" />

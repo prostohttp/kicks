@@ -1,10 +1,11 @@
 import deleteFilesWithUseStorage from "~/utils/delete-files-with-use-storage";
-import { ProductDto } from "./dto/product.dto";
+import { ProductDtoWithValues } from "./dto/product.dto";
 
 export default defineEventHandler(async (event) => {
   try {
     const { id } = await readBody(event);
-    const product: ProductDto | null = await Product.findByIdAndDelete(id);
+    const product: ProductDtoWithValues | null =
+      await Product.findByIdAndDelete(id);
 
     if (!product) {
       throw createError({

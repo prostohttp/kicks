@@ -50,20 +50,9 @@ export const validate = (state: ProductDto): FormError[] => {
     for (const item of state.options) {
       if (!item.sort) {
         errors.push({
-          path: `sort-${item._id}`,
+          path: `sort-${item.optionValue._id}`,
           message: locale[useSettingsDataStore().locale].error.required,
         });
-      }
-      // TODO: Удалить
-      if (item.values) {
-        for (const optionValue of item.values) {
-          if (!optionValue.value) {
-            errors.push({
-              path: `value-${optionValue._id}`,
-              message: locale[useSettingsDataStore().locale].error.required,
-            });
-          }
-        }
       }
     }
   }

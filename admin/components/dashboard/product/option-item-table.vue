@@ -1,24 +1,26 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
+import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 
 // define
-const option = defineModel("option", {
+const optionModel = defineModel("option", {
   required: true,
-  default: {} as OptionDtoWithValues | undefined,
+  default: {} as ProductOptionDto | undefined,
 });
 
 // store
 const settingsDataStore = useSettingsDataStore();
 const optionDataStore = useOptionDataStore();
 const { locale: settingsLocale } = storeToRefs(settingsDataStore);
-await useAsyncData(() => optionDataStore.getOption(option.value._id!));
-const { option: dataOption } = storeToRefs(optionDataStore);
+await useAsyncData(() =>
+  optionDataStore.getOption(optionModel.value!.optionValue._id!),
+);
+const { option } = storeToRefs(optionDataStore);
 
 // vars
-const optionValues = dataOption.value?.values!.map((option) => ({
-  label: option.value,
-  value: option._id,
+const optionValues = option.value!.values!.map((item) => ({
+  label: item.value,
+  value: item._id,
 }));
 const columns = [
   {
@@ -40,26 +42,32 @@ const columns = [
 
 // handlers
 const addNewValue = () => {
-  option.value.values?.push({
-    _id: option.value._id,
-    valueId: "",
-    value: {
-      value: "",
-      label: "",
+  optionModel.value!.values!.push({
+    optionValue: {
+      _id: Date.now().toString(),
+      value: {
+        value: "",
+        label: "",
+      },
+      sort: 0,
     },
     price: undefined,
     count: undefined,
   });
 };
 
-const deleteValue = (id: number) => {
-  deleteValueFromArray(id, option.value.values!);
+const deleteValue = (id: string) => {
+  const values = optionModel.value.values;
+  const index = values!.findIndex((value) => value.optionValue._id === id);
+  if (index !== -1) {
+    values!.splice(index, 1);
+  }
 };
 </script>
 
 <template>
   <UTable
-    :rows="option.values"
+    :rows="optionModel.values"
     :columns="columns"
     :empty-state="{
       icon: '',
@@ -86,7 +94,7 @@ const deleteValue = (id: number) => {
     </template>
     <template #value-data="{ row }">
       <UFormGroup
-        :name="`value-${row.id}`"
+        :name="`value-${row._id}`"
         :ui="{
           label: {
             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -94,7 +102,7 @@ const deleteValue = (id: number) => {
         }"
       >
         <USelectMenu
-          v-model="row.value"
+          v-model="row.optionValue.value"
           :options="optionValues"
           :placeholder="locale[settingsDataStore.locale].addOption"
           :uiMenu="{
@@ -111,7 +119,7 @@ const deleteValue = (id: number) => {
       </UFormGroup>
     </template>
     <template #count-data="{ row }">
-      <UFormGroup :name="`count-${row.id}`">
+      <UFormGroup :name="`count-${row._id}`">
         <UInput
           inputClass="clean-field"
           v-model="row.count"
@@ -121,7 +129,7 @@ const deleteValue = (id: number) => {
       </UFormGroup>
     </template>
     <template #price-data="{ row }">
-      <UFormGroup :name="`price-${row.id}`">
+      <UFormGroup :name="`price-${row._id}`">
         <UInput
           inputClass="clean-field"
           v-model="row.price"
@@ -134,7 +142,7 @@ const deleteValue = (id: number) => {
       <UButton
         class="icon-button float-right"
         icon="i-heroicons-minus-circle-16-solid"
-        @click="deleteValue(row.id)"
+        @click="deleteValue(row.optionValue._id!)"
       />
     </template>
   </UTable>

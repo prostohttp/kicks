@@ -2,15 +2,15 @@
 import type { ModelRef } from "vue";
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
-import type { ProductDto } from "~/pages/dashboard/products/product.dto";
+import type { FlatProductDto } from "~/server/api/product/dto/product.dto";
 
 // define
 const { isSaved } = defineProps<{
   isSaved?: boolean;
 }>();
-const state: ModelRef<ProductDto> = defineModel("state", {
+const state: ModelRef<FlatProductDto> = defineModel("state", {
   required: true,
-  default: {} as ProductDto,
+  default: {} as FlatProductDto,
 });
 
 // store

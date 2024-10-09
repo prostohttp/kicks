@@ -159,7 +159,7 @@ watch(
             placeholder
             fit="inside"
             width="40"
-            class="dark:opacity-90 rounded-[8px]"
+            class="dark:opacity-90"
             v-if="!row.image"
           />
           <NuxtImg
@@ -167,7 +167,7 @@ watch(
             placeholder
             fit="inside"
             width="40"
-            class="dark:opacity-90 rounded-[8px]"
+            class="dark:opacity-90"
             v-else
           />
         </NuxtLink>

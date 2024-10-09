@@ -15,5 +15,13 @@ export const OptionValue = defineMongooseModel({
       type: String,
       required: false,
     },
+    price: {
+      type: Number,
+      required: false,
+    },
+    count: {
+      type: Number,
+      required: false,
+    },
   },
 });

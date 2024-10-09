@@ -29,12 +29,13 @@ export const useProductDataStore = defineStore("productData", () => {
   // handlers
   const getProductById = async (id: string) => {
     try {
-      product.value = await $fetch("/api/product/one", {
+      const rawProduct: ProductDto = await $fetch("/api/product/one", {
         method: "GET",
         query: {
           id,
         },
       });
+      product.value = rawProduct;
     } catch (error: any) {
       throw createError({ statusMessage: error.message });
     }
@@ -144,8 +145,8 @@ export const useProductDataStore = defineStore("productData", () => {
       for (const product of products) {
         const resultProduct = {
           ...product,
-          options: product.options!.filter((option) =>
-            optionIds.includes(option._id!),
+          options: product.options!.filter((item) =>
+            optionIds.includes(item.optionValue._id!),
           ),
         };
         await editProductById(resultProduct);

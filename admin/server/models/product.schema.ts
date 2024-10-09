@@ -19,20 +19,54 @@ export const Product = defineMongooseModel({
     },
     category: [
       {
-        type: Types.ObjectId || String,
+        type: Types.ObjectId,
         required: false,
         ref: "Category",
       },
     ],
     options: [
       {
-        type: Types.ObjectId || String,
-        required: false,
-        ref: "Option",
+        optionValue: {
+          type: Types.ObjectId,
+          required: false,
+          ref: "Option",
+        },
+        value: {
+          type: String,
+          required: false,
+        },
+        required: {
+          type: Boolean,
+          required: true,
+        },
+        sort: {
+          type: Number,
+          required: true,
+        },
+        values: [
+          {
+            type: {
+              optionValue: {
+                type: Types.ObjectId,
+                required: false,
+                ref: "OptionValue",
+              },
+              price: {
+                type: Number,
+                required: false,
+              },
+              count: {
+                type: Number,
+                required: false,
+              },
+            },
+            required: false,
+          },
+        ],
       },
     ],
     brand: {
-      type: Types.ObjectId || String,
+      type: Types.ObjectId,
       required: false,
       ref: "Brand",
     },

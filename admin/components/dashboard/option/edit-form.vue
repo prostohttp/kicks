@@ -47,14 +47,14 @@ const submitHandler = async () => {
         }
       }
     } else if (state.value?.values?.length && !isVisibleTable.value) {
-      for (const id of option.value?.values!) {
-        await optionDataStore.deleteValue(id);
+      for (const item of option.value?.values!) {
+        await optionDataStore.deleteValue(item._id!);
       }
     }
     if (option.value?.values?.length) {
-      for (const id of option.value.values) {
-        if (optionValueIds.length && !optionValueIds.includes(id)) {
-          await optionDataStore.deleteValue(id);
+      for (const item of option.value.values) {
+        if (optionValueIds.length && !optionValueIds.includes(item._id!)) {
+          await optionDataStore.deleteValue(item._id!);
         }
       }
     }

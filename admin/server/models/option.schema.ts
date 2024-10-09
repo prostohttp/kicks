@@ -9,6 +9,10 @@ export const Option = defineMongooseModel({
       type: String,
       required: true,
     },
+    value: {
+      type: String,
+      required: false,
+    },
     type: {
       type: String,
       min: 3,
@@ -18,9 +22,13 @@ export const Option = defineMongooseModel({
       type: Number,
       required: true,
     },
+    required: {
+      type: Boolean,
+      required: false,
+    },
     values: [
       {
-        type: Types.ObjectId || String,
+        type: Types.ObjectId,
         required: false,
         ref: "OptionValue",
       },
