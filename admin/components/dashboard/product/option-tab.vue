@@ -50,7 +50,9 @@ const deleteOption = (id: number) => {
   <div
     class="flex lg:flex-row flex-col-reverse justify-between mt-[40px] gap-[40px]"
   >
-    <div class="lg:w-[30%] w-full flex flex-col gap-[10px] lg:mb-0 mb-[20px]">
+    <div
+      class="lg:w-[30%] w-full flex flex-col gap-[10px] lg:mb-0 mb-[20px] order-2 lg:order-1"
+    >
       <h2
         class="text-gray-700 dark:text-gray-200 font-[Rubik] font-[600] text-[20px] leading-[20px] mb-[5px]"
       >
@@ -97,7 +99,7 @@ const deleteOption = (id: number) => {
         />
       </UFormGroup>
     </div>
-    <div class="lg:w-[70%] w-full">
+    <div class="lg:w-[70%] w-full order-1 lg:order-2">
       <DashboardProductOptionTabItem
         v-for="(item, index) in options"
         :id="item.optionValue._id!"
