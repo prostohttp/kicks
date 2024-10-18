@@ -1,0 +1,17 @@
+type OrderProduct {
+  productId: Product
+  productCount: Int!
+}
+
+type Order {
+  _id: ID!
+  orderId: ID!
+  products: [OrderProduct!]!
+  customerId: User!
+  shipping: Shipping!
+  shippingAddress: String
+  payment: Payment!
+  status: String!
+  date: String!
+  note: String
+}

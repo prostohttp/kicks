@@ -9,6 +9,9 @@ export class Option {
   @Prop({ required: true, min: 3, type: String })
   title: string;
 
+  @Prop({ required: true, type: String })
+  value: string;
+
   @Prop({ required: true, min: 3, type: String })
   type: string;
 

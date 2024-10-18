@@ -64,7 +64,7 @@ export class Settings {
     label: string;
   };
 
-  @Prop({ required: false, type: Number })
+  @Prop({ required: true, type: Number })
   secondCurrencyRate: number;
 
   @Prop({

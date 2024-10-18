@@ -18,11 +18,15 @@ export class Product {
   description: string;
 
   @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: "Category",
-    required: false,
+    type: [
+      {
+        type: MongooseSchema.Types.ObjectId,
+        ref: "Category",
+        required: false,
+      },
+    ],
   })
-  category: Category;
+  category: Category[];
 
   @Prop({
     type: [

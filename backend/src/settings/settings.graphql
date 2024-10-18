@@ -1,0 +1,22 @@
+type SettingsType {
+  value: String!
+  label: String!
+}
+
+type SettingsLangType {
+  title: String!
+  phone: String!
+  description: String!
+  email: String!
+  address: String
+}
+
+type Settings {
+  image: String
+  localeDashboard: SettingsType
+  currency: SettingsType
+  mainCurrency: SettingsType
+  secondCurrencyRate: Int!
+  en: SettingsLangType
+  ru: SettingsLangType
+}
