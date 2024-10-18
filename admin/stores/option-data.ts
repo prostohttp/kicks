@@ -9,14 +9,14 @@ import type {
 } from "~/server/api/option/dto/option.dto";
 import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 
-export const useOptionDataStore = defineStore("optionData", () => {
-  interface OptionsPayload {
-    options: OptionDto[];
-    pagesInPagination?: number;
-    allItems: number;
-    activePage?: number;
-  }
+interface OptionsPayload {
+  options: OptionDto[];
+  pagesInPagination?: number;
+  allItems: number;
+  activePage?: number;
+}
 
+export const useOptionDataStore = defineStore("optionData", () => {
   // store
   const productDataStore = useProductDataStore();
 
