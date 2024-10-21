@@ -1,13 +1,8 @@
 type User {
-  _id: ID!
+  _id: MongoId
   name: String!
   email: String!
   role: String!
   image: String
   orders: [Order!]!
-}
-
-type Query {
-  user(index: Int!): User
-  users: [User!]!
 }

@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 export class MongoIdScalar
   implements CustomScalar<string, mongoose.Types.ObjectId>
 {
-  description = "Date custom scalar type";
+  description = "MongoId custom scalar type";
 
   parseValue(value: string): mongoose.Types.ObjectId {
     return new mongoose.Types.ObjectId(value);

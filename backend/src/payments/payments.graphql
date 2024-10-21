@@ -1,3 +1,4 @@
 type Payment {
-  _id: String!
+  _id: MongoId
+  title: String!
 }

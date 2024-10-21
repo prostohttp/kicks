@@ -1,5 +1,4 @@
-import { ParseIntPipe } from "@nestjs/common";
-import { Args, Query, Resolver } from "@nestjs/graphql";
+import { Resolver } from "@nestjs/graphql";
 import { User } from "src/graphql-types";
 
 @Resolver("User")
@@ -16,13 +15,13 @@ export class UsersResolver {
     },
   ];
 
-  @Query("user")
-  findOne(@Args("index", ParseIntPipe) index: number): User {
-    return this.users[index];
-  }
+  // @Query("user")
+  // findOne(@Args("index", ParseIntPipe) index: number): User {
+  //   return this.users[index];
+  // }
 
-  @Query("users")
-  async findAll(): Promise<User[]> {
-    return this.users;
-  }
+  // @Query("users")
+  // async findAll(): Promise<User[]> {
+  //   return this.users;
+  // }
 }

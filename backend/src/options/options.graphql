@@ -1,3 +1,8 @@
 type Option {
-  _id: String!
+  _id: MongoId
+  title: String!
+  value: String!
+  type: String!
+  sort: Int!
+  values: [OptionValue!]!
 }

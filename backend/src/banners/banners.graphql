@@ -1,3 +1,8 @@
 type Banner {
-  _id: String!
+  _id: MongoId
+  id: Int!
+  heading: String
+  image: String!
+  url: String
+  sort: Int!
 }

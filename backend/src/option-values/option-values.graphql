@@ -1,0 +1,6 @@
+type OptionValue {
+  _id: MongoId
+  value: String!
+  sort: Int!
+  image: String
+}

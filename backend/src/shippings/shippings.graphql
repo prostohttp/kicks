@@ -1,3 +1,6 @@
 type Shipping {
-  _id: String!
+  _id: MongoId
+  title: String!
+  description: String
+  price: Int!
 }

@@ -1,3 +1,21 @@
+scalar Date
+scalar MongoId
+
 type Article {
-  _id: String!
+  _id: MongoId
+  title: String!
+  shortDescription: String!
+  description: String
+  isEnabled: Boolean!
+  adminMenu: Boolean!
+  siteMenu: Boolean!
+  image: String
+  featuredProducts: [Product!]!
+  createdAt: Date!
+}
+
+type Query {
+  article(id: String!): Article
+  articles: [Article!]!
+  articlesForPagination(offset: Int!, limit: Int!): [Article!]!
 }

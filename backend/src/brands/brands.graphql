@@ -1,3 +1,6 @@
 type Brand {
-  _id: String!
+  _id: MongoId
+  title: String!
+  description: String
+  image: String
 }

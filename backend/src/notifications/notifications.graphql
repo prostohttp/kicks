@@ -1,3 +1,6 @@
 type Notification {
-  _id: String!
+  _id: MongoId
+  order: Order!
+  isRead: Boolean!
+  createdAt: Date!
 }

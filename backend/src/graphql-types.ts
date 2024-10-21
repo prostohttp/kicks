@@ -9,27 +9,71 @@
 /* eslint-disable */
 
 export class Article {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    title: string;
+    shortDescription: string;
+    description?: Nullable<string>;
+    isEnabled: boolean;
+    adminMenu: boolean;
+    siteMenu: boolean;
+    image?: Nullable<string>;
+    featuredProducts: Product[];
+    createdAt: Date;
+}
+
+export abstract class IQuery {
+    article?: Nullable<Article>;
+    articles: Article[];
+    articlesForPagination?: Article[];
 }
 
 export class Banner {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    id: number;
+    heading?: Nullable<string>;
+    image: string;
+    url?: Nullable<string>;
+    sort: number;
 }
 
 export class Brand {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    title: string;
+    description?: Nullable<string>;
+    image?: Nullable<string>;
 }
 
 export class Category {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    title: string;
+    image?: Nullable<string>;
+    description?: Nullable<string>;
+    isParent: boolean;
+    children: Category[];
+    isEnabled: boolean;
 }
 
 export class Notification {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    order: Order;
+    isRead: boolean;
+    createdAt: Date;
+}
+
+export class OptionValue {
+    _id?: Nullable<MongoId>;
+    value: string;
+    sort: number;
+    image?: Nullable<string>;
 }
 
 export class Option {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    title: string;
+    value: string;
+    type: string;
+    sort: number;
+    values: OptionValue[];
 }
 
 export class OrderProduct {
@@ -38,8 +82,8 @@ export class OrderProduct {
 }
 
 export class Order {
-    _id: string;
-    orderId: string;
+    _id?: Nullable<MongoId>;
+    orderId: MongoId;
     products: OrderProduct[];
     customerId: User;
     shipping: Shipping;
@@ -51,11 +95,31 @@ export class Order {
 }
 
 export class Payment {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    title: string;
+}
+
+export class ProductType {
+    label: string;
+    value: boolean;
 }
 
 export class Product {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    title: string;
+    shortDescription: string;
+    description?: Nullable<string>;
+    category: Category[];
+    options: Option[];
+    brand?: Nullable<Brand>;
+    sku?: Nullable<string>;
+    quantity: number;
+    regularPrice: number;
+    salePrice?: Nullable<number>;
+    tags: Nullable<string>[];
+    additionImages: Nullable<string>[];
+    isEnabled: ProductType;
+    createdAt: Date;
 }
 
 export class SettingsType {
@@ -82,11 +146,14 @@ export class Settings {
 }
 
 export class Shipping {
-    _id: string;
+    _id?: Nullable<MongoId>;
+    title: string;
+    description?: Nullable<string>;
+    price: number;
 }
 
 export class User {
-    _id: string;
+    _id?: Nullable<MongoId>;
     name: string;
     email: string;
     role: string;
@@ -94,9 +161,5 @@ export class User {
     orders: Order[];
 }
 
-export abstract class IQuery {
-    user?: Nullable<User>;
-    users: User[];
-}
-
+export type MongoId = any;
 type Nullable<T> = T | null;

@@ -1,3 +1,9 @@
 type Category {
-  _id: String!
+  _id: MongoId
+  title: String!
+  image: String
+  description: String
+  isParent: Boolean!
+  children: [Category!]!
+  isEnabled: Boolean!
 }

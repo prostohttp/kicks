@@ -1,3 +1,22 @@
+type ProductType {
+  label: String!
+  value: Boolean!
+}
+
 type Product {
-  _id: String!
+  _id: MongoId
+  title: String!
+  shortDescription: String!
+  description: String
+  category: [Category!]!
+  options: [Option!]!
+  brand: Brand
+  sku: String
+  quantity: Int!
+  regularPrice: Int!
+  salePrice: Int
+  tags: [String]!
+  additionImages: [String]!
+  isEnabled: ProductType!
+  createdAt: Date!
 }

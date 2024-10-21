@@ -4,8 +4,8 @@ type OrderProduct {
 }
 
 type Order {
-  _id: ID!
-  orderId: ID!
+  _id: MongoId
+  orderId: MongoId!
   products: [OrderProduct!]!
   customerId: User!
   shipping: Shipping!
