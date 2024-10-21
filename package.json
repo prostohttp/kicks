@@ -4,8 +4,10 @@
 	"description": "Kicks e-commerce Fullstack",
 	"main": "index.js",
 	"scripts": {
-		"start": "npm run dev:admin",
-		"dev:admin": "cd admin && npm run dev"
+		"start": "npm run dev:admin && npm run dev:back && npm run dev:front",
+		"dev:admin": "cd admin && npm run dev",
+		"dev:back": "cd backend && npm run start:dev",
+		"dev:front": "cd frontend && npm run dev"
 	},
 	"repository": {
 		"type": "git",
