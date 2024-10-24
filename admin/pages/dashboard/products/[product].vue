@@ -61,6 +61,9 @@ const state: Ref<FlatProductDto> = ref({
 // handlers
 const onSubmitHandler = async () => {
   try {
+    if (state.value.brand) {
+      await brandDataStore.getBrandByTitle(state.value.brand);
+    }
     const data = {
       ...state.value,
       options: state.value?.options.map((option) => {

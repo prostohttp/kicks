@@ -28,7 +28,7 @@ export const Product = defineMongooseModel({
       {
         optionValue: {
           type: Types.ObjectId,
-          required: false,
+          required: true,
           ref: "Option",
         },
         value: {

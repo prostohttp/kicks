@@ -76,6 +76,9 @@ const clearState = () => {
 
 const onSubmitHandler = async () => {
   try {
+    if (state.value.brand) {
+      await brandDataStore.getBrandByTitle(state.value.brand);
+    }
     const data = {
       ...state.value,
       options: state.value?.options.map((option) => {
@@ -180,6 +183,6 @@ useHead({
         </div>
       </UForm>
     </div>
-    <!-- <pre>{{ state }}</pre> -->
+    <pre>{{ state }}</pre>
   </main>
 </template>
