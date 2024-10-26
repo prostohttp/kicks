@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 export class MongoIdScalar
   implements CustomScalar<string, mongoose.Types.ObjectId>
 {
-  description = "MongoId custom scalar type";
+  description = "MongoId пользовательский скаляр";
 
   parseValue(value: string): mongoose.Types.ObjectId {
     return new mongoose.Types.ObjectId(value);
@@ -17,7 +17,7 @@ export class MongoIdScalar
   }
 
   parseLiteral(ast: ValueNode): mongoose.Types.ObjectId {
-    if (ast.kind === Kind.INT) {
+    if (ast.kind === Kind.STRING) {
       return new mongoose.Types.ObjectId(ast.value);
     }
     return null;
