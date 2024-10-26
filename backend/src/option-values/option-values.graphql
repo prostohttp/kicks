@@ -1,5 +1,5 @@
 type OptionValue {
-  _id: MongoId
+  _id: ID
   value: String!
   sort: Int!
   image: String
