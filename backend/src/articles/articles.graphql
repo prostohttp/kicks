@@ -1,8 +1,7 @@
 scalar Date
-scalar MongoId
 
-type Article {
-  _id: MongoId
+interface BasicArticle {
+  _id: ID
   title: String!
   shortDescription: String!
   description: String
@@ -10,12 +9,38 @@ type Article {
   adminMenu: Boolean!
   siteMenu: Boolean!
   image: String
-  featuredProducts: [Product!]!
+  sort: Int!
+  createdAt: Date!
+}
+
+type Article implements BasicArticle {
+  _id: ID
+  title: String!
+  shortDescription: String!
+  description: String
+  isEnabled: Boolean!
+  adminMenu: Boolean!
+  siteMenu: Boolean!
+  image: String
+  sort: Int!
+  featuredProducts: [Product!]
+  createdAt: Date!
+}
+
+type FlatArticle implements BasicArticle {
+  _id: ID
+  title: String!
+  shortDescription: String!
+  description: String
+  isEnabled: Boolean!
+  adminMenu: Boolean!
+  siteMenu: Boolean!
+  image: String
+  sort: Int!
   createdAt: Date!
 }
 
 type Query {
-  article(id: String!): Article
-  articles: [Article!]!
-  articlesForPagination(offset: Int!, limit: Int!): [Article!]!
+  article(id: ID!): Article
+  articles(offset: Int!, limit: Int!): [FlatArticle!]
 }
