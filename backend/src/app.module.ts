@@ -19,8 +19,8 @@ import { PaymentsModule } from "./payments/payments.module";
 import { ProductsModule } from "./products/products.module";
 import { SettingsModule } from "./settings/settings.module";
 import { ShippingsModule } from "./shippings/shippings.module";
-import { DateScalar } from "./types/scalars/date-scalar";
-import { MongoIdScalar } from "./types/scalars/mongo-id-scalar";
+import { DateScalar } from "./types/scalars/date.scalar";
+import { AuthModule } from "./auth/auth.module";
 
 mongoose.set("toJSON", {
   versionKey: false,
@@ -61,7 +61,8 @@ mongoose.set("toJSON", {
     SettingsModule,
     ShippingsModule,
     UserModule,
+    AuthModule,
   ],
-  providers: [DateScalar, MongoIdScalar],
+  providers: [DateScalar],
 })
 export class AppModule {}
