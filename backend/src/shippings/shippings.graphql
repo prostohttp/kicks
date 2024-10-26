@@ -1,6 +1,11 @@
 type Shipping {
-  _id: MongoId
+  _id: ID
   title: String!
   description: String
-  price: Int!
+  price: Int
+}
+
+extend type Query {
+  shipping(id: ID!): Shipping
+  shippings: [Shipping!]
 }

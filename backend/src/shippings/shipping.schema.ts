@@ -11,7 +11,7 @@ export class Shipping implements GraphQLTypes.Shipping {
   @Prop({ required: false, type: String })
   description: string;
 
-  @Prop({ required: true, type: Number })
+  @Prop({ required: false, type: Number })
   price: number;
 }
 
