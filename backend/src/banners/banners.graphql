@@ -1,8 +1,18 @@
-type Banner {
-  _id: MongoId
+type BannerItem {
+  _id: ID
   id: Int!
   heading: String
+  description: String
   image: String!
   url: String
   sort: Int!
+}
+
+type Banner {
+  title: String!
+  banners: [BannerItem!]!
+}
+
+extend type Query {
+  banner(id: ID!): Banner
 }
