@@ -34,7 +34,6 @@ export class User implements GraphQLTypes.User {
         required: false,
       },
     ],
-    required: true,
   })
   orders: Order[];
 }

@@ -1,8 +1,17 @@
 type User {
-  _id: MongoId
+  _id: ID
   name: String!
   email: String!
   role: String!
   image: String
-  orders: [Order!]!
+  address: String
+  orders: [Order!]
 }
+
+extend type Query {
+  user(id: ID!): User
+}
+
+# type Mutation {
+
+# }

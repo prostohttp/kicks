@@ -1,27 +1,13 @@
-import { Resolver } from "@nestjs/graphql";
-import { User } from "src/graphql-types";
+import { Args, Query, Resolver } from "@nestjs/graphql";
+import { UsersService } from "./users.service";
+import * as GraphQlTypes from "src/graphql-types";
 
 @Resolver("User")
 export class UsersResolver {
-  constructor() {}
+  constructor(private readonly userService: UsersService) {}
 
-  users: User[] = [
-    {
-      _id: "232323242fd323",
-      name: "Mikele",
-      email: "memphis.sail@gmail.com",
-      role: "Admin",
-      orders: [],
-    },
-  ];
-
-  // @Query("user")
-  // findOne(@Args("index", ParseIntPipe) index: number): User {
-  //   return this.users[index];
-  // }
-
-  // @Query("users")
-  // async findAll(): Promise<User[]> {
-  //   return this.users;
-  // }
+  @Query("user")
+  async findOne(@Args("id") id: string): Promise<GraphQlTypes.User> {
+    return await this.userService.findOne(id);
+  }
 }
