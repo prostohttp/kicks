@@ -1,0 +1,12 @@
+scalar Email
+
+type UserSignInInput {
+  name: String!
+  email: Email!
+  password: String!
+}
+
+type UserLogInInput {
+  email: Email!
+  password: String!
+}
