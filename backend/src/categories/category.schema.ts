@@ -15,9 +15,6 @@ export class Category implements GraphQLTypes.Category {
   @Prop({ required: false, type: String })
   description: string;
 
-  @Prop({ required: true, type: Boolean })
-  isParent: boolean;
-
   @Prop({
     type: [
       {

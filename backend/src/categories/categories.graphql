@@ -1,9 +1,13 @@
 type Category {
-  _id: MongoId
+  _id: ID
   title: String!
   image: String
   description: String
-  isParent: Boolean!
-  children: [Category!]!
+  children: [Category]
   isEnabled: Boolean!
+}
+
+extend type Query {
+  category(id: ID!): Category
+  categories: [Category!]
 }
