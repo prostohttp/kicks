@@ -1,22 +1,89 @@
+type OptionItemValue {
+  optionValue: OptionValue!
+  price: Int
+  count: Int
+}
+
+type OptionItem {
+  optionValue: Option!
+  value: String
+  required: Boolean!
+  sort: Int!
+  values: [OptionItemValue!]
+}
+
 type ProductType {
   label: String!
   value: Boolean!
 }
 
-type Product {
-  _id: MongoId
+interface BasicProduct {
+  _id: ID
   title: String!
   shortDescription: String!
   description: String
-  category: [Category!]!
-  options: [Option!]!
+  sku: String
+  quantity: Int!
+  regularPrice: Int!
+  salePrice: Int
+  tags: [String!]
+  additionImages: [String!]
+  isEnabled: ProductType!
+  createdAt: Date!
+}
+
+type Product implements BasicProduct {
+  _id: ID
+  title: String!
+  shortDescription: String!
+  description: String
+  category: [Category!]
+  options: [OptionItem!]
   brand: Brand
   sku: String
   quantity: Int!
   regularPrice: Int!
   salePrice: Int
-  tags: [String]!
-  additionImages: [String]!
+  tags: [String!]
+  additionImages: [String!]
   isEnabled: ProductType!
   createdAt: Date!
+}
+
+type ProductWithBrand implements BasicProduct {
+  _id: ID
+  title: String!
+  shortDescription: String!
+  description: String
+  brand: Brand
+  sku: String
+  quantity: Int!
+  regularPrice: Int!
+  salePrice: Int
+  tags: [String!]
+  additionImages: [String!]
+  isEnabled: ProductType!
+  createdAt: Date!
+}
+
+type ProductWithCategory implements BasicProduct {
+  _id: ID
+  title: String!
+  shortDescription: String!
+  description: String
+  category: [Category!]
+  sku: String
+  quantity: Int!
+  regularPrice: Int!
+  salePrice: Int
+  tags: [String!]
+  additionImages: [String!]
+  isEnabled: ProductType!
+  createdAt: Date!
+}
+
+extend type Query {
+  product(id: ID!): Product
+  productsByBrand(id: ID!, offset: Int, limit: Int): [ProductWithBrand!]
+  productsByCategory(id: ID!, offset: Int, limit: Int): [ProductWithCategory!]
 }

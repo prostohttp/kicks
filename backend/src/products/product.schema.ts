@@ -4,6 +4,7 @@ import { Option } from "../options/option.schema";
 import { Brand } from "../brands/brand.schema";
 import { Category } from "../categories/category.schema";
 import * as GraphQLTypes from "src/graphql-types";
+import { OptionValue } from "src/option-values/option-value.schema";
 
 export type ProductDocument = HydratedDocument<Product>;
 
@@ -32,13 +33,50 @@ export class Product implements GraphQLTypes.Product {
   @Prop({
     type: [
       {
-        type: MongooseSchema.Types.ObjectId,
-        ref: "Option",
-        required: false,
+        optionValue: {
+          type: MongooseSchema.Types.ObjectId,
+          required: false,
+          ref: "Option",
+        },
+        value: {
+          type: String,
+          required: false,
+        },
+        required: {
+          type: Boolean,
+          required: true,
+        },
+        sort: {
+          type: Number,
+          required: true,
+        },
+        values: [
+          {
+            optionValue: {
+              type: MongooseSchema.Types.ObjectId,
+              required: true,
+              ref: "OptionValue",
+            },
+            price: {
+              type: Number,
+              required: false,
+            },
+            count: {
+              type: Number,
+              required: false,
+            },
+          },
+        ],
       },
     ],
   })
-  options: Option[];
+  options: {
+    optionValue: Option;
+    value: string;
+    required: boolean;
+    sort: number;
+    values: { optionValue: OptionValue; price: number; count: number }[];
+  }[];
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,
@@ -79,7 +117,6 @@ export class Product implements GraphQLTypes.Product {
         required: true,
       },
     },
-    required: true,
   })
   isEnabled: { label: string; value: boolean };
 
