@@ -1,6 +1,11 @@
 type Brand {
-  _id: MongoId
+  _id: ID
   title: String!
   description: String
   image: String
+}
+
+extend type Query {
+  brand(id: ID!): Brand
+  brands: [Brand!]
 }
