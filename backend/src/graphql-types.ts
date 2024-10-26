@@ -96,6 +96,8 @@ export abstract class IQuery {
     notification?: Nullable<Notification>;
     option?: Nullable<Option>;
     options?: Nullable<Nullable<Option>[]>;
+    orderStatus?: Nullable<OrderStatus>;
+    orderStatuses?: Nullable<OrderStatus[]>;
     order?: Nullable<Order>;
     orders?: Nullable<Nullable<Order>[]>;
     payment?: Nullable<Payment>;
@@ -176,6 +178,11 @@ export class Option {
     type: string;
     sort: number;
     values?: Nullable<Nullable<OptionValue>[]>;
+}
+
+export class OrderStatus {
+    en: string;
+    ru: string;
 }
 
 export class Products {

@@ -15,6 +15,7 @@ import { NotificationsModule } from "./notifications/notifications.module";
 import { OptionValuesModule } from "./option-values/option-values.module";
 import { OptionsModule } from "./options/options.module";
 import { OrdersModule } from "./orders/orders.module";
+import { OrderStatusModule } from "./orders/order-status.module";
 import { PaymentsModule } from "./payments/payments.module";
 import { ProductsModule } from "./products/products.module";
 import { SettingsModule } from "./settings/settings.module";
@@ -56,6 +57,7 @@ mongoose.set("toJSON", {
     OptionValuesModule,
     OptionsModule,
     OrdersModule,
+    OrderStatusModule,
     PaymentsModule,
     ProductsModule,
     SettingsModule,

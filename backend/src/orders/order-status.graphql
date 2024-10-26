@@ -1,0 +1,9 @@
+type OrderStatus {
+  en: String!
+  ru: String!
+}
+
+extend type Query {
+  orderStatus(id: ID): OrderStatus
+  orderStatuses: [OrderStatus!]
+}
