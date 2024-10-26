@@ -1,4 +1,9 @@
 type Payment {
-  _id: MongoId
+  _id: ID
   title: String!
+}
+
+extend type Query {
+  payment(id: ID): Payment
+  payments: [Payment!]!
 }
