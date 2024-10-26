@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Schema as MongooseSchema } from "mongoose";
-import mongoose from "mongoose";
 import { OrderStatus } from "src/types/order-status";
 import * as GraphQLTypes from "src/graphql-types";
 import { Product } from "src/products/product.schema";
@@ -12,7 +11,7 @@ export type OrderDocument = HydratedDocument<Order>;
 
 @Schema()
 export class Order implements GraphQLTypes.Order {
-  @Prop({ required: true, unique: true, type: mongoose.Types.ObjectId })
+  @Prop({ required: true, type: String })
   orderId: string;
 
   @Prop({
@@ -37,46 +36,38 @@ export class Order implements GraphQLTypes.Order {
   }[];
 
   @Prop({
-    type: {
-      type: MongooseSchema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    type: MongooseSchema.Types.ObjectId,
+    ref: "User",
+    required: true,
   })
-  customerId: User;
+  customer: User;
 
   @Prop({
-    type: {
-      type: MongooseSchema.Types.ObjectId,
-      ref: "Shipping",
-      required: true,
-    },
+    type: MongooseSchema.Types.ObjectId,
+    ref: "Shipping",
+    required: true,
   })
   shipping: Shipping;
+
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: "Payment",
+    required: true,
+  })
+  payment: Payment;
 
   @Prop({ required: false, type: String })
   shippingAddress: string;
 
   @Prop({
-    type: {
-      type: MongooseSchema.Types.ObjectId,
-      ref: "Payment",
-      required: true,
-    },
-  })
-  payment: Payment;
-
-  @Prop({
-    type: {
-      required: true,
-      default: OrderStatus.PROCESSING,
-      type: String,
-    },
+    required: true,
+    default: OrderStatus.PROCESSING,
+    type: String,
   })
   status: OrderStatus;
 
   @Prop({ required: true, type: Date })
-  date: string;
+  date: Date;
 
   @Prop({ required: false, type: String })
   note: string;

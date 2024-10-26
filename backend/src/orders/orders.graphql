@@ -1,17 +1,66 @@
-type OrderProduct {
-  productId: Product
+type Products {
+  productId: Product!
+  productCount: Int!
+}
+
+type FlatProductsType {
+  productId: String!
   productCount: Int!
 }
 
 type Order {
-  _id: MongoId
-  orderId: MongoId!
-  products: [OrderProduct!]!
-  customerId: User!
+  _id: ID
+  orderId: String!
+  products: [Products]
+  customer: User!
   shipping: Shipping!
-  shippingAddress: String
   payment: Payment!
+  shippingAddress: String
+  status: String!
+  date: Date!
+  note: String
+}
+
+type NewOrder {
+  _id: String!
+  orderId: String!
+  products: [FlatProductsType!]!
+  customer: String!
+  shipping: String!
+  payment: String!
+  shippingAddress: String
   status: String!
   date: String!
   note: String
+}
+
+type NewOrderResponse {
+  order: NewOrder!
+  notification: Notification!
+}
+
+input FlatProducts {
+  productId: String!
+  productCount: Int!
+}
+
+input InputOrder {
+  orderId: String!
+  products: [FlatProducts!]!
+  customer: String!
+  shipping: String!
+  payment: String!
+  date: String!
+  shippingAddress: String
+  status: String!
+  note: String
+}
+
+extend type Query {
+  order(id: ID!): Order
+  orders(id: ID!): [Order]
+}
+
+type Mutation {
+  addOrder(order: InputOrder!): NewOrderResponse!
 }
