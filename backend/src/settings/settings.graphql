@@ -1,3 +1,8 @@
+enum SettingsLocale {
+  en
+  ru
+}
+
 type SettingsType {
   value: String!
   label: String!
@@ -13,10 +18,14 @@ type SettingsLangType {
 
 type Settings {
   image: String
-  localeDashboard: SettingsType
+  localeStore: SettingsType
   currency: SettingsType
   mainCurrency: SettingsType
   secondCurrencyRate: Int!
   en: SettingsLangType
   ru: SettingsLangType
+}
+
+extend type Query {
+  settings: Settings
 }

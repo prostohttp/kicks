@@ -24,7 +24,7 @@ export class Settings implements GraphQLTypes.Settings {
       },
     },
   })
-  localeDashboard: {
+  localeStore: {
     value: Locales;
     label: string;
   };
