@@ -8,8 +8,30 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export class Article {
-    _id?: Nullable<MongoId>;
+export enum SettingsLocale {
+    en = "en",
+    ru = "ru"
+}
+
+export class FlatProducts {
+    productId: string;
+    productCount: number;
+}
+
+export class InputOrder {
+    orderId: string;
+    products: FlatProducts[];
+    customer: string;
+    shipping: string;
+    payment: string;
+    date: string;
+    shippingAddress?: Nullable<string>;
+    status: string;
+    note?: Nullable<string>;
+}
+
+export interface BasicArticle {
+    _id?: Nullable<string>;
     title: string;
     shortDescription: string;
     description?: Nullable<string>;
@@ -17,86 +39,203 @@ export class Article {
     adminMenu: boolean;
     siteMenu: boolean;
     image?: Nullable<string>;
-    featuredProducts: Product[];
+    sort: number;
+    createdAt: Date;
+}
+
+export interface BasicProduct {
+    _id?: Nullable<string>;
+    title: string;
+    shortDescription: string;
+    description?: Nullable<string>;
+    sku?: Nullable<string>;
+    quantity: number;
+    regularPrice: number;
+    salePrice?: Nullable<number>;
+    tags?: Nullable<string[]>;
+    additionImages?: Nullable<string[]>;
+    isEnabled: ProductType;
+    createdAt: Date;
+}
+
+export class Article implements BasicArticle {
+    _id?: Nullable<string>;
+    title: string;
+    shortDescription: string;
+    description?: Nullable<string>;
+    isEnabled: boolean;
+    adminMenu: boolean;
+    siteMenu: boolean;
+    image?: Nullable<string>;
+    sort: number;
+    featuredProducts?: Nullable<Product[]>;
+    createdAt: Date;
+}
+
+export class FlatArticle implements BasicArticle {
+    _id?: Nullable<string>;
+    title: string;
+    shortDescription: string;
+    description?: Nullable<string>;
+    isEnabled: boolean;
+    adminMenu: boolean;
+    siteMenu: boolean;
+    image?: Nullable<string>;
+    sort: number;
     createdAt: Date;
 }
 
 export abstract class IQuery {
     article?: Nullable<Article>;
-    articles: Article[];
-    articlesForPagination?: Article[];
+    articles?: Nullable<FlatArticle[]>;
+    banner?: Nullable<Banner>;
+    brand?: Nullable<Brand>;
+    brands?: Nullable<Brand[]>;
+    category?: Nullable<Category>;
+    categories?: Nullable<Category[]>;
+    notification?: Nullable<Notification>;
+    option?: Nullable<Option>;
+    options?: Nullable<Nullable<Option>[]>;
+    order?: Nullable<Order>;
+    orders?: Nullable<Nullable<Order>[]>;
+    payment?: Nullable<Payment>;
+    payments: Payment[];
+    product?: Nullable<Product>;
+    productsByBrand?: Nullable<ProductWithBrand[]>;
+    productsByCategory?: Nullable<ProductWithCategory[]>;
+    settings?: Nullable<Settings>;
+    shipping?: Nullable<Shipping>;
+    shippings?: Nullable<Shipping[]>;
+    user?: Nullable<User>;
 }
 
-export class Banner {
-    _id?: Nullable<MongoId>;
+export class UserSignInInput {
+    name: string;
+    email: Email;
+    password: string;
+}
+
+export class UserLogInInput {
+    email: Email;
+    password: string;
+}
+
+export class BannerItem {
+    _id?: Nullable<string>;
     id: number;
     heading?: Nullable<string>;
+    description?: Nullable<string>;
     image: string;
     url?: Nullable<string>;
     sort: number;
 }
 
+export class Banner {
+    title: string;
+    banners: BannerItem[];
+}
+
 export class Brand {
-    _id?: Nullable<MongoId>;
+    _id?: Nullable<string>;
     title: string;
     description?: Nullable<string>;
     image?: Nullable<string>;
 }
 
 export class Category {
-    _id?: Nullable<MongoId>;
+    _id?: Nullable<string>;
     title: string;
     image?: Nullable<string>;
     description?: Nullable<string>;
-    isParent: boolean;
-    children: Category[];
+    children?: Nullable<Nullable<Category>[]>;
     isEnabled: boolean;
 }
 
 export class Notification {
-    _id?: Nullable<MongoId>;
-    order: Order;
+    _id?: Nullable<string>;
+    order: string;
     isRead: boolean;
     createdAt: Date;
 }
 
+export abstract class IMutation {
+    addNotfication?: Notification;
+    addOrder?: NewOrderResponse;
+}
+
 export class OptionValue {
-    _id?: Nullable<MongoId>;
+    _id?: Nullable<string>;
     value: string;
     sort: number;
     image?: Nullable<string>;
 }
 
 export class Option {
-    _id?: Nullable<MongoId>;
+    _id?: Nullable<string>;
     title: string;
-    value: string;
     type: string;
     sort: number;
-    values: OptionValue[];
+    values?: Nullable<Nullable<OptionValue>[]>;
 }
 
-export class OrderProduct {
-    productId?: Nullable<Product>;
+export class Products {
+    productId: Product;
+    productCount: number;
+}
+
+export class FlatProductsType {
+    productId: string;
     productCount: number;
 }
 
 export class Order {
-    _id?: Nullable<MongoId>;
-    orderId: MongoId;
-    products: OrderProduct[];
-    customerId: User;
+    _id?: Nullable<string>;
+    orderId: string;
+    products?: Nullable<Nullable<Products>[]>;
+    customer: User;
     shipping: Shipping;
-    shippingAddress?: Nullable<string>;
     payment: Payment;
+    shippingAddress?: Nullable<string>;
+    status: string;
+    date: Date;
+    note?: Nullable<string>;
+}
+
+export class NewOrder {
+    _id: string;
+    orderId: string;
+    products: FlatProductsType[];
+    customer: string;
+    shipping: string;
+    payment: string;
+    shippingAddress?: Nullable<string>;
     status: string;
     date: string;
     note?: Nullable<string>;
 }
 
+export class NewOrderResponse {
+    order: NewOrder;
+    notification: Notification;
+}
+
 export class Payment {
-    _id?: Nullable<MongoId>;
+    _id?: Nullable<string>;
     title: string;
+}
+
+export class OptionItemValue {
+    optionValue: OptionValue;
+    price?: Nullable<number>;
+    count?: Nullable<number>;
+}
+
+export class OptionItem {
+    optionValue: Option;
+    value?: Nullable<string>;
+    required: boolean;
+    sort: number;
+    values?: Nullable<OptionItemValue[]>;
 }
 
 export class ProductType {
@@ -104,20 +243,52 @@ export class ProductType {
     value: boolean;
 }
 
-export class Product {
-    _id?: Nullable<MongoId>;
+export class Product implements BasicProduct {
+    _id?: Nullable<string>;
     title: string;
     shortDescription: string;
     description?: Nullable<string>;
-    category: Category[];
-    options: Option[];
+    category?: Nullable<Category[]>;
+    options?: Nullable<OptionItem[]>;
     brand?: Nullable<Brand>;
     sku?: Nullable<string>;
     quantity: number;
     regularPrice: number;
     salePrice?: Nullable<number>;
-    tags: Nullable<string>[];
-    additionImages: Nullable<string>[];
+    tags?: Nullable<string[]>;
+    additionImages?: Nullable<string[]>;
+    isEnabled: ProductType;
+    createdAt: Date;
+}
+
+export class ProductWithBrand implements BasicProduct {
+    _id?: Nullable<string>;
+    title: string;
+    shortDescription: string;
+    description?: Nullable<string>;
+    brand?: Nullable<Brand>;
+    sku?: Nullable<string>;
+    quantity: number;
+    regularPrice: number;
+    salePrice?: Nullable<number>;
+    tags?: Nullable<string[]>;
+    additionImages?: Nullable<string[]>;
+    isEnabled: ProductType;
+    createdAt: Date;
+}
+
+export class ProductWithCategory implements BasicProduct {
+    _id?: Nullable<string>;
+    title: string;
+    shortDescription: string;
+    description?: Nullable<string>;
+    category?: Nullable<Category[]>;
+    sku?: Nullable<string>;
+    quantity: number;
+    regularPrice: number;
+    salePrice?: Nullable<number>;
+    tags?: Nullable<string[]>;
+    additionImages?: Nullable<string[]>;
     isEnabled: ProductType;
     createdAt: Date;
 }
@@ -137,7 +308,7 @@ export class SettingsLangType {
 
 export class Settings {
     image?: Nullable<string>;
-    localeDashboard?: Nullable<SettingsType>;
+    localeStore?: Nullable<SettingsType>;
     currency?: Nullable<SettingsType>;
     mainCurrency?: Nullable<SettingsType>;
     secondCurrencyRate: number;
@@ -146,20 +317,21 @@ export class Settings {
 }
 
 export class Shipping {
-    _id?: Nullable<MongoId>;
+    _id?: Nullable<string>;
     title: string;
     description?: Nullable<string>;
-    price: number;
+    price?: Nullable<number>;
 }
 
 export class User {
-    _id?: Nullable<MongoId>;
+    _id?: Nullable<string>;
     name: string;
     email: string;
     role: string;
     image?: Nullable<string>;
-    orders: Order[];
+    address?: Nullable<string>;
+    orders?: Nullable<Order[]>;
 }
 
-export type MongoId = any;
+export type Email = any;
 type Nullable<T> = T | null;
