@@ -1,8 +1,12 @@
 type Option {
-  _id: MongoId
+  _id: ID
   title: String!
-  value: String!
   type: String!
   sort: Int!
-  values: [OptionValue!]!
+  values: [OptionValue]
+}
+
+extend type Query {
+  option(id: ID!): Option
+  options: [Option]
 }
