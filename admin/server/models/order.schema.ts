@@ -8,7 +8,6 @@ export const Order = defineMongooseModel({
     orderId: {
       type: String,
       required: true,
-      unique: true,
     },
     products: [
       {
