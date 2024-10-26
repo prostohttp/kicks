@@ -1,6 +1,14 @@
 type Notification {
-  _id: MongoId
-  order: Order!
+  _id: ID
+  order: String!
   isRead: Boolean!
   createdAt: Date!
+}
+
+extend type Query {
+  notification(id: ID!): Notification
+}
+
+type Mutation {
+  addNotfication(id: ID!): Notification!
 }
