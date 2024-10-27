@@ -1,4 +1,5 @@
 type OrderStatus {
+  _id: String
   en: String!
   ru: String!
 }

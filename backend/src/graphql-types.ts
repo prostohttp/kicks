@@ -181,6 +181,7 @@ export class Option {
 }
 
 export class OrderStatus {
+    _id?: Nullable<string>;
     en: string;
     ru: string;
 }
@@ -203,7 +204,7 @@ export class Order {
     shipping: Shipping;
     payment: Payment;
     shippingAddress?: Nullable<string>;
-    status: string;
+    status: OrderStatus;
     date: Date;
     note?: Nullable<string>;
 }
@@ -319,6 +320,8 @@ export class Settings {
     currency?: Nullable<SettingsType>;
     mainCurrency?: Nullable<SettingsType>;
     secondCurrencyRate: number;
+    startOrderStatus: OrderStatus;
+    endOrderStatus: OrderStatus;
     en?: Nullable<SettingsLangType>;
     ru?: Nullable<SettingsLangType>;
 }

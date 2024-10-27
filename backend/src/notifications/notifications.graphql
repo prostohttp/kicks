@@ -9,6 +9,6 @@ extend type Query {
   notification(id: ID!): Notification
 }
 
-type Mutation {
+extend type Mutation {
   addNotfication(id: ID!): Notification!
 }

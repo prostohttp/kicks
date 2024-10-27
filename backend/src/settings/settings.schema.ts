@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Schema as MongooseSchema } from "mongoose";
 import { Currency } from "src/types/currency";
 import { Locales } from "src/types/locale";
 import * as GraphQLTypes from "src/graphql-types";
+import { OrderStatus } from "src/orders/order-status.schema";
 
 export type SettingsDocument = HydratedDocument<Settings>;
 
@@ -28,6 +29,20 @@ export class Settings implements GraphQLTypes.Settings {
     value: Locales;
     label: string;
   };
+
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    required: true,
+    ref: "OrderStatus",
+  })
+  startOrderStatus: OrderStatus;
+
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    required: true,
+    ref: "OrderStatus",
+  })
+  endOrderStatus: OrderStatus;
 
   @Prop({
     type: {

@@ -10,7 +10,9 @@ export class SettingsService {
   ) {}
 
   async getSettings(): Promise<Settings> {
-    const settings = await this.settingsModel.find();
+    const settings = await this.settingsModel
+      .find()
+      .populate(["startOrderStatus", "endOrderStatus"]);
     return settings[0];
   }
 }

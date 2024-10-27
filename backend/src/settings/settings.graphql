@@ -22,6 +22,8 @@ type Settings {
   currency: SettingsType
   mainCurrency: SettingsType
   secondCurrencyRate: Int!
+  startOrderStatus: OrderStatus!
+  endOrderStatus: OrderStatus!
   en: SettingsLangType
   ru: SettingsLangType
 }

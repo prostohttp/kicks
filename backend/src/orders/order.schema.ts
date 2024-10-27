@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Schema as MongooseSchema } from "mongoose";
-import { OrderStatus } from "src/types/order-status";
 import * as GraphQLTypes from "src/graphql-types";
 import { Product } from "src/products/product.schema";
 import { User } from "src/users/user.schema";
 import { Shipping } from "src/shippings/shipping.schema";
 import { Payment } from "src/payments/payment.schema";
+import { OrderStatus } from "./order-status.schema";
 
 export type OrderDocument = HydratedDocument<Order>;
 
@@ -60,9 +60,9 @@ export class Order implements GraphQLTypes.Order {
   shippingAddress: string;
 
   @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: "OrderStatus",
     required: true,
-    default: OrderStatus.PROCESSING,
-    type: String,
   })
   status: OrderStatus;
 

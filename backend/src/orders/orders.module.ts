@@ -13,6 +13,7 @@ import {
   Notification,
   NotificationSchema,
 } from "src/notifications/notififcation.schema";
+import { OrderStatus, OrderStatusSchema } from "./order-status.schema";
 
 @Module({
   imports: [
@@ -41,6 +42,10 @@ import {
       {
         name: Notification.name,
         schema: NotificationSchema,
+      },
+      {
+        name: OrderStatus.name,
+        schema: OrderStatusSchema,
       },
     ]),
   ],

@@ -31,7 +31,13 @@ export class OrdersService {
   async findAllByCustomer(id: string): Promise<Order[]> {
     const orders = await this.orderModel
       .find({ customer: id })
-      .populate(["products.productId", "customer", "shipping", "payment"]);
+      .populate([
+        "products.productId",
+        "customer",
+        "shipping",
+        "payment",
+        "status",
+      ]);
     if (!orders.length) {
       throw new GraphQLError(`Заказы у ${id} покупателя не найдены!`);
     }

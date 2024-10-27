@@ -16,7 +16,7 @@ type Order {
   shipping: Shipping!
   payment: Payment!
   shippingAddress: String
-  status: String!
+  status: OrderStatus!
   date: Date!
   note: String
 }
