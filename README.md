@@ -18,6 +18,19 @@
 - NuxtUI
 - MongoDb
 
+# Бэкенд часть интернет магазина
+
+/backend <br>
+Готовность 30%
+
+### Технологии
+
+- Typescript
+- Docker
+- Nest.js
+- GraphQL
+- MongoDb
+
 # Фронтенд часть интернет магазина
 
 /frontend <br>
@@ -31,17 +44,4 @@
 - GraphQL
 - Pinia
 - Shadcn/vue
-- MongoDb
-
-# Бэкенд часть интернет магазина
-
-/backend <br>
-В разработке
-
-### Технологии
-
-- Typescript
-- Docker
-- Nest.js
-- GraphQL
 - MongoDb
