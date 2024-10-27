@@ -1,6 +1,5 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
 import { Types } from "mongoose";
-import { OrderStatus } from "~/types/server/server.types";
 
 export const Order = defineMongooseModel({
   name: "Order",
@@ -44,7 +43,6 @@ export const Order = defineMongooseModel({
     },
     status: {
       type: String,
-      enum: Object.values(OrderStatus),
       required: true,
     },
     date: {

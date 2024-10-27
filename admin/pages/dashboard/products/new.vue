@@ -183,6 +183,6 @@ useHead({
         </div>
       </UForm>
     </div>
-    <pre>{{ state }}</pre>
+    <!-- <pre>{{ state }}</pre> -->
   </main>
 </template>

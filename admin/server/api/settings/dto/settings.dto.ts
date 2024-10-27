@@ -17,18 +17,20 @@ export interface SettingsDto {
     label: string;
   };
   localeStore: {
+    label: string;
     value: locale.ru | locale.en;
-    label: string;
   };
+  startOrderStatus: string;
+  endOrderStatus: string;
   currency: {
-    value: currency.rub | currency.usd;
     label: string;
+    value: currency.rub | currency.usd;
   };
   secondCurrencyRate: number;
   mainCurrency: {
-    value: currency.rub | currency.usd;
     label: string;
+    value: currency.rub | currency.usd;
   };
-  en: SettingsLocale;
   ru: SettingsLocale;
+  en: SettingsLocale;
 }

@@ -4,7 +4,7 @@ export enum Roles {
   ADMIN = "Admin",
 }
 
-export enum OrderStatus {
+export enum OrderStatusTypes {
   SOLD = "SOLD",
   PROCESSING = "PROCESSING",
   DELIVERED = "DELIVERED",

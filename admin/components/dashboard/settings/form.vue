@@ -1,12 +1,25 @@
 <script lang="ts" setup>
 import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
+import type { OrderStatusDto } from "~/server/api/order-status/dto/order-status.dto";
 import { SettingsLocale } from "~/types/ui/ui.types";
 import { SettingsCurrency } from "~/types/ui/ui.types";
 
+// TODO: USelectMenu в таких компонентах когда значение {label, value} нужно передавать значение массива const selected = ref(options[1]) v-model="selected"
+
 // store
 const settingsDataStore = useSettingsDataStore();
+const orderDataStore = useOrderDataStore();
+await useAsyncData(() => settingsDataStore.getSettings());
 const { settings } = storeToRefs(settingsDataStore);
+await useAsyncData(() => orderDataStore.getOrderStatusList());
+const { orderStatusList } = storeToRefs(orderDataStore);
+const { data: startData } = await useAsyncData<OrderStatusDto>(() =>
+  orderDataStore.getOrderStatus(settings.value?.startOrderStatus!),
+);
+const { data: endData } = await useAsyncData<OrderStatusDto>(() =>
+  orderDataStore.getOrderStatus(settings.value?.endOrderStatus!),
+);
 
 // vars
 const dropZoneRef = ref<HTMLInputElement | undefined>();
@@ -32,6 +45,25 @@ const currencyOptions = [
     value: SettingsCurrency.usd,
   },
 ];
+
+const orderStatusOptions = computed(() => {
+  return orderStatusList.value.map((status) => ({
+    label: status[settingsDataStore.locale],
+    value: status._id,
+  }));
+});
+
+const startOrderStatus = ref(
+  orderStatusOptions.value.find(
+    (status) => status.value === startData.value?._id,
+  ),
+);
+
+const endOrderStatus = ref(
+  orderStatusOptions.value.find(
+    (status) => status.value === endData.value?._id,
+  ),
+);
 
 // handlers
 const uploadImageHandler = async (formData: FormData) => {
@@ -125,6 +157,38 @@ const deleteImageHandler = async () => {
     });
   }
 };
+
+// hooks
+watch(startOrderStatus, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    settings.value!.startOrderStatus = newValue!.value;
+  }
+});
+
+watch(endOrderStatus, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    settings.value!.endOrderStatus = newValue!.value!;
+  }
+});
+
+watch(
+  // FIXME: Сделать рефакторинг
+  () => settingsDataStore.locale,
+  async () => {
+    const startData = await orderDataStore.getOrderStatus(
+      settings.value?.startOrderStatus!,
+    );
+    const endData = await orderDataStore.getOrderStatus(
+      settings.value?.endOrderStatus!,
+    );
+    startOrderStatus.value = orderStatusOptions.value.find(
+      (status) => status.value === startData!._id,
+    );
+    endOrderStatus.value = orderStatusOptions.value.find(
+      (status) => status.value === endData!._id,
+    );
+  },
+);
 </script>
 
 <template>
@@ -205,6 +269,36 @@ const deleteImageHandler = async () => {
           selectClass="select-label-without-icon"
         />
       </UFormGroup>
+      <UFormGroup
+        :label="locale[settingsDataStore.locale].startOrderStatus"
+        name="startOrderStatus"
+        :ui="{
+          label: {
+            base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+          },
+        }"
+      >
+        <USelectMenu
+          v-model="startOrderStatus"
+          :options="orderStatusOptions"
+          selectClass="select-label-without-icon"
+        />
+      </UFormGroup>
+      <UFormGroup
+        :label="locale[settingsDataStore.locale].endOrderStatus"
+        name="endOrderStatus"
+        :ui="{
+          label: {
+            base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+          },
+        }"
+      >
+        <USelectMenu
+          v-model="endOrderStatus"
+          :options="orderStatusOptions"
+          selectClass="select-label-without-icon"
+        />
+      </UFormGroup>
     </div>
     <div class="lg:w-[32%] w-full flex flex-col gap-[20px] lg:mb-0 mb-[20px]">
       <UFormGroup
@@ -227,4 +321,7 @@ const deleteImageHandler = async () => {
       </UFormGroup>
     </div>
   </div>
+  <!-- <pre>{{ settings }}</pre>
+  <pre>{{ startOrderStatus }}</pre>
+  <pre>{{ endOrderStatus }}</pre> -->
 </template>

@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { defineMongooseModel } from "#nuxt/mongoose";
 
 export const Settings = defineMongooseModel({
@@ -54,6 +55,16 @@ export const Settings = defineMongooseModel({
     secondCurrencyRate: {
       type: Number,
       required: true,
+    },
+    startOrderStatus: {
+      type: Types.ObjectId || String,
+      required: true,
+      ref: "OrderStatus",
+    },
+    endOrderStatus: {
+      type: Types.ObjectId || String,
+      required: true,
+      ref: "OrderStatus",
     },
     en: {
       title: {

@@ -61,6 +61,20 @@ export const validate = (state: SettingsDto): FormError[] => {
     });
   }
 
+  if (!state.startOrderStatus) {
+    errors.push({
+      path: "startOrderStatus",
+      message: locale[useSettingsDataStore().locale].error.required,
+    });
+  }
+
+  if (!state.endOrderStatus) {
+    errors.push({
+      path: "endOrderStatus",
+      message: locale[useSettingsDataStore().locale].error.required,
+    });
+  }
+
   // Locales eng
   if (!state.en.title) {
     errors.push({
