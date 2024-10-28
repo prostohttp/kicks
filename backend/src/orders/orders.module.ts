@@ -1,4 +1,4 @@
-import { forwardRef, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { OrdersResolver } from "./orders.resolver";
 import { OrdersService } from "./orders.service";
@@ -14,10 +14,19 @@ import {
   NotificationSchema,
 } from "src/notifications/notififcation.schema";
 import { OrderStatus, OrderStatusSchema } from "./order-status.schema";
+import { UserModule } from "src/users/user.module";
+import { UsersService } from "src/users/users.service";
+import { ShippingsService } from "src/shippings/shippings.service";
+import { ShippingsModule } from "src/shippings/shippings.module";
+import { PaymentsModule } from "src/payments/payments.module";
+import { PaymentsService } from "src/payments/payments.service";
 
 @Module({
   imports: [
-    forwardRef(() => NotificationsModule),
+    NotificationsModule,
+    UserModule,
+    ShippingsModule,
+    PaymentsModule,
     MongooseModule.forFeature([
       {
         name: Order.name,
@@ -49,7 +58,14 @@ import { OrderStatus, OrderStatusSchema } from "./order-status.schema";
       },
     ]),
   ],
-  providers: [OrdersResolver, OrdersService, NotificationsService],
+  providers: [
+    OrdersResolver,
+    OrdersService,
+    NotificationsService,
+    UsersService,
+    ShippingsService,
+    PaymentsService,
+  ],
   exports: [OrdersService],
 })
 export class OrdersModule {}

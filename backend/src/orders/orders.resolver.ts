@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { OrdersService } from "./orders.service";
 import * as GraphQlTypes from "src/graphql-types";
+import { CreateOrderDto } from "./dto/create-order.dto";
 
 @Resolver("Order")
 export class OrdersResolver {
@@ -19,7 +20,7 @@ export class OrdersResolver {
   }
 
   @Mutation("addOrder")
-  async addOne(@Args("order") order: GraphQlTypes.InputOrder): Promise<{
+  async addOne(@Args("order") order: CreateOrderDto): Promise<{
     order: GraphQlTypes.Order;
     notification: GraphQlTypes.Notification;
   }> {

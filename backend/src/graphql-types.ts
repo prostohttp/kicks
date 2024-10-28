@@ -13,6 +13,12 @@ export enum SettingsLocale {
     ru = "ru"
 }
 
+export class InputNotification {
+    order: string;
+    isRead: boolean;
+    createdAt: Date;
+}
+
 export class FlatProducts {
     productId: string;
     productCount: number;

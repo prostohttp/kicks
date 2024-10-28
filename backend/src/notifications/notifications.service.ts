@@ -3,14 +3,13 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { GraphQLError } from "graphql";
 import { Notification } from "./notififcation.schema";
-import { OrdersService } from "src/orders/orders.service";
+import { CreateNotificationDto } from "./dto/create-notification.dto";
 
 @Injectable()
 export class NotificationsService {
   constructor(
     @InjectModel(Notification.name)
     private notificationModel: Model<Notification>,
-    private orderService: OrdersService,
   ) {}
 
   async findOne(id: string): Promise<Notification> {
@@ -21,17 +20,8 @@ export class NotificationsService {
     return notification;
   }
 
-  async addOne(id: string): Promise<Notification> {
-    const order = await this.orderService.findOne(id);
-    if (!order) {
-      throw new GraphQLError(`Заказ с ${id} не найден!`);
-    }
-    const notification = new this.notificationModel({
-      order: id,
-      isRead: false,
-      createdAt: new Date(),
-    });
-
+  async addOne(input: CreateNotificationDto): Promise<Notification> {
+    const notification = new this.notificationModel(input);
     return await notification.save();
   }
 }

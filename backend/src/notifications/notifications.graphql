@@ -5,10 +5,16 @@ type Notification {
   createdAt: Date!
 }
 
+input InputNotification {
+  order: String!
+  isRead: Boolean!
+  createdAt: Date!
+}
+
 extend type Query {
   notification(id: ID!): Notification
 }
 
 extend type Mutation {
-  addNotfication(id: ID!): Notification!
+  addNotfication(notification: InputNotification!): Notification!
 }

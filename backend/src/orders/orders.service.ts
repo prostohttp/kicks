@@ -1,24 +1,24 @@
 import { Injectable } from "@nestjs/common";
-import { ModuleRef } from "@nestjs/core";
 import { InjectModel } from "@nestjs/mongoose";
 import { GraphQLError } from "graphql";
 import { Model } from "mongoose";
 import { Order } from "./order.schema";
 import { NotificationsService } from "src/notifications/notifications.service";
-import * as GraphQlTypes from "src/graphql-types";
 import { Notification } from "src/notifications/notififcation.schema";
+import { CreateOrderDto } from "./dto/create-order.dto";
+import { UsersService } from "src/users/users.service";
+import { ShippingsService } from "src/shippings/shippings.service";
+import { PaymentsService } from "src/payments/payments.service";
 
 @Injectable()
 export class OrdersService {
-  private notificationService: NotificationsService;
   constructor(
     @InjectModel(Order.name) private orderModel: Model<Order>,
-    private moduleRef: ModuleRef,
+    private notificationService: NotificationsService,
+    private userService: UsersService,
+    private shippingService: ShippingsService,
+    private paymentService: PaymentsService,
   ) {}
-
-  onModuleInit() {
-    this.notificationService = this.moduleRef.get(NotificationsService);
-  }
 
   async findOne(id: string): Promise<Order> {
     const order = this.orderModel.findById(id);
@@ -45,16 +45,25 @@ export class OrdersService {
   }
 
   async addOne(
-    input: GraphQlTypes.InputOrder,
+    input: CreateOrderDto,
   ): Promise<{ order: Order; notification: Notification }> {
-    const order = new this.orderModel(input);
-    await order.save();
-    const notification = await this.notificationService.addOne(
-      order._id.toString(),
-    );
-    return {
-      order,
-      notification,
-    };
+    // TODO: Рефакторинг?
+    const customer = await this.userService.isFlatUser(input.customer);
+    const shipping = await this.shippingService.findOne(input.shipping);
+    const payment = await this.paymentService.findOne(input.payment);
+
+    if (customer && shipping && payment) {
+      const order = new this.orderModel(input);
+      await order.save();
+      const notification = await this.notificationService.addOne({
+        order: order._id.toString(),
+        isRead: false,
+        createdAt: new Date(),
+      });
+      return {
+        order,
+        notification,
+      };
+    }
   }
 }

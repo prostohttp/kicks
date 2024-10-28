@@ -17,5 +17,6 @@ import { Shipping, ShippingSchema } from "src/shippings/shipping.schema";
     ]),
   ],
   providers: [UsersResolver, UsersService],
+  exports: [UsersService],
 })
 export class UserModule {}
