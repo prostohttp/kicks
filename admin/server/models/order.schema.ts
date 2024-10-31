@@ -42,8 +42,9 @@ export const Order = defineMongooseModel({
       ref: "Payment",
     },
     status: {
-      type: String,
+      type: Types.ObjectId || String,
       required: true,
+      ref: "OrderStatus",
     },
     date: {
       type: Date,
