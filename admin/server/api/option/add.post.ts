@@ -4,8 +4,7 @@ import { OptionDto } from "./dto/option.dto";
 export default defineEventHandler(async (event) => {
   try {
     const data = await readBody<OptionDto>(event);
-    const newOption = new Option(data);
-    return await newOption.save();
+    return await Option.create(data);
   } catch (error: any) {
     throw createError({
       statusMessage: error.message,

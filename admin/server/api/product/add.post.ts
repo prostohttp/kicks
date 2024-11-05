@@ -3,8 +3,7 @@ import { ProductDto } from "./dto/product.dto";
 export default defineEventHandler(async (event) => {
   try {
     const data = await readBody<ProductDto>(event);
-    const newProduct = new Product(data);
-    return await newProduct.save();
+    return await Product.create(data);
   } catch (error: any) {
     throw createError({
       statusMessage: error.message,

@@ -9,9 +9,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Title and price are required",
       });
     }
-
-    const newShipping = new Shipping(body);
-    return await newShipping.save();
+    return await Shipping.create(body);
   } catch (error: any) {
     throw createError({
       statusMessage: error.message,

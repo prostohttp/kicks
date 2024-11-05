@@ -10,14 +10,12 @@ export default defineEventHandler(async (event) => {
     if (user && user.role.toString() !== Roles.CUSTOMER) {
       return createError({ statusMessage: "Only customers can order" });
     }
-    const newOrder = await Order.create({
+    return await Order.create({
       ...body,
       orderId: "#" + nanoid(),
       // FIXME: Заказы не будут создаваться из админки, но все равно переделать
       status: OrderStatusTypes.PROCESSING,
     });
-
-    return await newOrder.save();
   } catch (error: any) {
     return createError({
       statusMessage: error.message,

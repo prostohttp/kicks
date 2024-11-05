@@ -4,9 +4,7 @@ export default defineEventHandler(async (event) => {
   const body: PaymentDto = await readBody(event);
 
   try {
-    const newPayment = new Payment(body);
-
-    return await newPayment.save();
+    return await Payment.create(body);
   } catch (error: any) {
     throw createError({
       statusMessage: error.message,

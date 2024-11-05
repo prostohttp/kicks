@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
-    "@tiptap/extension-placeholder": "2.7.1",
+    "@tiptap/extension-placeholder": "<=2.7.1",
     "@types/bcrypt": "^5.0.2",
-    "nuxt": "^3.13.2"
+    "nuxt": "^3.14.0"
   }
 }

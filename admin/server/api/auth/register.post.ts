@@ -5,14 +5,12 @@ export default defineEventHandler(async (event) => {
   try {
     const { name, email, password, role } = await readBody(event);
     const hashed = bcrypt.hashSync(password, 10);
-    const newUser = new User({
+    const savedUser = await User.create({
       name,
       email,
       password: hashed,
       role,
     });
-
-    const savedUser = await newUser.save();
     return { user: savedUser };
   } catch (error) {
     throw createError({
