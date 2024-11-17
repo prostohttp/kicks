@@ -14,8 +14,7 @@ export default defineEventHandler(async (event) => {
           select: "_id title",
         },
       });
-
-    return notifications;
+    return notifications.filter((notification) => notification.order);
   } catch (error: any) {
     throw createError({
       statusMessage: error.message,

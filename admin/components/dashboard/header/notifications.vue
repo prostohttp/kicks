@@ -78,7 +78,7 @@ const markAllAsRead = async () => {
             <template v-if="isEmpty">
               <span>{{ locale[settingsDataStore.locale].empty }}</span>
             </template>
-            <LazyDashboardHeaderNotificationsList
+            <DashboardHeaderNotificationsList
               :data="notifications"
               :close="close"
               v-else

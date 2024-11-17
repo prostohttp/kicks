@@ -26,12 +26,12 @@ const settingsDataStore = useSettingsDataStore();
           @click="close"
         >
           {{ locale[settingsDataStore.locale].order }}
-          {{ notification.order.orderId }}
+          {{ notification.order?.orderId }}
         </NuxtLink>
         <span
           class="text-[12px] bg-blue dark:bg-yellow text-fa-white dark:text-dark-gray inline-flex items-center justify-center rounded-[4px] h-[24px] px-[8px] font-[500]"
         >
-          {{ notification.order.status }}
+          {{ notification.order?.status }}
         </span>
       </div>
       <ul class="flex flex-col">
