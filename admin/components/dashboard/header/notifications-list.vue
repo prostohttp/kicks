@@ -31,7 +31,7 @@ const settingsDataStore = useSettingsDataStore();
         <span
           class="text-[12px] bg-blue dark:bg-yellow text-fa-white dark:text-dark-gray inline-flex items-center justify-center rounded-[4px] h-[24px] px-[8px] font-[500]"
         >
-          {{ notification.order?.status }}
+          {{ notification.order?.status[settingsDataStore.locale] }}
         </span>
       </div>
       <ul class="flex flex-col">

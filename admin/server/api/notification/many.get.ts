@@ -10,8 +10,8 @@ export default defineEventHandler(async (event) => {
         path: "order",
         select: "orderId products status",
         populate: {
-          path: "products.productId",
-          select: "_id title",
+          path: "products.productId status",
+          select: "_id title ru en",
         },
       });
     return notifications.filter((notification) => notification.order);

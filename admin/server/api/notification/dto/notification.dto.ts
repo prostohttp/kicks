@@ -2,7 +2,10 @@ export interface NotificationDto {
   _id: string;
   order: {
     orderId: string;
-    status: string;
+    status: {
+      ru: string;
+      en: string;
+    };
     products: [
       {
         productId: {
