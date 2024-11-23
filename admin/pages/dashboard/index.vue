@@ -7,13 +7,13 @@ import { locale } from "~/lang/locale";
 
 // meta
 definePageMeta({
-  name: "dashboard",
+    name: "dashboard",
 });
 useHead({
-  title: locale[useSettingsDataStore().locale].dashboard,
+    title: locale[useSettingsDataStore().locale].dashboard,
 });
 </script>
 
 <template>
-  <div>Dashboard</div>
+    <div>Dashboard</div>
 </template>

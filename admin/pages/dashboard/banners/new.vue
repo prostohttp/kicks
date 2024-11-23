@@ -12,20 +12,20 @@ const links: Ref<BreadcrumbItem[]> = ref(breadcrumbsArrayFactory(fullPath));
 
 // meta
 useHead({
-  title: locale[settingsDataStore.locale].addNewBanner,
+    title: locale[settingsDataStore.locale].addNewBanner,
 });
 </script>
 
 <template>
-  <DashboardBreadcrumbs
-    :links="links"
-    :title="locale[settingsDataStore.locale].addNewBanner"
-  />
-  <main
-    class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
-  >
-    <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
-      <DashboardBannerAddNewForm />
-    </div>
-  </main>
+    <DashboardBreadcrumbs
+        :links="links"
+        :title="locale[settingsDataStore.locale].addNewBanner"
+    />
+    <main
+        class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
+    >
+        <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
+            <DashboardBannerAddNewForm />
+        </div>
+    </main>
 </template>

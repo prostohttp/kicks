@@ -7,7 +7,7 @@ import * as v from "valibot";
 
 // define
 const { userId } = defineProps<{
-  userId: string;
+    userId: string;
 }>();
 const emit = defineEmits(["close"]);
 
@@ -25,144 +25,144 @@ const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
 const roles = Object.values(Roles).filter((role) => role !== Roles.ADMIN);
 const schema = v.object({
-  name: v.pipe(
-    v.string(),
-    v.trim(),
-    v.minLength(3, locale[settingsDataStore.locale].error.stringMin3),
-  ),
-  email: v.pipe(
-    v.string(),
-    v.email(locale[settingsDataStore.locale].error.invalidEmail),
-  ),
-  role: v.string(),
+    name: v.pipe(
+        v.string(),
+        v.trim(),
+        v.minLength(3, locale[settingsDataStore.locale].error.stringMin3),
+    ),
+    email: v.pipe(
+        v.string(),
+        v.email(locale[settingsDataStore.locale].error.invalidEmail),
+    ),
+    role: v.string(),
 });
 
 // handlers
 const uploadImageHandler = async (formData: FormData) => {
-  const uploadedImage = await $fetch("/api/image/add", {
-    method: "POST",
-    body: formData,
-  });
-  if (!uploadedImage) {
-    toast.add({
-      title: locale[settingsDataStore.locale].noImage,
-      color: "red",
+    const uploadedImage = await $fetch("/api/image/add", {
+        method: "POST",
+        body: formData,
     });
-  }
-  await $fetch("/api/user/edit", {
-    method: "PUT",
-    body: {
-      id: userId,
-      image: uploadedImage,
-    },
-  });
+    if (!uploadedImage) {
+        toast.add({
+            title: locale[settingsDataStore.locale].noImage,
+            color: "red",
+        });
+    }
+    await $fetch("/api/user/edit", {
+        method: "PUT",
+        body: {
+            id: userId,
+            image: uploadedImage,
+        },
+    });
 };
 
 const uploadImage = async (e: Event) => {
-  try {
-    let fileInput = e.target as HTMLInputElement;
-    const formData = new FormData();
-    if (fileInput.files![0]) {
-      formData.append("folderName", Constants.IMG_USERS);
-      formData.append("image", fileInput.files![0]);
+    try {
+        let fileInput = e.target as HTMLInputElement;
+        const formData = new FormData();
+        if (fileInput.files![0]) {
+            formData.append("folderName", Constants.IMG_USERS);
+            formData.append("image", fileInput.files![0]);
+        }
+        await uploadImageHandler(formData);
+        await userDataStore.getUserById(userId);
+        await userDataStore.getAllUsers(page);
+        toast.add({
+            title: locale[settingsDataStore.locale].imageUploaded,
+            color: "green",
+        });
+    } catch (_error) {
+        toast.add({
+            title: locale[settingsDataStore.locale].somethingWentWrong,
+            color: "red",
+        });
     }
-    await uploadImageHandler(formData);
-    await userDataStore.getUserById(userId);
-    await userDataStore.getAllUsers(page);
-    toast.add({
-      title: locale[settingsDataStore.locale].imageUploaded,
-      color: "green",
-    });
-  } catch (_error) {
-    toast.add({
-      title: locale[settingsDataStore.locale].somethingWentWrong,
-      color: "red",
-    });
-  }
 };
 
 const deleteImageHandler = async () => {
-  try {
-    await $fetch("/api/image/remove", {
-      method: "DELETE",
-      body: {
-        image: user.value?.image,
-      },
-    });
-    await $fetch("/api/user/edit", {
-      method: "PUT",
-      body: {
-        id: user.value?._id,
-        image: "",
-      },
-    });
-    await userDataStore.getAllUsers(page);
-    await userDataStore.getUserById(userId);
-    toast.add({
-      title: locale[settingsDataStore.locale].imageDeleted,
-      color: "green",
-    });
-  } catch (_error) {
-    toast.add({
-      title: locale[settingsDataStore.locale].somethingWentWrong,
-      color: "red",
-    });
-  }
+    try {
+        await $fetch("/api/image/remove", {
+            method: "DELETE",
+            body: {
+                image: user.value?.image,
+            },
+        });
+        await $fetch("/api/user/edit", {
+            method: "PUT",
+            body: {
+                id: user.value?._id,
+                image: "",
+            },
+        });
+        await userDataStore.getAllUsers(page);
+        await userDataStore.getUserById(userId);
+        toast.add({
+            title: locale[settingsDataStore.locale].imageDeleted,
+            color: "green",
+        });
+    } catch (_error) {
+        toast.add({
+            title: locale[settingsDataStore.locale].somethingWentWrong,
+            color: "red",
+        });
+    }
 };
 
 const onDrop = async (files: File[] | null) => {
-  try {
-    if (files) {
-      const formData = new FormData();
-      if (files![0]) {
-        formData.append("folderName", Constants.IMG_USERS);
-        formData.append("image", files![0]);
-      }
-      await uploadImageHandler(formData);
-      await userDataStore.getAllUsers(page);
-      await userDataStore.getUserById(userId);
-      toast.add({
-        title: locale[settingsDataStore.locale].imageDeleted,
-        color: "green",
-      });
+    try {
+        if (files) {
+            const formData = new FormData();
+            if (files![0]) {
+                formData.append("folderName", Constants.IMG_USERS);
+                formData.append("image", files![0]);
+            }
+            await uploadImageHandler(formData);
+            await userDataStore.getAllUsers(page);
+            await userDataStore.getUserById(userId);
+            toast.add({
+                title: locale[settingsDataStore.locale].imageDeleted,
+                color: "green",
+            });
+        }
+    } catch (error) {
+        toast.add({
+            title: locale[settingsDataStore.locale].somethingWentWrong,
+            color: "red",
+        });
     }
-  } catch (error) {
-    toast.add({
-      title: locale[settingsDataStore.locale].somethingWentWrong,
-      color: "red",
-    });
-  }
 };
 
 useDropZone(dropZoneRef, { onDrop });
 
 const onSubmitHandler = async (event: FormSubmitEvent<any>) => {
-  try {
-    console.log("Role", event.data.role);
+    try {
+        console.log("Role", event.data.role);
 
-    await $fetch("/api/user/edit", {
-      method: "PUT",
-      body: {
-        id: user.value?._id,
-        name: event.data.name,
-        email: event.data.email,
-        role: event.data.role,
-      },
-    });
+        await $fetch("/api/user/edit", {
+            method: "PUT",
+            body: {
+                id: user.value?._id,
+                name: event.data.name,
+                email: event.data.email,
+                role: event.data.role,
+            },
+        });
 
-    await userDataStore.getAllUsers(page);
-    await userDataStore.getUserById(userId);
-    toast.add({
-      title: "Profile updated",
-      color: "green",
-    });
-    emit("close");
-  } catch (error: any) {
-    toast.add({
-      title: locale[settingsDataStore.locale].somethingWentWrong,
-      color: "red",
-    });
-  }
+        await userDataStore.getAllUsers(page);
+        await userDataStore.getUserById(userId);
+        toast.add({
+            title: "Profile updated",
+            color: "green",
+        });
+        emit("close");
+    } catch (error: any) {
+        toast.add({
+            title: locale[settingsDataStore.locale].somethingWentWrong,
+            color: "red",
+        });
+    }
 };
 
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
@@ -171,76 +171,76 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 </script>
 
 <template>
-  <LazyUiEmpty v-if="!user" />
-  <UForm
-    :schema="v.safeParser(schema)"
-    :state="user"
-    @submit="protectedSubmitHandler"
-    class="w-full flex flex-col gap-[20px]"
-    v-else
-  >
-    <div
-      class="rounded-[8px] basis-[40%] p-[5px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
+    <LazyUiEmpty v-if="!user" />
+    <UForm
+        :schema="v.safeParser(schema)"
+        :state="user"
+        @submit="protectedSubmitHandler"
+        class="w-full flex flex-col gap-[20px]"
+        v-else
     >
-      <UiImageUpload
-        v-model:image="user"
-        :alt="user?.name"
-        v-model:drop-zone-ref="dropZoneRef"
-        @delete="deleteImageHandler"
-        @change="uploadImage($event)"
-      />
-    </div>
-    <UFormGroup
-      :label="locale[settingsDataStore.locale].userName"
-      name="name"
-      :ui="{
-        label: {
-          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
-        },
-      }"
-    >
-      <UInput
-        :placeholder="locale[settingsDataStore.locale].userName"
-        icon="i-heroicons-user-circle-16-solid"
-        v-model="user.name"
-        inputClass="input-label"
-      />
-    </UFormGroup>
-    <UFormGroup
-      :label="locale[settingsDataStore.locale].email"
-      name="email"
-      :ui="{
-        label: {
-          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
-        },
-      }"
-    >
-      <UInput
-        :placeholder="locale[settingsDataStore.locale].email"
-        icon="i-heroicons-envelope"
-        v-model="user.email"
-        inputClass="input-label"
-      />
-    </UFormGroup>
-    <UFormGroup
-      :label="locale[settingsDataStore.locale].role"
-      name="role"
-      :ui="{
-        label: {
-          base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
-        },
-      }"
-    >
-      <USelectMenu
-        v-model="user.role"
-        :options="roles"
-        leadingIcon="i-heroicons-shield-exclamation-20-solid"
-        leading
-        selectClass="select-label"
-      />
-    </UFormGroup>
-    <UButton type="submit" class="dark-button mt-[20px]">
-      {{ locale[settingsDataStore.locale].update }}
-    </UButton>
-  </UForm>
+        <div
+            class="rounded-[8px] basis-[40%] p-[5px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
+        >
+            <UiImageUpload
+                v-model:image="user"
+                :alt="user?.name"
+                v-model:drop-zone-ref="dropZoneRef"
+                @delete="deleteImageHandler"
+                @change="uploadImage($event)"
+            />
+        </div>
+        <UFormGroup
+            :label="locale[settingsDataStore.locale].userName"
+            name="name"
+            :ui="{
+                label: {
+                    base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+                },
+            }"
+        >
+            <UInput
+                :placeholder="locale[settingsDataStore.locale].userName"
+                icon="i-heroicons-user-circle-16-solid"
+                v-model="user.name"
+                inputClass="input-label"
+            />
+        </UFormGroup>
+        <UFormGroup
+            :label="locale[settingsDataStore.locale].email"
+            name="email"
+            :ui="{
+                label: {
+                    base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+                },
+            }"
+        >
+            <UInput
+                :placeholder="locale[settingsDataStore.locale].email"
+                icon="i-heroicons-envelope"
+                v-model="user.email"
+                inputClass="input-label"
+            />
+        </UFormGroup>
+        <UFormGroup
+            :label="locale[settingsDataStore.locale].role"
+            name="role"
+            :ui="{
+                label: {
+                    base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
+                },
+            }"
+        >
+            <USelectMenu
+                v-model="user.role"
+                :options="roles"
+                leadingIcon="i-heroicons-shield-exclamation-20-solid"
+                leading
+                selectClass="select-label"
+            />
+        </UFormGroup>
+        <UButton type="submit" class="dark-button mt-[20px]">
+            {{ locale[settingsDataStore.locale].update }}
+        </UButton>
+    </UForm>
 </template>

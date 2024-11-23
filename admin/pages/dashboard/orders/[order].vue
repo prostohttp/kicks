@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 definePageMeta({
-  name: "order",
+    name: "order",
 });
 useHead({
-  title: "Order",
+    title: "Order",
 });
 </script>
 
 <template>
-  <div>Order</div>
+    <div>Order</div>
 </template>

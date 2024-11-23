@@ -1,5 +1,5 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div>All Notifications</div>
+    <div>All Notifications</div>
 </template>

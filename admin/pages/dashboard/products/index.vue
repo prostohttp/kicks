@@ -27,128 +27,130 @@ const path = router.currentRoute.value.path;
 const category = ref(routeCategory?.toString());
 await useAsyncData(() => categoryDataStore.getCategoryById(category.value));
 const fullPath = computed(() =>
-  !categoryDataStore.category ? path : `${path}/${category.value}`,
+    !categoryDataStore.category ? path : `${path}/${category.value}`,
 );
 const links: Ref<BreadcrumbItem[]> = ref(
-  !categoryDataStore.category
-    ? breadcrumbsArrayFactory(path)
-    : breadcrumbsArrayFactory(
-        fullPath.value,
-        categoryDataStore.category.title,
-        `${path}?category=${category.value}`,
-      ),
+    !categoryDataStore.category
+        ? breadcrumbsArrayFactory(path)
+        : breadcrumbsArrayFactory(
+              fullPath.value,
+              categoryDataStore.category.title,
+              `${path}?category=${category.value}`,
+          ),
 );
 await useAsyncData<ProductsPayload>(() =>
-  productDataStore.getAllProducts(Number(route.query.page), category.value),
+    productDataStore.getAllProducts(Number(route.query.page), category.value),
 );
 const activePage = ref(data.value?.activePage || 1);
 
 // handlers
 const getSales = (id: string) => {
-  if (saleProducts.value && id in saleProducts.value) {
-    return saleProducts.value[id];
-  } else {
-    return 0;
-  }
+    if (saleProducts.value && id in saleProducts.value) {
+        return saleProducts.value[id];
+    } else {
+        return 0;
+    }
 };
 const pageTitle = computed(() =>
-  categoryDataStore.category?.title
-    ? `${categoryDataStore.category?.title} | ${locale[settingsDataStore.locale].breadcrumbs.products}`
-    : locale[settingsDataStore.locale].breadcrumbs.products,
+    categoryDataStore.category?.title
+        ? `${categoryDataStore.category?.title} | ${locale[settingsDataStore.locale].breadcrumbs.products}`
+        : locale[settingsDataStore.locale].breadcrumbs.products,
 );
 
 const deleteProduct = async (id: string) => {
-  try {
-    await $fetch("/api/product/remove", {
-      method: "DELETE",
-      body: {
-        id,
-      },
-    });
-    await productDataStore.getProductCount();
-    await productDataStore.getAllProducts(activePage.value, category.value);
-    toast.add({
-      title: locale[settingsDataStore.locale].deleteProductSuccess,
-    });
-  } catch (error: any) {
-    toast.add({ title: error.message });
-  }
+    try {
+        await $fetch("/api/product/remove", {
+            method: "DELETE",
+            body: {
+                id,
+            },
+        });
+        await productDataStore.getProductCount();
+        await productDataStore.getAllProducts(activePage.value, category.value);
+        toast.add({
+            title: locale[settingsDataStore.locale].deleteProductSuccess,
+        });
+    } catch (error: any) {
+        toast.add({ title: error.message });
+    }
 };
 
 // meta
 definePageMeta({
-  name: "all-products",
+    name: "all-products",
 });
 useHead({
-  title: pageTitle,
+    title: pageTitle,
 });
 
 // hooks
 watch(
-  () => route.query,
-  async (newValue, oldValue) => {
-    if (!newValue.category || newValue.category !== oldValue.category) {
-      category.value = newValue.category ? newValue.category.toString() : "";
-      await categoryDataStore.getCategoryById(category.value);
-    }
-    links.value = breadcrumbsArrayFactory(
-      fullPath.value,
-      categoryDataStore.category?.title,
-      `${path}?category=${category.value}`,
-    );
-    productDataStore.getAllProducts(
-      Number(newValue.page),
-      newValue.category?.toString(),
-    );
-    activePage.value = Number(newValue.page);
-  },
+    () => route.query,
+    async (newValue, oldValue) => {
+        if (!newValue.category || newValue.category !== oldValue.category) {
+            category.value = newValue.category
+                ? newValue.category.toString()
+                : "";
+            await categoryDataStore.getCategoryById(category.value);
+        }
+        links.value = breadcrumbsArrayFactory(
+            fullPath.value,
+            categoryDataStore.category?.title,
+            `${path}?category=${category.value}`,
+        );
+        productDataStore.getAllProducts(
+            Number(newValue.page),
+            newValue.category?.toString(),
+        );
+        activePage.value = Number(newValue.page);
+    },
 );
 
 watch(activePage, async (newValue) => {
-  router.push({ query: { ...route.query, page: newValue || 1 } });
+    router.push({ query: { ...route.query, page: newValue || 1 } });
 });
 </script>
 
 <template>
-  <div
-    class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
-  >
-    <DashboardBreadcrumbs
-      :links="links"
-      :title="
-        categoryDataStore.category?.title
-          ? categoryDataStore.category.title
-          : locale[settingsDataStore.locale].breadcrumbs.products
-      "
-    />
-    <UButton
-      class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
-      icon="i-heroicons-plus-circle"
-      :label="locale[settingsDataStore.locale].addNewProduct"
-      to="/dashboard/products/new"
-    />
-  </div>
-  <main class="flex flex-col">
-    <UiEmpty v-if="!data?.allItems" />
-    <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
-      <DashboardProductCard
-        v-for="product in data?.products"
-        @delete-product="deleteProduct"
-        :product="product as ProductDto"
-        :categories="
-          unwrapAfterPopulate(
-            product.category as unknown as TitleObjectAfterPopulate[],
-          )
-        "
-        :sales="getSales(product._id!)"
-        :key="product._id"
-      />
+    <div
+        class="flex justify-between items-center sm:flex-row flex-col gap-0 md:gap-[15px]"
+    >
+        <DashboardBreadcrumbs
+            :links="links"
+            :title="
+                categoryDataStore.category?.title
+                    ? categoryDataStore.category.title
+                    : locale[settingsDataStore.locale].breadcrumbs.products
+            "
+        />
+        <UButton
+            class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
+            icon="i-heroicons-plus-circle"
+            :label="locale[settingsDataStore.locale].addNewProduct"
+            to="/dashboard/products/new"
+        />
     </div>
-  </main>
-  <LazyUiPagination
-    v-if="data?.pagesInPagination"
-    v-model="activePage"
-    :element-in-page="Constants.PER_PAGE_PRODUCT"
-    :all-items="data?.allItems"
-  />
+    <main class="flex flex-col">
+        <UiEmpty v-if="!data?.allItems" />
+        <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
+            <DashboardProductCard
+                v-for="product in data?.products"
+                @delete-product="deleteProduct"
+                :product="product as ProductDto"
+                :categories="
+                    unwrapAfterPopulate(
+                        product.category as unknown as TitleObjectAfterPopulate[],
+                    )
+                "
+                :sales="getSales(product._id!)"
+                :key="product._id"
+            />
+        </div>
+    </main>
+    <LazyUiPagination
+        v-if="data?.pagesInPagination"
+        v-model="activePage"
+        :element-in-page="Constants.PER_PAGE_PRODUCT"
+        :all-items="data?.allItems"
+    />
 </template>

@@ -1,16 +1,16 @@
 export const usePersistDataStore = defineStore(
-  "persistData",
-  () => {
-    // vars
-    const brandImage = ref("");
-    const articleImage = ref("");
+    "persistData",
+    () => {
+        // vars
+        const brandImage = ref("");
+        const articleImage = ref("");
 
-    // handlers
+        // handlers
 
-    return {
-      brandImage,
-      articleImage,
-    };
-  },
-  { persist: true },
+        return {
+            brandImage,
+            articleImage,
+        };
+    },
+    { persist: true },
 );

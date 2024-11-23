@@ -20,132 +20,135 @@ const settingsDataStore = useSettingsDataStore();
 onClickOutside(target, () => (isOpen.value = false));
 
 const showSearchResultHandler = () => {
-  if (!query.value) {
-    isOpen.value = false;
-  } else {
-    isOpen.value = true;
-  }
+    if (!query.value) {
+        isOpen.value = false;
+    } else {
+        isOpen.value = true;
+    }
 };
 
 const searchHandler = async () => {
-  const data = await $fetch("/api/search/all", {
-    method: "GET",
-    query: {
-      searchModel: ModelNamesForSearchEngine.PRODUCT,
-      searchPhrase: query.value,
-      limit: Constants.SEARCH_LIMIT,
-    },
-    pick: ["results"],
-  });
-  founded.value = data.result.products.data;
+    const data = await $fetch("/api/search/all", {
+        method: "GET",
+        query: {
+            searchModel: ModelNamesForSearchEngine.PRODUCT,
+            searchPhrase: query.value,
+            limit: Constants.SEARCH_LIMIT,
+        },
+        pick: ["results"],
+    });
+    founded.value = data.result.products.data;
 };
 
 const prettySearchHandler = (event: KeyboardEvent) => {
-  if (event.code === "ArrowDown" || event.code === "Enter") {
-    if (query.value) {
-      isOpen.value = true;
+    if (event.code === "ArrowDown" || event.code === "Enter") {
+        if (query.value) {
+            isOpen.value = true;
+        }
     }
-  }
-  if (event.code === "Escape") {
-    isOpen.value = false;
-  }
+    if (event.code === "Escape") {
+        isOpen.value = false;
+    }
 };
 
 const showSearchInputHandler = () => {
-  isActive.value = true;
-  if (query.value) {
-    isOpen.value = true;
-  }
+    isActive.value = true;
+    if (query.value) {
+        isOpen.value = true;
+    }
 };
 
 const hideSearchInputHandler = () => {
-  isOpen.value = false;
-  isActive.value = false;
+    isOpen.value = false;
+    isActive.value = false;
 };
 
 const searchHandlerWithShortcut = (event: KeyboardEvent) => {
-  if (event.code === "ControlLeft") {
-    metaPressed.value = true;
-  }
-  if (metaPressed.value && event.code === "Enter" && query.value) {
-    navigateTo(`/dashboard/search?searchPhrase=${query.value}`);
-    metaPressed.value = false;
-    hideSearchInputHandler();
-  }
+    if (event.code === "ControlLeft") {
+        metaPressed.value = true;
+    }
+    if (metaPressed.value && event.code === "Enter" && query.value) {
+        navigateTo(`/dashboard/search?searchPhrase=${query.value}`);
+        metaPressed.value = false;
+        hideSearchInputHandler();
+    }
 };
 // hooks
 watch(query, (oldValue, newValue) => {
-  showSearchResultHandler();
-  if (oldValue !== newValue) {
-    searchHandler();
-  }
+    showSearchResultHandler();
+    if (oldValue !== newValue) {
+        searchHandler();
+    }
 });
 </script>
 
 <template>
-  <div class="flex gap-[10px] items-center">
-    <div class="flex items-center w-[40px] h-[40px] justify-center">
-      <UIcon
-        v-if="!isActive"
-        name="i-heroicons-magnifying-glass-20-solid"
-        class="bg-dark-gray w-[24px] h-[24px] dark:bg-fa-white cursor-pointer hover:bg-blue dark:hover:bg-yellow"
-        @click="showSearchInputHandler"
-      />
-    </div>
-    <UInput
-      v-if="isActive"
-      input-class=" border-dark-gray dark:border-fa-white h-[40px] pl-[44px] text-dark-gray sm:w-[200px] w-[calc(100%-30px)] z-[100] sm:relative sm:left-0 sm:top-0 fixed left-[20px] top-[32px]"
-      v-model="query"
-      name="query"
-      @keydown="searchHandlerWithShortcut"
-      @keyup="prettySearchHandler"
-      :placeholder="`${locale[settingsDataStore.locale].search}...`"
-      autocomplete="off"
-      ref="target"
-      autofocus
-      icon="i-heroicons-magnifying-glass-20-solid"
-      :ui="{
-        icon: {
-          trailing: { pointer: '' },
-        },
-      }"
-    >
-      <Transition>
-        <div
-          class="md:absolute fixed top-[90px] md:right-0 right-[10px] rounded-[8px] bg-white p-[20px] md:min-w-[250px] md:w-auto w-[calc(100%-30px)] text-dark-gray dark:text-fa-white dark:bg-dark-bg flex flex-col gap-[16px] z-[101]"
-          v-if="isOpen"
-        >
-          <h3 class="font-[Rubik] text-[20px] font-[600]">
-            {{ locale[settingsDataStore.locale].searchResult }}
-          </h3>
-          <DashboardHeaderSearchList :data="founded" v-model="isOpen" />
-          <NuxtLink
-            v-if="founded && founded.length"
-            :to="`/dashboard/search?searchPhrase=${query}`"
-            @click="hideSearchInputHandler"
-            class="text-[16px] font-[600] text-blue dark:text-yellow hover:text-dark-gray dark:hover:text-fa-white"
-          >
-            {{ locale[settingsDataStore.locale].seeAll }}
-          </NuxtLink>
+    <div class="flex gap-[10px] items-center">
+        <div class="flex items-center w-[40px] h-[40px] justify-center">
+            <UIcon
+                v-if="!isActive"
+                name="i-heroicons-magnifying-glass-20-solid"
+                class="bg-dark-gray w-[24px] h-[24px] dark:bg-fa-white cursor-pointer hover:bg-blue dark:hover:bg-yellow"
+                @click="showSearchInputHandler"
+            />
         </div>
-      </Transition>
-      <template #leading>
-        <UButton
-          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static left-[25px] top-[37px] z-[101]"
-          variant="link"
-          icon="i-heroicons-magnifying-glass-20-solid"
-          :padded="true"
-        />
-      </template>
-      <template #trailing>
-        <UButton
-          class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static right-[20px] top-[37px] z-[101]"
-          variant="link"
-          icon="i-heroicons-x-mark-20-solid"
-          :padded="true"
-          @click="hideSearchInputHandler"
-        />
-      </template>
-    </UInput>
-  </div>
+        <UInput
+            v-if="isActive"
+            input-class=" border-dark-gray dark:border-fa-white h-[40px] pl-[44px] text-dark-gray sm:w-[200px] w-[calc(100%-30px)] z-[100] sm:relative sm:left-0 sm:top-0 fixed left-[20px] top-[32px]"
+            v-model="query"
+            name="query"
+            @keydown="searchHandlerWithShortcut"
+            @keyup="prettySearchHandler"
+            :placeholder="`${locale[settingsDataStore.locale].search}...`"
+            autocomplete="off"
+            ref="target"
+            autofocus
+            icon="i-heroicons-magnifying-glass-20-solid"
+            :ui="{
+                icon: {
+                    trailing: { pointer: '' },
+                },
+            }"
+        >
+            <Transition>
+                <div
+                    class="md:absolute fixed top-[90px] md:right-0 right-[10px] rounded-[8px] bg-white p-[20px] md:min-w-[250px] md:w-auto w-[calc(100%-30px)] text-dark-gray dark:text-fa-white dark:bg-dark-bg flex flex-col gap-[16px] z-[101]"
+                    v-if="isOpen"
+                >
+                    <h3 class="font-[Rubik] text-[20px] font-[600]">
+                        {{ locale[settingsDataStore.locale].searchResult }}
+                    </h3>
+                    <DashboardHeaderSearchList
+                        :data="founded"
+                        v-model="isOpen"
+                    />
+                    <NuxtLink
+                        v-if="founded && founded.length"
+                        :to="`/dashboard/search?searchPhrase=${query}`"
+                        @click="hideSearchInputHandler"
+                        class="text-[16px] font-[600] text-blue dark:text-yellow hover:text-dark-gray dark:hover:text-fa-white"
+                    >
+                        {{ locale[settingsDataStore.locale].seeAll }}
+                    </NuxtLink>
+                </div>
+            </Transition>
+            <template #leading>
+                <UButton
+                    class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static left-[25px] top-[37px] z-[101]"
+                    variant="link"
+                    icon="i-heroicons-magnifying-glass-20-solid"
+                    :padded="true"
+                />
+            </template>
+            <template #trailing>
+                <UButton
+                    class="text-dark-gray hover:text-blue dark:text-fa-white fixed sm:static right-[20px] top-[37px] z-[101]"
+                    variant="link"
+                    icon="i-heroicons-x-mark-20-solid"
+                    :padded="true"
+                    @click="hideSearchInputHandler"
+                />
+            </template>
+        </UInput>
+    </div>
 </template>

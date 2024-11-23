@@ -7,10 +7,10 @@ const { locale: storeLocale } = storeToRefs(settingsDataStore);
 </script>
 
 <template>
-  <div>
-    <p>
-      &copy; {{ new Date().getFullYear() }}
-      {{ locale[storeLocale].copy }}
-    </p>
-  </div>
+    <div>
+        <p>
+            &copy; {{ new Date().getFullYear() }}
+            {{ locale[storeLocale].copy }}
+        </p>
+    </div>
 </template>

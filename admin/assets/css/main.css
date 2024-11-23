@@ -1,10 +1,10 @@
 body {
-  @apply font-[400] font-[Inter] text-[15px] text-dark-gray select-text selection:bg-blue selection:text-white;
+    @apply font-[400] font-[Inter] text-[15px] text-dark-gray select-text selection:bg-blue selection:text-white;
 }
 
 button,
 a {
-  @apply transition-all
+    @apply transition-all;
 }
 
 input[type="text"],
@@ -14,141 +14,141 @@ input[type="datetime-local"],
 input[type="time"],
 input[type="date"],
 textarea {
-  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray shadow-none;
+    @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray shadow-none;
 }
 
 .textarea textarea {
-  @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray py-[15px] px-[16px];
+    @apply border border-dark-gray rounded-[8px] text-[16px] placeholder:text-[#79767C] focus:ring-blue focus:shadow-none text-dark-gray py-[15px] px-[16px];
 }
 
 button[type="submit"] {
-  @apply bg-dark-gray rounded-[8px] uppercase font-[Rubik] font-[500] transition-colors;
+    @apply bg-dark-gray rounded-[8px] uppercase font-[Rubik] font-[500] transition-colors;
 }
 
 button.inverse {
-  @apply bg-yellow hover:bg-dark-gray uppercase;
+    @apply bg-yellow hover:bg-dark-gray uppercase;
 }
 
 input {
-  @apply rounded-[8px]
+    @apply rounded-[8px];
 }
 
 input[type="checkbox"] {
-  @apply border-dark-gray rounded-[2px] h-[15px] w-[15px];
+    @apply border-dark-gray rounded-[2px] h-[15px] w-[15px];
 }
 
 input[type="checkbox"]:checked,
 input[type="checkbox"]:checked:hover,
 input[type="checkbox"]:checked:focus {
-  @apply bg-dark-gray;
+    @apply bg-dark-gray;
 }
 
 .dark-button {
-  @apply py-[16px] px-[42px] flex items-center justify-center bg-dark-gray hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow
+    @apply py-[16px] px-[42px] flex items-center justify-center bg-dark-gray hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow;
 }
 
 .ui-modal {
-  font-family: "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
 .open-sans {
-  font-family: "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
 .ui-modal h1 {
-  @apply text-[30px] font-[700] leading-[40px] mb-[20px];
+    @apply text-[30px] font-[700] leading-[40px] mb-[20px];
 }
 
 .ui-modal h3 {
-  @apply text-[25px] font-[500] leading-[30px] my-[20px];
+    @apply text-[25px] font-[500] leading-[30px] my-[20px];
 }
 
 .ui-modal p {
-  @apply text-[16px] font-[400] leading-[30px];
+    @apply text-[16px] font-[400] leading-[30px];
 }
 
 a {
-  @apply transition-colors text-dark-gray dark:text-fa-white
+    @apply transition-colors text-dark-gray dark:text-fa-white;
 }
 
 .router-link-active {
-  @apply text-blue dark:text-yellow
+    @apply text-blue dark:text-yellow;
 }
 
 a:hover {
-  @apply text-blue transition-colors dark:text-yellow;
+    @apply text-blue transition-colors dark:text-yellow;
 }
 
 .v-enter-active {
-  @apply transform ease-out duration-300 transition;
+    @apply transform ease-out duration-300 transition;
 }
 
 .v-leave-active {
-  @apply transition ease-in duration-100;
+    @apply transition ease-in duration-100;
 }
 
 .v-enter-to {
-  @apply translate-y-0 opacity-100 sm:translate-x-0;
+    @apply translate-y-0 opacity-100 sm:translate-x-0;
 }
 
 .v-enter-from {
-  @apply translate-y-2 opacity-0 sm:translate-y-2;
+    @apply translate-y-2 opacity-0 sm:translate-y-2;
 }
 
 .v-leave-to {
-  @apply opacity-0;
+    @apply opacity-0;
 }
 
 .page-title {
-  @apply font-[Rubik] text-[24px] font-[500] mb-[5px]
+    @apply font-[Rubik] text-[24px] font-[500] mb-[5px];
 }
 
 .input {
-  @apply py-[15px] px-[16px]
+    @apply py-[15px] px-[16px];
 }
 
 .input-label {
-  @apply py-[15px] px-[16px] pl-[35px]
+    @apply py-[15px] px-[16px] pl-[35px];
 }
 
 .input-label-without-icon {
-  @apply py-[15px] px-[20px];
+    @apply py-[15px] px-[20px];
 }
 
 .sidebar {
-  @apply w-[260px] max-w-[260px]
+    @apply w-[260px] max-w-[260px];
 }
 
 .select-label {
-  @apply ring-0 border border-dark-gray dark:border-[#374151] text-[16px] shadow-none h-[52px];
+    @apply ring-0 border border-dark-gray dark:border-[#374151] text-[16px] shadow-none h-[52px];
 }
 
 .select-label-without-icon {
-  @apply select-label px-[20px]
+    @apply select-label px-[20px];
 }
 
 .red-button {
-  @apply bg-danger hover:bg-danger
+    @apply bg-danger hover:bg-danger;
 }
 
 .select-wrapper button {
-  @apply h-[52px] dark:text-[#6b7280] text-[#232321] pl-[16px] text-[16px] shadow-none border-none rounded-[8px]
+    @apply h-[52px] dark:text-[#6b7280] text-[#232321] pl-[16px] text-[16px] shadow-none border-none rounded-[8px];
 }
 
 .select-wrapper-with-icon button {
-  @apply h-[52px] dark:text-[#6b7280] text-[#232321] pl-[35px] text-[16px] shadow-none border-none rounded-[8px]
+    @apply h-[52px] dark:text-[#6b7280] text-[#232321] pl-[35px] text-[16px] shadow-none border-none rounded-[8px];
 }
 
 .big-button {
-  @apply py-[16px] px-[42px] uppercase font-[Rubik] font-[500]
+    @apply py-[16px] px-[42px] uppercase font-[Rubik] font-[500];
 }
 
 .checkbox input[type="checkbox"] {
-  @apply text-dark-gray dark:text-yellow
+    @apply text-dark-gray dark:text-yellow;
 }
 
 .tiptap {
-  @apply min-h-[150px] px-[15px] py-[16px];
+    @apply min-h-[150px] px-[15px] py-[16px];
 }
 
 .tiptap h1,
@@ -157,86 +157,86 @@ a:hover {
 .tiptap h4,
 .tiptap h5,
 .tiptap h6 {
-  @apply font-[600];
+    @apply font-[600];
 }
 
 .tiptap h1 {
-  @apply text-[46px];
+    @apply text-[46px];
 }
 
 .tiptap h2 {
-  @apply text-[36px];
+    @apply text-[36px];
 }
 
 .tiptap h3 {
-  @apply text-[28px];
+    @apply text-[28px];
 }
 
 .tiptap h4 {
-  @apply text-[22px];
+    @apply text-[22px];
 }
 
 .tiptap h5 {
-  @apply text-[18px];
+    @apply text-[18px];
 }
 
 .tiptap h6 {
-  @apply text-[14px];
+    @apply text-[14px];
 }
 
 .tiptap strong {
-  @apply font-[900]
+    @apply font-[900];
 }
 
 .tiptap ul {
-  @apply pl-[20px] list-disc
+    @apply pl-[20px] list-disc;
 }
 
 .tiptap ol {
-  @apply pl-[20px] list-decimal
+    @apply pl-[20px] list-decimal;
 }
 
 .no-left-icon {
-  @apply py-[15px] px-[16px]
+    @apply py-[15px] px-[16px];
 }
 
 .tiptap .tiptap-placeholder .tiptap-placeholder {
-  @apply block;
+    @apply block;
 }
 
 .tiptap.ProseMirror-focused .tiptap-placeholder {
-  @apply hidden;
+    @apply hidden;
 }
 
 .icon-button {
-  @apply bg-transparent dark:bg-transparent text-dark-gray dark:text-fa-white hover:bg-transparent dark:hover:bg-transparent shadow-none
+    @apply bg-transparent dark:bg-transparent text-dark-gray dark:text-fa-white hover:bg-transparent dark:hover:bg-transparent shadow-none;
 }
 
 input.clean-field {
-  @apply ring-0 shadow-none border-none border-[#d1d5db] pl-[10px] dark:bg-transparent text-[15px] rounded-[4px] py-[10px]
+    @apply ring-0 shadow-none border-none border-[#d1d5db] pl-[10px] dark:bg-transparent text-[15px] rounded-[4px] py-[10px];
 }
 
 .clean-field.field-error {
-  @apply bg-red-50 dark:bg-red-400 dark:bg-opacity-10
+    @apply bg-red-50 dark:bg-red-400 dark:bg-opacity-10;
 }
 
 .clean-field.field-error::placeholder {
-  @apply text-dark-gray dark:text-fa-white
+    @apply text-dark-gray dark:text-fa-white;
 }
 
 .for-absolute {
-  @apply relative
+    @apply relative;
 }
 
 .for-absolute p {
-  @apply absolute bottom-0
+    @apply absolute bottom-0;
 }
 
 .banners-table th:first-of-type,
 .banners-table td:first-of-type {
-  @apply flex justify-start
+    @apply flex justify-start;
 }
 
 .banners-table th:nth-last-child(2):not(:last-child) {
-  @apply text-left
+    @apply text-left;
 }

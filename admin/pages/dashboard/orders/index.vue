@@ -4,13 +4,13 @@ import { locale } from "~/lang/locale";
 // vars
 // meta
 definePageMeta({
-  name: "all-orders",
+    name: "all-orders",
 });
 useHead({
-  title: "Orders list",
+    title: "Orders list",
 });
 </script>
 
 <template>
-  <div>Orders list</div>
+    <div>Orders list</div>
 </template>

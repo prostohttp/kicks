@@ -15,21 +15,21 @@ const tempUser = data.value?.user as UserDto;
 
 // meta
 useHead({
-  title: tempUser.name,
+    title: tempUser.name,
 });
 </script>
 
 <template>
-  <DashboardBreadcrumbs
-    :links="links"
-    :title="locale[settingsDataStore.locale].breadcrumbs.profile"
-  />
-  <main
-    class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
-  >
-    <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
-      <LazyDashboardProfileInfoRegistered v-if="tempUser?.isRegistered" />
-      <LazyDashboardProfileInfoUnregistered v-else />
-    </div>
-  </main>
+    <DashboardBreadcrumbs
+        :links="links"
+        :title="locale[settingsDataStore.locale].breadcrumbs.profile"
+    />
+    <main
+        class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
+    >
+        <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
+            <LazyDashboardProfileInfoRegistered v-if="tempUser?.isRegistered" />
+            <LazyDashboardProfileInfoUnregistered v-else />
+        </div>
+    </main>
 </template>

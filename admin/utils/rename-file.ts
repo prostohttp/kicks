@@ -1,3 +1,3 @@
 export default (fileName: string): string => {
-  return Date.now().toString() + "." + fileName.replaceAll(" ", "-");
+    return Date.now().toString() + "." + fileName.replaceAll(" ", "-");
 };

@@ -10,5 +10,5 @@ cookieLocale.value = locale.value;
 </script>
 
 <template>
-  <slot />
+    <slot />
 </template>
