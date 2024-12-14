@@ -7,5 +7,5 @@ type Brand {
 
 extend type Query {
   brand(id: ID!): Brand
-  brands: [Brand!]
+  brands: [Brand!]!
 }

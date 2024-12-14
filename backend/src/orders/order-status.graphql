@@ -6,5 +6,5 @@ type OrderStatus {
 
 extend type Query {
   orderStatus(id: ID): OrderStatus
-  orderStatuses: [OrderStatus!]
+  orderStatuses: [OrderStatus!]!
 }

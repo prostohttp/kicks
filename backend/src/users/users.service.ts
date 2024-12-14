@@ -8,7 +8,7 @@ import { GraphQLError } from "graphql";
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  async isFlatUser(id: string): Promise<User> {
+  async findFlatUser(id: string): Promise<User> {
     const user = await this.userModel.findById(id);
     if (!user) {
       throw new GraphQLError(`Заказы у ${id} покупателя не найдены!`);

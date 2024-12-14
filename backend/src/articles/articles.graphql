@@ -23,7 +23,7 @@ type Article implements BasicArticle {
   siteMenu: Boolean!
   image: String
   sort: Int!
-  featuredProducts: [Product!]
+  featuredProducts: [Product!]!
   createdAt: Date!
 }
 
@@ -42,5 +42,5 @@ type FlatArticle implements BasicArticle {
 
 type Query {
   article(id: ID!): Article
-  articles(offset: Int!, limit: Int!): [FlatArticle!]
+  articles(offset: Int!, limit: Int!): [FlatArticle!]!
 }

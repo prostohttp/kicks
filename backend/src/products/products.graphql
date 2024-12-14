@@ -9,7 +9,7 @@ type OptionItem {
   value: String
   required: Boolean!
   sort: Int!
-  values: [OptionItemValue!]
+  values: [OptionItemValue!]!
 }
 
 type ProductType {
@@ -26,8 +26,8 @@ interface BasicProduct {
   quantity: Int!
   regularPrice: Int!
   salePrice: Int
-  tags: [String!]
-  additionImages: [String!]
+  tags: [String!]!
+  additionImages: [String!]!
   isEnabled: ProductType!
   createdAt: Date!
 }
@@ -37,15 +37,15 @@ type Product implements BasicProduct {
   title: String!
   shortDescription: String!
   description: String
-  category: [Category!]
-  options: [OptionItem!]
+  category: [Category!]!
+  options: [OptionItem!]!
   brand: Brand
   sku: String
   quantity: Int!
   regularPrice: Int!
   salePrice: Int
-  tags: [String!]
-  additionImages: [String!]
+  tags: [String!]!
+  additionImages: [String!]!
   isEnabled: ProductType!
   createdAt: Date!
 }
@@ -60,8 +60,8 @@ type ProductWithBrand implements BasicProduct {
   quantity: Int!
   regularPrice: Int!
   salePrice: Int
-  tags: [String!]
-  additionImages: [String!]
+  tags: [String!]!
+  additionImages: [String!]!
   isEnabled: ProductType!
   createdAt: Date!
 }
@@ -71,19 +71,19 @@ type ProductWithCategory implements BasicProduct {
   title: String!
   shortDescription: String!
   description: String
-  category: [Category!]
+  category: [Category!]!
   sku: String
   quantity: Int!
   regularPrice: Int!
   salePrice: Int
-  tags: [String!]
-  additionImages: [String!]
+  tags: [String!]!
+  additionImages: [String!]!
   isEnabled: ProductType!
   createdAt: Date!
 }
 
 extend type Query {
   product(id: ID!): Product
-  productsByBrand(id: ID!, offset: Int, limit: Int): [ProductWithBrand!]
-  productsByCategory(id: ID!, offset: Int, limit: Int): [ProductWithCategory!]
+  productsByBrand(id: ID!, offset: Int, limit: Int): [ProductWithBrand!]!
+  productsByCategory(id: ID!, offset: Int, limit: Int): [ProductWithCategory!]!
 }

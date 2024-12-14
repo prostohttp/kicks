@@ -58,8 +58,8 @@ export interface BasicProduct {
     quantity: number;
     regularPrice: number;
     salePrice?: Nullable<number>;
-    tags?: Nullable<string[]>;
-    additionImages?: Nullable<string[]>;
+    tags: string[];
+    additionImages: string[];
     isEnabled: ProductType;
     createdAt: Date;
 }
@@ -74,7 +74,7 @@ export class Article implements BasicArticle {
     siteMenu: boolean;
     image?: Nullable<string>;
     sort: number;
-    featuredProducts?: Nullable<Product[]>;
+    featuredProducts: Product[];
     createdAt: Date;
 }
 
@@ -93,27 +93,27 @@ export class FlatArticle implements BasicArticle {
 
 export abstract class IQuery {
     article?: Nullable<Article>;
-    articles?: Nullable<FlatArticle[]>;
+    articles?: FlatArticle[];
     banner?: Nullable<Banner>;
     brand?: Nullable<Brand>;
-    brands?: Nullable<Brand[]>;
+    brands: Brand[];
     category?: Nullable<Category>;
-    categories?: Nullable<Category[]>;
+    categories: Category[];
     notification?: Nullable<Notification>;
     option?: Nullable<Option>;
     options?: Nullable<Nullable<Option>[]>;
     orderStatus?: Nullable<OrderStatus>;
-    orderStatuses?: Nullable<OrderStatus[]>;
+    orderStatuses: OrderStatus[];
     order?: Nullable<Order>;
     orders?: Nullable<Nullable<Order>[]>;
     payment?: Nullable<Payment>;
     payments: Payment[];
     product?: Nullable<Product>;
-    productsByBrand?: Nullable<ProductWithBrand[]>;
-    productsByCategory?: Nullable<ProductWithCategory[]>;
+    productsByBrand?: ProductWithBrand[];
+    productsByCategory?: ProductWithCategory[];
     settings?: Nullable<Settings>;
     shipping?: Nullable<Shipping>;
-    shippings?: Nullable<Shipping[]>;
+    shippings: Shipping[];
     user?: Nullable<User>;
 }
 
@@ -249,7 +249,7 @@ export class OptionItem {
     value?: Nullable<string>;
     required: boolean;
     sort: number;
-    values?: Nullable<OptionItemValue[]>;
+    values: OptionItemValue[];
 }
 
 export class ProductType {
@@ -262,15 +262,15 @@ export class Product implements BasicProduct {
     title: string;
     shortDescription: string;
     description?: Nullable<string>;
-    category?: Nullable<Category[]>;
-    options?: Nullable<OptionItem[]>;
+    category: Category[];
+    options: OptionItem[];
     brand?: Nullable<Brand>;
     sku?: Nullable<string>;
     quantity: number;
     regularPrice: number;
     salePrice?: Nullable<number>;
-    tags?: Nullable<string[]>;
-    additionImages?: Nullable<string[]>;
+    tags: string[];
+    additionImages: string[];
     isEnabled: ProductType;
     createdAt: Date;
 }
@@ -285,8 +285,8 @@ export class ProductWithBrand implements BasicProduct {
     quantity: number;
     regularPrice: number;
     salePrice?: Nullable<number>;
-    tags?: Nullable<string[]>;
-    additionImages?: Nullable<string[]>;
+    tags: string[];
+    additionImages: string[];
     isEnabled: ProductType;
     createdAt: Date;
 }
@@ -296,13 +296,13 @@ export class ProductWithCategory implements BasicProduct {
     title: string;
     shortDescription: string;
     description?: Nullable<string>;
-    category?: Nullable<Category[]>;
+    category: Category[];
     sku?: Nullable<string>;
     quantity: number;
     regularPrice: number;
     salePrice?: Nullable<number>;
-    tags?: Nullable<string[]>;
-    additionImages?: Nullable<string[]>;
+    tags: string[];
+    additionImages: string[];
     isEnabled: ProductType;
     createdAt: Date;
 }
@@ -346,7 +346,7 @@ export class User {
     role: string;
     image?: Nullable<string>;
     address?: Nullable<string>;
-    orders?: Nullable<Order[]>;
+    orders: Order[];
 }
 
 export type Email = any;

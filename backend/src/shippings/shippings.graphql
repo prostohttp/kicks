@@ -7,5 +7,5 @@ type Shipping {
 
 extend type Query {
   shipping(id: ID!): Shipping
-  shippings: [Shipping!]
+  shippings: [Shipping!]!
 }

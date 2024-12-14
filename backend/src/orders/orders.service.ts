@@ -48,7 +48,7 @@ export class OrdersService {
     input: CreateOrderDto,
   ): Promise<{ order: Order; notification: Notification }> {
     // TODO: Рефакторинг?
-    const customer = await this.userService.isFlatUser(input.customer);
+    const customer = await this.userService.findFlatUser(input.customer);
     const shipping = await this.shippingService.findOne(input.shipping);
     const payment = await this.paymentService.findOne(input.payment);
 

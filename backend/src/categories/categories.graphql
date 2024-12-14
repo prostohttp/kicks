@@ -9,5 +9,5 @@ type Category {
 
 extend type Query {
   category(id: ID!): Category
-  categories: [Category!]
+  categories: [Category!]!
 }

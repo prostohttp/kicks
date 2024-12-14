@@ -21,7 +21,8 @@ export class NotificationsService {
   }
 
   async addOne(input: CreateNotificationDto): Promise<Notification> {
-    const notification = new this.notificationModel(input);
-    return await notification.save();
+    // const notification = new this.notificationModel(input);
+    // return await notification.save();
+    return await this.notificationModel.create(input);
   }
 }

@@ -5,7 +5,7 @@ type User {
   role: String!
   image: String
   address: String
-  orders: [Order!]
+  orders: [Order!]!
 }
 
 extend type Query {
