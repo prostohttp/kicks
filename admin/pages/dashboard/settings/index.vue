@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import { type BreadcrumbItem } from "~/types/ui/ui.types";
-import { SettingsLocale } from "~/types/ui/ui.types";
+import { type BreadcrumbItem, SettingsLocale } from "~/types/ui/ui.types";
 import { validate } from "./validator";
 import type { FormErrorEvent } from "#ui/types";
 
@@ -13,7 +12,6 @@ const { settings, locale: storeLocale } = storeToRefs(settingsDataStore);
 // vars
 const router = useRouter();
 const route = useRoute();
-const isAdmin = useIsAdmin();
 const toast = useToast();
 const fullPath = router.currentRoute.value.fullPath;
 const title = computed(() => locale[storeLocale.value].settings);
@@ -77,14 +75,8 @@ const onSubmitHandler = async () => {
 };
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 
-const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
-
 async function onError(event: FormErrorEvent) {
-    if (event.errors.length) {
-        isValidForm.value = false;
-    } else {
-        isValidForm.value = true;
-    }
+    isValidForm.value = !event.errors.length;
 }
 
 watch(
@@ -105,6 +97,10 @@ watch(
 useHead({
     title: title,
 });
+
+definePageMeta({
+    middleware: ["only-admin-access"],
+});
 </script>
 
 <template>
@@ -117,7 +113,7 @@ useHead({
     >
         <UForm
             :validate="validate"
-            @submit="protectedSubmitHandler"
+            @submit="onSubmit"
             @error="onError"
             class="flex flex-col lg:gap-[35px] gap-[20px]"
             :state="settings!"

@@ -11,6 +11,7 @@ const { savedUser: user } = storeToRefs(userStore);
 
 // Vars
 const { signOut } = useAuth();
+const isAdmin = useIsAdmin();
 </script>
 
 <template>
@@ -47,7 +48,7 @@ const { signOut } = useAuth();
                         activeClass="active"
                         to="/dashboard/settings"
                         class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
-                        v-if="user?.isRegistered"
+                        v-if="isAdmin"
                         @click="close"
                     >
                         <span>{{

@@ -46,7 +46,7 @@ export default defineNuxtConfig({
     },
 
     css: ["~/assets/css/main.css"],
-    devtools: { enabled: false },
+    devtools: { enabled: true },
 
     auth: {
         baseURL: "http://localhost:3001",

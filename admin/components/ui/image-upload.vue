@@ -12,9 +12,10 @@ interface IImageModel {
 const settingsDataStore = useSettingsDataStore();
 
 // define
-const { alt, addNew, classForDarkMode } = defineProps<{
+const { alt, addNew, canUpload, classForDarkMode } = defineProps<{
     alt: string | undefined;
     addNew?: boolean;
+    canUpload?: boolean;
     classForDarkMode?: string;
 }>();
 const model: Ref<IImageModel | undefined> = defineModel("image");
@@ -39,7 +40,7 @@ const deleteImageHandler = () => {
         @change="$emit('change', $event)"
         ref="inputRef"
         class="hidden"
-        v-if="isAdmin"
+        v-if="isAdmin || canUpload"
     />
     <div
         v-if="addNew ? !model : !model?.image"
@@ -54,7 +55,7 @@ const deleteImageHandler = () => {
         />
         <div
             class="flex flex-col gap-[10px] text-[14px] items-center"
-            v-if="isAdmin"
+            v-if="isAdmin || canUpload"
         >
             <h3>{{ locale[settingsDataStore.locale].dragDropMessage }}</h3>
             <UDivider
@@ -89,7 +90,7 @@ const deleteImageHandler = () => {
             icon="i-heroicons-trash"
             @click="deleteImageHandler()"
             class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[50px] w-[50px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
-            v-if="isAdmin"
+            v-if="isAdmin || canUpload"
         />
     </div>
 </template>

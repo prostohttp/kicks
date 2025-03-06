@@ -209,6 +209,7 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                 <UiImageUpload
                     v-model:image="user"
                     :alt="user?.name"
+                    :can-upload="true"
                     v-model:drop-zone-ref="dropZoneRef"
                     @delete="deleteImageHandler"
                     @change="uploadImage($event)"
