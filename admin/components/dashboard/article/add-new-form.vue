@@ -93,8 +93,7 @@ const uploadImage = async (e: Event) => {
             formData.append("folderName", Constants.IMG_ARTICLES);
             formData.append("image", fileInput.files![0]);
         }
-        const uploadedImage = await uploadImageHandler(formData);
-        articleImage.value = uploadedImage;
+        articleImage.value = await uploadImageHandler(formData);
         toast.add({
             title: locale[settingsDataStore.locale].imageUploaded,
             color: "green",
