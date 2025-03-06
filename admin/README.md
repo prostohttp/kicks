@@ -15,7 +15,10 @@ MongoDb
 
 ### Установка
 * npm install
+
+### Запуск
 * docker compose up --build
+* npm run dev
 
 ### Настройка
 * Открыть сайт 
