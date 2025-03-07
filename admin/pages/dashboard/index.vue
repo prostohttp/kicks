@@ -6,8 +6,10 @@ import { locale } from "~/lang/locale";
 // handlers
 
 // meta
+// TODO: Добавить мидлвару на все дочерние dashboard страницы
 definePageMeta({
     name: "dashboard",
+    middleware: ["check-user-in-db"],
 });
 useHead({
     title: locale[useSettingsDataStore().locale].dashboard,

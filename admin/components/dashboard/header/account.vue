@@ -38,6 +38,7 @@ const isAdmin = useIsAdmin();
                 <div class="p-[20px] flex flex-col gap-[20px] items-start">
                     <NuxtLink
                         activeClass="active"
+                        :prefetch-on="{ interaction: true }"
                         to="/dashboard/profile"
                         class="text-[20px] font-[600] hover:text-blue dark:hover:text-yellow"
                         @click="close"
@@ -47,6 +48,7 @@ const isAdmin = useIsAdmin();
                     <NuxtLink
                         activeClass="active"
                         to="/dashboard/settings"
+                        :prefetch-on="{ interaction: true }"
                         class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
                         v-if="isAdmin"
                         @click="close"

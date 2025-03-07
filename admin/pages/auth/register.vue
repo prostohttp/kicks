@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
-import { Constants } from "~/constants";
 import { locale } from "~/lang/locale";
+import { type RegisterFormDto, Roles } from "~/types/server/server.types";
+import { Constants } from "~/constants";
 
 // store
 const settingsDataStore = useSettingsDataStore();
@@ -9,7 +10,6 @@ const settingsDataStore = useSettingsDataStore();
 // vars
 const toast = useToast();
 const { signIn } = useAuth();
-import { Roles, type RegisterFormDto } from "~/types/server/server.types";
 
 // meta
 definePageMeta({
@@ -40,6 +40,21 @@ const register = async (data: RegisterFormDto) => {
                 image: "",
             },
         });
+
+        toast.add({
+            title: "Registered, please wait",
+        });
+
+        await $fetch("/api/email/register-send-email", {
+            method: "POST",
+            body: {
+                name,
+                userEmail: email,
+                siteName: locale[useSettingsDataStore().locale].siteName,
+                siteUrl: Constants.SITE_URL + "/login",
+            },
+        });
+
         if (!data.keepLogged) {
             toast.add({
                 title: "You are have been registered and now you can login",
@@ -47,25 +62,7 @@ const register = async (data: RegisterFormDto) => {
                     navigateTo("/login");
                 },
             });
-            await $fetch("/api/email/register-send-email", {
-                method: "POST",
-                body: {
-                    name,
-                    userEmail: email,
-                    siteName: locale[useSettingsDataStore().locale].siteName,
-                    siteUrl: Constants.SITE_URL + "/login",
-                },
-            });
         } else {
-            await $fetch("/api/email/register-send-email", {
-                method: "POST",
-                body: {
-                    name,
-                    userEmail: email,
-                    siteName: locale[useSettingsDataStore().locale].siteName,
-                    siteUrl: Constants.SITE_URL + "/login",
-                },
-            });
             await signIn("credentials", {
                 email,
                 password,

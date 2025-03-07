@@ -19,22 +19,21 @@ export const useUserDataStore = defineStore("userData", () => {
     // Handlers
     const getUser = async () => {
         if (user.isRegistered) {
-            try {
-                const foundedUser = await $fetch<UserDto>("/api/user/one", {
-                    method: "GET",
-                    query: {
-                        email: user?.email,
-                    },
-                });
-                savedUser.value = {
-                    ...foundedUser,
-                    isRegistered: true,
-                };
-            } catch (error) {
-                throw createError({
-                    statusMessage: "User not found.",
-                });
+            const foundedUser = await $fetch<UserDto>("/api/user/one", {
+                method: "GET",
+                query: {
+                    email: user?.email,
+                },
+            });
+
+            if(!foundedUser) {
+                savedUser.value = undefined;
+                return false;
             }
+            savedUser.value = {
+                ...foundedUser,
+                isRegistered: true,
+            };
         } else {
             savedUser.value = user;
         }
