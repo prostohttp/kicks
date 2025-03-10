@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onClickOutside } from "@vueuse/core";
+import { onClickOutside, useDebounceFn } from "@vueuse/core";
 import { locale } from "~/lang/locale";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
@@ -40,6 +40,12 @@ const searchHandler = async () => {
     founded.value = data.result.products.data;
 };
 
+const debounceSearchHandler = useDebounceFn(() => {
+    searchHandler();
+}, 1000, {
+    maxWait: 5000,
+});
+
 const prettySearchHandler = (event: KeyboardEvent) => {
     if (event.code === "ArrowDown" || event.code === "Enter") {
         if (query.value) {
@@ -77,9 +83,11 @@ const searchHandlerWithShortcut = (event: KeyboardEvent) => {
 watch(query, (oldValue, newValue) => {
     showSearchResultHandler();
     if (oldValue !== newValue) {
-        searchHandler();
+        debounceSearchHandler();
     }
 });
+
+// TODO: locale[settingsDataStore.locale].search конструкция вызывает запрос к бд!
 </script>
 
 <template>

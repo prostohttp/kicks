@@ -62,7 +62,7 @@ const isAdmin = useIsAdmin();
                         />
                     </NuxtLink>
                     <NuxtLink
-                        class="uppercase font-[Inter] flex justify-between w-full items-center cursor-pointer"
+                        class="uppercase font-[Inter] flex justify-between w-full leading-[20px] items-center cursor-pointer gap-[10px]"
                         @click="signOut({ callbackUrl: Constants.SITE_URL })"
                     >
                         <span>{{

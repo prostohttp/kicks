@@ -50,7 +50,6 @@ const items = [
     },
 ];
 const state: Ref<FlatProductDto> = ref({ ...initialState });
-const isLoading = ref(false);
 const isValidForm = ref(true);
 
 const selected = computed({
@@ -69,11 +68,6 @@ const selected = computed({
 });
 
 // handlers
-const clearState = () => {
-    state.value = initialState;
-    state.value.options.length = 0;
-};
-
 const onSubmitHandler = async () => {
     try {
         if (state.value.brand) {
@@ -89,8 +83,6 @@ const onSubmitHandler = async () => {
                             ...opt,
                             optionValue: opt.optionValue.value.value,
                         });
-                    } else if (opt.optionValue.value.label === "") {
-                        continue;
                     }
                 }
                 return {
@@ -109,19 +101,19 @@ const onSubmitHandler = async () => {
             method: "POST",
             body: data,
         });
-        isLoading.value = true;
         isValidForm.value = true;
         await productDataStore.getProductCount();
         toast.add({
             title: locale[storeLocale.value].successAddMessage,
             color: "green",
+            callback: () => {
+                return navigateTo("/dashboard/products", { redirectCode: 201 });
+            }
         });
-        clearState();
     } catch (error: any) {
         toast.add({ title: error.message, color: "red" });
     }
     setTimeout(() => {
-        isLoading.value = false;
     }, 300);
 };
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
@@ -153,8 +145,7 @@ useHead({
     <main
         class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
     >
-        <UiSpinner v-if="isLoading" />
-        <div class="space-y-4 w-full" v-else>
+        <div class="space-y-4 w-full">
             <div
                 v-if="!isValidForm"
                 class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] mb-[10px] rounded-[8px]"
@@ -192,6 +183,5 @@ useHead({
                 </div>
             </UForm>
         </div>
-        <!-- <pre>{{ state }}</pre> -->
     </main>
 </template>
