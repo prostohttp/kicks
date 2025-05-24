@@ -153,7 +153,7 @@ watch(product, () => {
 });
 
 // meta
-useHeadSafe({
+useHead({
     title: title,
 });
 </script>

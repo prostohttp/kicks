@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "build": "nuxt build",
-        "dev": "nuxt dev -p=3001",
+        "dev": "nuxt dev -p=3000",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
@@ -33,6 +33,6 @@
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
         "@tiptap/extension-placeholder": "<=2.7.1",
         "@types/bcrypt": "^5.0.2",
-        "nuxt": "^3.14.0"
+        "nuxt": "^3.17.4"
     }
 }

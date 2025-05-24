@@ -76,7 +76,7 @@ const articleData: InputData[] = [
 ];
 
 // meta
-useHeadSafe({
+useHead({
     title: title,
 });
 

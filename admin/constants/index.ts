@@ -1,6 +1,6 @@
 export const Constants = {
     EMAIL: "info@prostohttp.ru",
-    SITE_URL: "http://localhost:3001/",
+    SITE_URL: process.env.SITE_URL,
     IMG_PUBLIC: "",
     IMG_CATEGORIES: "img/categories/",
     IMG_PRODUCTS: "img/products/",

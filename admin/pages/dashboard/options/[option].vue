@@ -61,7 +61,7 @@ const submitHandler = () => {
 };
 
 // meta
-useHeadSafe({
+useHead({
     title: title,
 });
 

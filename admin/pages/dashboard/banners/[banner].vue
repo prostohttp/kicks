@@ -23,7 +23,7 @@ const title = computed(() =>
 );
 
 // meta
-useHeadSafe({
+useHead({
     title: title,
 });
 

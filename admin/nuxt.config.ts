@@ -4,9 +4,9 @@ export default defineNuxtConfig({
     routeRules: {
         // "/server/api/**": { cors: true },
         // "/api/**": { cors: true },
-        "/auth/**": {
-            prerender: true,
-        },
+        // "/auth/**": {
+        //     prerender: true,
+        // },
     },
     experimental: {
         typedPages: true,
@@ -40,14 +40,14 @@ export default defineNuxtConfig({
                 base: "./public",
             },
         },
-        experimental: {
-            websocket: false,
-        },
+        // experimental: {
+        //     websocket: false,
+        // },
     },
 
     css: ["~/assets/css/main.css"],
     devtools: {
-      enabled: true,
+      enabled: false,
 
       timeline: {
         enabled: true,
@@ -55,7 +55,7 @@ export default defineNuxtConfig({
     },
 
     auth: {
-        baseURL: "http://localhost:3001",
+        baseURL: process.env.SITE_URL,
         isEnabled: true,
         provider: {
             type: "authjs",
@@ -67,7 +67,7 @@ export default defineNuxtConfig({
 
     mongoose: {
         uri: process.env.MONGODB_URI,
-        devtools: true,
+        devtools: false,
     },
 
     pinia: {

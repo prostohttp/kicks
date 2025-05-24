@@ -41,7 +41,7 @@ const changeHandler = (e: Event) => {
             @click="onClickHandler"
         >
             <UIcon
-                name="i-material-symbols-add-to-photos-outline-rounded"
+                name="i-material-symbols-add-to-photos"
                 class="w-6 h-6 opacity-70"
             />
         </div>
