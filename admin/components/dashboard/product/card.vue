@@ -17,7 +17,7 @@ const settingsDataStore = useSettingsDataStore();
 const { settings } = storeToRefs(settingsDataStore);
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const modal = useModal();
 const needCalculate = computed(
     () => settings.value?.mainCurrency.value !== settings.value?.currency.value,

@@ -5,7 +5,7 @@ const emit = defineEmits(["delete", "change"]);
 
 // vars
 const inputRef: Ref<HTMLInputElement | null> = ref(null);
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 
 // handlers
 const onClickHandler = () => {

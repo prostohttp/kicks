@@ -1,17 +1,16 @@
 import { defineStore } from "pinia";
 import type { SettingsDto } from "~/server/api/settings/dto/settings.dto";
-import { SettingsLocale } from "~/types/ui/ui.types";
-import { SettingsCurrency } from "~/types/ui/ui.types";
+import { SettingsCurrency, SettingsLocale } from "~/types/ui/ui.types";
+import type {
+    CurrencyLocale,
+    LanguageLocale,
+} from "~/types/server/server.types";
 
 export const useSettingsDataStore = defineStore("settingsData", () => {
     // vars
     const settings: Ref<SettingsDto | undefined> = ref();
-    const locale: Ref<SettingsLocale.en | SettingsLocale.ru> = ref(
-        SettingsLocale.en,
-    );
-    const currency: Ref<SettingsCurrency.usd | SettingsCurrency.rub> = ref(
-        SettingsCurrency.usd,
-    );
+    const locale: Ref<LanguageLocale> = ref(SettingsLocale.en);
+    const currency: Ref<CurrencyLocale> = ref(SettingsCurrency.usd);
 
     // handlers
     const getSettings = async () => {
@@ -38,15 +37,12 @@ export const useSettingsDataStore = defineStore("settingsData", () => {
 
     const getLocale = async () => {
         try {
-            locale.value = await $fetch<SettingsLocale.en | SettingsLocale.ru>(
-                "/api/settings/all",
-                {
-                    method: "GET",
-                    query: {
-                        locale: true,
-                    },
+            locale.value = await $fetch<LanguageLocale>("/api/settings/all", {
+                method: "GET",
+                query: {
+                    locale: true,
                 },
-            );
+            });
         } catch (error: any) {
             throw createError({ statusMessage: error.message });
         }

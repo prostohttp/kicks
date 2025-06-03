@@ -29,7 +29,7 @@ const fullPath = router.currentRoute.value.fullPath;
 const links: Ref<BreadcrumbItem[]> = ref(
     breadcrumbsArrayFactory(fullPath, option.value?.title, fullPath),
 );
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const isSubmit = ref(false);
 const title = ref(
     option.value?.title || locale[settingsDataStore.locale].empty,

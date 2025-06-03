@@ -16,7 +16,7 @@ await useAsyncData(() => userStore.getUser());
 const { savedUser: user } = storeToRefs(userStore);
 
 // Vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
 const state = reactive({

@@ -6,6 +6,7 @@ import { usePersistDataStore } from "~/stores/persist-data.js";
 import type { InputData } from "~/types/ui/ui.types";
 import { Constants } from "~/constants";
 import * as v from "valibot";
+import { checkIsAdmin } from "~/utils/check-is-admin";
 
 // define
 const { articleData } = defineProps<{ articleData: InputData[] }>();
@@ -20,7 +21,7 @@ const { articleImage } = storeToRefs(persistDataStore);
 
 // Vars
 const isLoading = ref(false);
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 await productDataStore.getTitles();
 const titles = ref(data.value.map((el) => el.title));
 const toast = useToast();

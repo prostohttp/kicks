@@ -1,6 +1,6 @@
-import { useIsAdmin } from "~/composables/is-admin";
+import { checkIsAdmin } from "~/utils/check-is-admin";
 export default defineNuxtRouteMiddleware(() => {
-    const isAdmin = useIsAdmin();
+    const isAdmin = isAdmin();
     if (!isAdmin) {
         return navigateTo("/dashboard", { redirectCode: 403 });
     }

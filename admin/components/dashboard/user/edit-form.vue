@@ -18,7 +18,7 @@ await useAsyncData(() => userDataStore.getUserById(userId));
 const { userById: user } = storeToRefs(userDataStore);
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const route = useRoute();
 const page = Number(route.query.page);
 const toast = useToast();

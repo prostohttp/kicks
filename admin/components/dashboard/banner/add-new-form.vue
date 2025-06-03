@@ -9,14 +9,14 @@ interface BannerTab {
 }
 
 // store
-const bannerDataSrore = useBannerDataStore();
+const bannerDataStore = useBannerDataStore();
 const settingsDataStore = useSettingsDataStore();
-bannerDataSrore.clearBanner();
-const { banner } = storeToRefs(bannerDataSrore);
+bannerDataStore.clearBanner();
+const { banner } = storeToRefs(bannerDataStore);
 
 // vars
 const isLoading = ref(false);
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const activeTab = ref(0);
 const bannerTabs: Ref<BannerTab[]> = ref(
@@ -31,7 +31,7 @@ const isValidForm = ref(true);
 const clearState = () => {
     isLoading.value = true;
     setTimeout(() => {
-        bannerDataSrore.clearBanner();
+        bannerDataStore.clearBanner();
         isValidForm.value = true;
         bannerTabs.value = [];
         activeTab.value = 0;

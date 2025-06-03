@@ -11,7 +11,7 @@ const { savedUser: user } = storeToRefs(userStore);
 
 // Vars
 const { signOut } = useAuth();
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 </script>
 
 <template>

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
 import { SettingsLocale } from "~/types/ui/ui.types";
+import type { LanguageLocale } from "~/types/server/server.types";
 // define
 const { lang } = defineProps<{
-    lang: SettingsLocale.en | SettingsLocale.ru;
+    lang: LanguageLocale;
 }>();
 
 // store

@@ -15,7 +15,7 @@ const persistStore = usePersistDataStore();
 const { brandImage } = storeToRefs(persistStore);
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const state = reactive({
     title: "",

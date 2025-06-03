@@ -20,7 +20,7 @@ const settingsDataStore = useSettingsDataStore();
 const { categories: data, selected } = storeToRefs(categoryDataStore);
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const modal = useModal();
 const router = useRouter();
 const route = useRoute();

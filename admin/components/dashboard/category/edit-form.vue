@@ -25,7 +25,7 @@ const titles = ref(
 );
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const state = reactive({
     title: category.value?.title,

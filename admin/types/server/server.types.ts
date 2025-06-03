@@ -1,3 +1,5 @@
+import { SettingsCurrency } from "~/types/ui/ui.types";
+
 export enum Roles {
     CUSTOMER = "Customer",
     MANAGER = "Manager",
@@ -39,6 +41,7 @@ export interface ValueOption {
     sort: number | undefined;
     image: string;
 }
+
 export interface UiOptionDto {
     _id: string;
     title: string;
@@ -79,3 +82,7 @@ export interface AuthenticatedUserDto {
     role: Roles;
     image?: string;
 }
+
+export type LanguageLocale = SettingsLocale.en | SettingsLocale.ru;
+
+export type CurrencyLocale = SettingsCurrency.usd | SettingsCurrency.rub;

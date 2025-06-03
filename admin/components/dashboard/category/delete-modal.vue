@@ -12,7 +12,7 @@ const { categories } = defineProps<{
 const settingsDataStore = useSettingsDataStore();
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 
 // handlers

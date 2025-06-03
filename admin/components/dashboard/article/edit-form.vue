@@ -21,7 +21,7 @@ await productDataStore.getTitles();
 
 // Vars
 const titles = ref(data.value.map((el) => el.title));
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const dropZoneRef = ref<HTMLInputElement | undefined>();
 const state = reactive({

@@ -17,7 +17,7 @@ const { banner } = storeToRefs(bannerDataSrore);
 // vars
 const title = ref(banner.value.title);
 const isLoading = ref(false);
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const activeTab = ref(0);
 const bannerTabs: Ref<BannerTab[]> = ref(

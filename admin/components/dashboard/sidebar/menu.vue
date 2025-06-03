@@ -7,7 +7,7 @@ const settingsDataStore = useSettingsDataStore();
 const { locale: storeLocale } = storeToRefs(settingsDataStore);
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const menuItems = reactive([
     {
         to: "/dashboard",

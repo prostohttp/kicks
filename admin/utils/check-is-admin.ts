@@ -1,7 +1,7 @@
 import { Roles } from "~/types/server/server.types";
 import type { UserDto } from "~/server/dto/user.dto";
 
-export const useIsManager = (): boolean => {
+export const checkIsAdmin = (): boolean => {
     const { data } = useAuth();
     let user: UserDto;
     if (data.value) {
@@ -9,5 +9,5 @@ export const useIsManager = (): boolean => {
     } else {
         return false;
     }
-    return user.role === Roles.ADMIN || user.role === Roles.MANAGER;
+    return user.role === Roles.ADMIN;
 };

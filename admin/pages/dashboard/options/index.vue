@@ -25,7 +25,7 @@ useHead({
 });
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const router = useRouter();
 const route = useRoute();
 const page = Number(useRoute().query.page);

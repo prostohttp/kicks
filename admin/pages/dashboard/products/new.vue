@@ -32,7 +32,7 @@ const initialState: FlatProductDto = {
     additionImages: [],
 };
 const toast = useToast();
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const router = useRouter();
 const route = useRoute();
 const fullPath = router.currentRoute.value.fullPath;
@@ -108,13 +108,12 @@ const onSubmitHandler = async () => {
             color: "green",
             callback: () => {
                 return navigateTo("/dashboard/products", { redirectCode: 201 });
-            }
+            },
         });
     } catch (error: any) {
         toast.add({ title: error.message, color: "red" });
     }
-    setTimeout(() => {
-    }, 300);
+    setTimeout(() => {}, 300);
 };
 const onSubmit = useThrottleFn(onSubmitHandler, 3000);
 

@@ -28,7 +28,7 @@ const { locale: storeLocale } = storeToRefs(settingsDataStore);
 // vars
 const toast = useToast();
 const router = useRouter();
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const route = useRoute();
 const fullPath = router.currentRoute.value.fullPath;
 const isValidForm = ref(true);

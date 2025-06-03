@@ -19,7 +19,7 @@ await productDataStore.getAllProductsWithoutPagination();
 const { option } = storeToRefs(optionDataStore);
 
 // Vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const types: string[] = Object.values(optionKeys);
 const submitRef: Ref<HTMLFormElement | null> = ref(null);

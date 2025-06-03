@@ -17,7 +17,7 @@ await useAsyncData(() => brandDataStore.getBrandById(brandId));
 const { brand } = storeToRefs(brandDataStore);
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const isOpenDeleteModal = ref(false);
 const page = Number(useRoute().query.page);

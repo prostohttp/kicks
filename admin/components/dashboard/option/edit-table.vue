@@ -11,10 +11,8 @@ const state: ModelRef<ExtendedOptionValueDto[] | undefined> =
 // store
 const optionDataStore = useOptionDataStore();
 const settingsDataStore = useSettingsDataStore();
-const { option } = storeToRefs(optionDataStore);
 
 // vars
-const isAdmin = useIsAdmin();
 const toast = useToast();
 const columns = [
     {

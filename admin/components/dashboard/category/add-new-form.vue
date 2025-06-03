@@ -19,7 +19,7 @@ const { titles: data, selected } = storeToRefs(categoryStore);
 const titles = ref(data.value.map((el) => el.title));
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const toast = useToast();
 const state = reactive({
     title: "",

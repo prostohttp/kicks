@@ -7,7 +7,7 @@ import type { NotificationDto } from "~/server/api/notification/dto/notification
 const settingsDataStore = useSettingsDataStore();
 
 // vars
-const isAdmin = useIsAdmin();
+const isAdmin = checkIsAdmin();
 const notifications: Ref<NotificationDto[] | null> = ref([]);
 
 const { data } = await useFetch<NotificationDto[]>("/api/notification/many", {
