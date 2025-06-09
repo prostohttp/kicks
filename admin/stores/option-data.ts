@@ -7,7 +7,6 @@ import type {
     OptionDto,
     OptionDtoWithValues,
 } from "~/server/api/option/dto/option.dto";
-import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 
 interface OptionsPayload {
     options: OptionDto[];
@@ -22,7 +21,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
     // vars
     const option: Ref<OptionDtoWithValues | undefined> = ref();
-    const optionForProduct: Ref<ProductOptionDto | undefined> = ref();
     const options: Ref<OptionsPayload | undefined> = ref();
     const optionsWithoutPagination: Ref<OptionDto[] | undefined> = ref();
     const selected: Ref<IOption[]> = ref([]);
@@ -94,7 +92,7 @@ export const useOptionDataStore = defineStore("optionData", () => {
         } catch (error: any) {
             throw createError({ statusMessage: error.message });
         }
-        return true;
+        return option.value;
     };
 
     const getOptions = async (ids: string[]): Promise<OptionDto[]> => {
@@ -223,7 +221,6 @@ export const useOptionDataStore = defineStore("optionData", () => {
 
     return {
         option,
-        optionForProduct,
         titles,
         optionImages,
         options,

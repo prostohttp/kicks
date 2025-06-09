@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
 import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
+import type { OptionDtoWithValues } from "~/server/api/option/dto/option.dto";
 
 // define
 const optionModel = defineModel("option", {
@@ -8,20 +9,27 @@ const optionModel = defineModel("option", {
     default: {} as ProductOptionDto | undefined,
 });
 
+const optionId = defineModel("optionId", {
+    required: true,
+    type: String,
+});
+
 // store
 const settingsDataStore = useSettingsDataStore();
-const optionDataStore = useOptionDataStore();
 const { locale: settingsLocale } = storeToRefs(settingsDataStore);
-await useAsyncData(() =>
-    optionDataStore.getOption(optionModel.value!.optionValue._id!),
+const { data: option } = await useFetch<OptionDtoWithValues>(
+    () => `/api/option/one?id=${optionId.value}`,
+    {
+        watch: [optionId],
+    },
 );
-const { option } = storeToRefs(optionDataStore);
 
 // vars
 const optionValues = option.value!.values!.map((item) => ({
     label: item.value,
     value: item._id,
 }));
+
 const columns = [
     {
         key: "value",
@@ -67,12 +75,12 @@ const deleteValue = (id: string) => {
 
 <template>
     <UTable
-        :rows="optionModel.values"
         :columns="columns"
         :empty-state="{
             icon: '',
             label: '',
         }"
+        :rows="optionModel.values"
         :ui="{
             wrapper: 'overflow-x-visible',
             td: {
@@ -105,15 +113,15 @@ const deleteValue = (id: string) => {
                     v-model="row.optionValue.value"
                     :options="optionValues"
                     :placeholder="locale[settingsDataStore.locale].addOption"
+                    :ui="{
+                        wrapper:
+                            'select-wrapper ring-1 ring-dark-gray rounded-[8px] my-[10px]',
+                    }"
                     :uiMenu="{
                         option: {
                             base: 'h-[35px]',
                             color: 'dark:text-[#6b7280]',
                         },
-                    }"
-                    :ui="{
-                        wrapper:
-                            'select-wrapper ring-1 ring-dark-gray rounded-[8px] my-[10px]',
                     }"
                 />
             </UFormGroup>
@@ -121,22 +129,22 @@ const deleteValue = (id: string) => {
         <template #count-data="{ row }">
             <UFormGroup :name="`count-${row._id}`">
                 <UInput
-                    inputClass="clean-field"
                     v-model="row.count"
-                    type="number"
                     :placeholder="locale[settingsDataStore.locale].count"
+                    inputClass="clean-field"
+                    type="number"
                 />
             </UFormGroup>
         </template>
         <template #price-data="{ row }">
             <UFormGroup :name="`price-${row._id}`">
                 <UInput
-                    inputClass="clean-field"
                     v-model="row.price"
-                    type="number"
                     :placeholder="
                         locale[settingsDataStore.locale].productReqularPrice
                     "
+                    inputClass="clean-field"
+                    type="number"
                 />
             </UFormGroup>
         </template>

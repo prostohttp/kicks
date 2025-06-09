@@ -61,8 +61,8 @@ const deleteOption = (id: number) => {
             <div
                 v-for="(item, index) in options"
                 :key="index"
-                class="cursor-pointer py-[10px] pl-[20px] pr-[10px] rounded-[8px] flex justify-between items-center"
                 :class="{ 'active-tab': activeTab === index }"
+                class="cursor-pointer py-[10px] pl-[20px] pr-[10px] rounded-[8px] flex justify-between items-center"
                 @click="activeTab = index"
             >
                 <span>{{ item.optionValue.title }}</span>
@@ -74,38 +74,38 @@ const deleteOption = (id: number) => {
                 />
             </div>
             <UFormGroup
-                name="option"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="option"
             >
                 <USelectMenu
                     v-model="optionModel"
                     :options="optionTitles"
                     :placeholder="locale[settingsDataStore.locale].addOption"
-                    @change="changeOptionHandler"
+                    :ui="{
+                        wrapper:
+                            'select-wrapper ring-1 ring-dark-gray rounded-[8px] my-[10px]',
+                    }"
                     :uiMenu="{
                         option: {
                             base: 'h-[35px]',
                             color: 'dark:text-[#6b7280]',
                         },
                     }"
-                    :ui="{
-                        wrapper:
-                            'select-wrapper ring-1 ring-dark-gray rounded-[8px] my-[10px]',
-                    }"
+                    @change="changeOptionHandler"
                 />
             </UFormGroup>
         </div>
         <div class="lg:w-[70%] w-full order-1 lg:order-2">
             <DashboardProductOptionTabItem
                 v-for="(item, index) in options"
-                :id="item.optionValue._id!"
-                v-model:options="options"
                 v-show="index === activeTab"
                 :key="item.optionValue._id"
+                v-model:id="item.optionValue._id!"
+                v-model:options="options"
                 @click="activeTab = index"
             />
         </div>

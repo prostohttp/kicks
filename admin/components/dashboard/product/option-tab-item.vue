@@ -4,9 +4,11 @@ import type { ProductOptionDto } from "~/server/api/product/dto/product.dto";
 import { optionKeys } from "~/types/ui/ui.types";
 
 // define
-const { id } = defineProps<{
-    id: string;
-}>();
+const id = defineModel("id", {
+    required: true,
+    type: String,
+});
+
 const options = defineModel("options", {
     required: true,
     default: [] as ProductOptionDto[] | undefined,
@@ -14,11 +16,13 @@ const options = defineModel("options", {
 
 // store
 const settingsDataStore = useSettingsDataStore();
+const optionDataStore = useOptionDataStore();
 
 // vars
 const computedOption = computed(() =>
-    options.value.find((el) => el.optionValue._id === id),
+    options.value.find((el) => el.optionValue._id === id.value),
 );
+
 const isTable = computed(
     () =>
         computedOption.value?.optionValue.type === optionKeys.list ||
@@ -35,6 +39,13 @@ const isDateTime = computed(
         computedOption.value?.optionValue.type === optionKeys.date ||
         computedOption.value?.optionValue.type === optionKeys.time ||
         computedOption.value?.optionValue.type === optionKeys.datetime,
+);
+
+watch(
+    () => id,
+    (newValue) => {
+        console.log(newValue, "!!!!!");
+    },
 );
 </script>
 
@@ -57,16 +68,17 @@ const isDateTime = computed(
         </UFormGroup>
         <div>
             <DashboardProductOptionItemText
-                v-model:option="computedOption"
                 v-if="isText"
+                v-model:option="computedOption"
             />
             <DashboardProductOptionItemDatetime
-                v-model:option="computedOption"
                 v-if="isDateTime"
+                v-model:option="computedOption"
             />
             <DashboardProductOptionItemTable
-                v-model:option="computedOption"
                 v-if="isTable"
+                v-model:option="computedOption"
+                v-model:optionId="id"
             />
         </div>
         <UFormGroup
@@ -79,11 +91,11 @@ const isDateTime = computed(
         >
             <div class="flex gap-[10px] items-center mb-[10px]">
                 <UToggle
-                    size="md"
                     v-model="computedOption!.required"
                     :ui="{
                         active: 'bg-blue dark:bg-yellow',
                     }"
+                    size="md"
                 />
                 <span>{{
                     locale[settingsDataStore.locale].requiredOrnNot
