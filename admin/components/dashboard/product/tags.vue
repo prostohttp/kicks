@@ -31,15 +31,15 @@ const deleteTagHandler = (id: number) => {
 <template>
     <div>
         <input
+            ref="tagRef"
             class="input-label-without-icon w-full border border-dark-gray dark:border-[#374151] dark:bg-dark-bg"
             @keypress.enter.prevent="addTagHandler"
-            ref="tagRef"
         />
         <div class="flex gap-[10px] mt-[10px] items-center flex-wrap">
             <DashboardProductTagsItem
                 v-for="(tag, index) in tags"
-                :tag="tag"
                 :index="index"
+                :tag="tag"
                 @delete="deleteTagHandler"
             />
         </div>

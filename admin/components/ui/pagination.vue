@@ -21,20 +21,11 @@ const activePage: ModelRef<number | undefined> = defineModel();
 <template>
     <div class="mt-auto pt-[25px] mb-[30px]">
         <UPagination
-            :ui="{
-                base: 'dark:bg-transparent dark:border-grey bg-transparent ring-0 border border-dark-gray px-[15px] hover:bg-dark-gray hover:text-fa-white dark:hover:bg-yellow dark:hover:border-yellow dark:hover:text-dark-gray',
-                wrapper: 'gap-[16px]',
-                rounded: 'rounded-[8px]',
-            }"
+            v-model="activePage!"
             :active-button="{
                 inactiveClass: 'pagination-active',
             }"
-            :prev-button="{
-                icon: 'i-heroicons-chevron-left-20-solid',
-                label: locale[settingsDataStore.locale].prev,
-                inactiveClass:
-                    activePage !== 1 ? 'pagination-prev-next' : 'hidden',
-            }"
+            :max="elementInPage"
             :next-button="{
                 icon: 'i-heroicons-chevron-right-20-solid',
                 label: locale[settingsDataStore.locale].next,
@@ -44,10 +35,19 @@ const activePage: ModelRef<number | undefined> = defineModel();
                         ? 'pagination-prev-next'
                         : 'hidden',
             }"
-            v-model="activePage!"
             :page-count="elementInPage"
+            :prev-button="{
+                icon: 'i-heroicons-chevron-left-20-solid',
+                label: locale[settingsDataStore.locale].prev,
+                inactiveClass:
+                    activePage !== 1 ? 'pagination-prev-next' : 'hidden',
+            }"
             :total="allItems!"
-            :max="elementInPage"
+            :ui="{
+                base: 'dark:bg-transparent dark:border-grey bg-transparent ring-0 border border-dark-gray px-[15px] hover:bg-dark-gray hover:text-fa-white dark:hover:bg-yellow dark:hover:border-yellow dark:hover:text-dark-gray',
+                wrapper: 'gap-[16px]',
+                rounded: 'rounded-[8px]',
+            }"
         />
     </div>
 </template>

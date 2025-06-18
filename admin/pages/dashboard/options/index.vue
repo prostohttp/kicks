@@ -92,30 +92,30 @@ watch(
             :title="locale[settingsDataStore.locale].breadcrumbs.options"
         />
         <UButton
+            v-if="isAdmin"
+            :label="locale[settingsDataStore.locale].addNewOption"
             class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
             icon="i-heroicons-plus-circle"
-            :label="locale[settingsDataStore.locale].addNewOption"
             to="/dashboard/options/new"
-            v-if="isAdmin"
         />
     </div>
     <main
         class="p-[24px] bg-white flex flex-col rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
     >
         <UTable
+            v-model="selected"
+            :columns="columns"
+            :empty-state="{
+                icon: 'i-heroicons-circle-stack-20-solid',
+                label: locale[settingsDataStore.locale].empty,
+            }"
             :loading="!data"
             :loading-state="{
                 icon: 'i-heroicons-arrow-path-20-solid',
                 label: locale[settingsDataStore.locale].loadingText,
             }"
             :progress="{ color: 'primary', animation: 'carousel' }"
-            v-model="selected"
             :rows="options"
-            :columns="columns"
-            :empty-state="{
-                icon: 'i-heroicons-circle-stack-20-solid',
-                label: locale[settingsDataStore.locale].empty,
-            }"
             :ui="{
                 td: {
                     base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal',
@@ -139,8 +139,8 @@ watch(
                         }}
                     </span>
                     <DashboardOptionMenuAction
-                        v-model:activePage="activePage"
                         v-if="isAdmin"
+                        v-model:activePage="activePage"
                     />
                 </caption>
             </template>
@@ -155,9 +155,9 @@ watch(
             </template>
             <template #action-data="{ row }">
                 <UButton
+                    :to="`/dashboard/options/${row.id}`"
                     class="icon-button float-right"
                     icon="i-heroicons-pencil-square-solid"
-                    :to="`/dashboard/options/${row.id}`"
                 />
             </template>
         </UTable>
@@ -165,8 +165,8 @@ watch(
     <LazyUiPagination
         v-if="data?.pagesInPagination"
         v-model="activePage"
-        :element-in-page="Constants.PER_PAGE_OPTION"
         :all-items="data?.allItems"
+        :element-in-page="Constants.PER_PAGE_OPTION"
     />
 </template>
 

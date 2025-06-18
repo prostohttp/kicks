@@ -42,6 +42,14 @@ const schema = v.object({
 
 <template>
     <UForm
+        :schema="v.safeParser(schema)"
+        :state="{
+            name,
+            email,
+            password,
+            terms,
+            keepLogged,
+        }"
         class="flex flex-col gap-[24px]"
         @submit="
             $emit('submit', {
@@ -52,14 +60,6 @@ const schema = v.object({
                 keepLogged,
             })
         "
-        :schema="v.safeParser(schema)"
-        :state="{
-            name,
-            email,
-            password,
-            terms,
-            keepLogged,
-        }"
     >
         <div class="flex flex-col gap-[20px]">
             <h1 class="font-[Rubik] font-[600] text-[24px]">
@@ -67,10 +67,10 @@ const schema = v.object({
             </h1>
             <UFormGroup name="name">
                 <UInput
-                    variant="outline"
-                    :placeholder="locale[settingsDataStore.locale].userName"
                     v-model="name"
+                    :placeholder="locale[settingsDataStore.locale].userName"
                     input-class="input"
+                    variant="outline"
                 />
             </UFormGroup>
         </div>
@@ -80,20 +80,20 @@ const schema = v.object({
             </h1>
             <UFormGroup name="email">
                 <UInput
-                    variant="outline"
-                    :placeholder="locale[settingsDataStore.locale].email"
                     v-model="email"
+                    :placeholder="locale[settingsDataStore.locale].email"
                     input-class="input"
+                    variant="outline"
                 />
             </UFormGroup>
             <div class="flex flex-col gap-[5px]">
                 <UFormGroup name="password">
                     <UInput
+                        v-model="password"
+                        :placeholder="locale[settingsDataStore.locale].password"
+                        input-class="input"
                         type="password"
                         variant="outline"
-                        :placeholder="locale[settingsDataStore.locale].password"
-                        v-model="password"
-                        input-class="input"
                     />
                 </UFormGroup>
             </div>
@@ -105,8 +105,8 @@ const schema = v.object({
                         <span class="open-sans text-[16px] font-[600]">
                             {{ locale[settingsDataStore.locale].agreeText }}
                             <small
-                                @click.prevent="isOpen = true"
                                 class="text-[16px] underline decoration-gray-main hover: cursor-pointer"
+                                @click.prevent="isOpen = true"
                             >
                                 {{ locale[settingsDataStore.locale].terms }}
                             </small></span
@@ -124,28 +124,28 @@ const schema = v.object({
                 </UCheckbox>
             </UFormGroup>
             <UButton
-                type="submit"
                 class="h-[48px] px-[16px] flex justify-between dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow"
                 trailing
+                type="submit"
             >
                 <span>{{ locale[settingsDataStore.locale].register }}</span>
-                <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
+                <UIcon class="text-[20px]" dynamic name="i-mdi-arrow-right" />
             </UButton>
             <UButton
-                to="/auth/login"
                 class="inverse h-[48px] px-[16px] flex justify-between w-full dark:hover:bg-dark-gray dark:hover:text-fa-white dark:bg-yellow uppercase font-[Rubik] bg-yellow hover:text-fa-white hover:bg-dark-gray"
+                to="/auth/login"
                 trailing
             >
                 <span>{{ locale[settingsDataStore.locale].loginPage }}</span>
-                <UIcon name="i-mdi-arrow-right" dynamic class="text-[20px]" />
+                <UIcon class="text-[20px]" dynamic name="i-mdi-arrow-right" />
             </UButton>
         </div>
     </UForm>
     <UiModal
         v-model="isOpen"
-        title="KicksClub Terms & Conditions"
         class="dark:text-white"
         fullscreen
+        title="KicksClub Terms & Conditions"
     >
         <ContentDoc path="/terms" />
     </UiModal>

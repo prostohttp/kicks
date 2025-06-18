@@ -79,8 +79,8 @@ const containerImageFooter = {
 
                 <ESection :style="content">
                     <EImg
-                        width="620"
                         src="https://vue-email-demo.vercel.app/static/yelp-header.png"
+                        width="620"
                     />
 
                     <ERow
@@ -91,13 +91,13 @@ const containerImageFooter = {
                     >
                         <EColumn>
                             <EHeading
-                                as="h2"
                                 :style="{
                                     fontSize: '26px',
                                     fontWeight: 'bold',
                                     textAlign: 'center',
                                     marginTop: '10px',
                                 }"
+                                as="h2"
                             >
                                 {{ siteName }}
                             </EHeading>
@@ -111,7 +111,7 @@ const containerImageFooter = {
                     <ERow :style="{ ...boxInfos, paddingTop: '0' }">
                         <EColumn :style="containerButton" col-span="{2}">
                             <EText :style="button">
-                                <a style="color: white" :href="token"
+                                <a :href="token" style="color: white"
                                     >Reset the password</a
                                 >
                             </EText>
@@ -121,8 +121,8 @@ const containerImageFooter = {
 
                 <ESection :style="containerImageFooter">
                     <EImg
-                        width="620"
                         src="https://vue-email-demo.vercel.app/static/yelp-footer.png"
+                        width="620"
                     />
                 </ESection>
 

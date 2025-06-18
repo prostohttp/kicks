@@ -96,7 +96,7 @@ async function onError(event: FormErrorEvent) {
 
 <template>
     <UiSpinner v-if="isLoading" />
-    <div class="space-y-4 w-full" v-else>
+    <div v-else class="space-y-4 w-full">
         <div
             v-if="!isValidForm"
             class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
@@ -104,25 +104,25 @@ async function onError(event: FormErrorEvent) {
             {{ locale[settingsDataStore.locale].error.checkRequiredFields }}
         </div>
         <UForm
-            :validate="validate"
             :state="banner"
+            :validate="validate"
             class="space-y-4 w-full"
-            @submit="protectedSubmitHandler"
             @error="onError"
+            @submit="protectedSubmitHandler"
         >
             <UFormGroup
-                name="title"
                 :label="locale[settingsDataStore.locale].title"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="title"
             >
                 <UInput
+                    v-model="banner.title"
                     :placeholder="locale[settingsDataStore.locale].title"
                     inputClass="no-left-icon"
-                    v-model="banner.title"
                 />
             </UFormGroup>
             <div
@@ -140,8 +140,8 @@ async function onError(event: FormErrorEvent) {
                     <div
                         v-for="(tab, index) in bannerTabs"
                         :key="tab.id"
-                        class="cursor-pointer py-[10px] pl-[20px] pr-[10px] rounded-[8px] flex justify-between items-center"
                         :class="{ 'active-tab': activeTab === index }"
+                        class="cursor-pointer py-[10px] pl-[20px] pr-[10px] rounded-[8px] flex justify-between items-center"
                         @click="activeTab = index"
                     >
                         <span>{{
@@ -160,17 +160,17 @@ async function onError(event: FormErrorEvent) {
                         <UFormGroup name="banners">
                             <DashboardBannerAddNewFormItem
                                 v-for="(item, index) in banner.banners"
-                                :index="index"
-                                :id="item.id"
-                                v-model:active-tab="activeTab"
                                 v-show="index === activeTab"
+                                :id="item.id"
                                 :key="item.id"
+                                v-model:active-tab="activeTab"
+                                :index="index"
                             />
                         </UFormGroup>
                     </Transition>
                 </div>
             </div>
-            <UButton type="submit" class="dark-button float-end" v-if="isAdmin">
+            <UButton v-if="isAdmin" class="dark-button float-end" type="submit">
                 {{ locale[settingsDataStore.locale].save }}
             </UButton>
         </UForm>

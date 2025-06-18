@@ -101,7 +101,7 @@ const deleteImageHandler = async (index: number) => {
 <template>
     <UiImageUploadGallery
         v-model:images="state.additionImages"
-        @delete="deleteImageHandler"
         @change="uploadImage($event)"
+        @delete="deleteImageHandler"
     />
 </template>

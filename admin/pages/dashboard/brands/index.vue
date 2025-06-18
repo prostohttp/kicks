@@ -49,7 +49,7 @@ watch(
 );
 
 watch(activePage, async (newValue) => {
-    router.push({ query: { ...route.query, page: newValue || 1 } });
+    await router.push({ query: { ...route.query, page: newValue || 1 } });
     await brandsDataStore.getAllBrands(newValue!);
 });
 
@@ -69,30 +69,30 @@ onMounted(() => {
             :title="locale[settingsDataStore.locale].breadcrumbs.brands"
         />
         <UButton
-            class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
-            icon="i-heroicons-plus-circle"
             :label="locale[settingsDataStore.locale].addNewBrand"
             :to="addQuery('brandNew', 'yes')"
+            class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
+            icon="i-heroicons-plus-circle"
             @click="openAddNewBrandModal"
         />
     </div>
     <main class="flex flex-col">
         <UiEmpty v-if="!data?.allItems" />
         <div
-            class="grid 2xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 md:gap-[30px] gap-[15px]"
             v-else
+            class="grid 2xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 md:gap-[30px] gap-[15px]"
         >
             <DashboardBrandCard
                 v-for="brand in data?.brands"
-                :brand="brand"
                 :key="brand._id"
+                :brand="brand"
             />
         </div>
     </main>
     <LazyUiPagination
         v-if="data?.pagesInPagination"
         v-model="activePage"
-        :element-in-page="Constants.PER_PAGE_BRAND"
         :all-items="data?.allItems"
+        :element-in-page="Constants.PER_PAGE_BRAND"
     />
 </template>

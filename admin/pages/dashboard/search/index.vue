@@ -3,7 +3,7 @@ import { type BreadcrumbItem } from "~/types/ui/ui.types";
 import { locale } from "~/lang/locale";
 import { Constants } from "~/constants";
 import unwrapAfterPopulate from "~/utils/unwrap-after-populate";
-import type { ProductDtoWithValues } from "~/server/api/product/dto/product.dto";
+import type { ProductDto } from "~/server/api/product/dto/product.dto";
 import type { TitleObjectAfterPopulate } from "~/types/server/server.types";
 
 // store
@@ -125,25 +125,25 @@ watch(activePage, async (newValue) => {
     </div>
     <main class="flex flex-col">
         <UiEmpty v-if="!foundedProducts?.allItems" />
-        <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
+        <div v-else class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]">
             <DashboardProductCard
                 v-for="product in foundedProducts?.products"
-                @delete-product="deleteProduct"
-                :product="product as ProductDtoWithValues"
+                :key="product._id"
                 :categories="
                     unwrapAfterPopulate(
                         product.category as unknown as TitleObjectAfterPopulate[],
                     )
                 "
+                :product="product as ProductDto"
                 :sales="getSales(product._id!)"
-                :key="product._id"
+                @delete-product="deleteProduct"
             />
         </div>
     </main>
     <LazyUiPagination
         v-if="foundedProducts?.pagesInPagination"
         v-model="activePage"
-        :element-in-page="Constants.PER_PAGE_SEARCH"
         :all-items="foundedProducts?.allItems"
+        :element-in-page="Constants.PER_PAGE_SEARCH"
     />
 </template>

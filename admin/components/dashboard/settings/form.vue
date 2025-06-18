@@ -196,12 +196,12 @@ watch(
         <div class="lg:w-[65%] w-full flex flex-col gap-[20px]">
             <UFormGroup
                 :label="locale[settingsDataStore.locale].localeDashboard"
-                name="localeDashboard"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="localeDashboard"
             >
                 <USelectMenu
                     v-model="settings!.localeDashboard!"
@@ -211,12 +211,12 @@ watch(
             </UFormGroup>
             <UFormGroup
                 :label="locale[settingsDataStore.locale].localeStore"
-                name="localeStore"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="localeStore"
             >
                 <USelectMenu
                     v-model="settings!.localeStore"
@@ -226,12 +226,12 @@ watch(
             </UFormGroup>
             <UFormGroup
                 :label="locale[settingsDataStore.locale].mainCurrency"
-                name="mainCurrency"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="mainCurrency"
             >
                 <USelectMenu
                     v-model="settings!.mainCurrency"
@@ -241,27 +241,27 @@ watch(
             </UFormGroup>
             <UFormGroup
                 :label="locale[settingsDataStore.locale].secondCurrencyRate"
-                name="secondCurrencyRate"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="secondCurrencyRate"
             >
                 <UInput
-                    type="number"
                     v-model="settings!.secondCurrencyRate"
                     inputClass="input-label-without-icon"
+                    type="number"
                 />
             </UFormGroup>
             <UFormGroup
                 :label="locale[settingsDataStore.locale].currency"
-                name="currency"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="currency"
             >
                 <USelectMenu
                     v-model="settings!.currency"
@@ -271,12 +271,12 @@ watch(
             </UFormGroup>
             <UFormGroup
                 :label="locale[settingsDataStore.locale].startOrderStatus"
-                name="startOrderStatus"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="startOrderStatus"
             >
                 <USelectMenu
                     v-model="startOrderStatus"
@@ -286,12 +286,12 @@ watch(
             </UFormGroup>
             <UFormGroup
                 :label="locale[settingsDataStore.locale].endOrderStatus"
-                name="endOrderStatus"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="endOrderStatus"
             >
                 <USelectMenu
                     v-model="endOrderStatus"
@@ -305,20 +305,20 @@ watch(
         >
             <UFormGroup
                 :label="locale[settingsDataStore.locale].logo"
-                name="image"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="image"
             >
                 <UiImageUpload
-                    v-model:image="settings"
-                    alt="logo"
                     v-model:drop-zone-ref="dropZoneRef"
-                    @delete="deleteImageHandler"
-                    @change="uploadImage($event)"
+                    v-model:image="settings"
                     :classForDarkMode="'dark:invert-[1] dark:invert-1'"
+                    alt="logo"
+                    @change="uploadImage($event)"
+                    @delete="deleteImageHandler"
                 />
             </UFormGroup>
         </div>

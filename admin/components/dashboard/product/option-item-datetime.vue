@@ -34,22 +34,22 @@ const isDateTime = computed(
         }"
     >
         <UInput
-            type="date"
-            v-model="optionModel.value"
-            inputClass="input-label-without-icon"
             v-if="isDate"
-        />
-        <UInput
-            type="time"
             v-model="optionModel.value"
             inputClass="input-label-without-icon"
+            type="date"
+        />
+        <UInput
             v-if="isTime"
-        />
-        <UInput
-            type="datetime-local"
             v-model="optionModel.value"
             inputClass="input-label-without-icon"
+            type="time"
+        />
+        <UInput
             v-if="isDateTime"
+            v-model="optionModel.value"
+            inputClass="input-label-without-icon"
+            type="datetime-local"
         />
     </UFormGroup>
 </template>

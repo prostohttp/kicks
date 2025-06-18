@@ -87,11 +87,11 @@ watch(option, (newValue, oldValue) => {
     >
         <DashboardBreadcrumbs :links="links" :title="title" />
         <UButton
+            v-if="option && isAdmin"
+            :label="locale[settingsDataStore.locale].save"
             class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase fon-[Rubik] font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
             icon="i-heroicons-clipboard-document-20-solid"
             @click="submitHandler"
-            :label="locale[settingsDataStore.locale].save"
-            v-if="option && isAdmin"
         />
     </div>
     <main
@@ -100,10 +100,10 @@ watch(option, (newValue, oldValue) => {
         <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
             <UiEmpty v-if="!state._id" />
             <DashboardOptionEditForm
-                :optionData="optionData"
-                v-model:submit="isSubmit"
-                v-model:state="state"
                 v-else
+                v-model:state="state"
+                v-model:submit="isSubmit"
+                :optionData="optionData"
             />
         </div>
     </main>

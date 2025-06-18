@@ -112,11 +112,11 @@ definePageMeta({
         class="p-[24px] bg-white rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
     >
         <UForm
-            :validate="validate"
-            @submit="onSubmit"
-            @error="onError"
-            class="flex flex-col lg:gap-[35px] gap-[20px]"
             :state="settings!"
+            :validate="validate"
+            class="flex flex-col lg:gap-[35px] gap-[20px]"
+            @error="onError"
+            @submit="onSubmit"
         >
             <div
                 v-if="!isValidForm"
@@ -124,7 +124,7 @@ definePageMeta({
             >
                 {{ locale[storeLocale].error.checkRequiredFields }}
             </div>
-            <UTabs :items="items" class="w-full" v-model="selected">
+            <UTabs v-model="selected" :items="items" class="w-full">
                 <template #general>
                     <DashboardSettingsForm />
                 </template>
@@ -136,7 +136,7 @@ definePageMeta({
                 </template>
             </UTabs>
             <div>
-                <UButton type="submit" class="dark-button my-[10px]">
+                <UButton class="dark-button my-[10px]" type="submit">
                     {{ locale[storeLocale].save }}
                 </UButton>
             </div>

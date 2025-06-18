@@ -61,19 +61,19 @@ onMounted(() => {
         >
             <template v-if="user.image">
                 <NuxtImg
-                    :src="`/${user.image}`"
-                    placeholder
-                    fit="inside"
-                    width="80"
                     :alt="user.name"
+                    :src="`/${user.image}`"
                     class="rounded-[8px]"
+                    fit="inside"
+                    placeholder
+                    width="80"
                 />
             </template>
             <template v-else>
                 <NuxtImg
+                    :alt="locale[settingsDataStore.locale].noImage"
                     src="/no-image.svg"
                     width="40"
-                    :alt="locale[settingsDataStore.locale].noImage"
                 />
             </template>
         </div>
@@ -102,24 +102,24 @@ onMounted(() => {
                 }"
             >
                 <UButton
-                    trailing-icon="i-heroicons-ellipsis-horizontal-solid"
                     class="bg-[#efefef] dark:bg-[#efefef] text-dark-gray hover:bg-dark-gray dark:hover:bg-dark-gray dark:hover:text-fa-white hover:text-fa-white py-[2.5px]"
+                    trailing-icon="i-heroicons-ellipsis-horizontal-solid"
                 />
 
                 <template #panel>
                     <ul class="p-4 flex flex-col gap-[10px]">
                         <NuxtLink
-                            active-class="active"
                             :to="addQuery('userEdit', user._id)"
-                            @click="openEditUserModal(user._id)"
+                            active-class="active"
                             class="cursor-pointer"
+                            @click="openEditUserModal(user._id)"
                         >
                             {{ locale[settingsDataStore.locale].editProfile }}
                         </NuxtLink>
 
                         <NuxtLink
-                            @click="openDeleteUserModal"
                             class="cursor-pointer"
+                            @click="openDeleteUserModal"
                         >
                             {{ locale[settingsDataStore.locale].deletePerson }}
                         </NuxtLink>

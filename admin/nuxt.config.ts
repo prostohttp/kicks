@@ -1,16 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    // ssr: false,
-    routeRules: {
-        // "/server/api/**": { cors: true },
-        // "/api/**": { cors: true },
-        // "/auth/**": {
-        //     prerender: true,
-        // },
-    },
     experimental: {
         typedPages: true,
     },
+
     app: {
         head: {
             link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
@@ -40,18 +33,11 @@ export default defineNuxtConfig({
                 base: "./public",
             },
         },
-        // experimental: {
-        //     websocket: false,
-        // },
     },
 
     css: ["~/assets/css/main.css"],
     devtools: {
-      enabled: false,
-
-      timeline: {
         enabled: true,
-      },
     },
 
     auth: {
@@ -67,7 +53,7 @@ export default defineNuxtConfig({
 
     mongoose: {
         uri: process.env.MONGODB_URI,
-        devtools: false,
+        devtools: true,
     },
 
     pinia: {

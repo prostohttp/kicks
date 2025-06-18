@@ -18,14 +18,16 @@ const optionId = defineModel("optionId", {
 const settingsDataStore = useSettingsDataStore();
 const { locale: settingsLocale } = storeToRefs(settingsDataStore);
 const { data: option } = await useFetch<OptionDtoWithValues>(
-    () => `/api/option/one?id=${optionId.value}`,
+    "/api/option/one",
     {
+        method: "GET",
+        query: { id: optionId },
         watch: [optionId],
     },
 );
 
 // vars
-const optionValues = option.value!.values!.map((item) => ({
+const optionValues = option.value?.values?.map((item) => ({
     label: item.value,
     value: item._id,
 }));

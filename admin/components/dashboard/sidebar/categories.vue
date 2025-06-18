@@ -62,20 +62,20 @@ watch(
                         v-for="category in parentTitles"
                         :key="category._id"
                         :_id="category._id"
-                        :title="category.title"
-                        :is-active="isActive(category._id)"
                         :count="
                             computedProducts[category._id]
                                 ? computedProducts[category._id]
                                 : 0
                         "
+                        :is-active="isActive(category._id)"
+                        :title="category.title"
                     />
                     <li
                         class="h-[35px] mt-[30px] flex justify-between items-center mb-[16px] border-t border-grey dark:border-[#70706e] pt-[25px]"
                     >
                         <NuxtLink
-                            to="/dashboard/categories?page=1"
                             class="text-[16px] font-[600] text-dark-gray dark:text-fa-white"
+                            to="/dashboard/categories?page=1"
                             @click="isOpenMobileSidebar = false"
                         >
                             {{ locale[storeLocale].allCategories }}

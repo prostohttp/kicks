@@ -200,17 +200,17 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     <UForm
         :schema="v.safeParser(schema)"
         :state="state"
-        @submit="protectedSubmitHandler"
         class="w-full flex flex-col gap-[50px]"
+        @submit="protectedSubmitHandler"
     >
         <LazyUiSpinner v-if="isLoading" />
-        <div class="flex gap-[30px] lg:flex-row flex-col-reverse" v-else>
+        <div v-else class="flex gap-[30px] lg:flex-row flex-col-reverse">
             <div class="width-[60%] basis-[60%] flex flex-col gap-[24px]">
                 <UFormGroup
                     v-for="{ name, label, placeholder, type } in articleData"
+                    :key="name"
                     :label="type !== 'toggle' ? label : ''"
                     :name="name"
-                    :key="name"
                     :ui="{
                         label: {
                             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -218,83 +218,83 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                     }"
                 >
                     <UInput
-                        :placeholder="placeholder"
-                        v-model="state.title"
-                        inputClass="no-left-icon"
                         v-if="name === 'title'"
+                        v-model="state.title"
+                        :placeholder="placeholder"
+                        inputClass="no-left-icon"
                     />
                     <UTextarea
+                        v-else-if="name === 'shortDescription'"
                         v-model="state.shortDescription"
                         :placeholder="
                             locale[settingsDataStore.locale].shortDescription
                         "
                         class="textarea"
-                        v-else-if="name === 'shortDescription'"
                     />
                     <TiptapEditor
-                        :placeholder="placeholder"
-                        v-model="state.description"
                         v-else-if="name === 'description'"
+                        v-model="state.description"
+                        :placeholder="placeholder"
                     />
                     <UInput
-                        :placeholder="placeholder"
-                        v-model="state.sort"
-                        inputClass="no-left-icon"
                         v-if="name === 'sort'"
-                        type="number"
+                        v-model="state.sort"
+                        :placeholder="placeholder"
+                        inputClass="no-left-icon"
                         min="1"
+                        type="number"
                     />
                     <div
-                        class="flex gap-[10px] items-center mb-[10px]"
                         v-else-if="name === 'siteMenu'"
+                        class="flex gap-[10px] items-center mb-[10px]"
                     >
                         <UToggle
-                            size="md"
                             v-model="state.siteMenu"
                             :ui="{
                                 active: 'bg-blue dark:bg-yellow',
                             }"
+                            size="md"
                         />
                         <span>{{ label }}</span>
                     </div>
                     <div
-                        class="flex gap-[10px] items-center mb-[10px]"
                         v-else-if="name === 'adminMenu'"
+                        class="flex gap-[10px] items-center mb-[10px]"
                     >
                         <UToggle
-                            size="md"
                             v-model="state.adminMenu"
                             :ui="{
                                 active: 'bg-blue dark:bg-yellow',
                             }"
+                            size="md"
                         />
                         <span>{{ label }}</span>
                     </div>
                     <USelectMenu
-                        multiple
+                        v-else-if="type === 'select'"
                         v-model="state.featuredProducts"
                         :options="titles"
                         :placeholder="placeholder"
+                        :ui="{
+                            wrapper: 'select-wrapper',
+                        }"
                         :uiMenu="{
                             option: {
                                 color: 'dark:text-[#6b7280]',
                             },
                         }"
-                        :ui="{
-                            wrapper: 'select-wrapper',
-                        }"
-                        v-else-if="type === 'select'"
+                        multiple
                     />
                     <div
-                        class="flex gap-[10px] items-center mb-[10px]"
                         v-else-if="name === 'isEnabled'"
+                        class="flex gap-[10px] items-center mb-[10px]"
                     >
                         <UToggle
-                            size="md"
                             v-model="state.isEnabled"
                             :ui="{
                                 active: 'bg-blue dark:bg-yellow',
                             }"
+                            size="md"
                         />
                         <span>{{ label }}</span>
                     </div>
@@ -304,17 +304,17 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                 class="rounded-[8px] width-[40%] basis-[40%] flex flex-col relative group md:mt-[36px] mt-[10px]"
             >
                 <UiImageUpload
-                    :add-new="true"
-                    v-model:image="articleImage"
-                    alt="New Article"
                     v-model:drop-zone-ref="dropZoneRef"
-                    @delete="deleteImageHandler"
+                    v-model:image="articleImage"
+                    :add-new="true"
+                    alt="New Article"
                     @change="uploadImage($event)"
+                    @delete="deleteImageHandler"
                 />
             </div>
         </div>
         <div class="flex justify-end">
-            <UButton type="submit" class="dark-button">
+            <UButton class="dark-button" type="submit">
                 {{ locale[settingsDataStore.locale].addNewArticle }}
             </UButton>
         </div>

@@ -173,73 +173,73 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 <template>
     <LazyUiEmpty v-if="!user" />
     <UForm
+        v-else
         :schema="v.safeParser(schema)"
         :state="user"
-        @submit="protectedSubmitHandler"
         class="w-full flex flex-col gap-[20px]"
-        v-else
+        @submit="protectedSubmitHandler"
     >
         <div
             class="rounded-[8px] basis-[40%] p-[5px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group"
         >
             <UiImageUpload
+                v-model:drop-zone-ref="dropZoneRef"
                 v-model:image="user"
                 :alt="user?.name"
-                v-model:drop-zone-ref="dropZoneRef"
-                @delete="deleteImageHandler"
                 @change="uploadImage($event)"
+                @delete="deleteImageHandler"
             />
         </div>
         <UFormGroup
             :label="locale[settingsDataStore.locale].userName"
-            name="name"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="name"
         >
             <UInput
+                v-model="user.name"
                 :placeholder="locale[settingsDataStore.locale].userName"
                 icon="i-heroicons-user-circle-16-solid"
-                v-model="user.name"
                 inputClass="input-label"
             />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].email"
-            name="email"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="email"
         >
             <UInput
+                v-model="user.email"
                 :placeholder="locale[settingsDataStore.locale].email"
                 icon="i-heroicons-envelope"
-                v-model="user.email"
                 inputClass="input-label"
             />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].role"
-            name="role"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="role"
         >
             <USelectMenu
                 v-model="user.role"
                 :options="roles"
-                leadingIcon="i-heroicons-shield-exclamation-20-solid"
                 leading
+                leadingIcon="i-heroicons-shield-exclamation-20-solid"
                 selectClass="select-label"
             />
         </UFormGroup>
-        <UButton type="submit" class="dark-button mt-[20px]">
+        <UButton class="dark-button mt-[20px]" type="submit">
             {{ locale[settingsDataStore.locale].update }}
         </UButton>
     </UForm>

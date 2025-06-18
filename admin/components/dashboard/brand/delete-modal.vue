@@ -22,8 +22,6 @@ const deleteBrand = () => {
     <UModal
         v-model="isOpen"
         :transition="false"
-        class="bg-fa-white opacity-100"
-        prevent-close
         :ui="{
             overlay: {
                 background:
@@ -31,6 +29,8 @@ const deleteBrand = () => {
             },
             background: 'bg-fa-white',
         }"
+        class="bg-fa-white opacity-100"
+        prevent-close
     >
         <UCard
             :ui="{
@@ -46,10 +46,10 @@ const deleteBrand = () => {
                         {{ locale[settingsDataStore.locale].deleteBrand }}
                     </h3>
                     <UButton
-                        color="gray"
-                        variant="ghost"
-                        icon="i-heroicons-x-mark-20-solid"
                         class="-my-1"
+                        color="gray"
+                        icon="i-heroicons-x-mark-20-solid"
+                        variant="ghost"
                         @click="isOpen = false"
                     />
                 </div>
@@ -66,8 +66,8 @@ const deleteBrand = () => {
                         {{ locale[settingsDataStore.locale].cancel }}
                     </UButton>
                     <UButton
-                        @click="deleteBrand"
                         class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
+                        @click="deleteBrand"
                     >
                         {{ locale[settingsDataStore.locale].deleteBrand }}
                     </UButton>

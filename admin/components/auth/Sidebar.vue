@@ -6,9 +6,9 @@
     >
         <NuxtLink to="/">
             <img
-                src="~/assets/img/small-logo.svg"
                 alt="kicks"
                 class="w-[248px] dark:invert-[1] lg:dark:invert-0"
+                src="~/assets/img/small-logo.svg"
             />
         </NuxtLink>
     </div>

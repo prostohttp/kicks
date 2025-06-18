@@ -55,8 +55,8 @@ const loginHandler = useThrottleFn(login, 1000);
                         {{ locale[settingsDataStore.locale].login }}
                     </h1>
                     <ULink
-                        to="/auth/forgot"
                         class="open-sans text-[16px] font-[600] underline decoration-gray-main"
+                        to="/auth/forgot"
                     >
                         {{ locale[settingsDataStore.locale].forgotPassword }}
                     </ULink>
@@ -73,11 +73,11 @@ const loginHandler = useThrottleFn(login, 1000);
         </div>
         <UiModal
             v-model="isOpen"
-            title="KicksClub Terms & Conditions"
             class="dark:text-white"
             fullscreen
+            title="KicksClub Terms & Conditions"
         >
-            <ContentDoc path="/terms" class="dark:text-white" />
+            <ContentDoc class="dark:text-white" path="/terms" />
         </UiModal>
     </div>
 </template>

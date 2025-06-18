@@ -24,10 +24,10 @@ const settingsDataStore = useSettingsDataStore();
                         {{ locale[settingsDataStore.locale].deletePerson }}
                     </h3>
                     <UButton
-                        color="gray"
-                        variant="ghost"
-                        icon="i-heroicons-x-mark-20-solid"
                         class="-my-1"
+                        color="gray"
+                        icon="i-heroicons-x-mark-20-solid"
+                        variant="ghost"
                         @click="$emit('close')"
                     />
                 </div>
@@ -45,8 +45,8 @@ const settingsDataStore = useSettingsDataStore();
                         {{ locale[settingsDataStore.locale].cancel }}
                     </UButton>
                     <UButton
-                        @click="$emit('delete')"
                         class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white"
+                        @click="$emit('delete')"
                     >
                         {{ locale[settingsDataStore.locale].deletePerson }}
                     </UButton>

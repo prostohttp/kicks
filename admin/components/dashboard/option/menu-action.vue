@@ -34,7 +34,6 @@ const openDeleteOptionModal = (options: IOption[]) => {
 
 <template>
     <UPopover
-        class="absolute top-[5px] right-0"
         v-if="selected?.length"
         :popper="{ placement: 'bottom-end', offsetDistance: 10 }"
         :ui="{
@@ -44,16 +43,17 @@ const openDeleteOptionModal = (options: IOption[]) => {
             width: 'md:w-auto w-[calc(100%-20px)]',
             position: 'right-[10px] sm:right-auto',
         }"
+        class="absolute top-[5px] right-0"
     >
         <UIcon
-            name="i-heroicons-ellipsis-vertical-20-solid"
             class="cursor-pointer"
+            name="i-heroicons-ellipsis-vertical-20-solid"
         />
         <template #panel>
             <ul class="p-4 flex flex-col gap-[10px]">
                 <NuxtLink
-                    @click="openDeleteOptionModal(selected)"
                     class="cursor-pointer text-[16px] font-[400]"
+                    @click="openDeleteOptionModal(selected)"
                 >
                     {{ locale[settingsDataStore.locale].deleteOption }}
                 </NuxtLink>

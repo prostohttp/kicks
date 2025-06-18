@@ -25,41 +25,41 @@ const needCalculate = computed(
             <span>{{ locale[settingsDataStore.locale].empty }}</span>
         </div>
         <ul
-            class="flex flex-col gap-[16px] sm:w-[420px] w-full md:max-h-[400px] max-h-[200px] overflow-y-auto"
             v-else
+            class="flex flex-col gap-[16px] sm:w-[420px] w-full md:max-h-[400px] max-h-[200px] overflow-y-auto"
         >
             <li v-for="el in data" :key="el._id" class="flex gap-[15px]">
                 <NuxtLink
-                    :to="`/dashboard/products/${el._id}`"
                     :title="`${el.title}`"
+                    :to="`/dashboard/products/${el._id}`"
                     class="w-[10%]"
                     @click="model = false"
                 >
                     <NuxtImg
                         v-if="el.image"
+                        :alt="el.title"
                         :src="`/${el.image}`"
                         width="60"
-                        :alt="el.title"
                     />
                     <NuxtImg
+                        v-else
+                        :alt="el.title"
                         src="/no-image.svg"
                         width="40"
-                        :alt="el.title"
-                        v-else
                     />
                 </NuxtLink>
                 <div class="flex flex-col w-[80%]">
                     <NuxtLink
-                        activeClass="active"
                         :to="`/dashboard/products/${el._id}`"
+                        activeClass="active"
                         class="text-[16px] font-[600]"
                         @click="model = false"
                     >
                         {{ el.title }}
                     </NuxtLink>
                     <span
-                        class="text-[12px] h-[3em] whitespace-normal line-clamp-2"
                         v-if="el.shortDescription"
+                        class="text-[12px] h-[3em] whitespace-normal line-clamp-2"
                     >
                         {{ el.shortDescription }}
                     </span>
@@ -88,7 +88,7 @@ const needCalculate = computed(
                             }}
                         </span>
                     </div>
-                    <div class="font-[600]" v-else>
+                    <div v-else class="font-[600]">
                         {{
                             localizedFormatPrice(
                                 settings!.currency.value,

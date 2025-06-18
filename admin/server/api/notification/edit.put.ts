@@ -1,11 +1,11 @@
-import { Notification } from "#imports";
+import { Notification } from './../../models/notification.schema';
 import { NotificationDto } from "~/server/api/notification/dto/notification.dto";
 
 export default defineEventHandler(async (event) => {
     try {
         const notificationBody: NotificationDto = await readBody(event);
         const notification: NotificationDto | null =
-            await Notification.findById(notificationBody.id);
+            await Notification.findById(notificationBody._id);
 
         if (!notification) {
             throw createError({
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         }
 
         return await Notification.findByIdAndUpdate(
-            notificationBody.id,
+            notificationBody._id,
             { ...notificationBody, isRead: notificationBody.isRead },
             {
                 new: true,

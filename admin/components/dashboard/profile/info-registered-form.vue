@@ -172,8 +172,8 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     <UForm
         :schema="v.safeParser(schema)"
         :state="state"
-        @submit="protectedSubmitHandler"
         class="w-full flex flex-col gap-[50px]"
+        @submit="protectedSubmitHandler"
     >
         <div class="flex gap-[30px] lg:flex-row flex-col-reverse">
             <div class="basis-[60%] flex flex-col gap-[24px]">
@@ -186,9 +186,9 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                         type,
                         disabled,
                     } in userData"
+                    :key="name"
                     :label="label"
                     :name="name"
-                    :key="name"
                     :ui="{
                         label: {
                             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -196,28 +196,28 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                     }"
                 >
                     <UInput
-                        :placeholder="placeholder"
-                        :icon="icon"
                         v-model="state[name as keyof typeof state]"
-                        inputClass="input-label"
-                        :type="type ? type : 'text'"
                         :disabled="disabled"
+                        :icon="icon"
+                        :placeholder="placeholder"
+                        :type="type ? type : 'text'"
+                        inputClass="input-label"
                     />
                 </UFormGroup>
             </div>
             <div class="rounded-[8px] basis-[40%] flex flex-col relative group">
                 <UiImageUpload
+                    v-model:drop-zone-ref="dropZoneRef"
                     v-model:image="user"
                     :alt="user?.name"
                     :can-upload="true"
-                    v-model:drop-zone-ref="dropZoneRef"
-                    @delete="deleteImageHandler"
                     @change="uploadImage($event)"
+                    @delete="deleteImageHandler"
                 />
             </div>
         </div>
         <div class="flex justify-end">
-            <UButton type="submit" class="dark-button">
+            <UButton class="dark-button" type="submit">
                 {{ locale[settingsDataStore.locale].update }}
             </UButton>
         </div>

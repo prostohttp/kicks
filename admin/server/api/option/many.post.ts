@@ -1,3 +1,5 @@
+import { Option } from './../../models/option.schema';
+
 export default defineEventHandler(async (event) => {
     try {
         const { ids } = await readBody(event);

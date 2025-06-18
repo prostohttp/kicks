@@ -195,16 +195,16 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     <UForm
         :schema="v.safeParser(schema)"
         :state="state"
-        @submit="protectedSubmitHandler"
         class="w-full flex flex-col gap-[50px]"
+        @submit="protectedSubmitHandler"
     >
         <div class="flex gap-[30px] lg:flex-row flex-col-reverse">
             <div class="width-[60%] basis-[60%] flex flex-col gap-[24px]">
                 <UFormGroup
                     v-for="{ name, label, placeholder, type } in articleData"
+                    :key="name"
                     :label="type !== 'toggle' ? label : ''"
                     :name="name"
-                    :key="name"
                     :ui="{
                         label: {
                             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -212,84 +212,84 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                     }"
                 >
                     <UInput
-                        :placeholder="placeholder"
-                        v-model="state.title"
-                        inputClass="no-left-icon"
                         v-if="name === 'title'"
+                        v-model="state.title"
+                        :placeholder="placeholder"
+                        inputClass="no-left-icon"
                     />
                     <UTextarea
+                        v-else-if="name === 'shortDescription'"
                         v-model="state.shortDescription"
                         :placeholder="
                             locale[settingsDataStore.locale].shortDescription
                         "
                         class="textarea"
-                        v-else-if="name === 'shortDescription'"
                     />
                     <TiptapEditor
-                        :placeholder="placeholder"
-                        v-model="state.description"
                         v-else-if="name === 'description'"
+                        v-model="state.description"
+                        :placeholder="placeholder"
                     />
                     <UInput
-                        :placeholder="placeholder"
-                        v-model="state.sort"
-                        inputClass="no-left-icon"
                         v-if="name === 'sort'"
-                        type="number"
+                        v-model="state.sort"
+                        :placeholder="placeholder"
+                        inputClass="no-left-icon"
                         min="1"
+                        type="number"
                     />
                     <div
-                        class="flex gap-[10px] items-center mb-[10px]"
                         v-else-if="name === 'siteMenu'"
+                        class="flex gap-[10px] items-center mb-[10px]"
                     >
                         <UToggle
-                            size="md"
                             v-model="state.siteMenu"
                             :ui="{
                                 active: 'bg-blue dark:bg-yellow',
                             }"
+                            size="md"
                         />
                         <span>{{ label }}</span>
                     </div>
                     <div
-                        class="flex gap-[10px] items-center mb-[10px]"
                         v-else-if="name === 'adminMenu'"
+                        class="flex gap-[10px] items-center mb-[10px]"
                     >
                         <UToggle
-                            size="md"
                             v-model="state.adminMenu"
                             :ui="{
                                 active: 'bg-blue dark:bg-yellow',
                             }"
+                            size="md"
                         />
                         <span>{{ label }}</span>
                     </div>
                     <USelectMenu
-                        multiple
+                        v-else-if="type === 'select'"
                         v-model="state.featuredProducts"
                         :options="titles"
                         :placeholder="placeholder"
+                        :ui="{
+                            wrapper:
+                                'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
+                        }"
                         :uiMenu="{
                             option: {
                                 color: 'dark:text-[#6b7280]',
                             },
                         }"
-                        :ui="{
-                            wrapper:
-                                'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
-                        }"
-                        v-else-if="type === 'select'"
+                        multiple
                     />
                     <div
-                        class="flex gap-[10px] items-center mb-[10px]"
                         v-else-if="name === 'isEnabled'"
+                        class="flex gap-[10px] items-center mb-[10px]"
                     >
                         <UToggle
-                            size="md"
                             v-model="state.isEnabled"
                             :ui="{
                                 active: 'bg-blue dark:bg-yellow',
                             }"
+                            size="md"
                         />
                         <span>{{ label }}</span>
                     </div>
@@ -299,16 +299,16 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                 class="rounded-[8px] width-[40%] basis-[40%] flex flex-col relative group md:mt-[36px] mt-[10px]"
             >
                 <UiImageUpload
+                    v-model:drop-zone-ref="dropZoneRef"
                     v-model:image="article"
                     :alt="article?.title"
-                    v-model:drop-zone-ref="dropZoneRef"
-                    @delete="deleteImageHandler"
                     @change="uploadImage($event)"
+                    @delete="deleteImageHandler"
                 />
             </div>
         </div>
-        <div class="flex justify-end" v-if="isAdmin">
-            <UButton type="submit" class="dark-button">
+        <div v-if="isAdmin" class="flex justify-end">
+            <UButton class="dark-button" type="submit">
                 {{ locale[settingsDataStore.locale].save }}
             </UButton>
         </div>

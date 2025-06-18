@@ -85,9 +85,9 @@ const forgotHandler = useThrottleFn(forgot, 1000);
         </div>
         <UiModal
             v-model="isOpen"
-            title="KicksClub Terms & Conditions"
             class="dark:text-white"
             fullscreen
+            title="KicksClub Terms & Conditions"
         >
             <ContentDoc path="/terms" />
         </UiModal>

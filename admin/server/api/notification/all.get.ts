@@ -1,4 +1,4 @@
-import { Notification } from "#imports";
+import { Notification } from './../../models/notification.schema';
 import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
 

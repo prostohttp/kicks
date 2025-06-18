@@ -24,20 +24,20 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
         <DashboardSidebar class="hidden md:block" />
         <USlideover
             v-model="isOpen"
-            side="left"
-            class="md:hidden flex flex-col"
             :ui="{
                 base: 'sidebar',
             }"
+            class="md:hidden flex flex-col"
+            side="left"
         >
             <div
                 class="flex items-center justify-end px-[10px] pt-[10px] bg-fa-white dark:bg-dark-gray border-r border-[#cfcfcf] dark:border-gray-main"
             >
                 <UButton
-                    color="gray"
-                    variant="ghost"
-                    icon="i-heroicons-x-mark-20-solid"
                     class="-my-1"
+                    color="gray"
+                    icon="i-heroicons-x-mark-20-solid"
+                    variant="ghost"
                     @click="isOpen = false"
                 />
             </div>
@@ -49,10 +49,10 @@ provide(Constants.PROVIDE_IS_OPEN_MOBILE_SIDEBAR, isOpen);
             >
                 <UButton
                     active-class="active"
-                    size="xl"
-                    icon="i-heroicons-bars-3-bottom-left"
-                    @click="isOpen = true"
                     class="md:hidden bg-blue hover:bg-blue dark:hover:bg-yellow h-[34px] w-[34px] flex items-center justify-center"
+                    icon="i-heroicons-bars-3-bottom-left"
+                    size="xl"
+                    @click="isOpen = true"
                 />
                 <DashboardHeader />
             </div>

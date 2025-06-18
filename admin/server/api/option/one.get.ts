@@ -1,4 +1,4 @@
-import { Option } from "#imports";
+import { Option } from './../../models/option.schema';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
         });
 
         if (!option) {
-            throw createError({ statusMessage: "Option not found" });
+            return createError({ statusMessage: "Option not found" });
         }
         return option;
     } catch (error: any) {

@@ -68,6 +68,13 @@ export interface LoginFormDto {
     password: string;
 }
 
+export interface EmailRegisterDto {
+    name: string;
+    userEmail: string;
+    siteName: string;
+    siteUrl: string;
+}
+
 export interface ForgotFormDto {
     email: string;
 }

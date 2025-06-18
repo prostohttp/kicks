@@ -84,9 +84,9 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
     >
         <UFormGroup
             v-for="{ name, label, placeholder, icon, type } in inputData"
+            :key="name"
             :label="type === 'checkbox' ? '' : label"
             :name="name"
-            :key="name"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -94,59 +94,59 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
             }"
         >
             <UInput
-                :placeholder="placeholder"
-                v-model="state.title"
-                inputClass="input-label"
-                :icon="icon"
-                class="mb-[25px]"
                 v-if="name === 'title'"
+                v-model="state.title"
+                :icon="icon"
+                :placeholder="placeholder"
+                class="mb-[25px]"
+                inputClass="input-label"
             />
             <UTextarea
+                v-else-if="name === 'description'"
                 v-model="state.description"
                 :placeholder="placeholder"
                 class="textarea"
-                v-else-if="name === 'description'"
             />
             <USelectMenu
-                :icon="icon"
-                multiple
+                v-else-if="type === 'select'"
                 v-model="state.children"
+                :icon="icon"
                 :options="titles"
                 :placeholder="placeholder"
-                class="mb-[25px]"
+                :ui="{
+                    wrapper:
+                        'select-wrapper-with-icon ring-1 ring-dark-gray rounded-[8px]',
+                }"
                 :uiMenu="{
                     option: {
                         color: 'dark:text-[#6b7280]',
                     },
                 }"
-                :ui="{
-                    wrapper:
-                        'select-wrapper-with-icon ring-1 ring-dark-gray rounded-[8px]',
-                }"
-                v-else-if="type === 'select'"
+                class="mb-[25px]"
+                multiple
             />
             <UCheckbox
                 v-if="name === 'isParent'"
-                :label="placeholder"
                 v-model="state.isParent"
-                class="mb-[25px]"
+                :label="placeholder"
                 :ui="{
                     label: 'dark:text-[#6b7280] text-[16px]',
                 }"
+                class="mb-[25px]"
             />
             <UCheckbox
                 v-if="name === 'isEnabled'"
-                :label="placeholder"
                 v-model="state.isEnabled"
-                class="mb-[25px]"
+                :label="placeholder"
                 :ui="{
                     label: 'dark:text-[#6b7280] text-[16px]',
                 }"
+                class="mb-[25px]"
             />
         </UFormGroup>
         <div
-            class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
             v-if="isAdmin"
+            class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
         >
             <UButton
                 class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
@@ -155,8 +155,8 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                 {{ locale[settingsDataStore.locale].cancel }}
             </UButton>
             <UButton
-                type="submit"
                 class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
+                type="submit"
             >
                 {{ locale[settingsDataStore.locale].save }}
             </UButton>

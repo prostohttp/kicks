@@ -15,14 +15,14 @@ const { signIn } = useAuth();
             class="w-[31%]"
         >
             <AuthSocialButton
-                @click="signIn('github')"
-                link="https:github.com"
                 :title="locale[settingsDataStore.locale].loginGithub"
                 class="w-full"
+                link="https:github.com"
+                @click="signIn('github')"
             >
                 <img
-                    src="~/assets/img/icon-github.svg"
                     class="scale-[300%] sm:scale-[270%]"
+                    src="~/assets/img/icon-github.svg"
                 />
             </AuthSocialButton>
         </UTooltip>
@@ -32,12 +32,12 @@ const { signIn } = useAuth();
         >
             <AuthSocialButton
                 :title="locale[settingsDataStore.locale].loginYandex"
-                @click="signIn('yandex')"
                 class="w-full"
+                @click="signIn('yandex')"
             >
                 <img
-                    src="~/assets/img/icon-yandex.svg"
                     class="scale-100 sm:scale-[170%]"
+                    src="~/assets/img/icon-yandex.svg"
                 />
             </AuthSocialButton>
         </UTooltip>

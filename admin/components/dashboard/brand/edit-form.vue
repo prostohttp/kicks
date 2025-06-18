@@ -190,62 +190,62 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
 <template>
     <LazyUiEmpty v-if="!brand" />
     <UForm
+        v-else
         :schema="v.safeParser(schema)"
         :state="brand"
         class="space-y-4"
         @submit="protectedSubmitHandler"
-        v-else
     >
         <div
-            class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white flex items-center justify-center relative group mb-[40px]"
             v-if="isAdmin"
+            class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white flex items-center justify-center relative group mb-[40px]"
         >
             <UiImageUpload
-                v-model:image="brand"
                 v-model:drop-zone-ref="dropZoneRef"
+                v-model:image="brand"
                 :alt="brand?.title"
-                @delete="deleteImageHandler"
                 @change="uploadImage($event)"
+                @delete="deleteImageHandler"
             />
         </div>
         <div
-            class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-opacity-90 flex items-center justify-center relative group mb-[40px]"
             v-else-if="!isAdmin && brand?.image"
+            class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-opacity-90 flex items-center justify-center relative group mb-[40px]"
         >
             <div class="w-full">
                 <NuxtImg
                     :src="`/${brand.image}`"
-                    width="200"
-                    class="w-full rounded-[8px] dark:brightness-0 dark:invert-[0.5]"
                     alt="new brand"
+                    class="w-full rounded-[8px] dark:brightness-0 dark:invert-[0.5]"
+                    width="200"
                 />
             </div>
         </div>
         <UFormGroup
             :label="locale[settingsDataStore.locale].title"
-            name="title"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="title"
         >
             <UInput
-                :placeholder="locale[settingsDataStore.locale].title"
                 v-model="brand.title"
-                inputClass="input-label"
+                :placeholder="locale[settingsDataStore.locale].title"
                 icon="i-heroicons-queue-list"
+                inputClass="input-label"
             />
         </UFormGroup>
 
         <UFormGroup
             :label="locale[settingsDataStore.locale].description"
-            name="description"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="description"
         >
             <UTextarea
                 v-model="brand.description"
@@ -254,13 +254,13 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
             />
         </UFormGroup>
         <div
-            class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
             v-if="isAdmin"
+            class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
         >
             <UTooltip
+                :popper="{ placement: 'top' }"
                 :text="locale[settingsDataStore.locale].delete"
                 class="mr-auto"
-                :popper="{ placement: 'top' }"
             >
                 <UButton
                     class="bg-danger hover:bg-danger uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white flex sm:w-auto w-full text-center justify-center"
@@ -280,8 +280,8 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                 {{ locale[settingsDataStore.locale].cancel }}
             </UButton>
             <UButton
-                type="submit"
                 class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
+                type="submit"
             >
                 {{ locale[settingsDataStore.locale].save }}
             </UButton>

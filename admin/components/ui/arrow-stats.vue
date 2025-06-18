@@ -8,16 +8,16 @@ const { value } = defineProps<{
 <template>
     <div class="flex gap-[8px] items-center">
         <UIcon
-            name="i-ic-sharp-arrow-upward"
+            v-if="value > 0"
             class="text-yellow text-[16px]"
             dynamic
-            v-if="value > 0"
+            name="i-ic-sharp-arrow-upward"
         />
         <UIcon
-            name="i-ic-sharp-arrow-downward"
+            v-else
             class="text-dark-gray dark:text-fa-white text-[16px]"
             dynamic
-            v-else
+            name="i-ic-sharp-arrow-downward"
         />
         <span class="text-dark-gray dark:text-fa-white">
             {{ value }}

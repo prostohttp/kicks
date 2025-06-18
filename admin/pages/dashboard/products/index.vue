@@ -124,33 +124,33 @@ watch(activePage, async (newValue) => {
             "
         />
         <UButton
+            :label="locale[settingsDataStore.locale].addNewProduct"
             class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
             icon="i-heroicons-plus-circle"
-            :label="locale[settingsDataStore.locale].addNewProduct"
             to="/dashboard/products/new"
         />
     </div>
     <main class="flex flex-col">
         <UiEmpty v-if="!data?.allItems" />
-        <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
+        <div v-else class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]">
             <DashboardProductCard
                 v-for="product in data?.products"
-                @delete-product="deleteProduct"
-                :product="product as ProductDto"
+                :key="product._id"
                 :categories="
                     unwrapAfterPopulate(
                         product.category as unknown as TitleObjectAfterPopulate[],
                     )
                 "
+                :product="product as ProductDto"
                 :sales="getSales(product._id!)"
-                :key="product._id"
+                @delete-product="deleteProduct"
             />
         </div>
     </main>
     <LazyUiPagination
         v-if="data?.pagesInPagination"
         v-model="activePage"
-        :element-in-page="Constants.PER_PAGE_PRODUCT"
         :all-items="data?.allItems"
+        :element-in-page="Constants.PER_PAGE_PRODUCT"
     />
 </template>

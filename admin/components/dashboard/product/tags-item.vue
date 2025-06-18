@@ -16,8 +16,8 @@ const emit = defineEmits(["delete"]);
             {{ tag }}
         </span>
         <UIcon
-            name="i-material-symbols-close-rounded"
             class="cursor-pointer"
+            name="i-material-symbols-close-rounded"
             @click="emit('delete', index)"
         />
     </div>

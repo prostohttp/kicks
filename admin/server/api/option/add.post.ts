@@ -1,4 +1,4 @@
-import { Option } from "#imports";
+import { Option } from './../../models/option.schema';
 import { OptionDto } from "./dto/option.dto";
 
 export default defineEventHandler(async (event) => {

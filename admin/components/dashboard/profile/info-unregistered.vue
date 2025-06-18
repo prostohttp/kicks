@@ -37,10 +37,10 @@ const tempUser = [
             }"
         >
             <UInput
-                :placeholder="item.placeholder"
                 :icon="item.icon"
-                inputClass="input-label"
+                :placeholder="item.placeholder"
                 disabled
+                inputClass="input-label"
             />
         </UFormGroup>
     </div>
@@ -48,11 +48,11 @@ const tempUser = [
         class="rounded-[8px] basis-[40%] p-[8px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center"
     >
         <img
-            src="/no-image.svg"
-            alt="No Image"
             v-if="!user?.image"
+            alt="No Image"
             class="w-[100px]"
+            src="/no-image.svg"
         />
-        <img :src="user?.image" class="w-full rounded-[8px]" v-else />
+        <img v-else :src="user?.image" class="w-full rounded-[8px]" />
     </div>
 </template>

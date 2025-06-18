@@ -66,7 +66,7 @@ watch(activePage, async (newValue) => {
     />
     <main class="flex flex-col">
         <LazyUiEmpty v-if="!data?.allItems" />
-        <div class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]" v-else>
+        <div v-else class="grid xl:grid-cols-3 md:grid-cols-1 gap-[14px]">
             <DashboardUserCard
                 v-for="user in data?.users"
                 :key="user._id"
@@ -78,7 +78,7 @@ watch(activePage, async (newValue) => {
     <LazyUiPagination
         v-if="data?.pagesInPagination"
         v-model="activePage"
-        :element-in-page="Constants.PER_PAGE_USERS"
         :all-items="data?.allItems"
+        :element-in-page="Constants.PER_PAGE_USERS"
     />
 </template>

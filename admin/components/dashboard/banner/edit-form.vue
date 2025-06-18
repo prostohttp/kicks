@@ -10,9 +10,9 @@ interface BannerTab {
 }
 
 // store
-const bannerDataSrore = useBannerDataStore();
+const bannerDataStore = useBannerDataStore();
 const settingsDataStore = useSettingsDataStore();
-const { banner } = storeToRefs(bannerDataSrore);
+const { banner } = storeToRefs(bannerDataStore);
 
 // vars
 const title = ref(banner.value.title);
@@ -42,7 +42,7 @@ const submitHandler = async () => {
                 banners: banner.value.banners,
             },
         });
-        await bannerDataSrore.getBannerById(banner.value._id!);
+        await bannerDataStore.getBannerById(banner.value._id!);
         isValidForm.value = true;
         toast.add({
             title: locale[settingsDataStore.locale].successEdit,
@@ -89,7 +89,7 @@ async function onError(event: FormErrorEvent) {
 
 const deleteBannerHandler = () => {
     try {
-        bannerDataSrore.deleteBanner(banner.value._id!);
+        bannerDataStore.deleteBanner(banner.value._id!);
         toast.add({
             title: locale[settingsDataStore.locale].successDeleteMessage,
         });
@@ -104,7 +104,7 @@ const deleteBannerHandler = () => {
 
 <template>
     <UiSpinner v-if="isLoading" />
-    <div class="space-y-4 w-full" v-else>
+    <div v-else class="space-y-4 w-full">
         <div
             v-if="!isValidForm"
             class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] rounded-[8px]"
@@ -112,25 +112,25 @@ const deleteBannerHandler = () => {
             {{ locale[settingsDataStore.locale].error.checkRequiredFields }}
         </div>
         <UForm
-            :validate="validate"
             :state="banner"
+            :validate="validate"
             class="space-y-4 w-full"
-            @submit="protectedSubmitHandler"
             @error="onError"
+            @submit="protectedSubmitHandler"
         >
             <UFormGroup
-                name="title"
                 :label="locale[settingsDataStore.locale].title"
                 :ui="{
                     label: {
                         base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                     },
                 }"
+                name="title"
             >
                 <UInput
+                    v-model="title"
                     :placeholder="locale[settingsDataStore.locale].title"
                     inputClass="no-left-icon"
-                    v-model="title"
                 />
             </UFormGroup>
             <div
@@ -148,8 +148,8 @@ const deleteBannerHandler = () => {
                     <div
                         v-for="(tab, index) in bannerTabs"
                         :key="tab.id"
-                        class="cursor-pointer py-[10px] pl-[20px] pr-[10px] rounded-[8px] flex justify-between items-center"
                         :class="{ 'active-tab': activeTab === index }"
+                        class="cursor-pointer py-[10px] pl-[20px] pr-[10px] rounded-[8px] flex justify-between items-center"
                         @click="activeTab = index"
                     >
                         <span>
@@ -170,27 +170,27 @@ const deleteBannerHandler = () => {
                         <UFormGroup name="banners">
                             <DashboardBannerEditFormItem
                                 v-for="(item, index) in banner.banners"
-                                v-model:active-tab="activeTab"
-                                :index="index"
                                 v-show="index === activeTab"
                                 :key="item.id"
+                                v-model:active-tab="activeTab"
+                                :index="index"
                             />
                         </UFormGroup>
                     </Transition>
                 </div>
             </div>
             <div
-                class="flex items-center gap-[20px] justify-end"
                 v-if="isAdmin"
+                class="flex items-center gap-[20px] justify-end"
             >
                 <UButton
-                    type="button"
                     class="bg-danger dark:bg-danger text-fa-white hover:bg-danger hover:dark:bg-danger big-button"
+                    type="button"
                     @click="deleteBannerHandler"
                 >
                     {{ locale[settingsDataStore.locale].delete }}
                 </UButton>
-                <UButton type="submit" class="dark-button">
+                <UButton class="dark-button" type="submit">
                     {{ locale[settingsDataStore.locale].save }}
                 </UButton>
             </div>

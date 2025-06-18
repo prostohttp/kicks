@@ -126,16 +126,16 @@ const deleteImageHandler = async () => {
     <div class="flex flex-col gap-[30px]">
         <UFormGroup :name="`image${banner.banners[index].id}`">
             <UiImageUpload
+                v-model:drop-zone-ref="dropZoneRef"
                 v-model:image="banner.banners[index]"
                 :alt="locale[settingsDataStore.locale].newBanner"
-                v-model:drop-zone-ref="dropZoneRef"
-                @delete="deleteImageHandler"
                 @change="uploadImage($event)"
+                @delete="deleteImageHandler"
             />
         </UFormGroup>
         <UFormGroup
-            :name="`heading${banner.banners[index].id}`"
             :label="locale[settingsDataStore.locale].heading"
+            :name="`heading${banner.banners[index].id}`"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -143,14 +143,14 @@ const deleteImageHandler = async () => {
             }"
         >
             <UInput
+                v-model="banner.banners[index].heading"
                 :placeholder="locale[settingsDataStore.locale].heading"
                 inputClass="no-left-icon"
-                v-model="banner.banners[index].heading"
             />
         </UFormGroup>
         <UFormGroup
-            :name="`description${banner.banners[index].id}`"
             :label="locale[settingsDataStore.locale].description"
+            :name="`description${banner.banners[index].id}`"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -158,15 +158,15 @@ const deleteImageHandler = async () => {
             }"
         >
             <UTextarea
-                :placeholder="locale[settingsDataStore.locale].description"
-                inputClass="no-left-icon"
-                class="textarea"
                 v-model="banner.banners[index].description"
+                :placeholder="locale[settingsDataStore.locale].description"
+                class="textarea"
+                inputClass="no-left-icon"
             />
         </UFormGroup>
         <UFormGroup
-            :name="`url${banner.banners[index].id}`"
             :label="locale[settingsDataStore.locale].url"
+            :name="`url${banner.banners[index].id}`"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -174,14 +174,14 @@ const deleteImageHandler = async () => {
             }"
         >
             <UInput
+                v-model="banner.banners[index].url"
                 :placeholder="locale[settingsDataStore.locale].url"
                 inputClass="no-left-icon"
-                v-model="banner.banners[index].url"
             />
         </UFormGroup>
         <UFormGroup
-            :name="`sort${banner.banners[index].id}`"
             :label="locale[settingsDataStore.locale].sort"
+            :name="`sort${banner.banners[index].id}`"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[10px]',
@@ -189,11 +189,11 @@ const deleteImageHandler = async () => {
             }"
         >
             <UInput
+                v-model="banner.banners[index].sort"
                 :placeholder="locale[settingsDataStore.locale].sort"
                 inputClass="no-left-icon"
-                v-model="banner.banners[index].sort"
-                type="number"
                 min="1"
+                type="number"
             />
         </UFormGroup>
     </div>

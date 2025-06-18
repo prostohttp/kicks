@@ -50,14 +50,14 @@ const markAllAsRead = async () => {
         >
             <UIcon
                 v-if="isEmpty"
-                name="i-heroicons-bell"
                 class="icon cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
+                name="i-heroicons-bell"
             />
             <template v-else>
-                <UChip color="red" :text="notifications?.length" size="2xl">
+                <UChip :text="notifications?.length" color="red" size="2xl">
                     <UIcon
-                        name="i-heroicons-bell-alert-solid"
                         class="icon cursor-pointer bg-dark-gray dark:bg-fa-white w-[24px] h-[24px]"
+                        name="i-heroicons-bell-alert-solid"
                     />
                 </UChip>
             </template>
@@ -71,9 +71,9 @@ const markAllAsRead = async () => {
                             {{ locale[settingsDataStore.locale].notifications }}
                         </span>
                         <UIcon
+                            class="w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
                             name="i-heroicons-x-circle"
                             @click="close"
-                            class="w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
                         />
                     </div>
                     <div
@@ -85,9 +85,9 @@ const markAllAsRead = async () => {
                             }}</span>
                         </template>
                         <DashboardHeaderNotificationsList
-                            :data="notifications"
-                            :close="close"
                             v-else
+                            :close="close"
+                            :data="notifications"
                         />
                     </div>
                     <div
@@ -99,8 +99,8 @@ const markAllAsRead = async () => {
                             @click="markAllAsRead"
                         >
                             <UIcon
-                                name="i-heroicons-check-20-solid"
                                 class="w-[20px] h-[20px] flex items-center justify-center"
+                                name="i-heroicons-check-20-solid"
                             />
                             <span>{{
                                 locale[settingsDataStore.locale].markAllAsRead
@@ -108,8 +108,8 @@ const markAllAsRead = async () => {
                         </NuxtLink>
                         <NuxtLink
                             activeClass="active"
-                            to="/dashboard/notifications"
                             class="bg-dark-gray text-fa-white px-[16px] py-[8px] rounded-[8px] hover:text-fa-white hover:bg-blue dark:bg-fa-white dark:text-dark-gray dark:hover:bg-yellow dark:hover:text-dark-gray"
+                            to="/dashboard/notifications"
                             @click="close"
                         >
                             {{

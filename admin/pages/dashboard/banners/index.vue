@@ -69,17 +69,22 @@ watch(
             :title="locale[settingsDataStore.locale].breadcrumbs.banners"
         />
         <UButton
+            v-if="isAdmin"
+            :label="locale[settingsDataStore.locale].addNewBanner"
             class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
             icon="i-heroicons-plus-circle"
-            :label="locale[settingsDataStore.locale].addNewBanner"
             to="/dashboard/banners/new"
-            v-if="isAdmin"
         />
     </div>
     <main
         class="p-[24px] bg-white flex flex-col rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
     >
         <UTable
+            :columns="columns"
+            :empty-state="{
+                icon: 'i-heroicons-circle-stack-20-solid',
+                label: locale[settingsDataStore.locale].empty,
+            }"
             :loading="!data"
             :loading-state="{
                 icon: 'i-heroicons-arrow-path-20-solid',
@@ -87,11 +92,6 @@ watch(
             }"
             :progress="{ color: 'primary', animation: 'carousel' }"
             :rows="data?.banners"
-            :columns="columns"
-            :empty-state="{
-                icon: 'i-heroicons-circle-stack-20-solid',
-                label: locale[settingsDataStore.locale].empty,
-            }"
             :ui="{
                 td: {
                     base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal',
@@ -122,18 +122,18 @@ watch(
             <template #images-data="{ row }">
                 <NuxtLink :to="`/dashboard/banners/${row._id}`">
                     <NuxtImg
-                        src="/no-image.svg"
-                        width="40"
+                        v-if="!row.banners[0].image"
                         :alt="locale[settingsDataStore.locale].noImage"
                         class="dark:opacity-90 rounded-[8px]"
-                        v-if="!row.banners[0].image"
+                        src="/no-image.svg"
+                        width="40"
                     />
                     <NuxtImg
-                        width="200"
-                        height="60"
+                        v-else
                         :src="`/${row.banners[0].image}`"
                         class="dark:opacity-90 rounded-[8px]"
-                        v-else
+                        height="60"
+                        width="200"
                     />
                 </NuxtLink>
             </template>
@@ -142,9 +142,9 @@ watch(
             </template>
             <template #action-data="{ row }">
                 <UButton
+                    :to="`/dashboard/banners/${row._id}`"
                     class="icon-button float-right"
                     icon="i-heroicons-pencil-square-solid"
-                    :to="`/dashboard/banners/${row._id}`"
                 />
             </template>
         </UTable>
@@ -152,7 +152,7 @@ watch(
     <LazyUiPagination
         v-if="data?.pagesInPagination"
         v-model="activePage"
-        :element-in-page="Constants.PER_PAGE_BANNERS"
         :all-items="data?.allItems"
+        :element-in-page="Constants.PER_PAGE_BANNERS"
     />
 </template>

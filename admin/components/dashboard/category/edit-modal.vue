@@ -63,20 +63,20 @@ const inputData = [
                         {{ locale[settingsDataStore.locale].editCategory }}
                     </h3>
                     <UButton
-                        color="gray"
-                        variant="ghost"
-                        icon="i-heroicons-x-mark-20-solid"
                         class="-my-1"
+                        color="gray"
+                        icon="i-heroicons-x-mark-20-solid"
+                        variant="ghost"
                         @click="$emit('close')"
                     />
                 </div>
             </template>
             <LazyUiEmpty v-if="!categoryId" />
             <LazyDashboardCategoryEditForm
-                @close="$emit('close')"
-                :inputData="inputData"
-                :categoryId="categoryId"
                 v-else
+                :categoryId="categoryId"
+                :inputData="inputData"
+                @close="$emit('close')"
             />
         </UCard>
     </UModal>

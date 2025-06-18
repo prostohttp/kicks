@@ -1,4 +1,4 @@
-import { Notification } from "#imports";
+import { Notification } from './../../models/notification.schema';
 
 export default defineEventHandler(async (event) => {
     try {

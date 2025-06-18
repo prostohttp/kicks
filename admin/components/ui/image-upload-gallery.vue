@@ -28,12 +28,12 @@ const changeHandler = (e: Event) => {
 
 <template>
     <input
-        type="file"
-        @change="changeHandler($event)"
-        ref="inputRef"
         v-if="isAdmin"
+        ref="inputRef"
         class="hidden"
         multiple
+        type="file"
+        @change="changeHandler($event)"
     />
     <div class="flex flex-wrap gap-[15px]">
         <div
@@ -41,23 +41,23 @@ const changeHandler = (e: Event) => {
             @click="onClickHandler"
         >
             <UIcon
-                name="i-material-symbols-add-to-photos"
                 class="w-6 h-6 opacity-70"
+                name="i-material-symbols-add-to-photos"
             />
         </div>
         <div
-            class="flex justify-center items-center rounded-[8px] aspect-square w-[100px] max-w-[29%] relative group overflow-hidden bg-[#fafafa] dark:bg-[#2c2c2c] p-[10px]"
             v-for="(image, index) in images"
+            class="flex justify-center items-center rounded-[8px] aspect-square w-[100px] max-w-[29%] relative group overflow-hidden bg-[#fafafa] dark:bg-[#2c2c2c] p-[10px]"
         >
             <NuxtImg
                 :src="`/${image}`"
                 class="rounded-[8px] group-hover:opacity-70 transition-opacity"
             />
             <UButton
+                v-if="isAdmin"
+                class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[30px] w-[30px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
                 icon="i-heroicons-trash"
                 @click="emit('delete', index)"
-                class="absolute top-1/2 left-1/2 dark:hover:bg-yellow dark:bg-yellow h-[30px] w-[30px] flex items-center justify-center -translate-x-[50%] -translate-y-[50%] bg-blue hover:bg-blue opacity-0 group-hover:opacity-100 transition-opacity"
-                v-if="isAdmin"
             />
         </div>
     </div>

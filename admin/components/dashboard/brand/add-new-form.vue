@@ -150,43 +150,43 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
         @submit="protectedSubmitHandler"
     >
         <div
-            class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group mb-[40px]"
             v-if="isAdmin"
+            class="rounded-[8px] basis-[40%] px-[20px] py-[40px] bg-fa-white dark:bg-[#2c2c2c] flex items-center justify-center relative group mb-[40px]"
         >
             <UiImageUpload
-                v-model:image="brandImage"
-                alt="Brand Image"
-                :add-new="true"
                 v-model:drop-zone-ref="dropZoneRef"
-                @delete="deleteImageHandler"
+                v-model:image="brandImage"
+                :add-new="true"
+                alt="Brand Image"
                 @change="uploadImage($event)"
+                @delete="deleteImageHandler"
             />
         </div>
         <UFormGroup
             :label="locale[settingsDataStore.locale].title"
-            name="title"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="title"
         >
             <UInput
-                :placeholder="locale[settingsDataStore.locale].title"
                 v-model="state.title"
-                inputClass="input-label"
+                :placeholder="locale[settingsDataStore.locale].title"
                 icon="i-heroicons-queue-list"
+                inputClass="input-label"
             />
         </UFormGroup>
 
         <UFormGroup
             :label="locale[settingsDataStore.locale].description"
-            name="description"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="description"
         >
             <UTextarea
                 v-model="state.description"
@@ -195,8 +195,8 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
             />
         </UFormGroup>
         <div
-            class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
             v-if="isAdmin"
+            class="flex sm:gap-[20px] pt-[20px] justify-end sm:flex-row flex-col gap-[10px]"
         >
             <UButton
                 class="bg-dark-gray dark:bg-grey dark:text-dark-gray dark:hover:bg-grey dark:hover:text-dark-gray hover:bg-dark-bg uppercase px-[30px] flex sm:w-auto w-full text-center justify-center"
@@ -205,8 +205,8 @@ const protectedSubmitHandler = computed(() => (isAdmin ? onSubmit : () => {}));
                 {{ locale[settingsDataStore.locale].cancel }}
             </UButton>
             <UButton
-                type="submit"
                 class="red-button uppercase dark:bg-danger dark:text-fa-white dark:hover:bg-danger dark:hover:text-fa-white px-[30px] flex sm:w-auto w-full text-center justify-center"
+                type="submit"
             >
                 {{ locale[settingsDataStore.locale].save }}
             </UButton>

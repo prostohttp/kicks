@@ -49,8 +49,9 @@ export default defineEventHandler(async (event) => {
             allItems: articlesLength,
         };
     } catch (error: any) {
+        const e = error as Error;
         throw createError({
-            statusMessage: error.message,
+            statusMessage: e.message,
         });
     }
 });

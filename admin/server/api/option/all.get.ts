@@ -1,5 +1,5 @@
-import { Option } from "#imports";
 import { Constants } from "~/constants";
+import { Option } from './../../models/option.schema';
 import isValidPaginationPage from "~/utils/is-valid-pagination-page";
 import pageCount from "~/utils/page-count";
 
@@ -39,13 +39,13 @@ export default defineEventHandler(async (event) => {
 
         const skip = page * perPage - perPage;
 
-        const optioneInPage = await Option.find()
+        const optionInPage = await Option.find()
             .sort({ sort: 1 })
             .skip(skip)
             .limit(perPage);
 
         return {
-            options: optioneInPage,
+            options: optionInPage,
             pagesInPagination,
             activePage: page,
             allItems: optionsLength,

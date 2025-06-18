@@ -170,7 +170,7 @@ useHead({
     >
         <div class="flex lg:flex-row flex-col lg:gap-[35px] gap-[20px]">
             <LazyUiEmpty v-if="!product" />
-            <div class="space-y-4 w-full" v-else>
+            <div v-else class="space-y-4 w-full">
                 <div
                     v-if="!isValidForm"
                     class="bg-dark-gray dark:bg-yellow text-fa-white dark:text-dark-gray w-full text-center py-[5px] mb-[10px] rounded-[8px]"
@@ -181,13 +181,13 @@ useHead({
                     }}
                 </div>
                 <UForm
-                    :validate="validate"
-                    @submit="protectedSubmitHandler"
-                    class="flex flex-col lg:gap-[35px] gap-[20px]"
                     :state="state"
+                    :validate="validate"
+                    class="flex flex-col lg:gap-[35px] gap-[20px]"
                     @error="onError"
+                    @submit="protectedSubmitHandler"
                 >
-                    <UTabs :items="items" class="w-full" v-model="selected">
+                    <UTabs v-model="selected" :items="items" class="w-full">
                         <template #data>
                             <DashboardProductDataTab
                                 v-model:state="state"
@@ -202,9 +202,9 @@ useHead({
                     </UTabs>
                     <div>
                         <UButton
-                            type="submit"
-                            class="dark-button my-[10px]"
                             v-if="isAdmin"
+                            class="dark-button my-[10px]"
+                            type="submit"
                         >
                             {{ locale[storeLocale].save }}
                         </UButton>

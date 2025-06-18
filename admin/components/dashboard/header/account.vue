@@ -26,8 +26,8 @@ const isAdmin = checkIsAdmin();
             }"
         >
             <UButton
-                class="uppercase md:flex justify-center items-center h-[40px] bg-transparent border border-dark-gray text-dark-gray px-[16px] hover:bg-blue hover:text-fa-white hover:border-blue rounded-[8px] dark:bg-transparent dark:border-fa-white dark:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:hover:border-yellow hidden"
                 :label="user?.role"
+                class="uppercase md:flex justify-center items-center h-[40px] bg-transparent border border-dark-gray text-dark-gray px-[16px] hover:bg-blue hover:text-fa-white hover:border-blue rounded-[8px] dark:bg-transparent dark:border-fa-white dark:text-fa-white dark:hover:bg-yellow dark:hover:text-dark-gray dark:hover:border-yellow hidden"
                 trailing-icon="i-heroicons-chevron-down-20-solid"
             />
             <UButton
@@ -37,28 +37,28 @@ const isAdmin = checkIsAdmin();
             <template #panel="{ close }">
                 <div class="p-[20px] flex flex-col gap-[20px] items-start">
                     <NuxtLink
-                        activeClass="active"
                         :prefetch-on="{ interaction: true }"
-                        to="/dashboard/profile"
+                        activeClass="active"
                         class="text-[20px] font-[600] hover:text-blue dark:hover:text-yellow"
+                        to="/dashboard/profile"
                         @click="close"
                     >
                         {{ user?.name }}
                     </NuxtLink>
                     <NuxtLink
-                        activeClass="active"
-                        to="/dashboard/settings"
-                        :prefetch-on="{ interaction: true }"
-                        class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
                         v-if="isAdmin"
+                        :prefetch-on="{ interaction: true }"
+                        activeClass="active"
+                        class="uppercase font-[Inter] flex justify-between gap-[40px] w-full items-center"
+                        to="/dashboard/settings"
                         @click="close"
                     >
                         <span>{{
                             locale[settingsDataStore.locale].settings
                         }}</span>
                         <UIcon
-                            name="i-heroicons-chevron-right-20-solid"
                             class="scale-[1.6]"
+                            name="i-heroicons-chevron-right-20-solid"
                         />
                     </NuxtLink>
                     <NuxtLink
@@ -69,8 +69,8 @@ const isAdmin = checkIsAdmin();
                             locale[settingsDataStore.locale].logOut
                         }}</span>
                         <UIcon
-                            name="i-heroicons-arrow-right-end-on-rectangle-20-solid"
                             class="scale-[1.3]"
+                            name="i-heroicons-arrow-right-end-on-rectangle-20-solid"
                         />
                     </NuxtLink>
                 </div>

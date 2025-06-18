@@ -32,14 +32,14 @@ const isTextarea = computed(
         }"
     >
         <UInput
+            v-if="isText"
             v-model="optionModel.value"
             inputClass="input-label-without-icon"
-            v-if="isText"
         />
         <UTextarea
+            v-if="isTextarea"
             v-model="optionModel.value"
             class="textarea"
-            v-if="isTextarea"
         />
     </UFormGroup>
 </template>

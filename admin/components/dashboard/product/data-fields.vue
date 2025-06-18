@@ -37,12 +37,12 @@ const localeOptions = [
     <div class="lg:w-[65%] w-full flex flex-col gap-[20px]">
         <UFormGroup
             :label="locale[settingsDataStore.locale].title"
-            name="title"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="title"
         >
             <UInput
                 v-model="state.title"
@@ -51,50 +51,50 @@ const localeOptions = [
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].shortDescription"
-            name="shortDescription"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="shortDescription"
         >
             <UTextarea v-model="state.shortDescription" class="textarea" />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].description"
-            name="description"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="description"
         >
-            <TiptapEditor placeholder="" v-model="state.description" />
+            <TiptapEditor v-model="state.description" placeholder="" />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].showInCategories"
-            name="category"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="category"
         >
             <USelectMenu
-                multiple
                 v-model="state.category"
                 :options="titlesCategories"
-                placeholder=""
+                :ui="{
+                    wrapper:
+                        'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
+                }"
                 :uiMenu="{
                     option: {
                         base: 'h-[35px]',
                         color: 'dark:text-[#6b7280]',
                     },
                 }"
-                :ui="{
-                    wrapper:
-                        'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
-                }"
+                multiple
+                placeholder=""
             >
                 <template #label>
                     <span v-if="state.category?.length" class="truncate">{{
@@ -105,105 +105,105 @@ const localeOptions = [
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].brand"
-            name="brand"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="brand"
         >
             <USelectMenu
                 v-model="state.brand"
                 :options="titlesBrands"
-                placeholder=""
+                :ui="{
+                    wrapper:
+                        'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
+                }"
                 :uiMenu="{
                     option: {
                         base: 'h-[35px]',
                         color: 'dark:text-[#6b7280]',
                     },
                 }"
-                :ui="{
-                    wrapper:
-                        'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
-                }"
+                placeholder=""
             />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].productSku"
-            name="sku"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="sku"
         >
             <UInput v-model="state.sku" inputClass="input-label-without-icon" />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].productQuantity"
-            name="quantity"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="quantity"
         >
             <UInput
-                type="number"
-                min="0"
                 v-model="state.quantity"
                 inputClass="input-label-without-icon"
+                min="0"
+                type="number"
             />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].productReqularPrice"
-            name="regularPrice"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="regularPrice"
         >
             <UInput
-                type="number"
                 v-model="state.regularPrice"
                 inputClass="input-label-without-icon"
+                type="number"
             />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].productSalePrice"
-            name="salePrice"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="salePrice"
         >
             <UInput
-                type="number"
                 v-model="state.salePrice"
                 inputClass="input-label-without-icon"
+                type="number"
             />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].productTags"
-            name="tags"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="tags"
         >
             <DashboardProductTags v-model:tags="state.tags!" />
         </UFormGroup>
         <UFormGroup
             :label="locale[settingsDataStore.locale].productVisibility"
-            name="isEnabled"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="isEnabled"
         >
             <USelectMenu
                 v-model="state.isEnabled"

@@ -93,12 +93,12 @@ const deleteValue = (id: string) => {
 <template>
     <div v-if="state">
         <UTable
-            :rows="state"
             :columns="columns"
             :empty-state="{
                 icon: '',
                 label: '',
             }"
+            :rows="state"
             :ui="{
                 td: {
                     base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal for-absolute',
@@ -120,9 +120,9 @@ const deleteValue = (id: string) => {
             <template #value-data="{ row }">
                 <UFormGroup :name="`value${row._id}`">
                     <UInput
+                        v-model="row.value.label"
                         :placeholder="locale[settingsDataStore.locale].addValue"
                         inputClass="clean-field"
-                        v-model="row.value.label"
                     />
                 </UFormGroup>
             </template>
@@ -136,11 +136,11 @@ const deleteValue = (id: string) => {
             <template #sort-data="{ row }">
                 <UFormGroup :name="`sort${row.id}`">
                     <UInput
+                        v-model="row.sort"
                         :placeholder="locale[settingsDataStore.locale].sort"
                         inputClass="clean-field"
-                        v-model="row.sort"
-                        type="number"
                         min="1"
+                        type="number"
                     />
                 </UFormGroup>
             </template>
@@ -154,9 +154,9 @@ const deleteValue = (id: string) => {
         </UTable>
     </div>
     <UButton
-        type="button"
         class="icon-button float-right mr-[15px]"
         icon="i-heroicons-plus-circle-16-solid"
+        type="button"
         @click="optionDataStore.addNewOptionValueToTable(state!)"
     />
     <!-- <pre>{{ state }}</pre> -->

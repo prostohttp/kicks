@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core";
 import { locale } from "~/lang/locale";
-import { type RegisterFormDto, Roles } from "~/types/server/server.types";
+import {
+    type EmailRegisterDto,
+    type RegisterFormDto,
+    Roles,
+} from "~/types/server/server.types";
 import { Constants } from "~/constants";
 
 // store
@@ -52,7 +56,7 @@ const register = async (data: RegisterFormDto) => {
                 userEmail: email,
                 siteName: locale[useSettingsDataStore().locale].siteName,
                 siteUrl: Constants.SITE_URL + "/login",
-            },
+            } as EmailRegisterDto,
         });
 
         if (!data.keepLogged) {

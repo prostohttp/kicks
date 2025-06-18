@@ -1,4 +1,4 @@
-import { Notification } from "#imports";
+import { Notification } from './../../models/notification.schema';
 import { NotificationDto } from "~/server/api/notification/dto/notification.dto";
 
 export default defineEventHandler(async (event) => {

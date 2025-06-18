@@ -101,30 +101,30 @@ watch(
             :title="locale[settingsDataStore.locale].breadcrumbs.articles"
         />
         <UButton
+            v-if="isAdmin"
+            :label="locale[settingsDataStore.locale].addNewArticle"
             class="h-[48px] px-[26px] py-[10px] flex justify-center items-center uppercase font-[600] shadow-none bg-dark-gray rounded-[8px] hover:bg-dark-gray dark:bg-yellow dark:hover:bg-yellow mb-[24px] hover:text-fa-white dark:hover:text-dark-gray"
             icon="i-heroicons-plus-circle"
-            :label="locale[settingsDataStore.locale].addNewArticle"
             to="/dashboard/articles/new"
-            v-if="isAdmin"
         />
     </div>
     <main
         class="p-[24px] bg-white flex flex-col rounded-[16px] dark:bg-dark-gray dark:border border-[#70706e]"
     >
         <UTable
+            v-model="selected"
+            :columns="columns"
+            :empty-state="{
+                icon: 'i-heroicons-circle-stack-20-solid',
+                label: locale['en'].empty,
+            }"
             :loading="!articles"
             :loading-state="{
                 icon: 'i-heroicons-arrow-path-20-solid',
                 label: locale[settingsDataStore.locale].loadingText,
             }"
             :progress="{ color: 'primary', animation: 'carousel' }"
-            v-model="selected"
             :rows="articles"
-            :columns="columns"
-            :empty-state="{
-                icon: 'i-heroicons-circle-stack-20-solid',
-                label: locale['en'].empty,
-            }"
             :ui="{
                 td: {
                     base: 'md:whitespace-pre-wrap md:break-all whitespace-normal break-normal',
@@ -149,29 +149,29 @@ watch(
                         }}
                     </span>
                     <DashboardArticleMenuAction
-                        v-model:activePage="activePage"
                         v-if="isAdmin"
+                        v-model:activePage="activePage"
                     />
                 </caption>
             </template>
             <template #image-data="{ row }">
                 <NuxtLink :to="`/dashboard/articles/${row.id}`">
                     <NuxtImg
-                        src="/no-image.svg"
-                        :alt="locale[settingsDataStore.locale].noImage"
-                        placeholder
-                        fit="inside"
-                        width="40"
-                        class="dark:opacity-90"
                         v-if="!row.image"
+                        :alt="locale[settingsDataStore.locale].noImage"
+                        class="dark:opacity-90"
+                        fit="inside"
+                        placeholder
+                        src="/no-image.svg"
+                        width="40"
                     />
                     <NuxtImg
-                        :src="`/${row.image}`"
-                        placeholder
-                        fit="inside"
-                        width="40"
-                        class="dark:opacity-90"
                         v-else
+                        :src="`/${row.image}`"
+                        class="dark:opacity-90"
+                        fit="inside"
+                        placeholder
+                        width="40"
                     />
                 </NuxtLink>
             </template>
@@ -185,8 +185,8 @@ watch(
     <LazyUiPagination
         v-if="data?.pagesInPagination"
         v-model="activePage"
-        :element-in-page="Constants.PER_PAGE_ARTICLE"
         :all-items="data?.allItems"
+        :element-in-page="Constants.PER_PAGE_ARTICLE"
     />
 </template>
 

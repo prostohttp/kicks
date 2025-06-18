@@ -100,19 +100,19 @@ watch(isSubmit, () => {
 
 <template>
     <div class="flex flex-col gap-[20px] w-full pb-[20px]">
-        <div class="flex flex-col w-full gap-[24px]" v-if="state">
+        <div v-if="state" class="flex flex-col w-full gap-[24px]">
             <UForm
-                :validate="validate"
+                ref="submitRef"
                 :state="state"
+                :validate="validate"
                 class="space-y-4 w-full"
                 @submit="protectedSubmitHandler"
-                ref="submitRef"
             >
                 <UFormGroup
                     v-for="{ name, label, placeholder } in optionData"
-                    :name="name"
                     :key="name"
                     :label="label"
+                    :name="name"
                     :ui="{
                         label: {
                             base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
@@ -120,34 +120,34 @@ watch(isSubmit, () => {
                     }"
                 >
                     <UInput
+                        v-if="name === 'title'"
+                        v-model="state.title"
                         :placeholder="placeholder"
                         inputClass="no-left-icon"
-                        v-model="state.title"
-                        v-if="name === 'title'"
                     />
                     <USelectMenu
+                        v-else-if="name === 'type'"
+                        v-model="state.type"
                         :options="types"
                         :placeholder="placeholder"
-                        v-model="state.type"
+                        :ui="{
+                            wrapper:
+                                'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
+                        }"
                         :uiMenu="{
                             option: {
                                 color: 'dark:text-[#6b7280]',
                             },
                         }"
-                        :ui="{
-                            wrapper:
-                                'select-wrapper ring-1 ring-dark-gray rounded-[8px]',
-                        }"
-                        v-else-if="name === 'type'"
                     />
                     <UInput
-                        :placeholder="placeholder"
-                        v-model="state.sort"
-                        inputClass="no-left-icon"
                         v-if="name === 'sort'"
+                        v-model="state.sort"
+                        :placeholder="placeholder"
+                        inputClass="no-left-icon"
+                        min="1"
                         required
                         type="number"
-                        min="1"
                     />
                 </UFormGroup>
                 <DashboardOptionEditTable

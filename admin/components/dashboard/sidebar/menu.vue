@@ -74,10 +74,10 @@ watch(
         <DashboardSidebarMenuItem
             v-for="item in menuItems"
             :key="item.to"
-            :to="item.to"
-            :title="item.title"
             :icon="item.icon"
             :protected="item.protected"
+            :title="item.title"
+            :to="item.to"
             @click="isOpenMobileSidebar = false"
         />
     </ul>

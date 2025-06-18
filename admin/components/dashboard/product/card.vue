@@ -49,18 +49,18 @@ const openDeleteProductModal = () => {
             >
                 <template v-if="product.image">
                     <NuxtImg
-                        :src="`/${product.image}`"
-                        width="80"
                         :alt="product.title"
+                        :src="`/${product.image}`"
                         class="sm:max-w-[200px] max-w-[300px] w-full"
+                        width="80"
                     />
                 </template>
                 <template v-else>
                     <NuxtImg
-                        src="/no-image.svg"
-                        width="40"
                         :alt="locale[settingsDataStore.locale].noImage"
                         class="max-w-[200px]"
+                        src="/no-image.svg"
+                        width="40"
                     />
                 </template>
             </div>
@@ -126,14 +126,14 @@ const openDeleteProductModal = () => {
                     }"
                 >
                     <UButton
-                        trailing-icon="i-heroicons-ellipsis-horizontal-solid"
                         class="bg-[#efefef] dark:bg-[#efefef] text-dark-gray hover:bg-dark-gray dark:hover:bg-dark-gray dark:hover:text-fa-white hover:text-fa-white py-[3px]"
+                        trailing-icon="i-heroicons-ellipsis-horizontal-solid"
                     />
                     <template #panel>
                         <ul class="p-4 flex flex-col gap-[10px]">
                             <NuxtLink
-                                active-class="active"
                                 :to="`/dashboard/products/${product._id}`"
+                                active-class="active"
                                 class="cursor-pointer"
                             >
                                 {{
@@ -141,9 +141,9 @@ const openDeleteProductModal = () => {
                                 }}
                             </NuxtLink>
                             <NuxtLink
-                                @click="openDeleteProductModal"
-                                class="cursor-pointer"
                                 v-if="isAdmin"
+                                class="cursor-pointer"
+                                @click="openDeleteProductModal"
                             >
                                 {{
                                     locale[settingsDataStore.locale]
@@ -155,7 +155,7 @@ const openDeleteProductModal = () => {
                 </UPopover>
             </div>
         </div>
-        <div class="flex flex-col gap-[5px]" v-if="product.shortDescription">
+        <div v-if="product.shortDescription" class="flex flex-col gap-[5px]">
             <strong class="text-[16px]">{{
                 locale[settingsDataStore.locale].summary
             }}</strong>

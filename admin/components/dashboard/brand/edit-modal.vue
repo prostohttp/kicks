@@ -27,17 +27,17 @@ const settingsDataStore = useSettingsDataStore();
                         {{ locale[settingsDataStore.locale].editBrand }}
                     </h3>
                     <UButton
-                        color="gray"
-                        variant="ghost"
-                        icon="i-heroicons-x-mark-20-solid"
                         class="-my-1"
+                        color="gray"
+                        icon="i-heroicons-x-mark-20-solid"
+                        variant="ghost"
                         @click="$emit('close')"
                     />
                 </div>
             </template>
             <DashboardBrandEditForm
-                @close="$emit('close')"
                 :brandId="brandId"
+                @close="$emit('close')"
             />
         </UCard>
     </UModal>

@@ -28,26 +28,26 @@ export default defineEventHandler(async (event) => {
             });
 
         // TODO: Перенести на сайт
-        for (const product of products) {
-            for (const option of product.options) {
-                const opt = option.optionId as unknown as IOption;
-                const optionTitle = opt.title;
-                if (optionTitle in params) {
-                    for (const value of option.values) {
-                        const val = value.valueId as unknown as IOptionValue;
-                        const optionValue = val.value;
-                        if (
-                            params[optionTitle]
-                                ?.toString()
-                                .split(",")
-                                .includes(optionValue)
-                        ) {
-                            filteredArray.push(product);
-                        }
-                    }
-                }
-            }
-        }
+        // for (const product of products) {
+        //     for (const option of product.options) {
+        //         const opt = option.optionId as unknown as IOption;
+        //         const optionTitle = opt.title;
+        //         if (optionTitle in params) {
+        //             for (const value of option.values) {
+        //                 const val = value.valueId as unknown as IOptionValue;
+        //                 const optionValue = val.value;
+        //                 if (
+        //                     params[optionTitle]
+        //                         ?.toString()
+        //                         .split(",")
+        //                         .includes(optionValue)
+        //                 ) {
+        //                     filteredArray.push(product);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         return products;
         // TODO: Перенести на сайт
         return filteredArray;

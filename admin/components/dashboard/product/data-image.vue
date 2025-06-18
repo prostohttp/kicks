@@ -137,19 +137,19 @@ const deleteImageHandler = async () => {
     <div>
         <UFormGroup
             :label="locale[settingsDataStore.locale].productPhoto"
-            name="image"
             :ui="{
                 label: {
                     base: 'font-[Rubik] font-[600] text-[20px] mb-[16px]',
                 },
             }"
+            name="image"
         >
             <UiImageUpload
+                v-model:drop-zone-ref="dropZoneRef"
                 v-model:image="state"
                 alt="logo"
-                v-model:drop-zone-ref="dropZoneRef"
-                @delete="deleteImageHandler"
                 @change="uploadImage($event)"
+                @delete="deleteImageHandler"
             />
         </UFormGroup>
     </div>

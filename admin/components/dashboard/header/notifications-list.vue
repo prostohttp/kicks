@@ -20,8 +20,8 @@ const settingsDataStore = useSettingsDataStore();
         >
             <div class="flex justify-between gap-[5px] items-center pt-[5px]">
                 <NuxtLink
-                    activeClass="active"
                     :to="`/dashboard/orders/${notification._id}`"
+                    activeClass="active"
                     class="text-[16px] font-[600]"
                     @click="close"
                 >
@@ -41,8 +41,8 @@ const settingsDataStore = useSettingsDataStore();
                     class="lowercase text-[14px] font-[500]"
                 >
                     <NuxtLink
-                        activeClass="active"
                         :to="`/dashboard/products/${product.productId?._id}`"
+                        activeClass="active"
                         @click="close"
                     >
                         {{ product.productId?.title }}

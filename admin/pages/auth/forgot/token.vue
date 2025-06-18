@@ -82,15 +82,15 @@ onMounted(async () => {
             class="flex lg:pt-[40px] pb-[40px] pt-[40px] lg:px-0 px-[30px] justify-center items-center"
         >
             <LazyUiSpinner v-if="isLoading" />
-            <div class="max-w-[480px] flex flex-col w-full gap-[24px]" v-else>
+            <div v-else class="max-w-[480px] flex flex-col w-full gap-[24px]">
                 <div>
                     <h1 class="font-[Rubik] font-[600] text-[36px] mb-[8px]">
                         {{ locale[settingsDataStore.locale].resetPassword }}
                     </h1>
                 </div>
                 <LazyAuthResetPasswordForm
-                    @submit="resetPasswordHandler"
                     v-if="isValid"
+                    @submit="resetPasswordHandler"
                 />
                 <template v-else>
                     <p>
@@ -109,8 +109,8 @@ onMounted(async () => {
                         {{ locale[settingsDataStore.locale].contactUsForHelp }}
                     </p>
                     <UButton
-                        to="/forgot"
                         class="bg-dark-gray h-[48px] px-[16px] flex w-full uppercase justify-center font-[Rubik] font-[500] hover:bg-yellow"
+                        to="/forgot"
                     >
                         {{ locale[settingsDataStore.locale].tryAgain }}
                     </UButton>

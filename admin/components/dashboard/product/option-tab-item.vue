@@ -16,7 +16,6 @@ const options = defineModel("options", {
 
 // store
 const settingsDataStore = useSettingsDataStore();
-const optionDataStore = useOptionDataStore();
 
 // vars
 const computedOption = computed(() =>
@@ -39,13 +38,6 @@ const isDateTime = computed(
         computedOption.value?.optionValue.type === optionKeys.date ||
         computedOption.value?.optionValue.type === optionKeys.time ||
         computedOption.value?.optionValue.type === optionKeys.datetime,
-);
-
-watch(
-    () => id,
-    (newValue) => {
-        console.log(newValue, "!!!!!");
-    },
 );
 </script>
 
