@@ -7,7 +7,7 @@ const tags: ModelRef<string[]> = defineModel("tags", {
 });
 
 // vars
-const tagRef: Ref<HTMLInputElement | undefined> = ref();
+const tagRef = useTemplateRef("tagRef");
 
 // handlers
 const addTagHandler = (e: any) => {

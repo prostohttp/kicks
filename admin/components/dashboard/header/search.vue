@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onClickOutside, useDebounceFn } from "@vueuse/core";
+import { onClickOutside, useDebounceFn, type MaybeElementRef } from "@vueuse/core";
 import { locale } from "~/lang/locale";
 import { ModelNamesForSearchEngine } from "~/types/server/server.types";
 import type { SearchProductDto } from "./dto/search-product.dto";
@@ -7,7 +7,7 @@ import { Constants } from "~/constants";
 
 // vars
 const query = ref("");
-const target: Ref<HTMLInputElement | null> = ref(null);
+const target = useTemplateRef("target");
 const isActive = ref(false);
 const isOpen = ref(false);
 const founded: Ref<SearchProductDto[] | undefined> = ref();
@@ -17,7 +17,7 @@ const metaPressed = ref(false);
 const settingsDataStore = useSettingsDataStore();
 
 // handlers
-onClickOutside(target, () => (isOpen.value = false));
+onClickOutside(target as MaybeElementRef, () => (isOpen.value = false));
 
 const showSearchResultHandler = () => {
     if (!query.value) {

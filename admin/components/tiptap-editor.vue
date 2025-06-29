@@ -25,7 +25,7 @@ const editor = useEditor({
     ],
 });
 
-const editorRef = ref(null);
+const editorRef = useTemplateRef("editorRef");
 const isVisible = ref();
 
 // handlers

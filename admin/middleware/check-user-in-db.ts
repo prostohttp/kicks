@@ -1,5 +1,4 @@
 import { useUserDataStore } from "~/stores/user-data";
-import { Constants } from "~/constants";
 
 //TODO: Не корректно работает при нахождении на странице при перезагрузке страницы, при переходе на эту страницу с других отрабатывает.
 export default defineNuxtRouteMiddleware(async () => {
@@ -9,6 +8,6 @@ export default defineNuxtRouteMiddleware(async () => {
     const { savedUser } = storeToRefs(userStore);
     if (!savedUser.value) {
         console.log("User not found!");
-        await signOut({ callbackUrl: Constants.SITE_URL });
+        await signOut({ callbackUrl: "/" });
     }
 });

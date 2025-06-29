@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { locale } from "~/lang/locale";
-import { Constants } from "~/constants";
 import { useUserDataStore } from "~/stores/user-data";
 
 // Store
@@ -63,7 +62,7 @@ const isAdmin = checkIsAdmin();
                     </NuxtLink>
                     <NuxtLink
                         class="uppercase font-[Inter] flex justify-between w-full leading-[20px] items-center cursor-pointer gap-[10px]"
-                        @click="signOut({ callbackUrl: Constants.SITE_URL })"
+                        @click="signOut({ callbackUrl: '/' })"
                     >
                         <span>{{
                             locale[settingsDataStore.locale].logOut
