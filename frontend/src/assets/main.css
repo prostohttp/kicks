@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+    /* colors */
+    --color-theme-blue: #4A69E2;
+    --color-theme-orange: #FFA52F;
+    --color-theme-white: #FFFFFF;
+    --color-theme-fawhite: #FAFAFA;
+    --color-theme-gray: #E7E7E3;
+    --color-theme-darkgray: #70706E;
+    --color-theme-black: #232321;
+    /* size */
+    --spacing-theme-container: 1352px;
+    --spacing-theme-container-indent: 16px;
+    /* fonts */
+    --font-theme-open-sans: "Open Sans", sans-serif;
+    --font-theme-rubik: "Rubik", sans-serif;
+    --font-theme-inter: "Inter", sans-serif;
+    --font-theme-poppins: "Poppins", sans-serif;
+}
+
+@layer base {
+    body {
+        @apply font-theme-inter font-normal;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-theme-rubik font-semibold;
+    }
+}
+
+
+@layer components {
+    .checkbox {
+        @apply border-1 border-theme-black rounded-[2px] size-[19px];
+    }
+
+    .checkbox-sm {
+        @apply border-[1px];
+    }
+
+    .checkbox-md {
+        @apply border-[3px];
+    }
+
+    .full-filled {
+        @apply bg-theme-black bg-[url("./icons/tabler--check.png")] bg-cover;
+    }
+
+    .part-filled {
+        @apply bg-theme-black bg-[url("./icons/tabler--minus.png")] bg-cover;
+    }
+
+    .checkbox-md.full-filled {
+        @apply border-theme-darkgray;
+    }
+
+    .button {
+        @apply flex items-center gap-[10px] px-[15px] py-[8px] rounded-[8px] text-[14px] uppercase cursor-pointer;
+    }
+
+    .button:disabled {
+        @apply opacity-30 cursor-default;
+    }
+
+    .button:focus {}
+
+    .button-filled {
+        @apply bg-theme-black text-theme-white;
+    }
+
+    .button-outline {
+        @apply border-1 border-theme-black
+    }
+
+    .input {
+        @apply flex flex-col gap-[5px] text-theme-black;
+    }
+
+    .input-field {
+        @apply px-[16px] py-[10px] border-[1px] border-theme-black rounded-[8px] outline-none w-full text-[16px] text-theme-black placeholder:text-[#79767C] placeholder:text-[14px];
+    }
+
+    .input-label {
+        @apply text-[14px] text-theme-black;
+    }
+
+    .input-message {
+        @apply text-[12px] font-light
+    }
+
+    .input.danger .input-field {
+        @apply border-[#DA1E28]
+    }
+
+    .input.success .input-field {
+        @apply border-[#008B28]
+    }
+
+    .input.info .input-field {
+        @apply border-theme-gray
+    }
+
+    .input.danger .input-message {
+        @apply text-[#DA1E28]
+    }
+
+    .input.success .input-message {
+        @apply text-[#008B28]
+    }
+
+    .input-field:disabled {
+        @apply opacity-30;
+    }
+}

@@ -19,6 +19,7 @@
         "@vue-email/nuxt": "^0.8.19",
         "@vueuse/nuxt": "^11.1.0",
         "bcrypt": "^5.1.1",
+        "drizzle-orm": "^0.44.2",
         "nanoid": "^5.0.7",
         "nuxt-mongoose": "^1.0.6",
         "nuxt-tiptap-editor": "^2.0.0",
@@ -33,6 +34,7 @@
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
         "@tiptap/extension-placeholder": "<=2.7.1",
         "@types/bcrypt": "^5.0.2",
+        "drizzle-kit": "^0.31.4",
         "nuxt": "^3.17.4"
     }
 }
